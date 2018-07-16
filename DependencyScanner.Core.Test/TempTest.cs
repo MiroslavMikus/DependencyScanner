@@ -9,9 +9,9 @@ namespace DependencyScanner.Core.Test
         [TestMethod]
         public void TempTesting()
         {
-            var scan = new Scanner();
+            var scan = new FileScanner();
 
-            var result = scan.Scan(@"F:\Projects\_GitHub\Exercise.DynamicProxy");
+            var result = scan.ScanSolution(@"F:\Projects\_GitHub\Exercise.DynamicProxy");
 
 
         }

@@ -46,8 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="FileScanner.cs" />
+    <Compile Include="Interfaces\IScanner.cs" />
+    <Compile Include="Model\ProjectResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\SolutionResult.cs" />
+    <Compile Include="SolutionComparer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
