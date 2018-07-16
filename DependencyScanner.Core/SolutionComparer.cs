@@ -52,9 +52,4 @@ namespace DependencyScanner.Core
             }
         }
     }
-
-    public class SolutionComparsionResult
-    {
-
-    }
 }
