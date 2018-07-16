@@ -20,29 +20,32 @@ namespace DependencyScanner.Core
             {
                 var resultSolution = new SolutionResult(solution.Info);
 
-                foreach (var package in solution.Projects.SelectMany(a => a.References))
+                foreach (var project in solution.Projects)
                 {
-                    var similiarPackages = allPackages.Where(a => a.Id == package.Id);
-
-                    if (!ProcesedPackages.ContainsKey(package.Id))
+                    foreach (var package in project.References)
                     {
-                        var consolidation = !similiarPackages.All(a => a.Version.ToString() == package.Version.ToString());
+                        var similiarPackages = allPackages.Where(a => a.Id == package.Id);
 
-                        ProcesedPackages.Add(package.Id, consolidation);
+                        if (!ProcesedPackages.ContainsKey(package.Id))
+                        {
+                            var consolidation = !similiarPackages.All(a => a.Version.ToString() == package.Version.ToString());
 
-                        if (consolidation)
-                        {
-                            // todo resume here
-                            // add package to project and project to solution
+                            ProcesedPackages.Add(package.Id, consolidation);
+
+                            if (consolidation)
+                            {
+                                // todo resume here
+                                // add package to project and project to solution
+                            }
                         }
-                    }
-                    else
-                    {
-                        if (ProcesedPackages[package.Id])
+                        else
                         {
-                            // add package to project and project to solution
+                            if (ProcesedPackages[package.Id])
+                            {
+                                // add package to project and project to solution
+                            }
                         }
-                    }
+                    } 
                 }
 
                 yield return resultSolution;
