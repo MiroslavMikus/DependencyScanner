@@ -14,6 +14,7 @@ namespace DependencyScanner.Core
     {
         string[] GetPackages(string rootDirectory) => Directory.GetFiles(rootDirectory, "packages.config", SearchOption.AllDirectories);
         string[] GetSolutions(string rootDirectory) => Directory.GetFiles(rootDirectory, " *.sln", SearchOption.TopDirectoryOnly);
+        string[] GetGetProjects(string rootDirectory) => Directory.GetFiles(rootDirectory, "*.csproj", SearchOption.TopDirectoryOnly);
 
         public SolutionResult ScanSolution(string rootDirectory)
         {
