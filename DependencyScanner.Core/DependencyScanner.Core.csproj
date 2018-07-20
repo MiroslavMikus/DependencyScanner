@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="FileScanner.cs" />
     <Compile Include="Interfaces\IScanner.cs" />
+    <Compile Include="Model\ConsolidateReferences.cs" />
     <Compile Include="Model\ProjectResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\SolutionResult.cs" />

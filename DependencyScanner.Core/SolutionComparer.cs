@@ -10,46 +10,34 @@ namespace DependencyScanner.Core
 {
     public class SolutionComparer
     {
-        public IEnumerable<SolutionResult> FindConsolidateReferences(params SolutionResult[] solutions)
+        public IEnumerable<ConsolidateReference> FindConsolidateReferences(params SolutionResult[] solutions)
         {
-            Dictionary<string, bool> ProcesedPackages = new Dictionary<string, bool>();
+            var allReferenes = solutions.SelectMany(a => a.GetSolutionReferences()).GroupBy(a => a.Id);
 
-            var allPackages = solutions.SelectMany(a => a.Projects).SelectMany(a => a.References);
-
-            foreach (var solution in solutions)
+            foreach (var reference in allReferenes)
             {
-                var resultSolution = new SolutionResult(solution.Info);
+                var packageId = reference.First().Id;
+                var allVersions = reference.Select(a => a.Version);
 
-                foreach (var project in solution.Projects)
+                if (AllAreSame(allVersions)) continue;
+
+                var occuringSolutions = solutions.Where(a => a.GetSolutionReferences().Any(b => b.Id == packageId));
+
+                var dict = occuringSolutions.ToDictionary(a => a, b => b.GetSolutionReferences().First(a => a.Id == packageId).Version);
+
+                yield return new ConsolidateReference
                 {
-                    foreach (var package in project.References)
-                    {
-                        var similiarPackages = allPackages.Where(a => a.Id == package.Id);
-
-                        if (!ProcesedPackages.ContainsKey(package.Id))
-                        {
-                            var consolidation = !similiarPackages.All(a => a.Version.ToString() == package.Version.ToString());
-
-                            ProcesedPackages.Add(package.Id, consolidation);
-
-                            if (consolidation)
-                            {
-                                // todo resume here
-                                // add package to project and project to solution
-                            }
-                        }
-                        else
-                        {
-                            if (ProcesedPackages[package.Id])
-                            {
-                                // add package to project and project to solution
-                            }
-                        }
-                    } 
-                }
-
-                yield return resultSolution;
+                    Id = packageId,
+                    References = dict
+                };
             }
+        }
+
+        internal bool AllAreSame(IEnumerable<SemanticVersion> versions)
+        {
+            if (versions.Count() == 1) return true;
+
+            return versions.Distinct().Count() != versions.Count();
         }
     }
 }

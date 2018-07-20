@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using NuGet;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace DependencyScanner.Core.Model
 {
@@ -11,6 +14,11 @@ namespace DependencyScanner.Core.Model
         public SolutionResult(FileInfo info)
         {
             Info = info;
+        }
+
+        public IEnumerable<PackageReference> GetSolutionReferences()
+        {
+            return Projects.SelectMany(a => a.References);
         }
     }
 }
