@@ -33,7 +33,7 @@ namespace DependencyScanner.Core
             }
         }
 
-        internal bool AllAreSame(IEnumerable<SemanticVersion> versions)
+        private bool AllAreSame(IEnumerable<SemanticVersion> versions)
         {
             if (versions.Count() == 1) return true;
 

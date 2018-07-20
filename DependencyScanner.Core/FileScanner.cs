@@ -61,5 +61,16 @@ namespace DependencyScanner.Core
                 yield return ExecuteSolutionScan(solution);
             }
         }
+
+        public IEnumerable<SolutionResult> ScanMultipleDirectories(IEnumerable<string> directores)
+        {
+            foreach (var directory in directores)
+            {
+                foreach (var result in ScanSolutions(directory))
+                {
+                    yield return result;
+                }
+            }
+        }
     }
 }
