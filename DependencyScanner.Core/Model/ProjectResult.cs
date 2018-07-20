@@ -1,9 +1,11 @@
 ﻿using NuGet;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace DependencyScanner.Core.Model
 {
+    [DebuggerDisplay("{ProjectInfo.Name}")]
     public class ProjectResult
     {
         public FileInfo ProjectInfo { get; }

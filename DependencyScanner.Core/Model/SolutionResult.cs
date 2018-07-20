@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace DependencyScanner.Core.Model
 {
+    [DebuggerDisplay("{Info.Name}")]
     public class SolutionResult
     {
         public FileInfo Info { get; }

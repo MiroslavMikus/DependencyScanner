@@ -12,9 +12,13 @@ namespace DependencyScanner.Core
 {
     public class FileScanner : IScanner
     {
-        string[] GetPackages(string rootDirectory) => Directory.GetFiles(rootDirectory, "packages.config", SearchOption.AllDirectories);
-        string[] GetSolutions(string rootDirectory) => Directory.GetFiles(rootDirectory, " *.sln", SearchOption.TopDirectoryOnly);
-        string[] GetGetProjects(string rootDirectory) => Directory.GetFiles(rootDirectory, "*.csproj", SearchOption.TopDirectoryOnly);
+        private const string PackagePattern = "packages.config";
+        private const string SolutionPattern = "*.sln";
+        private const string ProjectPattern = "*.csproj";
+
+        string[] GetPackages(string rootDirectory) => Directory.GetFiles(rootDirectory, PackagePattern, SearchOption.AllDirectories);
+        string[] GetSolutions(string rootDirectory) => Directory.GetFiles(rootDirectory, SolutionPattern, SearchOption.AllDirectories);
+        string[] GetProjects(string rootDirectory) => Directory.GetFiles(rootDirectory, "*.csproj", SearchOption.TopDirectoryOnly);
 
         public SolutionResult ScanSolution(string rootDirectory)
         {
@@ -36,11 +40,11 @@ namespace DependencyScanner.Core
             {
                 var packageInfo = new FileInfo(packagePath);
 
-                var projectPath = Directory.GetFiles(packageInfo.DirectoryName, "*.csproj", SearchOption.TopDirectoryOnly);
+                var projectPath = GetProjects(packageInfo.DirectoryName);
 
                 var projectInfo = new FileInfo(projectPath[0]);
 
-                var projectResult = new ProjectResult(packageInfo, projectInfo);
+                var projectResult = new ProjectResult(projectInfo, packageInfo);
 
                 var file = new PackageReferenceFile(packageInfo.FullName);
 

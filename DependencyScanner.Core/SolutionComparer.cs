@@ -17,6 +17,7 @@ namespace DependencyScanner.Core
             foreach (var reference in allReferenes)
             {
                 var packageId = reference.First().Id;
+
                 var allVersions = reference.Select(a => a.Version);
 
                 if (AllAreSame(allVersions)) continue;
