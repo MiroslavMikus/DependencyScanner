@@ -29,6 +29,11 @@ namespace DependencyScanner.ViewModel
             _scanner = scanner;
             _messenger = messenger;
 
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.WorkingDirectory))
+            {
+                WorkingDirectory = new FileInfo(Properties.Settings.Default.WorkingDirectory);
+            }
+
             PickWorkingDirectoryCommand = new RelayCommand(() =>
             {
                 using (var dialog = new FolderBrowserDialog())
@@ -38,8 +43,10 @@ namespace DependencyScanner.ViewModel
                     if (result == DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
                     {
                         WorkingDirectory = new FileInfo(dialog.SelectedPath);
+
+                        Properties.Settings.Default.WorkingDirectory = dialog.SelectedPath;
+                        Properties.Settings.Default.Save();
                     }
-                    WorkingDirectory = new FileInfo(@"F:\Projects\_GitHub"); // todo remove
                 }
             });
 

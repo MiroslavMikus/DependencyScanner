@@ -24,6 +24,7 @@ namespace DependencyScanner.Standalone
             // Services
             builder.RegisterType<FileScanner>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<Messenger>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<SolutionComparer>().InstancePerLifetimeScope();
 
             // View Models
             builder.RegisterType<MainViewModel>().InstancePerLifetimeScope();

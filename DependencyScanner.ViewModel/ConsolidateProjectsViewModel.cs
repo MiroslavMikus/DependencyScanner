@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight.Command;
 
 namespace DependencyScanner.ViewModel
 {
-    public class ConsolidateProjects : ViewModelBase
+    public class ConsolidateProjectsViewModel : ViewModelBase
     {
         public RelayCommand ScanCommand { get; private set; }
     }

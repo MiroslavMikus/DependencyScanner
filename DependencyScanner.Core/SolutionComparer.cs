@@ -10,6 +10,11 @@ namespace DependencyScanner.Core
 {
     public class SolutionComparer
     {
+        public IEnumerable<ConsolidateReference> FindConsolidateReferences(IEnumerable<SolutionResult> solutions)
+        {
+            return FindConsolidateReferences(solutions.ToArray());
+        }
+
         public IEnumerable<ConsolidateReference> FindConsolidateReferences(params SolutionResult[] solutions)
         {
             var allReferenes = solutions.SelectMany(a => a.GetSolutionReferences()).GroupBy(a => a.Id);

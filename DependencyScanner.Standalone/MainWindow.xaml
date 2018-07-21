@@ -20,7 +20,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" Grid.Row="0">
-                    <Button Margin="5,5,0,5" Content="Scan" HorizontalAlignment="Left"
+                        <Button Margin="5,5,0,5" Content="Scan" HorizontalAlignment="Left"
                             Command="{Binding ScanCommand}"
                             Visibility="{Binding WorkingDirectory, Converter={StaticResource HideIfNull}}" Grid.Row="1"
                             />
@@ -34,17 +34,65 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Consolidate solutions" DataContext="{Binding ConsolidateSolutionsVM}">
-                <Grid >
+            <TabItem Header="Consolidate solutions" DataContext="{Binding ConsolidateSolutionsVM}" x:Name="ConsolidateSolutions">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid ItemsSource="{Binding ScanResult}" AutoGenerateColumns="False" Grid.Column="0">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn IsReadOnly="True" Header="Solution" Binding="{Binding Info}" />
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <Button Content="Select all" Margin="5" Command="{Binding SelectAllCommand}"/>
+                        <Button Content="Deselect all" Margin="5" Command="{Binding DeSelectAllCommand}"/>
+                        <Button Content="Quick compare" Command="{Binding ScanCommand}" Margin="5" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                    <ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Label Content="Select solutions to compare:"/>
+                            <DataGrid ItemsSource="{Binding ScanResult}" AutoGenerateColumns="False"  CanUserAddRows="False">
+                                <DataGrid.Columns>
+                                    <DataGridCheckBoxColumn IsReadOnly="False" Header="#" Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <DataGridTextColumn IsReadOnly="True" Header="Solution" Binding="{Binding Result.Info.Name}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Label Content="Consolidate nugets: "/>
+                            <DataGrid x:Name="References" ItemsSource="{Binding ResultReferences}" AutoGenerateColumns="False" CanUserAddRows="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn IsReadOnly="True" Header="Id" Binding="{Binding Id}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <ScrollViewer Grid.Column="2" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Label Content="Occurs in solutions: "/>
+                            <DataGrid ItemsSource="{Binding ElementName=References, Path=SelectedItem.References}" AutoGenerateColumns="False"  CanUserAddRows="False">
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn Header="#">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                                    <Button Margin="2" Content="Open" ToolTip="Open solution" 
+                                                        Command="{Binding ElementName=ConsolidateSolutions, Path=DataContext.OpenSolutionCommand}"
+                                                        CommandParameter="{Binding Key.Info.FullName}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn IsReadOnly="True" Header="Solution" Binding="{Binding Key}"/>
+                                    <DataGridTextColumn IsReadOnly="True" Header="Version" Binding="{Binding Value}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </ScrollViewer>
                 </Grid>
             </TabItem>
         </TabControl>
