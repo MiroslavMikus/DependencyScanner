@@ -1,5 +1,6 @@
 ﻿using DependencyScanner.Core;
 using DependencyScanner.Core.Model;
+using DependencyScanner.ViewModel.Events;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -63,6 +64,12 @@ namespace DependencyScanner.ViewModel
                 var viewModels = a.Select(b => new SolutionSelectionViewModel { Result = b, IsSelected = false });
 
                 ScanResult = new ObservableCollection<SolutionSelectionViewModel>(viewModels);
+            });
+
+            _messenger.Register<ClearResultEvent>(this, a =>
+            {
+                ScanResult.Clear();
+                //ResultReferences.Clear();
             });
         }
     }

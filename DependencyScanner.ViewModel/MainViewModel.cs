@@ -11,6 +11,7 @@ namespace DependencyScanner.ViewModel
     public class MainViewModel : ViewModelBase
     {
         public RelayCommand<string> OpenSolutionCommand { get; }
+        public RelayCommand<string> OpenCmdCommand { get; }
 
         public BrowseViewModel BrowseVM { get; }
         public ConsolidateSolutionsViewModel ConsolidateSolutionsVM { get; }
@@ -25,6 +26,25 @@ namespace DependencyScanner.ViewModel
                 try
                 {
                     Process.Start(a);
+                }
+                catch
+                {
+                }
+            });
+
+            OpenCmdCommand = new RelayCommand<string>(a =>
+            {
+                var startInfo = new ProcessStartInfo
+                {
+                    WorkingDirectory = a,
+                    WindowStyle = ProcessWindowStyle.Normal,
+                    FileName = "cmd.exe",
+                };
+
+
+                try
+                {
+                    Process.Start(startInfo);
                 }
                 catch
                 {

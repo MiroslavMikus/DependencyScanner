@@ -20,11 +20,11 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <!--<Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>-->
+                    </Grid.ColumnDefinitions>
                     <StackPanel Orientation="Horizontal" Grid.Row="0">
                         <Button Margin="5,5,0,5" Content="Scan" HorizontalAlignment="Left"
                             Command="{Binding ScanCommand}"
@@ -33,35 +33,51 @@
                         <Button Content="Pick working directory" HorizontalAlignment="Left" Margin="5" Command="{Binding PickWorkingDirectoryCommand}"/>
                         <TextBlock Text="{Binding WorkingDirectory.FullName, StringFormat='Your folder: {0}'}" VerticalAlignment="Center" Margin="5"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <DataGrid Margin="5" x:Name="AllSolutions" SelectionMode="Single" ItemsSource="{Binding ScanResult}" AutoGenerateColumns="False" >
-                            <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="#">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                                                <Button Margin="2" Content="Open" ToolTip="Open solution" 
+                    <ScrollViewer Grid.Row="1" Grid.Column="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                            <Label Content="Solutions: "/>
+                            <DataGrid Margin="5" x:Name="AllSolutions" SelectionMode="Single" ItemsSource="{Binding ScanResult}" AutoGenerateColumns="False" >
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn Header="#">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                                    <Button Margin="2" Content="Open" ToolTip="Open solution" 
                                                         Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenSolutionCommand}"
                                                         CommandParameter="{Binding Info.FullName}"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn IsReadOnly="True" Header="Solution" Binding="{Binding Info}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <DataGrid Margin="5" x:Name="Projects" SelectionMode="Single" ItemsSource="{Binding ElementName=AllSolutions, Path=SelectedItem.Projects}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Project" Binding="{Binding ProjectInfo.Name}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <DataGrid Margin="5" SelectionMode="Single" ItemsSource="{Binding ElementName=Projects, Path=SelectedItem.References}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
-                                <DataGridTextColumn Header="Version" Binding="{Binding Version}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </StackPanel>
+                                                    <Button Margin="2" Content="CMD" ToolTip="Open CMD" 
+                                                        Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenCmdCommand}"
+                                                        CommandParameter="{Binding Info.DirectoryName}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn IsReadOnly="True" Header="Solution" Binding="{Binding Info}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <ScrollViewer Grid.Row="1" Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                            <Label Content="Projects: "/>
+                            <DataGrid Margin="5" x:Name="Projects" SelectionMode="Single" ItemsSource="{Binding ElementName=AllSolutions, Path=SelectedItem.Projects}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Project" Binding="{Binding ProjectInfo.Name}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <ScrollViewer Grid.Row="1" Grid.Column="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                            <Label Content="Packages: "/>
+                            <DataGrid Margin="5" SelectionMode="Single" ItemsSource="{Binding ElementName=Projects, Path=SelectedItem.References}" IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+                                    <DataGridTextColumn Header="Version" Binding="{Binding Version}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </ScrollViewer>
                 </Grid>
             </TabItem>
             <TabItem Header="Consolidate solutions" DataContext="{Binding ConsolidateSolutionsVM}" x:Name="ConsolidateSolutions">
@@ -113,6 +129,9 @@
                                                     <Button Margin="2" Content="Open" ToolTip="Open solution" 
                                                         Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenSolutionCommand}"
                                                         CommandParameter="{Binding Key.Info.FullName}"/>
+                                                    <Button Margin="2" Content="CMD" ToolTip="Open CMD" 
+                                                        Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenCmdCommand}"
+                                                        CommandParameter="{Binding Info.DirectoryName}"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </DataGridTemplateColumn.CellTemplate>

@@ -1,5 +1,6 @@
 ﻿using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
+using DependencyScanner.ViewModel.Events;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -43,6 +44,10 @@ namespace DependencyScanner.ViewModel
                     if (result == DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
                     {
                         WorkingDirectory = new FileInfo(dialog.SelectedPath);
+
+                        ScanResult.Clear();
+
+                        _messenger.Send<ClearResultEvent>(new ClearResultEvent());
 
                         Properties.Settings.Default.WorkingDirectory = dialog.SelectedPath;
                         Properties.Settings.Default.Save();
