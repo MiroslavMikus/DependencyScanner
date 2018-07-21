@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using DependencyScanner.Core;
 using DependencyScanner.ViewModel;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -22,6 +23,7 @@ namespace DependencyScanner.Standalone
 
             // Services
             builder.RegisterType<FileScanner>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<Messenger>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
             // View Models
             builder.RegisterType<MainViewModel>().InstancePerLifetimeScope();

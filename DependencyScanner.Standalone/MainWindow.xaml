@@ -14,17 +14,38 @@
     <Grid>
         <TabControl>
             <TabItem Header="Browse" DataContext="{Binding BrowseVM}">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    <Button Margin="5,5,0,5" Content="Scan" HorizontalAlignment="Left"
+                            Command="{Binding ScanCommand}"
+                            Visibility="{Binding WorkingDirectory, Converter={StaticResource HideIfNull}}" Grid.Row="1"
+                            />
                         <Button Content="Pick working directory" HorizontalAlignment="Left" Margin="5" Command="{Binding PickWorkingDirectoryCommand}"/>
                         <TextBlock Text="{Binding WorkingDirectory.FullName, StringFormat='Your folder: {0}'}" VerticalAlignment="Center" Margin="5"/>
                     </StackPanel>
-                    <Button Margin="5" Content="Scan" HorizontalAlignment="Left"
-                            Command="{Binding ScanCommand}"
-                            Visibility="{Binding WorkingDirectory, Converter={StaticResource HideIfNull}}"
-                            />
-                    
-                </StackPanel>
+                    <DataGrid ItemsSource="{Binding ScanResult}" AutoGenerateColumns="False" Grid.Row="1">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn IsReadOnly="True" Header="Solution" Binding="{Binding Info}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Consolidate solutions" DataContext="{Binding ConsolidateSolutionsVM}">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid ItemsSource="{Binding ScanResult}" AutoGenerateColumns="False" Grid.Column="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn IsReadOnly="True" Header="Solution" Binding="{Binding Info}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

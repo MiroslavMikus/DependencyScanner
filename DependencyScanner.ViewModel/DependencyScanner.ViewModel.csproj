@@ -60,6 +60,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrowseViewModel.cs" />
+    <Compile Include="ConsolidateProjects.cs" />
+    <Compile Include="ConsolidateSolutionsViewModel.cs" />
     <Compile Include="Converters\AbstractBoolConverter.cs" />
     <Compile Include="Converters\AbstractNullConverter.cs" />
     <Compile Include="MainViewModel.cs" />
