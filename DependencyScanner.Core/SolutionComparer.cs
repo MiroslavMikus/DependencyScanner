@@ -23,7 +23,7 @@ namespace DependencyScanner.Core
             {
                 var packageId = reference.First().Id;
 
-                var allVersions = reference.Select(a => a.Version);
+                var allVersions = reference.Select(a => a.Version).ToList();
 
                 if (AllAreSame(allVersions)) continue;
 

@@ -18,7 +18,6 @@ namespace DependencyScanner.ViewModel
 
         public RelayCommand ScanCommand { get; }
         public RelayCommand SelectAllCommand { get; }
-        public RelayCommand<string> OpenSolutionCommand { get; }
         public RelayCommand DeSelectAllCommand { get; }
 
         private ObservableCollection<SolutionSelectionViewModel> _scanResult;
@@ -57,17 +56,6 @@ namespace DependencyScanner.ViewModel
                     item.IsSelected = false;
                 }
                 RaisePropertyChanged(nameof(ScanResult));
-            });
-
-            OpenSolutionCommand = new RelayCommand<string>(a =>
-            {
-                try
-                {
-                    Process.Start(a);
-                }
-                catch
-                {
-                }
             });
 
             _messenger.Register<IEnumerable<SolutionResult>>(this, a =>

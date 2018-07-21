@@ -42,6 +42,8 @@ namespace DependencyScanner.Core
 
                 var projectPath = GetProjects(packageInfo.DirectoryName);
 
+                if (projectPath.Count() == 0) continue; // todo check here -> package is found but project is missing
+
                 var projectInfo = new FileInfo(projectPath[0]);
 
                 var projectResult = new ProjectResult(projectInfo, packageInfo);
