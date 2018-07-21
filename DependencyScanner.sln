@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyScanner.Core", "D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyScanner.Core.Test", "DependencyScanner.Core.Test\DependencyScanner.Core.Test.csproj", "{50D8BD5B-AFC2-4C5B-91D3-9AADF164C8D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyScanner.ViewModel", "DependencyScanner.ViewModel\DependencyScanner.ViewModel.csproj", "{047F2ED9-749B-414A-B6E2-80F7BBA813A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyScanner.Standalone", "DependencyScanner.Standalone\DependencyScanner.Standalone.csproj", "{1F2234C6-6EC6-4E8F-A72C-CA766012DB13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{50D8BD5B-AFC2-4C5B-91D3-9AADF164C8D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50D8BD5B-AFC2-4C5B-91D3-9AADF164C8D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50D8BD5B-AFC2-4C5B-91D3-9AADF164C8D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{047F2ED9-749B-414A-B6E2-80F7BBA813A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{047F2ED9-749B-414A-B6E2-80F7BBA813A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{047F2ED9-749B-414A-B6E2-80F7BBA813A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{047F2ED9-749B-414A-B6E2-80F7BBA813A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F2234C6-6EC6-4E8F-A72C-CA766012DB13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F2234C6-6EC6-4E8F-A72C-CA766012DB13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F2234C6-6EC6-4E8F-A72C-CA766012DB13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F2234C6-6EC6-4E8F-A72C-CA766012DB13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
