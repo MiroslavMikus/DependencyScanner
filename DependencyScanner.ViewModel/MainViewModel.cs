@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using DependencyScanner.Core.Interfaces;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
@@ -6,29 +7,48 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DependencyScanner.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+
         public BrowseViewModel BrowseVM { get; } = new BrowseViewModel();
         public ConsolidateSolutionsViewModel ConsolidateSolutionsVM { get; } = new ConsolidateSolutionsViewModel();
     }
 
     public class BrowseViewModel : ViewModelBase
     {
+        private readonly IScanner _scanner;
+
         public RelayCommand PickWorkingDirectoryCommand { get; private set; }
+        public RelayCommand ScanCommand { get; private set; }
 
-        public FileInfo WorkingDirectory { get; set; }
+        private FileInfo _workingDirectory;
 
-        public BrowseViewModel()
+        public FileInfo WorkingDirectory { get => _workingDirectory; set => Set(ref _workingDirectory, value); }
+
+        public BrowseViewModel(IScanner scanner)
         {
+            _scanner = scanner;
+
             PickWorkingDirectoryCommand = new RelayCommand(() =>
             {
-                using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+                using (var dialog = new FolderBrowserDialog())
                 {
-                    System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                    DialogResult result = dialog.ShowDialog();
+
+                    if (result == DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
+                    {
+                        WorkingDirectory = new FileInfo(dialog.SelectedPath);
+                    }
                 }
+            });
+
+            ScanCommand = new RelayCommand(() =>
+            {
+
             });
         }
     }

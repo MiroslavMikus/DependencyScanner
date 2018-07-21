@@ -3,16 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:converter="clr-namespace:DependencyScanner.Standalone.Converters"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DependencyScanner.Standalone"
         mc:Ignorable="d"
         Title="Dependency scanner" Height="450" Width="800">
+    <Controls:MetroWindow.Resources>
+        <converter:NullToVisibilityConverter x:Key="HideIfNull" Positive="Collapsed" Negative="Visible"/>
+    </Controls:MetroWindow.Resources>
     <Grid>
         <TabControl>
             <TabItem Header="Browse" DataContext="{Binding BrowseVM}">
                 <StackPanel>
-                    <Button Content="Pick working directory" HorizontalAlignment="Left" Margin="5"
-                            Command="{Binding PickWorkingDirectoryCommand}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Pick working directory" HorizontalAlignment="Left" Margin="5" Command="{Binding PickWorkingDirectoryCommand}"/>
+                        <TextBlock Text="{Binding WorkingDirectory.FullName, StringFormat='Your folder: {0}'}" VerticalAlignment="Center" Margin="5"/>
+                    </StackPanel>
+                    <Button Margin="5" Content="Scan" HorizontalAlignment="Left" Visibility="{Binding WorkingDirectory, Converter={StaticResource HideIfNull}}"/>
                 </StackPanel>
             </TabItem>
         </TabControl>
