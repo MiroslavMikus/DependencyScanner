@@ -13,9 +13,14 @@ namespace DependencyScanner.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+        public BrowseViewModel BrowseVM { get; }
+        public ConsolidateSolutionsViewModel ConsolidateSolutionsVM { get; }
 
-        public BrowseViewModel BrowseVM { get; } = new BrowseViewModel();
-        public ConsolidateSolutionsViewModel ConsolidateSolutionsVM { get; } = new ConsolidateSolutionsViewModel();
+        public MainViewModel(BrowseViewModel browseViewModel, ConsolidateSolutionsViewModel consolidateSolutionsViewModel)
+        {
+            BrowseVM = browseViewModel;
+            ConsolidateSolutionsVM = consolidateSolutionsViewModel;
+        }
     }
 
     public class BrowseViewModel : ViewModelBase

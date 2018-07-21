@@ -1,4 +1,6 @@
-﻿using DependencyScanner.ViewModel;
+﻿using Autofac;
+using DependencyScanner.Core;
+using DependencyScanner.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,7 +18,23 @@ namespace DependencyScanner.Standalone
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            var window = new MainWindow() { DataContext = new MainViewModel() };
+            var builder = new ContainerBuilder();
+
+            // Services
+            builder.RegisterType<FileScanner>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            // View Models
+            builder.RegisterType<MainViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<BrowseViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<ConsolidateSolutionsViewModel>().InstancePerLifetimeScope();
+
+            // View
+            builder.Register(a => new MainWindow() { DataContext = a.Resolve<MainViewModel>() });
+
+            var scope = builder.Build().BeginLifetimeScope();
+
+            var window = scope.Resolve<MainWindow>();
+
             window.Show();
         }
     }

@@ -19,7 +19,11 @@
                         <Button Content="Pick working directory" HorizontalAlignment="Left" Margin="5" Command="{Binding PickWorkingDirectoryCommand}"/>
                         <TextBlock Text="{Binding WorkingDirectory.FullName, StringFormat='Your folder: {0}'}" VerticalAlignment="Center" Margin="5"/>
                     </StackPanel>
-                    <Button Margin="5" Content="Scan" HorizontalAlignment="Left" Visibility="{Binding WorkingDirectory, Converter={StaticResource HideIfNull}}"/>
+                    <Button Margin="5" Content="Scan" HorizontalAlignment="Left"
+                            Command="{Binding ScanCommand}"
+                            Visibility="{Binding WorkingDirectory, Converter={StaticResource HideIfNull}}"
+                            />
+                    
                 </StackPanel>
             </TabItem>
         </TabControl>
