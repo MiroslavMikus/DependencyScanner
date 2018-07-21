@@ -32,6 +32,8 @@ namespace DependencyScanner.Core.Test
         [TestMethod]
         public void Compare3()
         {
+            var comparer = new SolutionComparer();
+
             var list = new List<SemanticVersion>
             {
                 new SemanticVersion(new Version(1, 1, 1, 1)),
@@ -40,7 +42,7 @@ namespace DependencyScanner.Core.Test
                 new SemanticVersion(new Version(1, 1, 1, 2))
             };
 
-            var areAllSame = list.Distinct().Count() == list.Count();
+            var areAllSame = comparer.AllAreSame(list);
 
             Assert.IsFalse(areAllSame);
         }
@@ -48,6 +50,8 @@ namespace DependencyScanner.Core.Test
         [TestMethod]
         public void Compare4()
         {
+            var comparer = new SolutionComparer();
+
             var list = new List<SemanticVersion>
             {
                 new SemanticVersion(new Version(1, 1, 1, 2)),
@@ -56,7 +60,7 @@ namespace DependencyScanner.Core.Test
                 new SemanticVersion(new Version(1, 1, 1, 2))
             };
 
-            var areAllSame = list.Distinct().Count() == list.Count();
+            var areAllSame = comparer.AllAreSame(list);
 
             Assert.IsTrue(areAllSame);
         }

@@ -21,11 +21,11 @@ namespace DependencyScanner.Core
 
             foreach (var reference in allReferenes)
             {
-                var packageId = reference.First().Id;
-
                 var allVersions = reference.Select(a => a.Version).ToList();
 
                 if (AllAreSame(allVersions)) continue;
+
+                var packageId = reference.First().Id;
 
                 var occuringSolutions = solutions.Where(a => a.GetSolutionReferences().Any(b => b.Id == packageId));
 
@@ -39,11 +39,21 @@ namespace DependencyScanner.Core
             }
         }
 
-        private bool AllAreSame(IEnumerable<SemanticVersion> versions)
+        internal bool AllAreSame(IEnumerable<SemanticVersion> versions)
         {
             if (versions.Count() == 1) return true;
 
-            return versions.Distinct().Count() != versions.Count();
+            foreach (var versionSource in versions)
+            {
+                foreach (var versionTarget in versions)
+                {
+                    if (versionSource != versionTarget)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 }
