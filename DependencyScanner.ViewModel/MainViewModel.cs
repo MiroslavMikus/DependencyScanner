@@ -11,8 +11,8 @@ namespace DependencyScanner.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        public BrowseViewModel BrowseVM { get; set; }
-        public ConsolidateSolutionsViewModel ConsolidateSolutionsVM{ get; set; }
+        public BrowseViewModel BrowseVM { get; } = new BrowseViewModel();
+        public ConsolidateSolutionsViewModel ConsolidateSolutionsVM { get; } = new ConsolidateSolutionsViewModel();
     }
 
     public class BrowseViewModel : ViewModelBase
@@ -20,6 +20,17 @@ namespace DependencyScanner.ViewModel
         public RelayCommand PickWorkingDirectoryCommand { get; private set; }
 
         public FileInfo WorkingDirectory { get; set; }
+
+        public BrowseViewModel()
+        {
+            PickWorkingDirectoryCommand = new RelayCommand(() =>
+            {
+                using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+                {
+                    System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                }
+            });
+        }
     }
 
     public class ConsolidateSolutionsViewModel : ViewModelBase

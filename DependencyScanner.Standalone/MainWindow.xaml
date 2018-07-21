@@ -8,6 +8,13 @@
         mc:Ignorable="d"
         Title="Dependency scanner" Height="450" Width="800">
     <Grid>
-
+        <TabControl>
+            <TabItem Header="Browse" DataContext="{Binding BrowseVM}">
+                <StackPanel>
+                    <Button Content="Pick working directory" HorizontalAlignment="Left" Margin="5"
+                            Command="{Binding PickWorkingDirectoryCommand}"/>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Controls:MetroWindow>
