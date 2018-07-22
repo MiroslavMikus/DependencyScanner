@@ -4,10 +4,14 @@ using DependencyScanner.ViewModel.Events;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.IO;
 using System.Windows.Forms;
+using static DependencyScanner.ViewModel.Tools.DispatcherTools;
+using System.Threading.Tasks;
 
 namespace DependencyScanner.ViewModel
 {
@@ -33,6 +37,8 @@ namespace DependencyScanner.ViewModel
             if (!string.IsNullOrEmpty(Properties.Settings.Default.WorkingDirectory))
             {
                 WorkingDirectory = new FileInfo(Properties.Settings.Default.WorkingDirectory);
+
+                Task.Run(() => Scan());
             }
 
             PickWorkingDirectoryCommand = new RelayCommand(() =>
@@ -56,6 +62,14 @@ namespace DependencyScanner.ViewModel
             });
 
             ScanCommand = new RelayCommand(() =>
+            {
+                Scan();
+            });
+        }
+
+        private void Scan()
+        {
+            DispacherInvoke(() =>
             {
                 var scanResult = _scanner.ScanSolutions(_workingDirectory.FullName);
 

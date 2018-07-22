@@ -57,13 +57,8 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Header="Solution" IsReadOnly="True">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding Info.Name}" ToolTip="{Binding Info.FullName}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Solution" IsReadOnly="True" Binding="{Binding Info.Name}" />
+                                <DataGridTextColumn Header="FullPath" IsReadOnly="True" Binding="{Binding Info.FullName}" />
                             </DataGrid.Columns>
                         </DataGrid>
                         <Label Content="Projects: " Grid.Row="0" Grid.Column="1"/>
