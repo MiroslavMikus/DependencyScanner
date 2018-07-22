@@ -38,7 +38,7 @@ namespace DependencyScanner.ViewModel
             {
                 WorkingDirectory = new FileInfo(Properties.Settings.Default.WorkingDirectory);
 
-                Task.Run(() => Scan());
+                //Task.Run(() => Scan());
             }
 
             PickWorkingDirectoryCommand = new RelayCommand(() =>
