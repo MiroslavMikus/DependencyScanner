@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static DependencyScanner.Core.Tools.VersionComparer;
 
 namespace DependencyScanner.Core.Test
 {
@@ -32,8 +33,6 @@ namespace DependencyScanner.Core.Test
         [TestMethod]
         public void Compare3()
         {
-            var comparer = new SolutionComparer();
-
             var list = new List<SemanticVersion>
             {
                 new SemanticVersion(new Version(1, 1, 1, 1)),
@@ -42,7 +41,7 @@ namespace DependencyScanner.Core.Test
                 new SemanticVersion(new Version(1, 1, 1, 2))
             };
 
-            var areAllSame = comparer.AllAreSame(list);
+            var areAllSame = AllAreSame(list);
 
             Assert.IsFalse(areAllSame);
         }
@@ -50,8 +49,6 @@ namespace DependencyScanner.Core.Test
         [TestMethod]
         public void Compare4()
         {
-            var comparer = new SolutionComparer();
-
             var list = new List<SemanticVersion>
             {
                 new SemanticVersion(new Version(1, 1, 1, 2)),
@@ -60,7 +57,7 @@ namespace DependencyScanner.Core.Test
                 new SemanticVersion(new Version(1, 1, 1, 2))
             };
 
-            var areAllSame = comparer.AllAreSame(list);
+            var areAllSame = AllAreSame(list);
 
             Assert.IsTrue(areAllSame);
         }

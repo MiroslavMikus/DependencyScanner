@@ -5,9 +5,9 @@ using System.Diagnostics;
 namespace DependencyScanner.Core.Model
 {
     [DebuggerDisplay("{Id}")]
-    public class ConsolidateSolution
+    public class ConsolidateProject
     {
         public string Id { get; set; }
-        public Dictionary<SolutionResult, SemanticVersion> References { get; set; }
+        public Dictionary<ProjectResult, SemanticVersion> References { get; set; }
     }
 }

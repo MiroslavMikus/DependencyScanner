@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DependencyScanner.Core.Test
 {
-    [Ignore]
+    //[Ignore]
     [TestClass]
     public class TempTest
     {
@@ -22,6 +22,18 @@ namespace DependencyScanner.Core.Test
             var scan = new FileScanner();
 
             var result = scan.ScanSolutions(@"F:\Projects\_GitHub").ToList();
+        }
+
+        [TestMethod]
+        public void CheckConsolidateSolution()
+        {
+            var scan = new FileScanner();
+
+            var solution = scan.ScanSolution(@"F:\s\Serva.Application.OperationControlCenter");
+
+            var comparer = new ProjectComparer();
+
+            var result = comparer.FindConsolidateReferences(solution).ToList();
         }
     }
 }

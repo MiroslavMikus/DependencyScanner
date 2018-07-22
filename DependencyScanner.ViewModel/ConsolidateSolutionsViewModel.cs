@@ -24,8 +24,8 @@ namespace DependencyScanner.ViewModel
         private ObservableCollection<SolutionSelectionViewModel> _scanResult;
         public ObservableCollection<SolutionSelectionViewModel> ScanResult { get => _scanResult; set => Set(ref _scanResult, value); }
 
-        private ObservableCollection<ConsolidateReference> _resultReferences;
-        public ObservableCollection<ConsolidateReference> ResultReferences { get => _resultReferences; set => Set(ref _resultReferences, value); }
+        private ObservableCollection<ConsolidateSolution> _resultReferences;
+        public ObservableCollection<ConsolidateSolution> ResultReferences { get => _resultReferences; set => Set(ref _resultReferences, value); }
 
         public ConsolidateSolutionsViewModel(IMessenger messenger, SolutionComparer solutionComparer)
         {
@@ -38,7 +38,7 @@ namespace DependencyScanner.ViewModel
 
                 var result = _solutionComparer.FindConsolidateReferences(solutionsToCompare);
 
-                ResultReferences = new ObservableCollection<ConsolidateReference>(result);
+                ResultReferences = new ObservableCollection<ConsolidateSolution>(result);
             });
 
             SelectAllCommand = new RelayCommand(() =>

@@ -5,17 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static DependencyScanner.Core.Tools.VersionComparer;
 
 namespace DependencyScanner.Core
 {
     public class SolutionComparer
     {
-        public IEnumerable<ConsolidateReference> FindConsolidateReferences(IEnumerable<SolutionResult> solutions)
+        public IEnumerable<ConsolidateSolution> FindConsolidateReferences(IEnumerable<SolutionResult> solutions)
         {
             return FindConsolidateReferences(solutions.ToArray());
         }
 
-        public IEnumerable<ConsolidateReference> FindConsolidateReferences(params SolutionResult[] solutions)
+        public IEnumerable<ConsolidateSolution> FindConsolidateReferences(params SolutionResult[] solutions)
         {
             var allReferenes = solutions.SelectMany(a => a.GetSolutionReferences()).GroupBy(a => a.Id);
 
@@ -31,29 +32,12 @@ namespace DependencyScanner.Core
 
                 var dict = occuringSolutions.ToDictionary(a => a, b => b.GetSolutionReferences().First(a => a.Id == packageId).Version);
 
-                yield return new ConsolidateReference
+                yield return new ConsolidateSolution
                 {
                     Id = packageId,
                     References = dict
                 };
             }
-        }
-
-        internal bool AllAreSame(IEnumerable<SemanticVersion> versions)
-        {
-            if (versions.Count() == 1) return true;
-
-            foreach (var versionSource in versions)
-            {
-                foreach (var versionTarget in versions)
-                {
-                    if (versionSource != versionTarget)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
         }
     }
 }
