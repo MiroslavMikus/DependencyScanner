@@ -75,6 +75,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="SolutionSelectionViewModel.cs" />
     <Compile Include="Tools\DispatcherTools.cs" />
   </ItemGroup>
   <ItemGroup>

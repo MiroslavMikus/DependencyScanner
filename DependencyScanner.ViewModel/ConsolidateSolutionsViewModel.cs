@@ -69,16 +69,7 @@ namespace DependencyScanner.ViewModel
             _messenger.Register<ClearResultEvent>(this, a =>
             {
                 ScanResult.Clear();
-                //ResultReferences.Clear();
             });
         }
-    }
-
-    public class SolutionSelectionViewModel : ObservableObject
-    {
-        public SolutionResult Result { get; set; }
-
-        private bool _isSelected;
-        public bool IsSelected { get => _isSelected; set => Set(ref _isSelected, value); }
     }
 }

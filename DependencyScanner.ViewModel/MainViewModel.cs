@@ -10,18 +10,22 @@ namespace DependencyScanner.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        public RelayCommand<string> OpenSolutionCommand { get; }
+        public RelayCommand<string> RunCommand { get; }
         public RelayCommand<string> OpenCmdCommand { get; }
 
         public BrowseViewModel BrowseVM { get; }
         public ConsolidateSolutionsViewModel ConsolidateSolutionsVM { get; }
+        public ConsolidateProjectsViewModel ConsolidateProjectsViewModel { get; }
 
-        public MainViewModel(BrowseViewModel browseViewModel, ConsolidateSolutionsViewModel consolidateSolutionsViewModel)
+        public MainViewModel(BrowseViewModel browseViewModel,
+                             ConsolidateSolutionsViewModel consolidateSolutionsViewModel,
+                             ConsolidateProjectsViewModel consolidateProjectsViewModel)
         {
             BrowseVM = browseViewModel;
             ConsolidateSolutionsVM = consolidateSolutionsViewModel;
+            ConsolidateProjectsViewModel = consolidateProjectsViewModel;
 
-            OpenSolutionCommand = new RelayCommand<string>(a =>
+            RunCommand = new RelayCommand<string>(a =>
             {
                 try
                 {

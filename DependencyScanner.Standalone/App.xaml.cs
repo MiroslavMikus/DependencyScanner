@@ -25,12 +25,14 @@ namespace DependencyScanner.Standalone
             builder.RegisterType<FileScanner>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<Messenger>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<SolutionComparer>().InstancePerLifetimeScope();
+            builder.RegisterType<ProjectComparer>().InstancePerLifetimeScope();
 
             // View Models
             builder.RegisterType<MainViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<BrowseViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<ConsolidateSolutionsViewModel>().InstancePerLifetimeScope();
-
+            builder.RegisterType<ConsolidateProjectsViewModel>().InstancePerLifetimeScope();
+            
             // View
             builder.Register(a => new MainWindow() { DataContext = a.Resolve<MainViewModel>() });
 
