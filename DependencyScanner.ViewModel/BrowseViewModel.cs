@@ -51,11 +51,12 @@ namespace DependencyScanner.ViewModel
                     {
                         WorkingDirectory = new FileInfo(dialog.SelectedPath);
 
-                        ScanResult.Clear();
+                        ScanResult?.Clear();
 
                         _messenger.Send<ClearResultEvent>(new ClearResultEvent());
 
                         Properties.Settings.Default.WorkingDirectory = dialog.SelectedPath;
+
                         Properties.Settings.Default.Save();
                     }
                 }

@@ -43,7 +43,7 @@ namespace DependencyScanner.ViewModel
 
             _messenger.Register<ClearResultEvent>(this, a =>
             {
-                ScanResult.Clear();
+                ScanResult?.Clear();
             });
         }
     }
