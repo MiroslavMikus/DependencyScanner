@@ -228,20 +228,6 @@
                                   Grid.Row="1" Grid.Column="2"
                                   AutoGenerateColumns="False"  CanUserAddRows="False">
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="#">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                                                <Button Margin="2" Content="Open" ToolTip="Open solution" 
-                                                        Command="{Binding ElementName=TheMainWindow, Path=DataContext.RunCommand}"
-                                                        CommandParameter="{Binding Key.Info.FullName}"/>
-                                                <Button Margin="2" Content="CMD" ToolTip="Open CMD" 
-                                                        Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenCmdCommand}"
-                                                        CommandParameter="{Binding Info.DirectoryName}"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
                                 <DataGridTemplateColumn Header="Solution" IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
