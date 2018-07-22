@@ -12,6 +12,11 @@ namespace DependencyScanner.Core.Model
         public FileInfo PackageInfo{ get; }
         public ICollection<PackageReference> References { get; } = new List<PackageReference>();
 
+        public ProjectResult(FileInfo projectInfo)
+        {
+            ProjectInfo = projectInfo;
+        }
+
         public ProjectResult(FileInfo projectInfo, FileInfo packageInfo)
         {
             ProjectInfo = projectInfo;

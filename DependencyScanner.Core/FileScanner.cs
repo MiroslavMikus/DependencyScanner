@@ -16,9 +16,9 @@ namespace DependencyScanner.Core
         private const string SolutionPattern = "*.sln";
         private const string ProjectPattern = "*.csproj";
 
-        string[] GetPackages(string rootDirectory) => Directory.GetFiles(rootDirectory, PackagePattern, SearchOption.AllDirectories);
+        string[] GetPackages(string rootDirectory) => Directory.GetFiles(rootDirectory, PackagePattern, SearchOption.TopDirectoryOnly);
         string[] GetSolutions(string rootDirectory) => Directory.GetFiles(rootDirectory, SolutionPattern, SearchOption.AllDirectories);
-        string[] GetProjects(string rootDirectory) => Directory.GetFiles(rootDirectory, "*.csproj", SearchOption.TopDirectoryOnly);
+        string[] GetProjects(string rootDirectory) => Directory.GetFiles(rootDirectory, "*.csproj", SearchOption.AllDirectories);
 
         public SolutionResult ScanSolution(string rootDirectory)
         {
@@ -36,21 +36,29 @@ namespace DependencyScanner.Core
         {
             var result = new SolutionResult(new FileInfo(solution));
 
-            foreach (var packagePath in GetPackages(result.Info.DirectoryName))
+            foreach (var projectPath in GetProjects(result.Info.DirectoryName))
             {
-                var packageInfo = new FileInfo(packagePath);
+                var projectInfo = new FileInfo(projectPath);
 
-                var projectPath = GetProjects(packageInfo.DirectoryName);
+                var packagePaths = GetPackages(projectInfo.DirectoryName);
 
-                if (projectPath.Count() == 0) continue; // todo check here -> package is found but project is missing
+                ProjectResult projectResult;
 
-                var projectInfo = new FileInfo(projectPath[0]);
+                if (packagePaths.Count() != 0)
+                // Projects contains package.config file
+                {
+                    var packageInfo = new FileInfo(packagePaths.First());
 
-                var projectResult = new ProjectResult(projectInfo, packageInfo);
+                    projectResult = new ProjectResult(projectInfo, packageInfo);
 
-                var file = new PackageReferenceFile(packageInfo.FullName);
+                    var file = new PackageReferenceFile(packageInfo.FullName);
 
-                projectResult.References.AddRange(file.GetPackageReferences());
+                    projectResult.References.AddRange(file.GetPackageReferences());
+                }
+                else
+                {
+                    projectResult = new ProjectResult(projectInfo);
+                }
 
                 result.Projects.Add(projectResult);
             }
