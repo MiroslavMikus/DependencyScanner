@@ -15,10 +15,13 @@ namespace DependencyScanner.Core
         private const string PackagePattern = "packages.config";
         private const string SolutionPattern = "*.sln";
         private const string ProjectPattern = "*.csproj";
+        private const string NuspecPattern = "*.nuspec";
+
 
         string[] GetPackages(string rootDirectory) => Directory.GetFiles(rootDirectory, PackagePattern, SearchOption.TopDirectoryOnly);
         string[] GetSolutions(string rootDirectory) => Directory.GetFiles(rootDirectory, SolutionPattern, SearchOption.AllDirectories);
-        string[] GetProjects(string rootDirectory) => Directory.GetFiles(rootDirectory, "*.csproj", SearchOption.AllDirectories);
+        string[] GetProjects(string rootDirectory) => Directory.GetFiles(rootDirectory, ProjectPattern, SearchOption.AllDirectories);
+        string[] GetNuspec(string rootDirectory) => Directory.GetFiles(rootDirectory, NuspecPattern, SearchOption.TopDirectoryOnly);
 
         public SolutionResult ScanSolution(string rootDirectory)
         {
@@ -58,6 +61,13 @@ namespace DependencyScanner.Core
                 else
                 {
                     projectResult = new ProjectResult(projectInfo);
+                }
+
+                var nuspecInfo = GetNuspec(projectInfo.DirectoryName).FirstOrDefault();
+
+                if (!string.IsNullOrEmpty(nuspecInfo))
+                {
+                    projectResult.NuspecInfo = new FileInfo(nuspecInfo);
                 }
 
                 result.Projects.Add(projectResult);

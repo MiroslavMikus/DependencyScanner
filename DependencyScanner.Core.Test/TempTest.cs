@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DependencyScanner.Core.Test
 {
-    //[Ignore]
+    [Ignore]
     [TestClass]
     public class TempTest
     {
