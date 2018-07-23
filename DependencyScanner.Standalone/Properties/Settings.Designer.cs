@@ -34,5 +34,29 @@ namespace DependencyScanner.Standalone.Properties {
                 this["Browse_Solution_Width"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        public double Window_Height {
+            get {
+                return ((double)(this["Window_Height"]));
+            }
+            set {
+                this["Window_Height"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        public double Windows_Width {
+            get {
+                return ((double)(this["Windows_Width"]));
+            }
+            set {
+                this["Windows_Width"] = value;
+            }
+        }
     }
 }

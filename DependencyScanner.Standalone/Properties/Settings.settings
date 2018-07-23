@@ -5,5 +5,11 @@
     <Setting Name="Browse_Solution_Width" Type="System.Windows.GridLength" Scope="User">
       <Value Profile="(Default)">250</Value>
     </Setting>
+    <Setting Name="Window_Height" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">400</Value>
+    </Setting>
+    <Setting Name="Windows_Width" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">800</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

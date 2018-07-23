@@ -11,7 +11,9 @@
         xmlns:templates="clr-namespace:DependencyScanner.Standalone.Templates"
         xmlns:model="clr-namespace:DependencyScanner.Core.Model;assembly=DependencyScanner.Core"
         mc:Ignorable="d"
-        Title="Dependency scanner" Height="450" Width="800"
+        Title="Dependency scanner"
+        Height="{Binding ElementName=TheMainWindow, Path=WindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
+        Width="{Binding ElementName=TheMainWindow, Path=WindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
         x:Name="TheMainWindow"
         d:DataContext="{d:DesignInstance viewModel:MainViewModel , IsDesignTimeCreatable=True}"
         >

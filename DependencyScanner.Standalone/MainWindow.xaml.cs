@@ -34,6 +34,26 @@ namespace DependencyScanner.Standalone
             }
         }
 
+        public double WindowHeight
+        {
+            get => Properties.Settings.Default.Window_Height;
+            set
+            {
+                Properties.Settings.Default.Window_Height = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public double WindowWidth
+        {
+            get => Properties.Settings.Default.Windows_Width;
+            set
+            {
+                Properties.Settings.Default.Windows_Width = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
