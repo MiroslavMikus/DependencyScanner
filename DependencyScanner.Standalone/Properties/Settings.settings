@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="Browse_Solution_Width" Type="System.Windows.GridLength" Scope="User">
-      <Value Profile="(Default)">300</Value>
+      <Value Profile="(Default)">250</Value>
     </Setting>
   </Settings>
 </SettingsFile>

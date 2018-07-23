@@ -25,7 +25,7 @@ namespace DependencyScanner.Standalone.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        [global::System.Configuration.DefaultSettingValueAttribute("250")]
         public global::System.Windows.GridLength Browse_Solution_Width {
             get {
                 return ((global::System.Windows.GridLength)(this["Browse_Solution_Width"]));
