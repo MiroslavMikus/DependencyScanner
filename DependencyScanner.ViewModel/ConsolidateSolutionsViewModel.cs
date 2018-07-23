@@ -4,11 +4,14 @@ using DependencyScanner.ViewModel.Events;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows.Data;
 
 namespace DependencyScanner.ViewModel
 {
@@ -23,6 +26,21 @@ namespace DependencyScanner.ViewModel
 
         private ObservableCollection<SolutionSelectionViewModel> _scanResult;
         public ObservableCollection<SolutionSelectionViewModel> ScanResult { get => _scanResult; set => Set(ref _scanResult, value); }
+
+        private string _solutionFilter;
+
+        public string SolutionFilter
+        {
+            get { return _solutionFilter; }
+            set
+            {
+                Set(ref _solutionFilter, value);
+                FilterScanResult?.Refresh();
+            }
+        }
+
+        private ICollectionView _filterScanResult;
+        public ICollectionView FilterScanResult { get => _filterScanResult; private set => Set(ref _filterScanResult, value); }
 
         private ObservableCollection<ConsolidateSolution> _resultReferences;
         public ObservableCollection<ConsolidateSolution> ResultReferences { get => _resultReferences; set => Set(ref _resultReferences, value); }
@@ -64,12 +82,24 @@ namespace DependencyScanner.ViewModel
                 var viewModels = a.Select(b => new SolutionSelectionViewModel { Result = b, IsSelected = false });
 
                 ScanResult = new ObservableCollection<SolutionSelectionViewModel>(viewModels);
+
+                FilterScanResult = CollectionViewSource.GetDefaultView(ScanResult);
+
+                FilterScanResult.Filter = FilterJob;
             });
 
             _messenger.Register<ClearResultEvent>(this, a =>
             {
                 ScanResult?.Clear();
             });
+        }
+        private bool FilterJob(object value)
+        {
+            if (value is SolutionSelectionViewModel input && !string.IsNullOrEmpty(SolutionFilter))
+            {
+                return input.Result.Info.Name.IndexOf(SolutionFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+            }
+            return true;
         }
     }
 }

@@ -115,8 +115,15 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <GridSplitter Width="5" Grid.Column="1" Grid.Row="1" ResizeBehavior="PreviousAndNext"/>
-                        <Label Content="Select solutions to compare:" Grid.Row="0" Grid.Column="0"/>
-                        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding ScanResult}" Margin="5">
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
+                            <Label Content="Select solutions: " VerticalAlignment="Center"/>
+                            <TextBox Margin="2" Width="180"
+                                     Text="{Binding SolutionFilter, Delay=300, UpdateSourceTrigger=PropertyChanged}"
+                                     Controls:TextBoxHelper.ClearTextButton="True"
+                                     Controls:TextBoxHelper.Watermark="Search...">
+                            </TextBox>
+                        </StackPanel>
+                        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FilterScanResult}" Margin="5">
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type viewModel:SolutionSelectionViewModel}">
                                     <templates:SelectableSolutionTemplate DataContext="{Binding}"/>
