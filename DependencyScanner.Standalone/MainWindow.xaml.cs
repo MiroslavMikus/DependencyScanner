@@ -1,7 +1,9 @@
 ﻿using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,7 +21,7 @@ namespace DependencyScanner.Standalone
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindow : MetroWindow, INotifyPropertyChanged
     {
         public GridLength SolutionWidth
         {
@@ -28,12 +30,19 @@ namespace DependencyScanner.Standalone
             {
                 Properties.Settings.Default.Browse_Solution_Width = value;
                 Properties.Settings.Default.Save();
+                OnPropertyChanged();
             }
         }
 
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName]string a_propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(a_propertyName));
         }
     }
 }

@@ -106,34 +106,35 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="{Binding ElementName=TheMainWindow, Path=SolutionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
+                                              MinWidth="250"/>
+                            <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        <GridSplitter Width="5" Grid.Column="1" Grid.Row="1" ResizeBehavior="PreviousAndNext"/>
                         <Label Content="Select solutions to compare:" Grid.Row="0" Grid.Column="0"/>
-                        <DataGrid ItemsSource="{Binding ScanResult}" 
-                                  Margin="5"
-                                  Grid.Row="1" Grid.Column="0"
-                                  AutoGenerateColumns="False"  CanUserAddRows="False">
-                            <DataGrid.Columns>
-                                <DataGridCheckBoxColumn IsReadOnly="False" Header="#" Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <DataGridTextColumn IsReadOnly="True" Header="Solution" Binding="{Binding Result.Info.Name}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <Label Content="Consolidate nugets: " Grid.Row="0" Grid.Column="1"/>
+                        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding ScanResult}" Margin="5">
+                            <ListBox.Resources>
+                                <DataTemplate DataType="{x:Type viewModel:SolutionSelectionViewModel}">
+                                    <templates:SelectableSolutionTemplate DataContext="{Binding}"/>
+                                </DataTemplate>
+                            </ListBox.Resources>
+                        </ListBox>
+                        <Label Content="Consolidate nugets: " Grid.Row="0" Grid.Column="2"/>
                         <DataGrid x:Name="References" SelectionMode="Single" 
-                                  Grid.Row="1" Grid.Column="1"
+                                  Grid.Row="1" Grid.Column="2"
                                   Margin="5"
                                   ItemsSource="{Binding ResultReferences}" AutoGenerateColumns="False" CanUserAddRows="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn IsReadOnly="True" Header="Id" Binding="{Binding Id}"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Label Content="Occurs in solutions: " Grid.Row="0" Grid.Column="2"/>
+                        <Label Content="Occurs in solutions: " Grid.Row="0" Grid.Column="3"/>
                         <DataGrid ItemsSource="{Binding ElementName=References, Path=SelectedItem.References}"
                                   Margin="5"
                                   SelectionMode="Single"
-                                  Grid.Row="1" Grid.Column="2"
+                                  Grid.Row="1" Grid.Column="3"
                                   AutoGenerateColumns="False"  CanUserAddRows="False">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="#">
@@ -183,51 +184,35 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="{Binding ElementName=TheMainWindow, Path=SolutionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
+                                              MinWidth="250"/>
+                            <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        <GridSplitter Width="5" Grid.Column="1" Grid.Row="1" ResizeBehavior="PreviousAndNext"/>
                         <Label Content="Select solution to check:" Grid.Row="0" Grid.Column="0"/>
-                        <DataGrid ItemsSource="{Binding ScanResult}" x:Name="ProjectScanResult" 
-                                  Margin="5"
-                                  SelectionMode="Single"
-                                  Grid.Row="1" Grid.Column="0"
-                                  AutoGenerateColumns="False"  CanUserAddRows="False">
-                            <DataGrid.Columns>
-                                <DataGridTemplateColumn Header="#">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                                                <Button Margin="2" Content="Open" ToolTip="Open solution" 
-                                                        Command="{Binding ElementName=TheMainWindow, Path=DataContext.RunCommand}"
-                                                        CommandParameter="{Binding Info.FullName}"/>
-                                                <Button Margin="2" Content="Folder" ToolTip="Open Folder" 
-                                                        Command="{Binding ElementName=TheMainWindow, Path=DataContext.RunCommand}"
-                                                        CommandParameter="{Binding Info.DirectoryName}"/>
-                                                <Button Margin="2" Content="CMD" ToolTip="Open CMD" 
-                                                        Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenCmdCommand}"
-                                                        CommandParameter="{Binding Info.DirectoryName}"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn IsReadOnly="True" Header="Solution" Binding="{Binding Info.Name}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <Label Content="Consolidate nugets: " Grid.Row="0" Grid.Column="1"/>
+                        <ListBox x:Name="ProjectScanResult" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding ScanResult}" Margin="5">
+                            <ListBox.Resources>
+                                <DataTemplate DataType="{x:Type model:SolutionResult}">
+                                    <templates:SolutionTemplate DataContext="{Binding}"/>
+                                </DataTemplate>
+                            </ListBox.Resources>
+                        </ListBox>
+                        <Label Content="Consolidate nugets: " Grid.Row="0" Grid.Column="2"/>
                         <DataGrid x:Name="ProjectReferences" SelectionMode="Single" 
-                                  Grid.Row="1" Grid.Column="1"
+                                  Grid.Row="1" Grid.Column="2"
                                   Margin="5"
                                   ItemsSource="{Binding ResultReferences}" AutoGenerateColumns="False" CanUserAddRows="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn IsReadOnly="True" Header="Id" Binding="{Binding Id}"/>
                             </DataGrid.Columns>
                         </DataGrid>
-                        <Label Content="Occurs in projects: " Grid.Row="0" Grid.Column="2"/>
+                        <Label Content="Occurs in projects: " Grid.Row="0" Grid.Column="3"/>
                         <DataGrid ItemsSource="{Binding ElementName=ProjectReferences, Path=SelectedItem.References}"
                                   Margin="5"
                                   SelectionMode="Single"
-                                  Grid.Row="1" Grid.Column="2"
+                                  Grid.Row="1" Grid.Column="3"
                                   AutoGenerateColumns="False"  CanUserAddRows="False">
                             <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="Solution" IsReadOnly="True">
