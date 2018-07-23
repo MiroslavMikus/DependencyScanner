@@ -1,7 +1,10 @@
-﻿using GalaSoft.MvvmLight;
+﻿using DependencyScanner.Core.Model;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using NuGet;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +19,11 @@ namespace DependencyScanner.ViewModel
         public BrowseViewModel BrowseVM { get; }
         public ConsolidateSolutionsViewModel ConsolidateSolutionsVM { get; }
         public ConsolidateProjectsViewModel ConsolidateProjectsViewModel { get; }
+
+        public MainViewModel()
+        {
+            BrowseVM = new BrowseViewModel();
+        }
 
         public MainViewModel(BrowseViewModel browseViewModel,
                              ConsolidateSolutionsViewModel consolidateSolutionsViewModel,

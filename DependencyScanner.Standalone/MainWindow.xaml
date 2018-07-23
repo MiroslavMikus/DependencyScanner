@@ -5,10 +5,13 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:converter="clr-namespace:DependencyScanner.Standalone.Converters"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:DependencyScanner.ViewModel;assembly=DependencyScanner.ViewModel"
         xmlns:local="clr-namespace:DependencyScanner.Standalone"
         mc:Ignorable="d"
-        Title="Dependency scanner" Height="450" Width="800"
-        x:Name="TheMainWindow">
+        Title="Dependency scanner" Height="450" Width="1200"
+        x:Name="TheMainWindow"
+        d:DataContext="{d:DesignInstance viewModel:MainViewModel , IsDesignTimeCreatable=True}"
+                      >
     <Controls:MetroWindow.Resources>
         <converter:NullToVisibilityConverter x:Key="HideIfNull" Positive="Collapsed" Negative="Visible"/>
         <converter:NullToBoolConverter x:Key="NullToFalse" Positive="False" Negative="True"/>
