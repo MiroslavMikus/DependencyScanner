@@ -13,6 +13,8 @@ using System.Windows.Forms;
 using static DependencyScanner.ViewModel.Tools.DispatcherTools;
 using System.Threading.Tasks;
 using NuGet;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace DependencyScanner.ViewModel
 {
@@ -27,7 +29,23 @@ namespace DependencyScanner.ViewModel
         private ObservableCollection<SolutionResult> _scanResult;
         public ObservableCollection<SolutionResult> ScanResult { get => _scanResult; set => Set(ref _scanResult, value); }
 
+        private string _solutionFilter;
+
+        public string SolutionFilter
+        {
+            get { return _solutionFilter; }
+            set
+            {
+                Set(ref _solutionFilter, value);
+                FilterScanResult.Refresh();
+            }
+        }
+
+        private ICollectionView _filterScanResult;
+        public ICollectionView FilterScanResult { get => _filterScanResult; private set => Set(ref _filterScanResult, value); }
+
         private FileInfo _workingDirectory;
+
         public FileInfo WorkingDirectory { get => _workingDirectory; set => Set(ref _workingDirectory, value); }
 
         public BrowseViewModel()
@@ -98,8 +116,21 @@ namespace DependencyScanner.ViewModel
 
                 ScanResult = new ObservableCollection<SolutionResult>(scanResult);
 
+                FilterScanResult = CollectionViewSource.GetDefaultView(ScanResult);
+
+                FilterScanResult.Filter = FilterJob;
+
                 _messenger.Send<IEnumerable<SolutionResult>>(ScanResult);
             });
+        }
+
+        private bool FilterJob(object value)
+        {
+            if (value is SolutionResult input && !string.IsNullOrEmpty(SolutionFilter))
+            {
+                return input.Info.Name.Contains(SolutionFilter);
+            }
+            return true;
         }
     }
 }

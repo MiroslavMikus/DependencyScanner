@@ -7,8 +7,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:DependencyScanner.ViewModel;assembly=DependencyScanner.ViewModel"
         xmlns:local="clr-namespace:DependencyScanner.Standalone"
+        xmlns:model="clr-namespace:DependencyScanner.Core.Model;assembly=DependencyScanner.Core"
         mc:Ignorable="d"
-        Title="Dependency scanner" Height="450" Width="1200"
+        Title="Dependency scanner" Height="450" Width="800"
         x:Name="TheMainWindow"
         d:DataContext="{d:DesignInstance viewModel:MainViewModel , IsDesignTimeCreatable=True}"
                       >
@@ -17,7 +18,10 @@
         <converter:NullToBoolConverter x:Key="NullToFalse" Positive="False" Negative="True"/>
     </Controls:MetroWindow.Resources>
     <Grid>
-        <TabControl>
+        <Grid.Resources>
+            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+        </Grid.Resources>
+        <TabControl Controls:TabControlHelper.Underlined="SelectedTabItem">
             <TabItem Header="Browse" DataContext="{Binding BrowseVM}">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -42,8 +46,41 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Label Content="Solutions: " Grid.Row="0" Grid.Column="0"/>
-                        <DataGrid Margin="5" x:Name="AllSolutions" 
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
+                            <Label Content="Solutions: " VerticalAlignment="Center"/>
+                            <TextBox Margin="2" Width="200"
+                                     Text="{Binding SolutionFilter, Delay=300, UpdateSourceTrigger=PropertyChanged}"
+                                     Controls:TextBoxHelper.ClearTextButton="True"
+                                     Controls:TextBoxHelper.Watermark="Search...">
+                            </TextBox>
+                        </StackPanel>
+                        <ListBox x:Name="AllSolutions" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FilterScanResult}" Margin="5">
+                            <ListBox.Resources>
+                                <DataTemplate DataType="{x:Type model:SolutionResult}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Content="{Binding Info.Name}" FontWeight="Bold" FontSize="14"/>
+                                        <Label Grid.Row="1" Content="{Binding Info.FullName}" FontWeight="Regular" FontSize="11"/>
+                                        <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                            <Button Margin="2" Content="Open" ToolTip="Open solution" 
+                                                        Command="{Binding ElementName=TheMainWindow, Path=DataContext.RunCommand}"
+                                                        CommandParameter="{Binding Info.FullName}"/>
+                                            <Button Margin="2" Content="Folder" ToolTip="Open Folder" 
+                                                        Command="{Binding ElementName=TheMainWindow, Path=DataContext.RunCommand}"
+                                                        CommandParameter="{Binding Info.DirectoryName}"/>
+                                            <Button Margin="2" Content="CMD" ToolTip="Open CMD" 
+                                                        Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenCmdCommand}"
+                                                        CommandParameter="{Binding Info.DirectoryName}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.Resources>
+                        </ListBox>
+                        <!--<DataGrid Margin="5" x:Name="AllSolutions" 
                               Grid.Row="1" Grid.Column="0"
                               SelectionMode="Single" ItemsSource="{Binding ScanResult}" AutoGenerateColumns="False" >
                             <DataGrid.Columns>
@@ -67,7 +104,7 @@
                                 <DataGridTextColumn Header="Solution" IsReadOnly="True" Binding="{Binding Info.Name}" />
                                 <DataGridTextColumn Header="FullPath" IsReadOnly="True" Binding="{Binding Info.FullName}" />
                             </DataGrid.Columns>
-                        </DataGrid>
+                        </DataGrid>-->
                         <Label Content="Projects: " Grid.Row="0" Grid.Column="1"/>
                         <DataGrid Margin="5" x:Name="Projects" 
                               Grid.Row="1" Grid.Column="1"
