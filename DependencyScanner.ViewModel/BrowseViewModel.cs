@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using NuGet;
 using System.ComponentModel;
 using System.Windows.Data;
+using System.Globalization;
 
 namespace DependencyScanner.ViewModel
 {
@@ -37,7 +38,7 @@ namespace DependencyScanner.ViewModel
             set
             {
                 Set(ref _solutionFilter, value);
-                FilterScanResult.Refresh();
+                FilterScanResult?.Refresh();
             }
         }
 
@@ -128,7 +129,7 @@ namespace DependencyScanner.ViewModel
         {
             if (value is SolutionResult input && !string.IsNullOrEmpty(SolutionFilter))
             {
-                return input.Info.Name.Contains(SolutionFilter);
+                return input.Info.Name.IndexOf(SolutionFilter, StringComparison.OrdinalIgnoreCase) >= 0;
             }
             return true;
         }

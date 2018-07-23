@@ -21,6 +21,16 @@ namespace DependencyScanner.Standalone
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        public GridLength SolutionWidth
+        {
+            get => Properties.Settings.Default.Browse_Solution_Width;
+            set
+            {
+                Properties.Settings.Default.Browse_Solution_Width = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
