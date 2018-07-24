@@ -11,6 +11,7 @@ namespace DependencyScanner.Core.Model
         public FileInfo ProjectInfo { get; }
         public FileInfo PackageInfo { get; }
         public FileInfo NuspecInfo { get; set; }
+        public bool HasNuspec { get => NuspecInfo != null; }
 
         public ICollection<PackageReference> References { get; } = new List<PackageReference>();
 

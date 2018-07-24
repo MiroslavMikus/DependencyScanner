@@ -70,14 +70,15 @@
                             </ListBox.Resources>
                         </ListBox>
                         <Label Content="Projects: " Grid.Row="0" Grid.Column="2"/>
-                        <DataGrid Margin="5" x:Name="Projects" 
-                              Grid.Row="1" Grid.Column="2"
-                              SelectionMode="Single" ItemsSource="{Binding ElementName=AllSolutions, Path=SelectedItem.Projects}"
-                              IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Project" Binding="{Binding ProjectInfo.Name}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
+                        <ListBox Margin="5" x:Name="Projects" 
+                                 Grid.Row="1" Grid.Column="2"
+                                 ItemsSource="{Binding ElementName=AllSolutions, Path=SelectedItem.Projects}">
+                            <ListBox.Resources>
+                                <DataTemplate DataType="{x:Type model:ProjectResult}">
+                                    <templates:ProjectTemplate DataContext="{Binding}"/>
+                                </DataTemplate>
+                            </ListBox.Resources>
+                        </ListBox>
                         <Label Content="Packages: " Grid.Row="0" Grid.Column="3"/>
                         <DataGrid Margin="5" SelectionMode="Single" 
                                   Grid.Row="1" Grid.Column="3"
@@ -183,7 +184,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                        <Button Content="Quick compare" Command="{Binding ScanCommand}" Margin="5" HorizontalAlignment="Left"
+                        <Button Content="Quick selected" Command="{Binding ScanCommand}" Margin="5" HorizontalAlignment="Left"
                                 IsEnabled="{Binding ElementName=ProjectScanResult, Path=SelectedItem, Converter={StaticResource NullToFalse}}"
                                 CommandParameter="{Binding ElementName=ProjectScanResult, Path=SelectedItem}"/>
                         <Button Content="Compare all" Margin="5"

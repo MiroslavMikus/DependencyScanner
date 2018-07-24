@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileScanner.cs" />
+    <Compile Include="Interfaces\ICancelableProgress.cs" />
     <Compile Include="Interfaces\IScanner.cs" />
     <Compile Include="Model\ConsolidateProject.cs" />
     <Compile Include="Model\ConsolidateReferences.cs" />
