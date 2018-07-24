@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace DependencyScanner.Core.Test
 {
+    [Ignore]
     [TestClass]
     public class NGitExamples
     {
@@ -20,6 +21,18 @@ namespace DependencyScanner.Core.Test
             ListBranchCommand command = git.BranchList();
 
             var result = command.Call();
+
+            var localNames = result.Select(a => a.GetName()).Where(a => !a.Contains("remote")).ToList();
+        }
+
+        [TestMethod]
+        public void NGit_CurrentBranch()
+        {
+            var git = Git.Open(@"F:\Projects\_GitHub\DependencyScanner");
+
+            var repo = git.GetRepository();
+
+            var branch = repo.GetBranch();
         }
 
         [TestMethod]
