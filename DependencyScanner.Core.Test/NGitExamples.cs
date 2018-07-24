@@ -21,5 +21,51 @@ namespace DependencyScanner.Core.Test
 
             var result = command.Call();
         }
+
+        [TestMethod]
+        public void NGit_CreateBranch()
+        {
+            var git = Git.Open(@"F:\Projects\_GitHub\DependencyScanner");
+
+            CreateBranchCommand command = git.BranchCreate();
+
+            command.SetName("dev/SomeTest");
+
+            var result = command.Call();
+        }
+
+        [TestMethod]
+        public void NGit_Remove()
+        {
+            var git = Git.Open(@"F:\Projects\_GitHub\DependencyScanner");
+
+            DeleteBranchCommand command = git.BranchDelete();
+
+            command.SetBranchNames("dev/SomeTest");
+
+            var result = command.Call();
+        }
+
+        [TestMethod]
+        public void NGit_CheckoutCommand()
+        {
+            var git = Git.Open(@"F:\Projects\_GitHub\DependencyScanner");
+
+            CheckoutCommand command = git.Checkout();
+
+            command.SetName("dev/SomeTest");
+
+            var result = command.Call();
+        }
+
+        [TestMethod]
+        public void NGit_State()
+        {
+            var git = Git.Open(@"F:\Projects\_GitHub\DependencyScanner");
+
+            var repo = git.GetRepository();
+
+            Status status = git.Status().Call();
+        }
     }
 }
