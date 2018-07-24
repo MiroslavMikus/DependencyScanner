@@ -11,24 +11,7 @@
             <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-        </Grid.RowDefinitions>
         <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IsSelected}" Grid.RowSpan="3"/>
-        <Label Grid.Row="0" Content="{Binding Result.Info.Name}" FontWeight="Bold" FontSize="14" Grid.Column="1"/>
-        <Label Grid.Row="1" Content="{Binding Result.Info.FullName}" FontWeight="Regular" FontSize="11" Grid.Column="1"/>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Grid.Column="1">
-            <Button Margin="2" Content="Open" ToolTip="Open solution" 
-                    Command="{Binding ElementName=TheMainWindow, Path=DataContext.RunCommand}"
-                    CommandParameter="{Binding Result.Info.FullName}"/>
-            <Button Margin="2" Content="Folder" ToolTip="Open Folder" 
-                    Command="{Binding ElementName=TheMainWindow, Path=DataContext.RunCommand}"
-                    CommandParameter="{Binding Result.Info.DirectoryName}"/>
-            <Button Margin="2" Content="CMD" ToolTip="Open CMD" 
-                    Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenCmdCommand}"
-                    CommandParameter="{Binding Result.Info.DirectoryName}"/>
-        </StackPanel>
+        <local:SolutionTemplate DataContext="{Binding Result}" Grid.Column="1"/>
     </Grid>
 </UserControl>
