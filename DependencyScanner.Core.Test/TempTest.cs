@@ -21,7 +21,7 @@ namespace DependencyScanner.Core.Test
         {
             var scan = new FileScanner();
 
-            var result = scan.ScanSolutions(@"F:\Projects\_GitHub").ToList();
+            //var result = scan.ScanSolutions(@"F:\Projects\_GitHub").ToList();
         }
 
         [TestMethod]

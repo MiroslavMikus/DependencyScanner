@@ -16,19 +16,20 @@ using NuGet;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Globalization;
+using System.Threading;
 
 namespace DependencyScanner.ViewModel
 {
     public class BrowseViewModel : SolutionBaseViewModel<SolutionResult>
     {
         private readonly IScanner _scanner;
+        private CancellationTokenSource _cancellationTokenSource;
         private readonly IMessenger _messenger;
 
         public RelayCommand PickWorkingDirectoryCommand { get; private set; }
         public RelayCommand ScanCommand { get; private set; }
 
         private FileInfo _workingDirectory;
-
         public FileInfo WorkingDirectory { get => _workingDirectory; set => Set(ref _workingDirectory, value); }
 
         public BrowseViewModel()
@@ -95,7 +96,19 @@ namespace DependencyScanner.ViewModel
         {
             DispacherInvoke(() =>
             {
-                var scanResult = _scanner.ScanSolutions(_workingDirectory.FullName);
+                _cancellationTokenSource = new CancellationTokenSource();
+
+                var progress = new DefaultProgress
+                {
+                    Token = _cancellationTokenSource.Token
+                };
+
+                progress.ReportAction = a =>
+                {
+
+                };
+
+                var scanResult = _scanner.ScanSolutions(_workingDirectory.FullName, progress);
 
                 ScanResult = new ObservableCollection<SolutionResult>(scanResult);
 

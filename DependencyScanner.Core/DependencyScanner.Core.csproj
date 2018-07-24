@@ -51,6 +51,8 @@
     <Compile Include="Interfaces\IScanner.cs" />
     <Compile Include="Model\ConsolidateProject.cs" />
     <Compile Include="Model\ConsolidateReferences.cs" />
+    <Compile Include="Model\DefaultProgress.cs" />
+    <Compile Include="Model\ProgressMessage.cs" />
     <Compile Include="Model\ProjectResult.cs" />
     <Compile Include="ProjectComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

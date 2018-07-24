@@ -1,13 +1,13 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 
 namespace DependencyScanner.Core.Interfaces
 {
     /// <summary>
     /// Cancelable progress with message
     /// </summary>
-    public interface ICancelableProgress
+    public interface ICancelableProgress<T> : IProgress<T>
     {
         CancellationToken Token { get; }
-        void Report(double value, string message);
     }
 }

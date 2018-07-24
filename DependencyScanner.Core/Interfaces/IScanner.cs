@@ -5,8 +5,8 @@ namespace DependencyScanner.Core.Interfaces
 {
     public interface IScanner
     {
-        IEnumerable<SolutionResult> ScanMultipleDirectories(IEnumerable<string> directores);
-        IEnumerable<SolutionResult> ScanSolutions(string rootDirectory);
+        IEnumerable<SolutionResult> ScanMultipleDirectories(IEnumerable<string> directores, ICancelableProgress<ProgressMessage> progress);
+        IEnumerable<SolutionResult> ScanSolutions(string rootDirectory, ICancelableProgress<ProgressMessage> progress);
         SolutionResult ScanSolution(string rootDirectory);
     }
 }

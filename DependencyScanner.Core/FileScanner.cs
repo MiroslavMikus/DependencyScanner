@@ -76,21 +76,32 @@ namespace DependencyScanner.Core
             return result;
         }
 
-        public IEnumerable<SolutionResult> ScanSolutions(string rootDirectory)
+        public IEnumerable<SolutionResult> ScanSolutions(string rootDirectory, ICancelableProgress<ProgressMessage> progress)
         {
             var solutions = GetSolutions(rootDirectory);
 
-            foreach (var solution in solutions)
+            double Progress(int current) => Math.Round(current / (solutions.Count() / 100D), 2);
+
+            for (int i = 0; i < solutions.Length; i++)
             {
+                string solution = solutions[i];
+
+                progress.Report(new ProgressMessage { Value = Progress(i + 1), Message = $"Scanning {i + 1}/{solutions.Count()}" });
+
+                if (progress.Token.IsCancellationRequested)
+                {
+                    throw new OperationCanceledException("Operation was canceled by user");
+                }
+
                 yield return ExecuteSolutionScan(solution);
             }
         }
 
-        public IEnumerable<SolutionResult> ScanMultipleDirectories(IEnumerable<string> directores)
+        public IEnumerable<SolutionResult> ScanMultipleDirectories(IEnumerable<string> directores, ICancelableProgress<ProgressMessage> progress)
         {
             foreach (var directory in directores)
             {
-                foreach (var result in ScanSolutions(directory))
+                foreach (var result in ScanSolutions(directory, progress))
                 {
                     yield return result;
                 }
