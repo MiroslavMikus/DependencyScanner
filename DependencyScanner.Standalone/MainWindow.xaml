@@ -20,7 +20,9 @@
     <Controls:MetroWindow.Resources>
         <converter:NullToVisibilityConverter x:Key="HideIfNull" Positive="Collapsed" Negative="Visible"/>
         <converter:NullToBoolConverter x:Key="NullToFalse" Positive="False" Negative="True"/>
-        <converter:BoolToVisibility x:Key="TrueToVisible"/>
+        <converter:BoolToVisibilityConverter x:Key="TrueToVisible"/>
+        <converter:BoolToVisibilityConverter x:Key="FalseToCollapsed" Negative="Collapsed"/>
+        <converter:BoolToBoolConverter x:Key="InvertBool" Positive="False" Negative="True"/>
     </Controls:MetroWindow.Resources>
     <Grid>
         <Grid.Resources>
@@ -37,6 +39,11 @@
                         <Button Margin="5,5,0,5" Content="Scan" HorizontalAlignment="Left"
                             Command="{Binding ScanCommand}"
                             Visibility="{Binding WorkingDirectory, Converter={StaticResource HideIfNull}}" Grid.Row="1"
+                            IsEnabled="{Binding IsScanning, Converter={StaticResource InvertBool}}"
+                            />
+                        <Button Margin="5,5,0,5" Content="Cancel" HorizontalAlignment="Left"
+                            Command="{Binding CancelCommand}"
+                            Visibility="{Binding IsScanning, Converter={StaticResource FalseToCollapsed}}" Grid.Row="1"
                             />
                         <Button Content="Pick working directory" HorizontalAlignment="Left" Margin="5" Command="{Binding PickWorkingDirectoryCommand}"/>
                         <TextBlock Text="{Binding WorkingDirectory.FullName, StringFormat='Your folder: {0}'}" VerticalAlignment="Center" Margin="5"/>
@@ -55,9 +62,8 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <ProgressBar Grid.Row="0" Grid.ColumnSpan="4" Value="{Binding Progress}" Visibility="{Binding IsScanning, Converter={StaticResource TrueToVisible}}"/>
-                        <Label Content="{Binding ProgressMessage}" Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsScanning, Converter={StaticResource TrueToVisible}}"/>
+                        <Label Content="{Binding ProgressMessage}" FontSize="11" Padding="2" Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsScanning, Converter={StaticResource TrueToVisible}}"/>
                         <GridSplitter Width="5" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" ResizeBehavior="PreviousAndNext"/>
-
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" >
                             <Label Content="Solutions: " VerticalAlignment="Center"/>
                             <TextBox Margin="2" Width="180"
@@ -188,7 +194,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                        <Button Content="Quick selected" Command="{Binding ScanCommand}" Margin="5" HorizontalAlignment="Left"
+                        <Button Content="Compare selected" Command="{Binding ScanCommand}" Margin="5" HorizontalAlignment="Left"
                                 IsEnabled="{Binding ElementName=ProjectScanResult, Path=SelectedItem, Converter={StaticResource NullToFalse}}"
                                 CommandParameter="{Binding ElementName=ProjectScanResult, Path=SelectedItem}"/>
                         <Button Content="Compare all" Margin="5"

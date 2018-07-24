@@ -86,7 +86,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converters\BoolToVisibility.cs" />
+    <Compile Include="Converters\BoolToBoolConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Templates\ProjectTemplate.xaml.cs">
       <DependentUpon>ProjectTemplate.xaml</DependentUpon>
     </Compile>

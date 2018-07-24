@@ -32,11 +32,12 @@ namespace DependencyScanner.ViewModel
         private double _progress;
         public double Progress { get => _progress; set => Set(ref _progress, value); }
 
-        private string _progressMessage;
+        private string _progressMessage = "";
         public string ProgressMessage { get => _progressMessage; set => Set(ref _progressMessage, value); }
 
         public RelayCommand PickWorkingDirectoryCommand { get; private set; }
         public RelayCommand ScanCommand { get; private set; }
+        public RelayCommand CancelCommand { get; private set; }
 
         private FileInfo _workingDirectory;
 
@@ -48,6 +49,10 @@ namespace DependencyScanner.ViewModel
             {
                 throw new Exception("Allowed only in design time");
             }
+
+            IsScanning = true;
+            Progress = 50;
+            ProgressMessage = "Scanning";
 
             FileInfo FakeInfo() => new FileInfo(@"F:\Projects\_GitHub\DependencyScanner\DependencyScanner.sln");
 
@@ -98,25 +103,38 @@ namespace DependencyScanner.ViewModel
 
             ScanCommand = new RelayCommand(async () =>
             {
-                ProgressMessage = "";
-
                 IsScanning = true;
 
-                await Scan();
+                _cancellationTokenSource = new CancellationTokenSource();
+
+                try
+                {
+                    await Scan(_cancellationTokenSource.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                }
 
                 IsScanning = false;
+                ProgressMessage = "";
+                Progress = 0D;
+                _cancellationTokenSource = null;
+
+            });
+
+            CancelCommand = new RelayCommand(() =>
+            {
+                _cancellationTokenSource?.Cancel();
             });
         }
 
-        private Task Scan()
+        private Task Scan(CancellationToken Token)
         {
             return Task.Run(() =>
             {
-                _cancellationTokenSource = new CancellationTokenSource();
-
                 var progress = new DefaultProgress
                 {
-                    Token = _cancellationTokenSource.Token
+                    Token = Token
                 };
 
                 progress.ReportAction = a =>
@@ -127,7 +145,6 @@ namespace DependencyScanner.ViewModel
 
                 var scanResult = _scanner.ScanSolutions(_workingDirectory.FullName, progress);
 
-                _cancellationTokenSource = null;
 
                 ScanResult = new ObservableCollection<SolutionResult>(scanResult);
 
