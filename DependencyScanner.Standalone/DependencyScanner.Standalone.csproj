@@ -89,6 +89,9 @@
     <Compile Include="Templates\SelectableSolutionTemplate.xaml.cs">
       <DependentUpon>SelectableSolutionTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Templates\SolutionProjectCompareTemplate.xaml.cs">
+      <DependentUpon>SolutionProjectCompareTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Templates\SolutionTemplate.xaml.cs">
       <DependentUpon>SolutionTemplate.xaml</DependentUpon>
     </Compile>
@@ -107,6 +110,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Templates\SelectableSolutionTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\SolutionProjectCompareTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -12,32 +12,46 @@ using System.Windows.Data;
 
 namespace DependencyScanner.ViewModel
 {
-    public class ConsolidateProjectsViewModel : SolutionBaseViewModel<SolutionResult>
+    public class ConsolidateProjectsViewModel : SolutionBaseViewModel<SolutionProjectCompareResult>
     {
-        public RelayCommand<SolutionResult> ScanCommand { get; private set; }
+        public RelayCommand<SolutionProjectCompareResult> ScanCommand { get; private set; }
+        public RelayCommand CompareAllCommand { get; }
         private readonly IMessenger _messenger;
         private readonly ProjectComparer _projectComparer;
-
-        private ObservableCollection<ConsolidateProject> _resultReferences;
-        public ObservableCollection<ConsolidateProject> ResultReferences { get => _resultReferences; set => Set(ref _resultReferences, value); }
 
         public ConsolidateProjectsViewModel(IMessenger messenger, ProjectComparer projectComparer)
         {
             _messenger = messenger;
             _projectComparer = projectComparer;
 
-            ScanCommand = new RelayCommand<SolutionResult>(a =>
+            ScanCommand = new RelayCommand<SolutionProjectCompareResult>(a =>
             {
                 if (a == null) return;
 
-                var result = _projectComparer.FindConsolidateReferences(a);
+                var result = _projectComparer.FindConsolidateReferences(a.Result);
 
-                ResultReferences = new ObservableCollection<ConsolidateProject>(result.ToList());
+                a.ProjectResult = result;
+            });
+
+            CompareAllCommand = new RelayCommand(() =>
+            {
+                if (ScanResult?.Count() > 0)
+                {
+                    foreach (var item in ScanResult)
+                    {
+                        var result = _projectComparer.FindConsolidateReferences(item.Result);
+
+                        item.ProjectResult = result;
+                    }
+                }
             });
 
             _messenger.Register<IEnumerable<SolutionResult>>(this, a =>
             {
-                ScanResult = new ObservableCollection<SolutionResult>(a);
+                ScanResult = new ObservableCollection<SolutionProjectCompareResult>(a.Select(b => new SolutionProjectCompareResult
+                {
+                    Result = b
+                }));
 
                 FilterScanResult = CollectionViewSource.GetDefaultView(ScanResult);
 
@@ -52,9 +66,9 @@ namespace DependencyScanner.ViewModel
 
         protected override bool FilterJob(object value)
         {
-            if (value is SolutionResult input && !string.IsNullOrEmpty(SolutionFilter))
+            if (value is SolutionProjectCompareResult input && !string.IsNullOrEmpty(SolutionFilter))
             {
-                return input.Info.Name.IndexOf(SolutionFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+                return input.Result.Info.Name.IndexOf(SolutionFilter, StringComparison.OrdinalIgnoreCase) >= 0;
             }
             return true;
         }

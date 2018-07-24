@@ -76,6 +76,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SolutionBaseViewModel.cs" />
+    <Compile Include="SolutionProjectCompareResult.cs" />
     <Compile Include="SolutionSelectionViewModel.cs" />
     <Compile Include="Tools\DispatcherTools.cs" />
   </ItemGroup>
