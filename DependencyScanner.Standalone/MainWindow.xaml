@@ -20,6 +20,7 @@
     <Controls:MetroWindow.Resources>
         <converter:NullToVisibilityConverter x:Key="HideIfNull" Positive="Collapsed" Negative="Visible"/>
         <converter:NullToBoolConverter x:Key="NullToFalse" Positive="False" Negative="True"/>
+        <converter:BoolToVisibility x:Key="TrueToVisible"/>
     </Controls:MetroWindow.Resources>
     <Grid>
         <Grid.Resources>
@@ -53,7 +54,8 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <!--<ProgressBar Grid.Row="0" Grid.ColumnSpan="4" Value="{Binding Progress}"/>-->
+                        <ProgressBar Grid.Row="0" Grid.ColumnSpan="4" Value="{Binding Progress}" Visibility="{Binding IsScanning, Converter={StaticResource TrueToVisible}}"/>
+                        <Label Content="{Binding ProgressMessage}" Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsScanning, Converter={StaticResource TrueToVisible}}"/>
                         <GridSplitter Width="5" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" ResizeBehavior="PreviousAndNext"/>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" >

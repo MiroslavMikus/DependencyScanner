@@ -24,9 +24,10 @@ namespace DependencyScanner.ViewModel
     {
         private readonly IScanner _scanner;
         private readonly IMessenger _messenger;
-
         private CancellationTokenSource _cancellationTokenSource;
-        public CancellationTokenSource CancellationTokenSource { get => _cancellationTokenSource; set => Set(ref _cancellationTokenSource, value); }
+
+        private bool _isScanning;
+        public bool IsScanning { get => _isScanning; set => Set(ref _isScanning, value); }
 
         private double _progress;
         public double Progress { get => _progress; set => Set(ref _progress, value); }
@@ -95,21 +96,27 @@ namespace DependencyScanner.ViewModel
                 }
             });
 
-            ScanCommand = new RelayCommand(() =>
+            ScanCommand = new RelayCommand(async () =>
             {
-                Scan();
+                ProgressMessage = "";
+
+                IsScanning = true;
+
+                await Scan();
+
+                IsScanning = false;
             });
         }
 
-        private void Scan()
+        private Task Scan()
         {
-            DispacherInvoke(() =>
+            return Task.Run(() =>
             {
-                CancellationTokenSource = new CancellationTokenSource();
+                _cancellationTokenSource = new CancellationTokenSource();
 
                 var progress = new DefaultProgress
                 {
-                    Token = CancellationTokenSource.Token
+                    Token = _cancellationTokenSource.Token
                 };
 
                 progress.ReportAction = a =>
@@ -120,7 +127,7 @@ namespace DependencyScanner.ViewModel
 
                 var scanResult = _scanner.ScanSolutions(_workingDirectory.FullName, progress);
 
-                CancellationTokenSource = null;
+                _cancellationTokenSource = null;
 
                 ScanResult = new ObservableCollection<SolutionResult>(scanResult);
 
