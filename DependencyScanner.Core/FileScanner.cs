@@ -16,12 +16,15 @@ namespace DependencyScanner.Core
         private const string SolutionPattern = "*.sln";
         private const string ProjectPattern = "*.csproj";
         private const string NuspecPattern = "*.nuspec";
+        private const string GitPattern = ".git";
 
 
         string[] GetPackages(string rootDirectory) => Directory.GetFiles(rootDirectory, PackagePattern, SearchOption.TopDirectoryOnly);
         string[] GetSolutions(string rootDirectory) => Directory.GetFiles(rootDirectory, SolutionPattern, SearchOption.AllDirectories);
         string[] GetProjects(string rootDirectory) => Directory.GetFiles(rootDirectory, ProjectPattern, SearchOption.AllDirectories);
         string[] GetNuspec(string rootDirectory) => Directory.GetFiles(rootDirectory, NuspecPattern, SearchOption.TopDirectoryOnly);
+        string[] GetGitFolder(DirectoryInfo dir) => Directory.GetDirectories(dir.FullName, GitPattern, SearchOption.TopDirectoryOnly);
+
 
         public SolutionResult ScanSolution(string rootDirectory)
         {
@@ -73,6 +76,13 @@ namespace DependencyScanner.Core
                 result.Projects.Add(projectResult);
             }
 
+            var gitPath = SearchGit(solution);
+
+            if (!string.IsNullOrEmpty(gitPath))
+            {
+                result.GitInformation = new GitInfo(gitPath);
+            }
+
             return result;
         }
 
@@ -104,6 +114,30 @@ namespace DependencyScanner.Core
                 foreach (var result in ScanSolutions(directory, progress))
                 {
                     yield return result;
+                }
+            }
+        }
+
+        private string SearchGit(string directory)
+        {
+            var current = Directory.GetParent(directory);
+
+            while (true)
+            {
+                if (current == null)
+                {
+                    return string.Empty;
+                }
+
+                var folders = GetGitFolder(current);
+
+                if (folders.Count() == 0)
+                {
+                    current = current.Parent;
+                }
+                else
+                {
+                    return folders.First();
                 }
             }
         }

@@ -20,7 +20,7 @@ namespace DependencyScanner.Core.Model
 
             BranchList = GetBranches(git);
 
-            UpdateStatus(git);
+            //UpdateStatus(git);
 
             var repo = git.GetRepository();
 
@@ -31,6 +31,7 @@ namespace DependencyScanner.Core.Model
         {
             UpdateStatus(GetGit());
         }
+
         public void Checkout(string branch)
         {
             if (BranchList.Contains(branch))

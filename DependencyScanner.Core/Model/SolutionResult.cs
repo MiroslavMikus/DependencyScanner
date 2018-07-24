@@ -11,6 +11,7 @@ namespace DependencyScanner.Core.Model
     {
         public FileInfo Info { get; }
         public ICollection<ProjectResult> Projects { get; protected set; } = new List<ProjectResult>();
+        public GitInfo GitInformation { get; internal set; }
 
         public SolutionResult(FileInfo info)
         {

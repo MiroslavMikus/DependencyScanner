@@ -19,10 +19,18 @@
         <Label Grid.Row="0" Content="{Binding ProjectInfo.Name}" FontWeight="Bold" FontSize="14"/>
         <Label Grid.Row="1" Content="{Binding ProjectInfo.FullName}" FontWeight="Regular" FontSize="11"/>
         <StackPanel Grid.Row="2" Orientation="Horizontal" Visibility="{Binding NuspecInfo, Converter={StaticResource NullToHidden}}">
-            <Button Margin="2" Content="Nuspec" ToolTip="Open nuspec" 
+            <Button Margin="2" Content="Nuspec" 
                     Command="{Binding ElementName=TheMainWindow, Path=DataContext.RunCommand}"
-                    CommandParameter="{Binding NuspecInfo.FullName}"/>
+                    CommandParameter="{Binding NuspecInfo.FullName}">
+                <Button.ToolTip>
+                    <StackPanel>
+                        <Label Content="Open nuspec" FontWeight="Bold"/>
+                        <Label Content="{Binding NuspecInfo.FullName}"/>
+                    </StackPanel>
+                </Button.ToolTip>
+            </Button>
             <Label Content="This project has nuspec file." />
+
         </StackPanel>
     </Grid>
 </UserControl>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DependencyScanner.Core.Test
 {
-    [Ignore]
+    //[Ignore]
     [TestClass]
     public class NGitExamples
     {

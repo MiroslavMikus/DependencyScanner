@@ -17,6 +17,7 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Globalization;
 using System.Threading;
+using DependencyScanner.ViewModel.Tools;
 
 namespace DependencyScanner.ViewModel
 {
@@ -82,23 +83,26 @@ namespace DependencyScanner.ViewModel
 
             PickWorkingDirectoryCommand = new RelayCommand(() =>
             {
-                using (var dialog = new FolderBrowserDialog())
+                DispacherInvoke(() =>
                 {
-                    DialogResult result = dialog.ShowDialog();
-
-                    if (result == DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
+                    using (var dialog = new FolderBrowserDialog())
                     {
-                        WorkingDirectory = new FileInfo(dialog.SelectedPath);
+                        DialogResult result = dialog.ShowDialog();
 
-                        ScanResult?.Clear();
+                        if (result == DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
+                        {
+                            WorkingDirectory = new FileInfo(dialog.SelectedPath);
 
-                        _messenger.Send<ClearResultEvent>(new ClearResultEvent());
+                            ScanResult?.Clear();
 
-                        Properties.Settings.Default.WorkingDirectory = dialog.SelectedPath;
+                            _messenger.Send<ClearResultEvent>(new ClearResultEvent());
 
-                        Properties.Settings.Default.Save();
+                            Properties.Settings.Default.WorkingDirectory = dialog.SelectedPath;
+
+                            Properties.Settings.Default.Save();
+                        }
                     }
-                }
+                });
             });
 
             ScanCommand = new RelayCommand(async () =>
@@ -145,7 +149,8 @@ namespace DependencyScanner.ViewModel
 
                 var scanResult = _scanner.ScanSolutions(_workingDirectory.FullName, progress);
 
-
+                //DispacherInvoke(() =>
+                //{
                 ScanResult = new ObservableCollection<SolutionResult>(scanResult);
 
                 FilterScanResult = CollectionViewSource.GetDefaultView(ScanResult);
@@ -153,6 +158,7 @@ namespace DependencyScanner.ViewModel
                 FilterScanResult.Filter = FilterJob;
 
                 _messenger.Send<IEnumerable<SolutionResult>>(ScanResult);
+                //});
             });
         }
 
