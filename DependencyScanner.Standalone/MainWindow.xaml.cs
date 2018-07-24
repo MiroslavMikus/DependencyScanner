@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.Controls;
+﻿using GalaSoft.MvvmLight.Command;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,7 +34,6 @@ namespace DependencyScanner.Standalone
                 OnPropertyChanged();
             }
         }
-
         public double WindowHeight
         {
             get => Properties.Settings.Default.Window_Height;
@@ -43,7 +43,6 @@ namespace DependencyScanner.Standalone
                 Properties.Settings.Default.Save();
             }
         }
-
         public double WindowWidth
         {
             get => Properties.Settings.Default.Windows_Width;
@@ -54,8 +53,17 @@ namespace DependencyScanner.Standalone
             }
         }
 
+        public RelayCommand<string> SwitchTab { get; }
         public MainWindow()
         {
+            SwitchTab = new RelayCommand<string>(a =>
+            {
+                if (int.TryParse(a, out int result))
+                {
+                    MainTabControl.SelectedIndex = result;
+                }
+            });
+
             InitializeComponent();
         }
 

@@ -17,6 +17,11 @@
         x:Name="TheMainWindow"
         d:DataContext="{d:DesignInstance viewModel:MainViewModel , IsDesignTimeCreatable=True}"
         >
+    <Controls:MetroWindow.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="Y" Command="{Binding ElementName=TheMainWindow, Path=SwitchTab}" CommandParameter="0"/>
+        <KeyBinding Modifiers="Ctrl" Key="X" Command="{Binding ElementName=TheMainWindow, Path=SwitchTab}" CommandParameter="1"/>
+        <KeyBinding Modifiers="Ctrl" Key="C" Command="{Binding ElementName=TheMainWindow, Path=SwitchTab}" CommandParameter="2"/>
+    </Controls:MetroWindow.InputBindings>
     <Controls:MetroWindow.Resources>
         <converter:NullToVisibilityConverter x:Key="HideIfNull" Positive="Collapsed" Negative="Visible"/>
         <converter:NullToBoolConverter x:Key="NullToFalse" Positive="False" Negative="True"/>
@@ -28,7 +33,7 @@
         <Grid.Resources>
             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
         </Grid.Resources>
-        <TabControl Controls:TabControlHelper.Underlined="SelectedTabItem">
+        <TabControl Controls:TabControlHelper.Underlined="SelectedTabItem" x:Name="MainTabControl">
             <TabItem Header="Browse" DataContext="{Binding BrowseVM}">
                 <Grid>
                     <Grid.RowDefinitions>
