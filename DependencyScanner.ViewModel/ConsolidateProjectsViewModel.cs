@@ -4,20 +4,19 @@ using DependencyScanner.ViewModel.Events;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Data;
 
 namespace DependencyScanner.ViewModel
 {
-    public class ConsolidateProjectsViewModel : ViewModelBase
+    public class ConsolidateProjectsViewModel : SolutionBaseViewModel<SolutionResult>
     {
         public RelayCommand<SolutionResult> ScanCommand { get; private set; }
         private readonly IMessenger _messenger;
         private readonly ProjectComparer _projectComparer;
-
-        private ObservableCollection<SolutionResult> _scanResult;
-        public ObservableCollection<SolutionResult> ScanResult { get => _scanResult; set => Set(ref _scanResult, value); }
 
         private ObservableCollection<ConsolidateProject> _resultReferences;
         public ObservableCollection<ConsolidateProject> ResultReferences { get => _resultReferences; set => Set(ref _resultReferences, value); }
@@ -39,12 +38,25 @@ namespace DependencyScanner.ViewModel
             _messenger.Register<IEnumerable<SolutionResult>>(this, a =>
             {
                 ScanResult = new ObservableCollection<SolutionResult>(a);
+
+                FilterScanResult = CollectionViewSource.GetDefaultView(ScanResult);
+
+                FilterScanResult.Filter = FilterJob;
             });
 
             _messenger.Register<ClearResultEvent>(this, a =>
             {
                 ScanResult?.Clear();
             });
+        }
+
+        protected override bool FilterJob(object value)
+        {
+            if (value is SolutionResult input && !string.IsNullOrEmpty(SolutionFilter))
+            {
+                return input.Info.Name.IndexOf(SolutionFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+            }
+            return true;
         }
     }
 }

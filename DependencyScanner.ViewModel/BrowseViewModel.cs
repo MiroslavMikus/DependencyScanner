@@ -19,31 +19,13 @@ using System.Globalization;
 
 namespace DependencyScanner.ViewModel
 {
-    public class BrowseViewModel : ViewModelBase
+    public class BrowseViewModel : SolutionBaseViewModel<SolutionResult>
     {
         private readonly IScanner _scanner;
         private readonly IMessenger _messenger;
 
         public RelayCommand PickWorkingDirectoryCommand { get; private set; }
         public RelayCommand ScanCommand { get; private set; }
-
-        private ObservableCollection<SolutionResult> _scanResult;
-        public ObservableCollection<SolutionResult> ScanResult { get => _scanResult; set => Set(ref _scanResult, value); }
-
-        private string _solutionFilter;
-
-        public string SolutionFilter
-        {
-            get { return _solutionFilter; }
-            set
-            {
-                Set(ref _solutionFilter, value);
-                FilterScanResult?.Refresh();
-            }
-        }
-
-        private ICollectionView _filterScanResult;
-        public ICollectionView FilterScanResult { get => _filterScanResult; private set => Set(ref _filterScanResult, value); }
 
         private FileInfo _workingDirectory;
 
@@ -125,7 +107,7 @@ namespace DependencyScanner.ViewModel
             });
         }
 
-        private bool FilterJob(object value)
+        protected override bool FilterJob(object value)
         {
             if (value is SolutionResult input && !string.IsNullOrEmpty(SolutionFilter))
             {

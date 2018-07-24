@@ -15,7 +15,7 @@ using System.Windows.Data;
 
 namespace DependencyScanner.ViewModel
 {
-    public class ConsolidateSolutionsViewModel : ViewModelBase
+    public class ConsolidateSolutionsViewModel : SolutionBaseViewModel<SolutionSelectionViewModel>
     {
         private readonly IMessenger _messenger;
         private readonly SolutionComparer _solutionComparer;
@@ -23,24 +23,6 @@ namespace DependencyScanner.ViewModel
         public RelayCommand ScanCommand { get; }
         public RelayCommand SelectAllCommand { get; }
         public RelayCommand DeSelectAllCommand { get; }
-
-        private ObservableCollection<SolutionSelectionViewModel> _scanResult;
-        public ObservableCollection<SolutionSelectionViewModel> ScanResult { get => _scanResult; set => Set(ref _scanResult, value); }
-
-        private string _solutionFilter;
-
-        public string SolutionFilter
-        {
-            get { return _solutionFilter; }
-            set
-            {
-                Set(ref _solutionFilter, value);
-                FilterScanResult?.Refresh();
-            }
-        }
-
-        private ICollectionView _filterScanResult;
-        public ICollectionView FilterScanResult { get => _filterScanResult; private set => Set(ref _filterScanResult, value); }
 
         private ObservableCollection<ConsolidateSolution> _resultReferences;
         public ObservableCollection<ConsolidateSolution> ResultReferences { get => _resultReferences; set => Set(ref _resultReferences, value); }
@@ -93,7 +75,7 @@ namespace DependencyScanner.ViewModel
                 ScanResult?.Clear();
             });
         }
-        private bool FilterJob(object value)
+        protected override bool FilterJob(object value)
         {
             if (value is SolutionSelectionViewModel input && !string.IsNullOrEmpty(SolutionFilter))
             {
