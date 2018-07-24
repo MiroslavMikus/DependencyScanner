@@ -50,11 +50,13 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <GridSplitter Width="5" Grid.Column="1" Grid.Row="1" ResizeBehavior="PreviousAndNext"/>
+                        <!--<ProgressBar Grid.Row="0" Grid.ColumnSpan="4" Value="{Binding Progress}"/>-->
+                        <GridSplitter Width="5" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" ResizeBehavior="PreviousAndNext"/>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
+                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" >
                             <Label Content="Solutions: " VerticalAlignment="Center"/>
                             <TextBox Margin="2" Width="180"
                                      Text="{Binding SolutionFilter, Delay=300, UpdateSourceTrigger=PropertyChanged}"
@@ -62,16 +64,16 @@
                                      Controls:TextBoxHelper.Watermark="Search...">
                             </TextBox>
                         </StackPanel>
-                        <ListBox x:Name="AllSolutions" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FilterScanResult}" Margin="5">
+                        <ListBox x:Name="AllSolutions" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding FilterScanResult}" Margin="5">
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type model:SolutionResult}">
                                     <templates:SolutionTemplate DataContext="{Binding}"/>
                                 </DataTemplate>
                             </ListBox.Resources>
                         </ListBox>
-                        <Label Content="Projects: " Grid.Row="0" Grid.Column="2"/>
+                        <Label Content="Projects: " Grid.Row="1" Grid.Column="2"/>
                         <ListBox Margin="5" x:Name="Projects" 
-                                 Grid.Row="1" Grid.Column="2"
+                                 Grid.Row="2" Grid.Column="2"
                                  ItemsSource="{Binding ElementName=AllSolutions, Path=SelectedItem.Projects}">
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type model:ProjectResult}">
@@ -79,9 +81,9 @@
                                 </DataTemplate>
                             </ListBox.Resources>
                         </ListBox>
-                        <Label Content="Packages: " Grid.Row="0" Grid.Column="3"/>
+                        <Label Content="Packages: " Grid.Row="1" Grid.Column="3"/>
                         <DataGrid Margin="5" SelectionMode="Single" 
-                                  Grid.Row="1" Grid.Column="3"
+                                  Grid.Row="2" Grid.Column="3"
                                   ItemsSource="{Binding ElementName=Projects, Path=SelectedItem.References}" 
                                   IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False">
                             <DataGrid.Columns>

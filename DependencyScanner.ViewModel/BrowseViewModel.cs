@@ -23,13 +23,22 @@ namespace DependencyScanner.ViewModel
     public class BrowseViewModel : SolutionBaseViewModel<SolutionResult>
     {
         private readonly IScanner _scanner;
-        private CancellationTokenSource _cancellationTokenSource;
         private readonly IMessenger _messenger;
+
+        private CancellationTokenSource _cancellationTokenSource;
+        public CancellationTokenSource CancellationTokenSource { get => _cancellationTokenSource; set => Set(ref _cancellationTokenSource, value); }
+
+        private double _progress;
+        public double Progress { get => _progress; set => Set(ref _progress, value); }
+
+        private string _progressMessage;
+        public string ProgressMessage { get => _progressMessage; set => Set(ref _progressMessage, value); }
 
         public RelayCommand PickWorkingDirectoryCommand { get; private set; }
         public RelayCommand ScanCommand { get; private set; }
 
         private FileInfo _workingDirectory;
+
         public FileInfo WorkingDirectory { get => _workingDirectory; set => Set(ref _workingDirectory, value); }
 
         public BrowseViewModel()
@@ -96,19 +105,22 @@ namespace DependencyScanner.ViewModel
         {
             DispacherInvoke(() =>
             {
-                _cancellationTokenSource = new CancellationTokenSource();
+                CancellationTokenSource = new CancellationTokenSource();
 
                 var progress = new DefaultProgress
                 {
-                    Token = _cancellationTokenSource.Token
+                    Token = CancellationTokenSource.Token
                 };
 
                 progress.ReportAction = a =>
                 {
-
+                    Progress = a.Value;
+                    ProgressMessage = a.Message;
                 };
 
                 var scanResult = _scanner.ScanSolutions(_workingDirectory.FullName, progress);
+
+                CancellationTokenSource = null;
 
                 ScanResult = new ObservableCollection<SolutionResult>(scanResult);
 
