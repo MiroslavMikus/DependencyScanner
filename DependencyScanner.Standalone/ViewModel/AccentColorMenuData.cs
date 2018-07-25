@@ -29,6 +29,9 @@ namespace DependencyScanner.Standalone.ViewModel
             var theme = ThemeManager.DetectAppStyle(Application.Current);
             var accent = ThemeManager.GetAccent(this.Name);
             ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
+
+            Properties.Settings.Default.Accent_Name = Name;
+            Properties.Settings.Default.Save();
         }
     }
 }

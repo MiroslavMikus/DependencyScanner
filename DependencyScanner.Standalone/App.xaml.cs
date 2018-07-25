@@ -2,6 +2,7 @@
 using DependencyScanner.Core;
 using DependencyScanner.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
+using MahApps.Metro;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -19,6 +20,12 @@ namespace DependencyScanner.Standalone
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            // set colors
+            var theme = ThemeManager.GetAppTheme(Standalone.Properties.Settings.Default.Theme_Name);
+            var accent = ThemeManager.GetAccent(Standalone.Properties.Settings.Default.Accent_Name);
+
+            ThemeManager.ChangeAppStyle(Current, accent, theme);
+
             var builder = new ContainerBuilder();
 
             // Services

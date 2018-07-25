@@ -58,5 +58,29 @@ namespace DependencyScanner.Standalone.Properties {
                 this["Windows_Width"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Cyan")]
+        public string Accent_Name {
+            get {
+                return ((string)(this["Accent_Name"]));
+            }
+            set {
+                this["Accent_Name"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("BaseLight")]
+        public string Theme_Name {
+            get {
+                return ((string)(this["Theme_Name"]));
+            }
+            set {
+                this["Theme_Name"] = value;
+            }
+        }
     }
 }
