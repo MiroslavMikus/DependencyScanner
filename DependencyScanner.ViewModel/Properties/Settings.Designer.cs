@@ -34,5 +34,77 @@ namespace DependencyScanner.ViewModel.Properties {
                 this["WorkingDirectory"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ExecuteScanOnInit {
+            get {
+                return ((bool)(this["ExecuteScanOnInit"]));
+            }
+            set {
+                this["ExecuteScanOnInit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowCmdButton {
+            get {
+                return ((bool)(this["ShowCmdButton"]));
+            }
+            set {
+                this["ShowCmdButton"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowFolderButton {
+            get {
+                return ((bool)(this["ShowFolderButton"]));
+            }
+            set {
+                this["ShowFolderButton"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowOpenButton {
+            get {
+                return ((bool)(this["ShowOpenButton"]));
+            }
+            set {
+                this["ShowOpenButton"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("cmd.exe")]
+        public string PreferedConsoleTool {
+            get {
+                return ((string)(this["PreferedConsoleTool"]));
+            }
+            set {
+                this["PreferedConsoleTool"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PreferencedWebBrowser {
+            get {
+                return ((string)(this["PreferencedWebBrowser"]));
+            }
+            set {
+                this["PreferencedWebBrowser"] = value;
+            }
+        }
     }
 }
