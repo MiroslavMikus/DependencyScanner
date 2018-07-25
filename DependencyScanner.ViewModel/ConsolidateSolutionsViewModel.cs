@@ -76,6 +76,7 @@ namespace DependencyScanner.ViewModel
                 ScanResult?.Clear();
             });
         }
+
         protected override bool FilterJob(object value)
         {
             if (value is SolutionSelectionViewModel input && !string.IsNullOrEmpty(SolutionFilter))

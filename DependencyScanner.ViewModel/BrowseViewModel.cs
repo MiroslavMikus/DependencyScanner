@@ -48,12 +48,12 @@ namespace DependencyScanner.ViewModel
         {
             if (!IsInDesignMode)
             {
-                throw new Exception("Allowed only in design time");
+                throw new Exception("Allowed only at design time");
             }
 
             IsScanning = true;
-            Progress = 50;
-            ProgressMessage = "Scanning";
+            Progress = 50D;
+            ProgressMessage = "Scanning in designer";
 
             FileInfo FakeInfo() => new FileInfo(@"F:\Projects\_GitHub\DependencyScanner\DependencyScanner.sln");
 
@@ -107,23 +107,29 @@ namespace DependencyScanner.ViewModel
 
             ScanCommand = new RelayCommand(async () =>
             {
-                IsScanning = true;
-
-                _cancellationTokenSource = new CancellationTokenSource();
-
                 try
                 {
+                    IsScanning = true;
+
+                    ProgressMessage = "Init scan";
+
+                    _cancellationTokenSource = new CancellationTokenSource();
+
                     await Scan(_cancellationTokenSource.Token);
                 }
                 catch (OperationCanceledException)
                 {
                 }
+                finally
+                {
+                    IsScanning = false;
 
-                IsScanning = false;
-                ProgressMessage = "";
-                Progress = 0D;
-                _cancellationTokenSource = null;
+                    ProgressMessage = "";
 
+                    Progress = 0D;
+
+                    _cancellationTokenSource = null;
+                }
             });
 
             CancelCommand = new RelayCommand(() =>
@@ -149,8 +155,6 @@ namespace DependencyScanner.ViewModel
 
                 var scanResult = _scanner.ScanSolutions(_workingDirectory.FullName, progress);
 
-                //DispacherInvoke(() =>
-                //{
                 ScanResult = new ObservableCollection<SolutionResult>(scanResult);
 
                 FilterScanResult = CollectionViewSource.GetDefaultView(ScanResult);
@@ -158,7 +162,6 @@ namespace DependencyScanner.ViewModel
                 FilterScanResult.Filter = FilterJob;
 
                 _messenger.Send<IEnumerable<SolutionResult>>(ScanResult);
-                //});
             });
         }
 

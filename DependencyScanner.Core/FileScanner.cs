@@ -88,6 +88,7 @@ namespace DependencyScanner.Core
 
         public IEnumerable<SolutionResult> ScanSolutions(string rootDirectory, ICancelableProgress<ProgressMessage> progress)
         {
+            progress.Report(new ProgressMessage { Value = 0D, Message = "Searching for solutions" });
             var solutions = GetSolutions(rootDirectory);
 
             double Progress(int current) => Math.Round(current / (solutions.Count() / 100D), 2);
