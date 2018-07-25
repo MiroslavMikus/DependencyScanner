@@ -14,15 +14,69 @@
         Title="Dependency scanner"
         Height="{Binding ElementName=TheMainWindow, Path=WindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
         Width="{Binding ElementName=TheMainWindow, Path=WindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
+        MinWidth="550"
         x:Name="TheMainWindow"
+        RightWindowCommandsOverlayBehavior="Never"
         d:DataContext="{d:DesignInstance viewModel:MainViewModel , IsDesignTimeCreatable=True}"
         >
-    <!--<Controls:MetroWindow.RightWindowCommands>
+    <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button Content="Accent"/>
-            <Button Content="Theme"/>
+            <Button Content="Settings" Click="Settings_Click"/>
         </Controls:WindowCommands>
-    </Controls:MetroWindow.RightWindowCommands>-->
+    </Controls:MetroWindow.RightWindowCommands>
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout x:Name="settingsFlyout"
+                             Width="500"
+                             Header="Settings"
+                             Position="Right"
+                             IsModal="True">
+                <DockPanel LastChildFill="True">
+                    <DockPanel.Resources>
+                        <Ellipse x:Key="AppThemeMenuIcon"
+                                 Width="16"
+                                 Height="16"
+                                 x:Shared="False"
+                                 Fill="{Binding ColorBrush, Mode=OneWay}"
+                                 Stroke="{Binding BorderColorBrush, Mode=OneWay}"
+                                 StrokeThickness="1" />
+                        <Ellipse x:Key="AccentMenuIcon"
+                                 Width="16"
+                                 Height="16"
+                                 x:Shared="False"
+                                 Fill="{Binding ColorBrush, Mode=OneWay}" />
+
+                        <Style x:Key="AppThemeMenuItemStyle"
+                               BasedOn="{StaticResource MetroMenuItem}"
+                               TargetType="{x:Type MenuItem}">
+                            <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
+                            <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
+                            <Setter Property="Icon" Value="{StaticResource AppThemeMenuIcon}" />
+                        </Style>
+
+                        <Style x:Key="AccentColorMenuItemStyle"
+                               BasedOn="{StaticResource MetroMenuItem}"
+                               TargetType="{x:Type MenuItem}">
+                            <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
+                            <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
+                            <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
+                        </Style>
+                    </DockPanel.Resources>
+                    <Menu Grid.Row="0"
+                          Margin="5"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Stretch">
+                        <MenuItem Header="Theme"
+                                  ItemContainerStyle="{StaticResource AppThemeMenuItemStyle}"
+                                  ItemsSource="{Binding ElementName=TheMainWindow, Path=AppThemes, Mode=OneWay}" />
+                        <MenuItem Header="Accent"
+                                  ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}"
+                                  ItemsSource="{Binding ElementName=TheMainWindow, Path=AccentColors, Mode=OneWay}" />
+                    </Menu>
+                </DockPanel>
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
     <Controls:MetroWindow.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="Y" Command="{Binding ElementName=TheMainWindow, Path=SwitchTab}" CommandParameter="0"/>
         <KeyBinding Modifiers="Ctrl" Key="X" Command="{Binding ElementName=TheMainWindow, Path=SwitchTab}" CommandParameter="1"/>

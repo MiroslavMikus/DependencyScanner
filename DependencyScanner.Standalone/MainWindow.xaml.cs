@@ -88,5 +88,10 @@ namespace DependencyScanner.Standalone
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(a_propertyName));
         }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            settingsFlyout.IsOpen = true;
+        }
     }
 }
