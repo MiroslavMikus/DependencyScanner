@@ -3,10 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:converter="clr-namespace:DependencyScanner.Standalone.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DependencyScanner.Standalone.Templates"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:BoolToVisibilityConverter x:Key="TrueToVisible" Positive="Visible" Negative="Collapsed"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -44,13 +48,19 @@
         <StackPanel Grid.Row="3" Orientation="Horizontal">
             <Button Margin="2" Content="Open" ToolTip="Open solution" 
                     Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.RunCommand}"
-                    CommandParameter="{Binding Info.FullName}"/>
+                    CommandParameter="{Binding Info.FullName}"
+                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.MainSettings.ShowOpenButton, Converter={StaticResource TrueToVisible}}"
+                    />
             <Button Margin="2" Content="Folder" ToolTip="Open Folder" 
                     Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.RunCommand}"
-                    CommandParameter="{Binding Info.DirectoryName}"/>
+                    CommandParameter="{Binding Info.DirectoryName}"
+                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.MainSettings.ShowFolderButton, Converter={StaticResource TrueToVisible}}"
+                    />
             <Button Margin="2" Content="CMD" ToolTip="Open CMD" 
                     Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenCmdCommand}"
-                    CommandParameter="{Binding Info.DirectoryName}"/>
+                    CommandParameter="{Binding Info.DirectoryName}"
+                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.MainSettings.ShowFolderButton, Converter={StaticResource TrueToVisible}}"
+                    />
         </StackPanel>
     </Grid>
 </UserControl>

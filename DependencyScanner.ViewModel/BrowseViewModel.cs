@@ -74,13 +74,6 @@ namespace DependencyScanner.ViewModel
             _scanner = scanner;
             _messenger = messenger;
 
-            if (!string.IsNullOrEmpty(Properties.Settings.Default.WorkingDirectory))
-            {
-                WorkingDirectory = new FileInfo(Properties.Settings.Default.WorkingDirectory);
-
-                //Task.Run(() => Scan());
-            }
-
             PickWorkingDirectoryCommand = new RelayCommand(() =>
             {
                 DispacherInvoke(() =>
@@ -136,6 +129,16 @@ namespace DependencyScanner.ViewModel
             {
                 _cancellationTokenSource?.Cancel();
             });
+
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.WorkingDirectory))
+            {
+                WorkingDirectory = new FileInfo(Properties.Settings.Default.WorkingDirectory);
+
+                if (AppSettings.Instance.ExecuteScanOnInit)
+                {
+                    ScanCommand.Execute(null);
+                }
+            }
         }
 
         private Task Scan(CancellationToken Token)

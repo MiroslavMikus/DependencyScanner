@@ -149,7 +149,8 @@
                             Command="{Binding CancelCommand}"
                             Visibility="{Binding IsScanning, Converter={StaticResource FalseToCollapsed}}" Grid.Row="1"
                             />
-                        <Button Content="Pick working directory" HorizontalAlignment="Left" Margin="5" Command="{Binding PickWorkingDirectoryCommand}"/>
+                        <Button Content="Pick working directory" HorizontalAlignment="Left" Margin="5" Command="{Binding PickWorkingDirectoryCommand}"
+                                IsEnabled="{Binding IsScanning, Converter={StaticResource InvertBool}}"/>
                         <TextBlock Text="{Binding WorkingDirectory.FullName, StringFormat='Your folder: {0}'}" VerticalAlignment="Center" Margin="5"/>
                     </StackPanel>
                     <Grid Grid.Row="1">
