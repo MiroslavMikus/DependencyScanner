@@ -227,9 +227,12 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                        <Button Content="Select all" Margin="5" Command="{Binding SelectAllCommand}"/>
-                        <Button Content="Deselect all" Margin="5" Command="{Binding DeSelectAllCommand}"/>
-                        <Button Content="Quick compare" Command="{Binding ScanCommand}" Margin="5" HorizontalAlignment="Left"/>
+                        <Button Content="Select all" Margin="5" Command="{Binding SelectAllCommand}"
+                                IsEnabled="{Binding FilterScanResult, Converter={StaticResource NullToFalse}}"/>
+                        <Button Content="Deselect all" Margin="5" Command="{Binding DeSelectAllCommand}"
+                                IsEnabled="{Binding FilterScanResult, Converter={StaticResource NullToFalse}}"/>
+                        <Button Content="Quick compare" Command="{Binding ScanCommand}" Margin="5" HorizontalAlignment="Left"
+                                IsEnabled="{Binding FilterScanResult, Converter={StaticResource NullToFalse}}"/>
                     </StackPanel>
                     <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
@@ -317,7 +320,7 @@
                                 CommandParameter="{Binding ElementName=ProjectScanResult, Path=SelectedItem}"/>
                         <Button Content="Compare all" Margin="5"
                                 Command="{Binding CompareAllCommand}"
-                                />
+                                IsEnabled="{Binding FilterScanResult, Converter={StaticResource NullToFalse}}"/>
                     </StackPanel>
                     <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
