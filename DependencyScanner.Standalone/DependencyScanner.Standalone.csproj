@@ -100,6 +100,8 @@
     <Compile Include="Templates\SolutionTemplate.xaml.cs">
       <DependentUpon>SolutionTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\AccentColorMenuData.cs" />
+    <Compile Include="ViewModel\AppThemeMenuData.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

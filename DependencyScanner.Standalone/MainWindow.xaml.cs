@@ -1,4 +1,6 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using DependencyScanner.Standalone.ViewModel;
+using GalaSoft.MvvmLight.Command;
+using MahApps.Metro;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
@@ -54,6 +56,10 @@ namespace DependencyScanner.Standalone
         }
 
         public RelayCommand<string> SwitchTab { get; }
+
+        public List<AppThemeMenuData> AppThemes { get; set; }
+        public List<AccentColorMenuData> AccentColors { get; set; }
+
         public MainWindow()
         {
             SwitchTab = new RelayCommand<string>(a =>
@@ -63,6 +69,16 @@ namespace DependencyScanner.Standalone
                     MainTabControl.SelectedIndex = result;
                 }
             });
+
+            // create accent color menu items for the demo
+            this.AccentColors = ThemeManager.Accents
+                                            .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })
+                                            .ToList();
+
+            // create metro theme color menu items for the demo
+            this.AppThemes = ThemeManager.AppThemes
+                                           .Select(a => new AppThemeMenuData() { Name = a.Name, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
+                                           .ToList();
 
             InitializeComponent();
         }

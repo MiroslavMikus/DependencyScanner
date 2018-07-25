@@ -17,6 +17,12 @@
         x:Name="TheMainWindow"
         d:DataContext="{d:DesignInstance viewModel:MainViewModel , IsDesignTimeCreatable=True}"
         >
+    <!--<Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Content="Accent"/>
+            <Button Content="Theme"/>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>-->
     <Controls:MetroWindow.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="Y" Command="{Binding ElementName=TheMainWindow, Path=SwitchTab}" CommandParameter="0"/>
         <KeyBinding Modifiers="Ctrl" Key="X" Command="{Binding ElementName=TheMainWindow, Path=SwitchTab}" CommandParameter="1"/>
