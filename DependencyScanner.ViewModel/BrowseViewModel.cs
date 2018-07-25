@@ -10,7 +10,6 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.IO;
 using System.Windows.Forms;
-using static DependencyScanner.ViewModel.Tools.DispatcherTools;
 using System.Threading.Tasks;
 using NuGet;
 using System.ComponentModel;
@@ -18,6 +17,7 @@ using System.Windows.Data;
 using System.Globalization;
 using System.Threading;
 using DependencyScanner.ViewModel.Tools;
+using static DependencyScanner.ViewModel.Tools.DispatcherTools;
 
 namespace DependencyScanner.ViewModel
 {
