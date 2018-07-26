@@ -13,7 +13,7 @@ namespace DependencyScanner.Core.GitClient
             return parse(engineResult);
         }
 
-        internal static string GitProcess(string workingDirectory, string parameter)
+        public static string GitProcess(string workingDirectory, string parameter)
         {
             var proc = new Process
             {
