@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 namespace DependencyScanner.Core.GitClient
@@ -13,15 +14,17 @@ namespace DependencyScanner.Core.GitClient
             return parse(engineResult);
         }
 
-        public static string GitProcess(string workingDirectory, string parameter)
+        public static string GitProcess(string workingDirectory, params string[] parameter)
         {
+            var parameters = parameter.Aggregate((a, b) => $"{a} {b}");
+
             var proc = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
                     WorkingDirectory = workingDirectory,
                     FileName = "git",
-                    Arguments = parameter,
+                    Arguments = parameters,
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     CreateNoWindow = true

@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FindConsolidateNugetsTest.cs" />
+    <Compile Include="GitTests\GitExamples.cs" />
     <Compile Include="GitTests\GitParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SemanticVersionTest.cs" />

@@ -16,13 +16,26 @@ namespace DependencyScanner.Core.Model
         {
             Root = new FileInfo(root);
 
-            var branches = GitEngine.GitProcess(root, GitCommand.BranchList);
+            var branches = GitEngine.GitProcess(Root.DirectoryName, GitCommand.BranchList);
 
             BranchList = GitParser.GetBranchList(branches);
 
             CurrentBranch = GitParser.GetCurrentBranch(branches);
 
-            Status = GitEngine.GitProcess(root, GitCommand.Status);
+            Status = GitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
+        }
+
+        public void Checkout(string branch)
+        {
+            if (BranchList.Contains(branch))
+            {
+                var result = GitEngine.GitProcess(Root.DirectoryName, GitCommand.SwitchBranch, branch);
+            }
+        }
+
+        public void Pull()
+        {
+            GitEngine.GitProcess(Root.DirectoryName, GitCommand.Pull);
         }
     }
 }
