@@ -8,7 +8,6 @@ namespace DependencyScanner.Core.Model
     public class GitInfo
     {
         public FileInfo Root { get; }
-        public GitStatus Status { get; private set; }
         public string CurrentBranch { get; private set; }
         public IEnumerable<string> BranchList { get; private set; }
 
@@ -20,16 +19,9 @@ namespace DependencyScanner.Core.Model
 
             BranchList = GetBranches(git);
 
-            //UpdateStatus(git);
-
             var repo = git.GetRepository();
 
             CurrentBranch = repo.GetBranch();
-        }
-
-        public void UpdateStatus()
-        {
-            UpdateStatus(GetGit());
         }
 
         public void Checkout(string branch)
@@ -49,14 +41,6 @@ namespace DependencyScanner.Core.Model
         }
 
         private Git GetGit() => Git.Open(Root.DirectoryName);
-        private void UpdateStatus(Git git)
-        {
-            var repo = git.GetRepository();
-
-            Status status = git.Status().Call();
-
-            Status = new GitStatus(status);
-        }
 
         private IEnumerable<string> GetBranches(Git git)
         {
