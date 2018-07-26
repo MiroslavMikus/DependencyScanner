@@ -86,7 +86,7 @@ namespace DependencyScanner.ViewModel
                         {
                             WorkingDirectory = new FileInfo(dialog.SelectedPath);
 
-                            ScanResult?.Clear();
+                            //ScanResult?.Clear();
 
                             _messenger.Send<ClearResultEvent>(new ClearResultEvent());
 
