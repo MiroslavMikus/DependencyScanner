@@ -16,7 +16,7 @@ namespace DependencyScanner.Core.Test.GitTests
         [TestMethod]
         public void MyTestMethod()
         {
-            var Status = GitEngine.GitProcess(Environment.CurrentDirectory, GitCommand.Status);
+            var Status = GitEngine.GitProcess(Environment.CurrentDirectory, GitCommand.RemoteBranch);
 
         }
 

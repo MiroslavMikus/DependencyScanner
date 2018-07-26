@@ -10,6 +10,7 @@ namespace DependencyScanner.Core.Model
         public FileInfo Root { get; }
         public string CurrentBranch { get; private set; }
         public string Status { get; private set; }
+        public string RemoteUrl { get; private set; }
         public IEnumerable<string> BranchList { get; private set; }
         public bool UpToDate { get => Status.Contains("Your branch is up to date"); }
 
@@ -24,6 +25,8 @@ namespace DependencyScanner.Core.Model
             CurrentBranch = GitParser.GetCurrentBranch(branches);
 
             Status = GitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
+
+            RemoteUrl = GitEngine.GitExecute(Root.DirectoryName, GitCommand.RemoteBranch, a => GitParser.GetRemoteUrl(a));
         }
 
         public void Checkout(string branch)
