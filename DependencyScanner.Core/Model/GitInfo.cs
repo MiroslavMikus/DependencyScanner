@@ -11,6 +11,7 @@ namespace DependencyScanner.Core.Model
         public string CurrentBranch { get; private set; }
         public string Status { get; private set; }
         public IEnumerable<string> BranchList { get; private set; }
+        public bool UpToDate { get => Status.Contains("Your branch is up to date"); }
 
         public GitInfo(string root)
         {

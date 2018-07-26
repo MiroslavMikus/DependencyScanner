@@ -28,24 +28,49 @@
                    Width="450"
                    >
         </TextBlock>
-        <Grid Margin="4 2 2 2" Grid.Row="2" HorizontalAlignment="Stretch" >
+        <!--<Grid Margin="4 2 2 2" Grid.Row="2" HorizontalAlignment="Stretch" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock VerticalAlignment="Center" Grid.Column="0" Text="{Binding GitInformation.CurrentBranch, StringFormat='Branch: {0}'}">
-                <TextBlock.ToolTip>
+            </Grid.ColumnDefinitions>-->
+        <StackPanel Orientation="Horizontal" Margin="4" Grid.Row="2" >
+            <Label>
+                <iconPack:PackIconFontAwesome Kind="CodeBranchSolid" Margin="0 0 4 0" />
+                <Label.ToolTip>
                     <StackPanel>
                         <Label Content="All local branches:" FontWeight="Bold"/>
                         <ListView ItemsSource="{Binding GitInformation.BranchList}"/>
                     </StackPanel>
-                </TextBlock.ToolTip>
-            </TextBlock>
-            <!--<ComboBox Grid.Column="1"
+                </Label.ToolTip>
+            </Label>
+
+            <Label>
+                <Label.Style>
+                    <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding GitInformation.UpToDate}" Value="False">
+                                <Setter Property="Foreground" Value="Red"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+                <iconPack:PackIconFontAwesome Kind="InfoCircleSolid" Margin="0 0 4 0" />
+                <Label.ToolTip>
+                    <StackPanel>
+                        <Label Content="Git status" FontWeight="Bold"/>
+                        <Label Content="{Binding GitInformation.Status}"/>
+                    </StackPanel>
+                </Label.ToolTip>
+            </Label>
+
+            <TextBlock VerticalAlignment="Center" Grid.Column="0" Text="{Binding GitInformation.CurrentBranch, StringFormat='Branch: {0}'}"/>
+
+        </StackPanel>
+        <!--<ComboBox Grid.Column="1"
                       ItemsSource="{Binding GitInformation.BranchList}" 
                       Width="200" 
                       HorizontalAlignment="left"/>-->
-        </Grid>
+        <!--</Grid>-->
         <StackPanel Grid.Row="3" Orientation="Horizontal">
             <StackPanel.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
