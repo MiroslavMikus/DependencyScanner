@@ -8,8 +8,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <converter:NullToVisibilityConverter x:Key="NullToHidden" Positive="Hidden" Negative="Visible"/>
+        <converter:NullToVisibilityConverter x:Key="NullToCollaps" Positive="Collapsed" Negative="Visible"/>
+        <converter:NullToBoolConverter x:Key="NullToFalse" Positive="True" Negative="False"/>
     </UserControl.Resources>
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding HasNuspec}" Value="True">
+                    <Setter Property="Background" Value="Wheat"/>
+                </DataTrigger>
+                <!--<Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="HotPink"/>
+                </Trigger>-->
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -18,7 +31,7 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="{Binding ProjectInfo.Name}" FontWeight="Bold" FontSize="14"/>
         <Label Grid.Row="1" Content="{Binding ProjectInfo.FullName}" FontWeight="Regular" FontSize="11"/>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Visibility="{Binding NuspecInfo, Converter={StaticResource NullToHidden}}">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Visibility="{Binding NuspecInfo, Converter={StaticResource NullToCollaps}}">
             <Button Margin="2" Content="Nuspec" 
                     Command="{Binding ElementName=TheMainWindow, Path=DataContext.RunCommand}"
                     CommandParameter="{Binding NuspecInfo.FullName}">
