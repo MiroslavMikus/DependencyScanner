@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DependencyScanner.Core.Test
 {
-    //[Ignore]
+    [Ignore]
     [TestClass]
     public class NGitExamples
     {
@@ -79,6 +79,24 @@ namespace DependencyScanner.Core.Test
             var repo = git.GetRepository();
 
             Status status = git.Status().Call();
+        }
+
+        [TestMethod]
+        public void NGit_Url()
+        {
+            var git = Git.Open(@"F:\Projects\_GitHub\DependencyScanner");
+
+            var repo = git.GetRepository();
+
+            var config = repo.GetConfig();
+
+            foreach (var section in config.GetSections())
+            {
+                foreach (var name in config.GetNames(section))
+                {
+
+                }
+            }
         }
     }
 }
