@@ -59,7 +59,7 @@
             <Button Margin="2" Content="CMD" ToolTip="Open CMD" 
                     Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenCmdCommand}"
                     CommandParameter="{Binding Info.DirectoryName}"
-                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.MainSettings.ShowFolderButton, Converter={StaticResource TrueToVisible}}"
+                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.MainSettings.ShowCmdButton, Converter={StaticResource TrueToVisible}}"
                     />
         </StackPanel>
     </Grid>
