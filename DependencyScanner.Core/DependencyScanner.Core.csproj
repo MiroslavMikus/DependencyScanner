@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileScanner.cs" />
+    <Compile Include="GitClient\GitManager.cs" />
     <Compile Include="Interfaces\ICancelableProgress.cs" />
     <Compile Include="Interfaces\IScanner.cs" />
     <Compile Include="Model\ConsolidateProject.cs" />
@@ -88,8 +89,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GitClient\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
