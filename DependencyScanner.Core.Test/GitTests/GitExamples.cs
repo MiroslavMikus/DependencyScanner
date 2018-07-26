@@ -10,14 +10,13 @@ using System.Threading.Tasks;
 namespace DependencyScanner.Core.Test.GitTests
 {
     [TestClass]
-    //[Ignore]
+    [Ignore]
     public class GitExamples
     {
         [TestMethod]
         public void MyTestMethod()
         {
             var Status = GitEngine.GitProcess(Environment.CurrentDirectory, GitCommand.RemoteBranch);
-
         }
 
         [TestMethod]

@@ -109,6 +109,13 @@
                     >
                 <iconPack:PackIconFontAwesome Kind="TerminalSolid" />
             </Button>
+            <Button Margin="2" ToolTip="Open remote url"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenLinkCommand}"
+                    CommandParameter="{Binding GitInformation.RemoteUrl}"
+                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.MainSettings.ShowCmdButton, Converter={StaticResource TrueToVisible}}"
+                    >
+                <iconPack:PackIconFontAwesome Kind="EdgeBrands" />
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>
