@@ -70,7 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileScanner.cs" />
-    <Compile Include="GitClient\GitManager.cs" />
+    <Compile Include="GitClient\GitCommand.cs" />
+    <Compile Include="GitClient\GitEngine.cs" />
+    <Compile Include="GitClient\GitParser.cs" />
     <Compile Include="Interfaces\ICancelableProgress.cs" />
     <Compile Include="Interfaces\IScanner.cs" />
     <Compile Include="Model\ConsolidateProject.cs" />
