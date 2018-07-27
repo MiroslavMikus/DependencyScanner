@@ -26,6 +26,37 @@
     </Controls:MetroWindow.RightWindowCommands>
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
+            <Controls:Flyout Position="Bottom" DataContext="{Binding BrowseVM}"
+                             IsOpen="{Binding IsScanning}"
+                             Height="110">
+                <StackPanel Orientation="Vertical">
+                    <Label Content="{Binding ProgressMessage}"
+                       FontSize="20" 
+                       FontWeight="Bold"
+                       Padding="2"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center" Margin="20"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90*"/>
+                            <ColumnDefinition Width="10*"/>
+                        </Grid.ColumnDefinitions>
+                        <ProgressBar Value="{Binding Progress}" >
+                            <ProgressBar.Style>
+                                <Style TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource MahApps.Metro.Styles.ProgressBar}">
+                                    <Setter Property="IsIndeterminate" Value="False"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Progress}" Value="0">
+                                            <Setter Property="IsIndeterminate" Value="True"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ProgressBar.Style>
+                        </ProgressBar>
+                    </Grid>
+                </StackPanel>
+            </Controls:Flyout>
+
             <Controls:Flyout x:Name="settingsFlyout"
                              Width="500"
                              Header="Settings"
@@ -168,24 +199,10 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <ProgressBar Grid.Row="0" Grid.ColumnSpan="4" Value="{Binding Progress}" Visibility="{Binding IsScanning, Converter={StaticResource TrueToVisible}}">
-                            <ProgressBar.Style>
-                                <Style TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource MahApps.Metro.Styles.ProgressBar}">
-                                    <Setter Property="IsIndeterminate" Value="False"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Progress}" Value="0">
-                                            <Setter Property="IsIndeterminate" Value="True"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ProgressBar.Style>
-                        </ProgressBar>
-                        <Label Content="{Binding ProgressMessage}" FontSize="11" Padding="2" Grid.Row="0" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsScanning, Converter={StaticResource TrueToVisible}}"/>
                         <GridSplitter Width="5" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" ResizeBehavior="PreviousAndNext"/>
-                        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" >
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
                             <Label Content="Solutions: " VerticalAlignment="Center"/>
                             <TextBox Margin="2" Width="180"
                                      Text="{Binding SolutionFilter, Delay=300, UpdateSourceTrigger=PropertyChanged}"
@@ -193,16 +210,16 @@
                                      Controls:TextBoxHelper.Watermark="Search...">
                             </TextBox>
                         </StackPanel>
-                        <ListBox x:Name="AllSolutions" Grid.Row="2" Grid.Column="0" ItemsSource="{Binding FilterScanResult}" Margin="5">
+                        <ListBox x:Name="AllSolutions" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FilterScanResult}" Margin="5">
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type model:SolutionResult}">
                                     <templates:SolutionTemplate DataContext="{Binding}"/>
                                 </DataTemplate>
                             </ListBox.Resources>
                         </ListBox>
-                        <Label Content="Projects: " Grid.Row="1" Grid.Column="2"/>
+                        <Label Content="Projects: " Grid.Row="0" Grid.Column="2"/>
                         <ListBox Margin="5" x:Name="Projects" 
-                                 Grid.Row="2" Grid.Column="2"
+                                 Grid.Row="1" Grid.Column="2"
                                  ItemsSource="{Binding ElementName=AllSolutions, Path=SelectedItem.Projects}">
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type model:ProjectResult}">
@@ -210,9 +227,9 @@
                                 </DataTemplate>
                             </ListBox.Resources>
                         </ListBox>
-                        <Label Content="Packages: " Grid.Row="1" Grid.Column="3"/>
+                        <Label Content="Packages: " Grid.Row="0" Grid.Column="3"/>
                         <DataGrid Margin="5" SelectionMode="Single" 
-                                  Grid.Row="2" Grid.Column="3"
+                                  Grid.Row="1" Grid.Column="3"
                                   ItemsSource="{Binding ElementName=Projects, Path=SelectedItem.References}" 
                                   IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False">
                             <DataGrid.Columns>

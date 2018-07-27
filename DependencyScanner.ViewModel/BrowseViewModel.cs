@@ -107,9 +107,11 @@ namespace DependencyScanner.ViewModel
             {
                 try
                 {
-                    IsScanning = true;
-
                     ProgressMessage = "Init scan";
+
+                    Progress = 0D;
+
+                    IsScanning = true;
 
                     _cancellationTokenSource = new CancellationTokenSource();
 
@@ -121,10 +123,6 @@ namespace DependencyScanner.ViewModel
                 finally
                 {
                     IsScanning = false;
-
-                    ProgressMessage = "";
-
-                    Progress = 0D;
 
                     _cancellationTokenSource = null;
                 }
