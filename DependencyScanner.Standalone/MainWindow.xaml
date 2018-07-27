@@ -131,7 +131,7 @@
                         <StackPanel Orientation="Horizontal" >
                             <TextBox Margin="0 10 20 0" Width="300"
                                      Controls:TextBoxHelper.ClearTextButton="True"
-                                     Text="{Binding PreferedConsoleTool}"
+                                     Text="{Binding PreferedConsoleTool, Mode=TwoWay, Delay=350}"
                                      ToolTip="Clear to use CMD."
                                      >
                             </TextBox>
@@ -141,11 +141,29 @@
                         <StackPanel Orientation="Horizontal" >
                             <TextBox Margin="0 10 20 0" Width="300"
                                      Controls:TextBoxHelper.ClearTextButton="True"
-                                     Text="{Binding PreferencedWebBrowser}"
+                                     Text="{Binding PreferencedWebBrowser, Mode=TwoWay, Delay=350}"
                                      ToolTip="Clear to use your default browser."
                                      />
                             <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0" Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenLinkCommand}"
                                     CommandParameter="https://github.com/MiroslavMikus/"/>
+                        </StackPanel>
+                        <Label Content="Clear nuspec" />
+                        <TextBlock Text="Path to nuspec.exe" Margin="0 10 0 0"/>
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBox Margin="0 10 20 0" Width="300"
+                                     Controls:TextBoxHelper.ClearTextButton="True"
+                                     Text="{Binding PathToNuspec, Mode=TwoWay, Delay=350}"
+                                     ToolTip="Clear to use your default browser."
+                                     />
+                            <Button Content="Clear" Width="70" Height="20" Margin="0 10 0 0" 
+                                    Command="{Binding ElementName=TheMainWindow, Path=DataContext.ClearNuspec}">
+                                <Button.ToolTip>
+                                    <StackPanel>
+                                        <Label Content="Clear nuget" FontWeight="Bold"/>
+                                        <TextBlock Text="Clear global nuget cache with nuget.exe locals all -clear command"/>
+                                    </StackPanel>
+                                </Button.ToolTip>
+                            </Button>
                         </StackPanel>
                     </StackPanel>
                 </DockPanel>
@@ -363,7 +381,7 @@
                                      Controls:TextBoxHelper.ClearTextButton="True"
                                      Controls:TextBoxHelper.Watermark="Search...">
                             </TextBox>
-                            <CheckBox Margin="10 2 2 2" IsChecked="{Binding FilterForConsolidates}" Content="Filter consolidates"/> 
+                            <CheckBox Margin="10 2 2 2" IsChecked="{Binding FilterForConsolidates}" Content="Filter consolidates"/>
                         </StackPanel>
                         <ListBox x:Name="ProjectScanResult" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FilterScanResult}" Margin="5">
                             <ListBox.Resources>

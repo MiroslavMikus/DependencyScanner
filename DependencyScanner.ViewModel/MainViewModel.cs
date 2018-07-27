@@ -14,6 +14,7 @@ namespace DependencyScanner.ViewModel
     public class MainViewModel : ViewModelBase
     {
         public RelayCommand<string> RunCommand { get; }
+        public RelayCommand ClearNuspec { get; }
         public RelayCommand<string> OpenCmdCommand { get; }
         public RelayCommand<string> OpenLinkCommand { get; }
 
@@ -37,29 +38,29 @@ namespace DependencyScanner.ViewModel
 
             RunCommand = new RelayCommand<string>(a =>
             {
+                if (string.IsNullOrEmpty(a))
+                {
+                    return;
+                    // todo log here
+                }
+
                 try
                 {
                     Process.Start(a);
                 }
                 catch
                 {
+                    // todo log here
                 }
             });
 
             OpenCmdCommand = new RelayCommand<string>(a =>
             {
-                string consoleTool = AppSettings.Instance.PreferedConsoleTool;
-
-                if (string.IsNullOrEmpty(consoleTool))
-                {
-                    consoleTool = "cmd.exe";
-                }
-
                 var startInfo = new ProcessStartInfo
                 {
                     WorkingDirectory = a,
                     WindowStyle = ProcessWindowStyle.Normal,
-                    FileName = consoleTool
+                    FileName = GetTerminalTool()
                 };
 
                 try
@@ -68,6 +69,7 @@ namespace DependencyScanner.ViewModel
                 }
                 catch
                 {
+                    // todo log here
                 }
             });
 
@@ -87,8 +89,48 @@ namespace DependencyScanner.ViewModel
                 }
                 catch (Exception ex)
                 {
+                    // todo log here
                 }
             });
+
+            ClearNuspec = new RelayCommand(() =>
+            {
+                string path = AppSettings.Instance.PathToNuspec;
+
+                if (string.IsNullOrEmpty(path))
+                {
+                    return;
+                    // todo log here
+                }
+
+                var startInfo = new ProcessStartInfo
+                {
+                    WindowStyle = ProcessWindowStyle.Normal,
+                    FileName = path,
+                    Arguments = "locals all -clear"
+                };
+
+                try
+                {
+                    Process.Start(startInfo);
+                }
+                catch
+                {
+                    // log here!
+                }
+            });
+        }
+
+        private string GetTerminalTool()
+        {
+            string terminalTool = AppSettings.Instance.PreferedConsoleTool;
+
+            if (string.IsNullOrEmpty(terminalTool))
+            {
+                terminalTool = "cmd.exe";
+            }
+
+            return terminalTool;
         }
     }
 }

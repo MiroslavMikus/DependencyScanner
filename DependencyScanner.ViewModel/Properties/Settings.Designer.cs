@@ -130,5 +130,17 @@ namespace DependencyScanner.ViewModel.Properties {
                 this["ShowOpenUrlButton"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PathToNuspec {
+            get {
+                return ((string)(this["PathToNuspec"]));
+            }
+            set {
+                this["PathToNuspec"] = value;
+            }
+        }
     }
 }

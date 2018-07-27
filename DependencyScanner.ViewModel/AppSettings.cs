@@ -118,5 +118,19 @@ namespace DependencyScanner.ViewModel
                 }
             }
         }
+
+        private string _pathToNuspec = Properties.Settings.Default.PathToNuspec;
+        public string PathToNuspec
+        {
+            get { return _pathToNuspec; }
+            set
+            {
+                if (Set(ref _pathToNuspec, value))
+                {
+                    Properties.Settings.Default.PathToNuspec = value;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
     }
 }
