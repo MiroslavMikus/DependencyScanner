@@ -209,12 +209,25 @@
                             Visibility="{Binding WorkingDirectory, Converter={StaticResource HideIfNull}}" Grid.Row="1"
                             IsEnabled="{Binding IsScanning, Converter={StaticResource InvertBool}}"
                             />
-                        <Button Margin="5,5,0,5" Content="Cancel" HorizontalAlignment="Left"
+                        <Button Margin="5,6,0,4" Content="Cancel" HorizontalAlignment="Left"
                             Command="{Binding CancelCommand}"
                             Visibility="{Binding IsScanning, Converter={StaticResource FalseToCollapsed}}" Grid.Row="1"
                             />
-                        <Button Content="Pick working directory" HorizontalAlignment="Left" Margin="5" Command="{Binding PickWorkingDirectoryCommand}"
-                                IsEnabled="{Binding IsScanning, Converter={StaticResource InvertBool}}"/>
+                        <ComboBox Width="100" Height="24" Margin="5,5,0,5"
+                                  ItemsSource="{Binding ElementName=TheMainWindow, Path=DataContext.MainSettings.WorkingDirectories}"
+                                  SelectedItem="{Binding WorkingDirectory}">
+                            <!--TODO add template with remove button-->
+                        </ComboBox>
+                        <Button Content="Add change Icon" HorizontalAlignment="Left" Margin="5" Command="{Binding PickWorkingDirectoryCommand}"
+                                IsEnabled="{Binding IsScanning, Converter={StaticResource InvertBool}}"
+                                >
+                            <Button.ToolTip>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label FontWeight="Bold" Content="Add to working directories"/>
+                                    <TextBlock Text="Scan will be executed only for the selected directory!"/>
+                                </StackPanel>
+                            </Button.ToolTip>
+                        </Button>
                         <TextBlock Text="{Binding WorkingDirectory.FullName, StringFormat='Your folder: {0}'}" VerticalAlignment="Center" Margin="5"/>
                     </StackPanel>
                     <Grid Grid.Row="1">

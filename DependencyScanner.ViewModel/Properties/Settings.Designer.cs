@@ -154,5 +154,16 @@ namespace DependencyScanner.ViewModel.Properties {
                 this["ExecuteGitFetchWitScan"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection WorkingDirectories {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["WorkingDirectories"]));
+            }
+            set {
+                this["WorkingDirectories"] = value;
+            }
+        }
     }
 }

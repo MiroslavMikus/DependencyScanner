@@ -18,6 +18,8 @@ using System.Globalization;
 using System.Threading;
 using DependencyScanner.ViewModel.Tools;
 using static DependencyScanner.ViewModel.Tools.DispatcherTools;
+using System.Collections.Specialized;
+using System.Linq;
 
 namespace DependencyScanner.ViewModel
 {
@@ -40,9 +42,11 @@ namespace DependencyScanner.ViewModel
         public RelayCommand ScanCommand { get; private set; }
         public RelayCommand CancelCommand { get; private set; }
 
-        private FileInfo _workingDirectory;
+        private ObservableCollection<string> _workingDirectories;
+        public ObservableCollection<string> WorkingDirectories { get => _workingDirectories; set => Set( ref _workingDirectories, value); }
 
-        public FileInfo WorkingDirectory { get => _workingDirectory; set => Set(ref _workingDirectory, value); }
+        private string _workingDirectory;
+        public string WorkingDirectory { get => _workingDirectory; set => Set(ref _workingDirectory, value); }
 
         public BrowseViewModel()
         {
@@ -84,13 +88,20 @@ namespace DependencyScanner.ViewModel
 
                         if (result == DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
                         {
-                            WorkingDirectory = new FileInfo(dialog.SelectedPath);
+                            WorkingDirectory = dialog.SelectedPath;
 
                             //ScanResult?.Clear();
 
                             _messenger.Send<ClearResultEvent>(new ClearResultEvent());
 
-                            Properties.Settings.Default.WorkingDirectory = dialog.SelectedPath;
+                            var allWorkingdirectories = AppSettings.Instance.WorkingDirectories;
+
+                            if (!allWorkingdirectories.Contains(WorkingDirectory))
+                            {
+                                allWorkingdirectories.Add(WorkingDirectory);
+                            }
+
+                            Properties.Settings.Default.WorkingDirectory = WorkingDirectory;
 
                             Properties.Settings.Default.Save();
 
@@ -133,9 +144,25 @@ namespace DependencyScanner.ViewModel
                 _cancellationTokenSource?.Cancel();
             });
 
+            WorkingDirectories = new ObservableCollection<string>(Properties.Settings.Default.WorkingDirectories.OfType<string>());
+
+            WorkingDirectories.CollectionChanged += (s, e) =>
+            {
+                var collection = new StringCollection();
+
+                foreach (var item in WorkingDirectories)
+                {
+                    collection.Add(item);
+                }
+
+                Properties.Settings.Default.WorkingDirectories = collection;
+
+                Properties.Settings.Default.Save();
+            };
+
             if (!string.IsNullOrEmpty(Properties.Settings.Default.WorkingDirectory))
             {
-                WorkingDirectory = new FileInfo(Properties.Settings.Default.WorkingDirectory);
+                WorkingDirectory = Properties.Settings.Default.WorkingDirectory;
 
                 if (AppSettings.Instance.ExecuteScanOnInit)
                 {
@@ -159,7 +186,7 @@ namespace DependencyScanner.ViewModel
                     ProgressMessage = a.Message;
                 };
 
-                var scanResult = _scanner.ScanSolutions(_workingDirectory.FullName, progress);
+                var scanResult = _scanner.ScanSolutions(WorkingDirectory, progress);
 
                 ScanResult = new ObservableCollection<SolutionResult>(scanResult);
 

@@ -1,5 +1,8 @@
 ﻿using DependencyScanner.Core;
 using GalaSoft.MvvmLight;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Linq;
 
 namespace DependencyScanner.ViewModel
 {
