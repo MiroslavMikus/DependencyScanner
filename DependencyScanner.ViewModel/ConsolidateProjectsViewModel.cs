@@ -44,6 +44,8 @@ namespace DependencyScanner.ViewModel
                 var result = _projectComparer.FindConsolidateReferences(a.Result);
 
                 a.ProjectResult = result;
+
+                FilterScanResult?.Refresh();
             });
 
             CompareAllCommand = new RelayCommand(() =>
@@ -56,6 +58,7 @@ namespace DependencyScanner.ViewModel
 
                         item.ProjectResult = result;
                     }
+                    FilterScanResult?.Refresh();
                 }
             });
 
