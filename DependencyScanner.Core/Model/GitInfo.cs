@@ -12,7 +12,7 @@ namespace DependencyScanner.Core.Model
         public string Status { get; private set; }
         public string RemoteUrl { get; private set; }
         public IEnumerable<string> BranchList { get; private set; }
-        public bool UpToDate { get => Status.Contains("Your branch is up to date"); }
+        public bool UpToDate { get => Status.Contains("working tree clean"); }
 
         public GitInfo(string root)
         {
@@ -29,17 +29,18 @@ namespace DependencyScanner.Core.Model
             RemoteUrl = GitEngine.GitExecute(Root.DirectoryName, GitCommand.RemoteBranch, a => GitParser.GetRemoteUrl(a));
         }
 
-        public void Checkout(string branch)
+        public string Checkout(string branch)
         {
             if (BranchList.Contains(branch))
             {
-                var result = GitEngine.GitProcess(Root.DirectoryName, GitCommand.SwitchBranch, branch);
+                return GitEngine.GitProcess(Root.DirectoryName, GitCommand.SwitchBranch, branch);
             }
+            return $"Branch '{branch}' doesnt exist in scan results!";
         }
 
-        public void Pull()
+        public string Pull()
         {
-            GitEngine.GitProcess(Root.DirectoryName, GitCommand.Pull);
+            return GitEngine.GitProcess(Root.DirectoryName, GitCommand.Pull);
         }
     }
 }

@@ -87,11 +87,14 @@
                         <Label Content="Scan: " Margin="5 0 0 0"/>
                         <Controls:ToggleSwitch OnLabel="Execute scan on app start" OffLabel="Do not execute scan on app start" 
                                                IsChecked="{Binding ExecuteScanOnInit}"/>
+                        <Controls:ToggleSwitch OnLabel="Execute after picking directory" OffLabel="Do not execute scan after picking directory" 
+                                               IsChecked="{Binding AutoScanAfterPickingDirectory}"/>
 
                         <Label Content="Show / Hide action buttons in solution detail"/>
                         <Controls:ToggleSwitch OnLabel="Show terminal" OffLabel="Hide terminal" IsChecked="{Binding ShowCmdButton}"/>
                         <Controls:ToggleSwitch OnLabel="Show folder" OffLabel="Hide folder" IsChecked="{Binding ShowFolderButton}"/>
                         <Controls:ToggleSwitch OnLabel="Show open solution" OffLabel="Hide open solution" IsChecked="{Binding ShowOpenButton}"/>
+                        <Controls:ToggleSwitch OnLabel="Show open url" OffLabel="Hide open url" IsChecked="{Binding ShowOpenUrlButton}"/>
                         <Label Content="Actions:" />
                         <TextBlock Text="Prefered console tool:"/>
                         <StackPanel Orientation="Horizontal" >

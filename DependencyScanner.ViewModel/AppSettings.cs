@@ -90,5 +90,33 @@ namespace DependencyScanner.ViewModel
                 }
             }
         }
+
+        private bool _autoScanAfterPickingDirectory = Properties.Settings.Default.AutoScanAfterPickingDirectory;
+        public bool AutoScanAfterPickingDirectory
+        {
+            get { return _autoScanAfterPickingDirectory; }
+            set
+            {
+                if (Set(ref _autoScanAfterPickingDirectory, value))
+                {
+                    Properties.Settings.Default.AutoScanAfterPickingDirectory = value;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
+
+        private bool _showOpenUrlButton = Properties.Settings.Default.ShowOpenUrlButton;
+        public bool ShowOpenUrlButton
+        {
+            get { return _showOpenUrlButton; }
+            set
+            {
+                if (Set(ref _showOpenUrlButton, value))
+                {
+                    Properties.Settings.Default.ShowOpenUrlButton = value;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
     }
 }

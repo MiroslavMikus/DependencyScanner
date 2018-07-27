@@ -5,13 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DependencyScanner.Standalone.Templates"
              mc:Ignorable="d" 
+             x:Name="SelectableControl"
              d:DesignHeight="450" d:DesignWidth="800">
+    <!--<UserControl.InputBindings>
+        <KeyBinding Key="Space" Command="{Binding ElementName=SelectableControl, Path=SelectCurrentSolution}"/>
+    </UserControl.InputBindings>-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IsSelected}" Grid.RowSpan="3"/>
+        <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IsSelected}" Grid.RowSpan="3" x:Name="CheckSolution"/>
         <local:SolutionTemplate DataContext="{Binding Result}" Grid.Column="1"/>
     </Grid>
 </UserControl>

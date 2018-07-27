@@ -93,6 +93,11 @@ namespace DependencyScanner.ViewModel
                             Properties.Settings.Default.WorkingDirectory = dialog.SelectedPath;
 
                             Properties.Settings.Default.Save();
+
+                            if (AppSettings.Instance.AutoScanAfterPickingDirectory)
+                            {
+                                ScanCommand.Execute(null);
+                            }
                         }
                     }
                 });

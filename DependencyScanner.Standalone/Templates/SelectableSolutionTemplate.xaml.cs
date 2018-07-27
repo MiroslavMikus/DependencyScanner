@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,17 @@ namespace DependencyScanner.Standalone.Templates
     /// </summary>
     public partial class SelectableSolutionTemplate : UserControl
     {
+        //public RelayCommand SelectCurrentSolution
+        //{
+        //    get
+        //    {
+        //        return new RelayCommand(() =>
+        //        {
+        //            CheckSolution.IsChecked ^= CheckSolution.IsChecked;
+        //        });
+        //    }
+        //}
+
         public SelectableSolutionTemplate()
         {
             InitializeComponent();

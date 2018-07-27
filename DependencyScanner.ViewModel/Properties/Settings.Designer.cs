@@ -106,5 +106,29 @@ namespace DependencyScanner.ViewModel.Properties {
                 this["PreferencedWebBrowser"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoScanAfterPickingDirectory {
+            get {
+                return ((bool)(this["AutoScanAfterPickingDirectory"]));
+            }
+            set {
+                this["AutoScanAfterPickingDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowOpenUrlButton {
+            get {
+                return ((bool)(this["ShowOpenUrlButton"]));
+            }
+            set {
+                this["ShowOpenUrlButton"] = value;
+            }
+        }
     }
 }
