@@ -274,6 +274,7 @@
                                      Controls:TextBoxHelper.ClearTextButton="True"
                                      Controls:TextBoxHelper.Watermark="Search...">
                             </TextBox>
+                            <CheckBox Margin="10 2 2 2" IsChecked="{Binding FilterForSelected}" Content="Filter selected"/>
                         </StackPanel>
                         <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FilterScanResult}" Margin="5">
                             <ListBox.Resources>

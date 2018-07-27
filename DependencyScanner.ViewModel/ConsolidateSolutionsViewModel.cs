@@ -25,6 +25,17 @@ namespace DependencyScanner.ViewModel
         public RelayCommand SelectAllCommand { get; }
         public RelayCommand DeSelectAllCommand { get; }
 
+        private bool _filterForConsolidates;
+        public bool FilterForSelected
+        {
+            get => _filterForConsolidates;
+            set
+            {
+                Set(ref _filterForConsolidates, value);
+                FilterScanResult?.Refresh();
+            }
+        }
+
         private ObservableCollection<ConsolidateSolution> _resultReferences;
         public ObservableCollection<ConsolidateSolution> ResultReferences { get => _resultReferences; set => Set(ref _resultReferences, value); }
 
@@ -79,11 +90,21 @@ namespace DependencyScanner.ViewModel
 
         protected override bool FilterJob(object value)
         {
-            if (value is SolutionSelectionViewModel input && !string.IsNullOrEmpty(SolutionFilter))
+            bool filterName = true;
+            bool filterConsolidates = true;
+            if (value is SolutionSelectionViewModel input)
             {
-                return input.Result.Info.Name.IndexOf(SolutionFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+                if (!string.IsNullOrEmpty(SolutionFilter))
+                {
+                    filterName = input.Result.Info.Name.IndexOf(SolutionFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+                }
+
+                if (FilterForSelected)
+                {
+                    filterConsolidates = input.IsSelected;
+                }
             }
-            return true;
+            return filterName && filterConsolidates;
         }
     }
 }
