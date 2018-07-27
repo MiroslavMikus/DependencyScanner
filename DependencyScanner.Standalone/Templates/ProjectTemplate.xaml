@@ -31,19 +31,30 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="{Binding ProjectInfo.Name}" FontWeight="Bold" FontSize="14"/>
         <Label Grid.Row="1" Content="{Binding ProjectInfo.FullName}" FontWeight="Regular" FontSize="11"/>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Visibility="{Binding NuspecInfo, Converter={StaticResource NullToCollaps}}">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" >
             <Button Margin="2" Content="Nuspec" 
                     Command="{Binding ElementName=TheMainWindow, Path=DataContext.RunCommand}"
-                    CommandParameter="{Binding NuspecInfo.FullName}">
+                    CommandParameter="{Binding NuspecInfo.FullName}"
+                    Visibility="{Binding NuspecInfo, Converter={StaticResource NullToCollaps}}"
+                    >
                 <Button.ToolTip>
                     <StackPanel>
-                        <Label Content="Open nuspec" FontWeight="Bold"/>
+                        <Label Content="Open nuspec file" FontWeight="Bold"/>
                         <Label Content="{Binding NuspecInfo.FullName}"/>
                     </StackPanel>
                 </Button.ToolTip>
             </Button>
-            <Label Content="This project has nuspec file." />
-
+            <Button Margin="4 2 2 2" Content="Package" 
+                    Command="{Binding ElementName=TheMainWindow, Path=DataContext.RunCommand}"
+                    CommandParameter="{Binding PackageInfo.FullName}"
+                    Visibility="{Binding PackageInfo, Converter={StaticResource NullToCollaps}}">
+                <Button.ToolTip>
+                    <StackPanel>
+                        <Label Content="Open package.config" FontWeight="Bold"/>
+                        <Label Content="{Binding PackageInfo.FullName}"/>
+                    </StackPanel>
+                </Button.ToolTip>
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>
