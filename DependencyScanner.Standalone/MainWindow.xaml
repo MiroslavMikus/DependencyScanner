@@ -14,7 +14,7 @@
         Title="Dependency scanner"
         Height="{Binding ElementName=TheMainWindow, Path=WindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
         Width="{Binding ElementName=TheMainWindow, Path=WindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
-        MinWidth="550"
+        MinWidth="500"
         x:Name="TheMainWindow"
         RightWindowCommandsOverlayBehavior="Never"
         d:DataContext="{d:DesignInstance viewModel:MainViewModel , IsDesignTimeCreatable=True}"
@@ -194,8 +194,8 @@
                             <ColumnDefinition Width="{Binding ElementName=TheMainWindow, Path=SolutionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
                                               MinWidth="250"/>
                             <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" MinWidth="100"/>
+                            <ColumnDefinition Width="*" MinWidth="100"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
@@ -263,8 +263,8 @@
                             <ColumnDefinition Width="{Binding ElementName=TheMainWindow, Path=SolutionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
                                               MinWidth="250"/>
                             <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" MinWidth="100"/>
+                            <ColumnDefinition Width="*" MinWidth="100"/>
                         </Grid.ColumnDefinitions>
                         <GridSplitter Width="5" Grid.Column="1" Grid.Row="1" ResizeBehavior="PreviousAndNext"/>
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
@@ -352,8 +352,8 @@
                             <ColumnDefinition Width="{Binding ElementName=TheMainWindow, Path=SolutionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
                                               MinWidth="250"/>
                             <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" MinWidth="100"/>
+                            <ColumnDefinition Width="*" MinWidth="100"/>
                         </Grid.ColumnDefinitions>
                         <GridSplitter Width="5" Grid.Column="1" Grid.Row="1" ResizeBehavior="PreviousAndNext"/>
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
