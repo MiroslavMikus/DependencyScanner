@@ -11,6 +11,9 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <converter:BoolToVisibilityConverter x:Key="TrueToVisible" Positive="Visible" Negative="Collapsed"/>
+        <converter:NullToVisibilityConverter x:Key="NullToCollapse" Positive="Collapsed" Negative="Visible"/>
+        <converter:NullToBoolConverter x:Key="NullToFalse" Positive="False" Negative="True"/>
+        <converter:BoolToVisibilityMultiValueConverter x:Key="BoolAnd"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -28,12 +31,7 @@
                    Width="450"
                    >
         </TextBlock>
-        <!--<Grid Margin="4 2 2 2" Grid.Row="2" HorizontalAlignment="Stretch" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>-->
-        <StackPanel Orientation="Horizontal" Margin="4" Grid.Row="2" >
+        <StackPanel Orientation="Horizontal" Margin="4" Grid.Row="2" Visibility="{Binding GitInformation, Converter={StaticResource NullToCollapse}}">
             <Label>
                 <iconPack:PackIconFontAwesome Kind="CodeBranchSolid" Margin="0 0 4 0" />
                 <Label.ToolTip>
@@ -71,7 +69,7 @@
                       Width="200" 
                       HorizontalAlignment="left"/>-->
         <!--</Grid>-->
-        <StackPanel Grid.Row="3" Orientation="Horizontal">
+        <StackPanel Grid.Row="3" Orientation="Horizontal" >
             <StackPanel.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
                     <Setter Property="Width" Value="30"/>
@@ -112,8 +110,13 @@
             <Button Margin="2" ToolTip="Open remote url"
                     Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenLinkCommand}"
                     CommandParameter="{Binding GitInformation.RemoteUrl}"
-                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.MainSettings.ShowCmdButton, Converter={StaticResource TrueToVisible}}"
                     >
+                <Button.Visibility>
+                    <MultiBinding Converter="{StaticResource BoolAnd}">
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Window}}" Path="DataContext.MainSettings.ShowCmdButton"/>
+                        <Binding Converter="{StaticResource NullToFalse}" Path="GitInformation"/>
+                    </MultiBinding> 
+                </Button.Visibility>
                 <iconPack:PackIconFontAwesome Kind="EdgeBrands" />
             </Button>
         </StackPanel>

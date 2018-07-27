@@ -91,6 +91,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToBoolConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityMultiValueConverter.cs" />
     <Compile Include="Templates\ProjectTemplate.xaml.cs">
       <DependentUpon>ProjectTemplate.xaml</DependentUpon>
     </Compile>
