@@ -18,6 +18,8 @@ namespace DependencyScanner.Core.Model
         {
             Root = new FileInfo(root);
 
+            GitEngine.GitProcess(Root.DirectoryName, GitCommand.UpdateRemote);
+
             var branches = GitEngine.GitProcess(Root.DirectoryName, GitCommand.BranchList);
 
             BranchList = GitParser.GetBranchList(branches);
