@@ -356,12 +356,13 @@
                         </Grid.ColumnDefinitions>
                         <GridSplitter Width="5" Grid.Column="1" Grid.Row="1" ResizeBehavior="PreviousAndNext"/>
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
-                            <Label Content="Select solution to check: " VerticalAlignment="Center"/>
+                            <Label Content="Solutions: " VerticalAlignment="Center" ToolTip="Select solution to check."/>
                             <TextBox Margin="2" Width="180"
                                      Text="{Binding SolutionFilter, Delay=300, UpdateSourceTrigger=PropertyChanged}"
                                      Controls:TextBoxHelper.ClearTextButton="True"
                                      Controls:TextBoxHelper.Watermark="Search...">
                             </TextBox>
+                            <CheckBox Margin="10 2 2 2" IsChecked="{Binding FilterForConsolidates}" Content="Filter consolidates"/> 
                         </StackPanel>
                         <ListBox x:Name="ProjectScanResult" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FilterScanResult}" Margin="5">
                             <ListBox.Resources>

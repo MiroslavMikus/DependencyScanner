@@ -15,10 +15,22 @@ namespace DependencyScanner.ViewModel
 {
     public class ConsolidateProjectsViewModel : SolutionBaseViewModel<SolutionProjectCompareResult>
     {
-        public RelayCommand<SolutionProjectCompareResult> ScanCommand { get; private set; }
-        public RelayCommand CompareAllCommand { get; }
         private readonly IMessenger _messenger;
         private readonly ProjectComparer _projectComparer;
+
+        public RelayCommand<SolutionProjectCompareResult> ScanCommand { get; private set; }
+        public RelayCommand CompareAllCommand { get; }
+
+        private bool _filterForConsolidates;
+        public bool FilterForConsolidates
+        {
+            get => _filterForConsolidates;
+            set
+            {
+                Set(ref _filterForConsolidates, value);
+                FilterScanResult?.Refresh();
+            }
+        }
 
         public ConsolidateProjectsViewModel(IMessenger messenger, ProjectComparer projectComparer)
         {
@@ -67,11 +79,21 @@ namespace DependencyScanner.ViewModel
 
         protected override bool FilterJob(object value)
         {
-            if (value is SolutionProjectCompareResult input && !string.IsNullOrEmpty(SolutionFilter))
+            bool filterName = true;
+            bool filterConsolidates = true;
+            if (value is SolutionProjectCompareResult input)
             {
-                return input.Result.Info.Name.IndexOf(SolutionFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+                if (!string.IsNullOrEmpty(SolutionFilter))
+                {
+                    filterName = input.Result.Info.Name.IndexOf(SolutionFilter, StringComparison.OrdinalIgnoreCase) >= 0; 
+                }
+
+                if (FilterForConsolidates)
+                {
+                    filterConsolidates = input.HasConsolidates;
+                }
             }
-            return true;
+            return filterName && filterConsolidates;
         }
     }
 }
