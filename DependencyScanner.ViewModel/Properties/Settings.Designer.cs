@@ -142,5 +142,17 @@ namespace DependencyScanner.ViewModel.Properties {
                 this["PathToNuspec"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ExecuteGitFetchWitScan {
+            get {
+                return ((bool)(this["ExecuteGitFetchWitScan"]));
+            }
+            set {
+                this["ExecuteGitFetchWitScan"] = value;
+            }
+        }
     }
 }

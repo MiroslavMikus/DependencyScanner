@@ -1,9 +1,15 @@
-﻿using GalaSoft.MvvmLight;
+﻿using DependencyScanner.Core;
+using GalaSoft.MvvmLight;
 
 namespace DependencyScanner.ViewModel
 {
     public class AppSettings : ViewModelBase
     {
+        static AppSettings()
+        {
+            FileScanner.ExecuteGitFetchWitScan = Properties.Settings.Default.ExecuteGitFetchWitScan;
+        }
+
         private static AppSettings _instance;
         public static AppSettings Instance { get => _instance ?? (_instance = new AppSettings()); }
 
@@ -128,6 +134,21 @@ namespace DependencyScanner.ViewModel
                 if (Set(ref _pathToNuspec, value))
                 {
                     Properties.Settings.Default.PathToNuspec = value;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
+
+        private bool _executeGitFetchWitScan = Properties.Settings.Default.ExecuteGitFetchWitScan;
+        public bool ExecuteGitFetchWitScan
+        {
+            get { return _executeGitFetchWitScan; }
+            set
+            {
+                if (Set(ref _executeGitFetchWitScan, value))
+                {
+                    FileScanner.ExecuteGitFetchWitScan = value;
+                    Properties.Settings.Default.ExecuteGitFetchWitScan = value;
                     Properties.Settings.Default.Save();
                 }
             }

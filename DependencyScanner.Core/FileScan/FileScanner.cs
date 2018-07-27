@@ -12,19 +12,19 @@ namespace DependencyScanner.Core
 {
     public class FileScanner : IScanner
     {
+        public static bool ExecuteGitFetchWitScan { get; set; } = false;
+
         private const string PackagePattern = "packages.config";
         private const string SolutionPattern = "*.sln";
         private const string ProjectPattern = "*.csproj";
         private const string NuspecPattern = "*.nuspec";
         private const string GitPattern = ".git";
 
-
         string[] GetPackages(string rootDirectory) => Directory.GetFiles(rootDirectory, PackagePattern, SearchOption.TopDirectoryOnly);
         string[] GetSolutions(string rootDirectory) => Directory.GetFiles(rootDirectory, SolutionPattern, SearchOption.AllDirectories);
         string[] GetProjects(string rootDirectory) => Directory.GetFiles(rootDirectory, ProjectPattern, SearchOption.AllDirectories);
         string[] GetNuspec(string rootDirectory) => Directory.GetFiles(rootDirectory, NuspecPattern, SearchOption.TopDirectoryOnly);
         string[] GetGitFolder(DirectoryInfo dir) => Directory.GetDirectories(dir.FullName, GitPattern, SearchOption.TopDirectoryOnly);
-
 
         public SolutionResult ScanSolution(string rootDirectory)
         {
@@ -89,6 +89,7 @@ namespace DependencyScanner.Core
         public IEnumerable<SolutionResult> ScanSolutions(string rootDirectory, ICancelableProgress<ProgressMessage> progress)
         {
             progress.Report(new ProgressMessage { Value = 0D, Message = "Searching for solutions" });
+
             var solutions = GetSolutions(rootDirectory);
 
             double Progress(int current) => Math.Round(current / (solutions.Count() / 100D), 2);

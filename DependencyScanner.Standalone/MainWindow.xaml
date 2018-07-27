@@ -120,7 +120,17 @@
                                                IsChecked="{Binding ExecuteScanOnInit}"/>
                         <Controls:ToggleSwitch OnLabel="Execute after picking directory" OffLabel="Do not execute scan after picking directory" 
                                                IsChecked="{Binding AutoScanAfterPickingDirectory}"/>
-
+                        <Controls:ToggleSwitch OnLabel="Update remote references while scanning" OffLabel="Do not update remote references while scanning" 
+                                               IsChecked="{Binding ExecuteGitFetchWitScan}"
+                                               >
+                            <Controls:ToggleSwitch.ToolTip>
+                                <StackPanel>
+                                    <Label Content="Update references" FontWeight="Bold" Margin="5"/>
+                                    <TextBlock Text="This will execute git remote update command which will update your remote references/branches." Margin="5"/>
+                                    <TextBlock Text="Updating your references can make scannig process up to 10 times slower." Margin="5"/>
+                                </StackPanel>
+                            </Controls:ToggleSwitch.ToolTip>
+                        </Controls:ToggleSwitch>
                         <Label Content="Show / Hide action buttons in solution detail"/>
                         <Controls:ToggleSwitch OnLabel="Show terminal" OffLabel="Hide terminal" IsChecked="{Binding ShowCmdButton}"/>
                         <Controls:ToggleSwitch OnLabel="Show folder" OffLabel="Hide folder" IsChecked="{Binding ShowFolderButton}"/>
@@ -159,8 +169,8 @@
                                     Command="{Binding ElementName=TheMainWindow, Path=DataContext.ClearNuspec}">
                                 <Button.ToolTip>
                                     <StackPanel>
-                                        <Label Content="Clear nuget" FontWeight="Bold"/>
-                                        <TextBlock Text="Clear global nuget cache with nuget.exe locals all -clear command"/>
+                                        <Label Content="Clear nuget" FontWeight="Bold" Margin="5"/>
+                                        <TextBlock Text="Clear global nuget cache with nuget.exe locals all -clear command" Margin="5"/>
                                     </StackPanel>
                                 </Button.ToolTip>
                             </Button>
