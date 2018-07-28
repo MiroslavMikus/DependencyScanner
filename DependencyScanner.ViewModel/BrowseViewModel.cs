@@ -47,7 +47,19 @@ namespace DependencyScanner.ViewModel
         public ObservableCollection<string> WorkingDirectories { get => _workingDirectories; set => Set(ref _workingDirectories, value); }
 
         private string _workingDirectory;
-        public string WorkingDirectory { get => _workingDirectory; set => Set(ref _workingDirectory, value); }
+        public string WorkingDirectory
+        {
+            get => _workingDirectory;
+            set
+            {
+                if (Set(ref _workingDirectory, value))
+                {
+                    Properties.Settings.Default.WorkingDirectory = value;
+
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
 
         public BrowseViewModel()
         {
@@ -107,10 +119,6 @@ namespace DependencyScanner.ViewModel
                                 WorkingDirectories.Add(WorkingDirectory);
                             }
 
-                            Properties.Settings.Default.WorkingDirectory = WorkingDirectory;
-
-                            Properties.Settings.Default.Save();
-
                             if (AppSettings.Instance.AutoScanAfterPickingDirectory)
                             {
                                 ScanCommand.Execute(null);
@@ -155,6 +163,11 @@ namespace DependencyScanner.ViewModel
                 if (string.IsNullOrEmpty(a))
                 {
                     return;
+                }
+
+                if (a == WorkingDirectory)
+                {
+                    WorkingDirectory = null;
                 }
 
                 WorkingDirectories.Remove(a);
