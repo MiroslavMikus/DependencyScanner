@@ -165,5 +165,17 @@ namespace DependencyScanner.ViewModel.Properties {
                 this["WorkingDirectories"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ScanAfterDirectoryChange {
+            get {
+                return ((bool)(this["ScanAfterDirectoryChange"]));
+            }
+            set {
+                this["ScanAfterDirectoryChange"] = value;
+            }
+        }
     }
 }

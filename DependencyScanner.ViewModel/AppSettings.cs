@@ -156,5 +156,20 @@ namespace DependencyScanner.ViewModel
                 }
             }
         }
+
+
+        private bool _scanAfterDirectoryChange = Properties.Settings.Default.ScanAfterDirectoryChange;
+        public bool ScanAfterDirectoryChange
+        {
+            get { return _scanAfterDirectoryChange; }
+            set
+            {
+                if (Set(ref _scanAfterDirectoryChange, value))
+                {
+                    Properties.Settings.Default.ScanAfterDirectoryChange = value;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
     }
 }

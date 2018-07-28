@@ -57,6 +57,12 @@ namespace DependencyScanner.ViewModel
                     Properties.Settings.Default.WorkingDirectory = value;
 
                     Properties.Settings.Default.Save();
+
+                    if (AppSettings.Instance.ScanAfterDirectoryChange &&
+                        !string.IsNullOrEmpty(value))
+                    {
+                        ScanCommand.Execute(null);
+                    }
                 }
             }
         }
@@ -119,7 +125,7 @@ namespace DependencyScanner.ViewModel
                                 WorkingDirectories.Add(WorkingDirectory);
                             }
 
-                            if (AppSettings.Instance.AutoScanAfterPickingDirectory)
+                            if (AppSettings.Instance.AutoScanAfterPickingDirectory && !AppSettings.Instance.ScanAfterDirectoryChange)
                             {
                                 ScanCommand.Execute(null);
                             }

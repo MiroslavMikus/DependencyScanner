@@ -133,6 +133,12 @@
                                     </StackPanel>
                                 </Controls:ToggleSwitch.ToolTip>
                             </Controls:ToggleSwitch>
+
+                            <Controls:ToggleSwitch OnLabel="Trigger new scan after directory change" OffLabel="Do not trigger new scan after directory change" 
+                                               IsChecked="{Binding ScanAfterDirectoryChange}"
+                                               />
+
+
                             <Label Content="Show / Hide action buttons in solution detail"/>
                             <Controls:ToggleSwitch OnLabel="Show terminal" OffLabel="Hide terminal" IsChecked="{Binding ShowCmdButton}"/>
                             <Controls:ToggleSwitch OnLabel="Show folder" OffLabel="Hide folder" IsChecked="{Binding ShowFolderButton}"/>
