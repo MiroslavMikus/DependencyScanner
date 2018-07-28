@@ -41,9 +41,10 @@ namespace DependencyScanner.ViewModel
         public RelayCommand PickWorkingDirectoryCommand { get; private set; }
         public RelayCommand ScanCommand { get; private set; }
         public RelayCommand CancelCommand { get; private set; }
+        public RelayCommand<string> RemoveWorkingDirectoryCommand { get; private set; }
 
         private ObservableCollection<string> _workingDirectories;
-        public ObservableCollection<string> WorkingDirectories { get => _workingDirectories; set => Set( ref _workingDirectories, value); }
+        public ObservableCollection<string> WorkingDirectories { get => _workingDirectories; set => Set(ref _workingDirectories, value); }
 
         private string _workingDirectory;
         public string WorkingDirectory { get => _workingDirectory; set => Set(ref _workingDirectory, value); }
@@ -71,6 +72,13 @@ namespace DependencyScanner.ViewModel
             {
                 solution1
             };
+
+            WorkingDirectories = new ObservableCollection<string>()
+            {
+                "First directory",
+                "Second directory"
+            };
+            WorkingDirectory = "Selected directory";
         }
 
         public BrowseViewModel(IScanner scanner, IMessenger messenger)
@@ -94,11 +102,9 @@ namespace DependencyScanner.ViewModel
 
                             _messenger.Send<ClearResultEvent>(new ClearResultEvent());
 
-                            var allWorkingdirectories = AppSettings.Instance.WorkingDirectories;
-
-                            if (!allWorkingdirectories.Contains(WorkingDirectory))
+                            if (!WorkingDirectories.Contains(WorkingDirectory))
                             {
-                                allWorkingdirectories.Add(WorkingDirectory);
+                                WorkingDirectories.Add(WorkingDirectory);
                             }
 
                             Properties.Settings.Default.WorkingDirectory = WorkingDirectory;
@@ -144,7 +150,25 @@ namespace DependencyScanner.ViewModel
                 _cancellationTokenSource?.Cancel();
             });
 
-            WorkingDirectories = new ObservableCollection<string>(Properties.Settings.Default.WorkingDirectories.OfType<string>());
+            RemoveWorkingDirectoryCommand = new RelayCommand<string>(a =>
+            {
+                if (string.IsNullOrEmpty(a))
+                {
+                    return;
+                }
+
+                WorkingDirectories.Remove(a);
+            });
+
+
+            if (Properties.Settings.Default.WorkingDirectories != null)
+            {
+                WorkingDirectories = new ObservableCollection<string>(Properties.Settings.Default.WorkingDirectories.OfType<string>());
+            }
+            else
+            {
+                WorkingDirectories = new ObservableCollection<string>();
+            }
 
             WorkingDirectories.CollectionChanged += (s, e) =>
             {
