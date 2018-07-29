@@ -123,8 +123,6 @@
                                     Margin="0 10 0 0"
                                     CommandParameter="https://github.com/MiroslavMikus/DependencyScanner/issues"/>
                             <Label Content="Scan: " />
-                            <Controls:ToggleSwitch OnLabel="Execute scan on app start" OffLabel="Do not execute scan on app start" 
-                                               IsChecked="{Binding ExecuteScanOnInit}"/>
                             <Controls:ToggleSwitch OnLabel="Execute after picking directory" OffLabel="Do not execute scan after picking directory" 
                                                IsChecked="{Binding AutoScanAfterPickingDirectory}"/>
                             <Controls:ToggleSwitch OnLabel="Update remote references while scanning" OffLabel="Do not update remote references while scanning" 
@@ -265,7 +263,9 @@
                         <ComboBox MinWidth="200" Height="24" Margin="5,5,0,5"
                                   ItemsSource="{Binding WorkingDirectories}"
                                   SelectedItem="{Binding WorkingDirectory}"
-                                  ItemTemplate="{StaticResource WorkingDirectoryTemplate}">
+                                  ItemTemplate="{StaticResource WorkingDirectoryTemplate}"
+                                  IsEnabled="{Binding IsScanning, Converter={StaticResource InvertBool}}"
+                                  >
                         </ComboBox>
                     </StackPanel>
                     <Grid Grid.Row="1">
@@ -284,22 +284,31 @@
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
                             <Label Content="Solutions: " VerticalAlignment="Center"/>
                             <TextBox Margin="2" Width="180"
-                                     Text="{Binding SolutionFilter, Delay=300, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding PrimaryFilter, Delay=300, UpdateSourceTrigger=PropertyChanged}"
                                      Controls:TextBoxHelper.ClearTextButton="True"
-                                     Controls:TextBoxHelper.Watermark="Search...">
-                            </TextBox>
+                                     Controls:TextBoxHelper.Watermark="Search..."/>
                         </StackPanel>
-                        <ListBox x:Name="AllSolutions" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FilterScanResult}" Margin="5">
+                        <ListBox x:Name="AllSolutions" Grid.Row="1" Grid.Column="0" 
+                                 Margin="5"
+                                 ItemsSource="{Binding PrimaryFilterResult}" 
+                                 SelectedItem="{Binding PrimarySelectedItem, Delay=250}"
+                                 >
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type model:SolutionResult}">
                                     <templates:SolutionTemplate DataContext="{Binding}"/>
                                 </DataTemplate>
                             </ListBox.Resources>
                         </ListBox>
-                        <Label Content="Projects: " Grid.Row="0" Grid.Column="2"/>
+                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
+                        <Label Content="Projects: " />
+                            <TextBox Margin="2" Width="180"
+                                     Text="{Binding SecondaryFilter, Delay=300, UpdateSourceTrigger=PropertyChanged}"
+                                     Controls:TextBoxHelper.ClearTextButton="True"
+                                     Controls:TextBoxHelper.Watermark="Search..."/>
+                        </StackPanel>
                         <ListBox Margin="5" x:Name="Projects" 
                                  Grid.Row="1" Grid.Column="2"
-                                 ItemsSource="{Binding ElementName=AllSolutions, Path=SelectedItem.Projects}">
+                                 ItemsSource="{Binding SecondaryFilterResult}">
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type model:ProjectResult}">
                                     <templates:ProjectTemplate DataContext="{Binding}"/>

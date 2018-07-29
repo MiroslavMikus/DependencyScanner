@@ -16,20 +16,6 @@ namespace DependencyScanner.ViewModel
         private static AppSettings _instance;
         public static AppSettings Instance { get => _instance ?? (_instance = new AppSettings()); }
 
-        private bool _executeScanOnInit = Properties.Settings.Default.ExecuteScanOnInit;
-        public bool ExecuteScanOnInit
-        {
-            get { return _executeScanOnInit; }
-            set
-            {
-                if (Set(ref _executeScanOnInit, value))
-                {
-                    Properties.Settings.Default.ExecuteScanOnInit = value;
-                    Properties.Settings.Default.Save();
-                }
-            }
-        }
-
         private bool _showCmdButton = Properties.Settings.Default.ShowCmdButton;
         public bool ShowCmdButton
         {

@@ -48,7 +48,7 @@ namespace DependencyScanner.ViewModel
                 {
                     Process.Start(a);
                 }
-                catch
+                catch (Exception ex)
                 {
                     // todo log here
                 }

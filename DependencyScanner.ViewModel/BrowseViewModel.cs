@@ -23,7 +23,7 @@ using System.Linq;
 
 namespace DependencyScanner.ViewModel
 {
-    public class BrowseViewModel : SolutionBaseViewModel<SolutionResult>
+    public class BrowseViewModel : FilterViewModelBase<SolutionResult, ProjectResult>
     {
         private readonly IScanner _scanner;
         private readonly IMessenger _messenger;
@@ -86,7 +86,7 @@ namespace DependencyScanner.ViewModel
             var solution1 = new SolutionResult(FakeInfo());
             solution1.Projects.Add(project1);
 
-            ScanResult = new ObservableCollection<SolutionResult>()
+            PrimaryCollectoion = new ObservableCollection<SolutionResult>()
             {
                 solution1
             };
@@ -203,15 +203,7 @@ namespace DependencyScanner.ViewModel
                 Properties.Settings.Default.Save();
             };
 
-            if (!string.IsNullOrEmpty(Properties.Settings.Default.WorkingDirectory))
-            {
-                WorkingDirectory = Properties.Settings.Default.WorkingDirectory;
-
-                if (AppSettings.Instance.ExecuteScanOnInit)
-                {
-                    ScanCommand.Execute(null);
-                }
-            }
+            WorkingDirectory = Properties.Settings.Default.WorkingDirectory;
         }
 
         private Task Scan(CancellationToken Token)
@@ -231,23 +223,33 @@ namespace DependencyScanner.ViewModel
 
                 var scanResult = _scanner.ScanSolutions(WorkingDirectory, progress);
 
-                ScanResult = new ObservableCollection<SolutionResult>(scanResult);
+                PrimaryCollectoion = new ObservableCollection<SolutionResult>(scanResult);
 
-                FilterScanResult = CollectionViewSource.GetDefaultView(ScanResult);
-
-                FilterScanResult.Filter = FilterJob;
-
-                _messenger.Send<IEnumerable<SolutionResult>>(ScanResult);
+                _messenger.Send<IEnumerable<SolutionResult>>(PrimaryCollectoion);
             });
         }
 
-        protected override bool FilterJob(object value)
+        protected override bool PrimaryFilterJob(object value)
         {
-            if (value is SolutionResult input && !string.IsNullOrEmpty(SolutionFilter))
+            if (value is SolutionResult input && !string.IsNullOrEmpty(PrimaryFilter))
             {
-                return input.Info.Name.IndexOf(SolutionFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+                return input.Info.Name.IndexOf(PrimaryFilter, StringComparison.OrdinalIgnoreCase) >= 0;
             }
             return true;
+        }
+
+        protected override bool SecondaryFilterJob(object value)
+        {
+            if (value is ProjectResult input && !string.IsNullOrEmpty(SecondaryFilter))
+            {
+                return input.ProjectInfo.Name.IndexOf(SecondaryFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+            }
+            return true;
+        }
+
+        protected override IEnumerable<ProjectResult> GetSecondaryCollection(SolutionResult primary)
+        {
+            return primary.Projects;
         }
     }
 }
