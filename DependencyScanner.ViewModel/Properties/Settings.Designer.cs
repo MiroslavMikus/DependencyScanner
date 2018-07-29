@@ -177,5 +177,17 @@ namespace DependencyScanner.ViewModel.Properties {
                 this["ScanAfterDirectoryChange"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PreferedTextEditor {
+            get {
+                return ((string)(this["PreferedTextEditor"]));
+            }
+            set {
+                this["PreferedTextEditor"] = value;
+            }
+        }
     }
 }

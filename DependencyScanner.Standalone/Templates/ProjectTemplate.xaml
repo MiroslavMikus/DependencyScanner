@@ -33,7 +33,7 @@
         <Label Grid.Row="1" Content="{Binding ProjectInfo.FullName}" FontWeight="Regular" FontSize="11"/>
         <StackPanel Grid.Row="2" Orientation="Horizontal" >
             <Button Margin="2" Content="Nuspec" 
-                    Command="{Binding ElementName=TheMainWindow, Path=DataContext.RunCommand}"
+                    Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenTextFileCommand}"
                     CommandParameter="{Binding NuspecInfo.FullName}"
                     Visibility="{Binding NuspecInfo, Converter={StaticResource NullToCollaps}}"
                     >
@@ -45,7 +45,7 @@
                 </Button.ToolTip>
             </Button>
             <Button Margin="4 2 2 2" Content="Package" 
-                    Command="{Binding ElementName=TheMainWindow, Path=DataContext.RunCommand}"
+                    Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenTextFileCommand}"
                     CommandParameter="{Binding PackageInfo.FullName}"
                     Visibility="{Binding PackageInfo, Converter={StaticResource NullToCollaps}}">
                 <Button.ToolTip>

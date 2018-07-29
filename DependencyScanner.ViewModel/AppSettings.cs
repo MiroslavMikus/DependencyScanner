@@ -143,7 +143,6 @@ namespace DependencyScanner.ViewModel
             }
         }
 
-
         private bool _scanAfterDirectoryChange = Properties.Settings.Default.ScanAfterDirectoryChange;
         public bool ScanAfterDirectoryChange
         {
@@ -153,6 +152,20 @@ namespace DependencyScanner.ViewModel
                 if (Set(ref _scanAfterDirectoryChange, value))
                 {
                     Properties.Settings.Default.ScanAfterDirectoryChange = value;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
+
+        private string _preferedTextEditor = Properties.Settings.Default.PreferedTextEditor;
+        public string PreferedTextEditor
+        {
+            get { return _preferedTextEditor; }
+            set
+            {
+                if (Set(ref _preferedTextEditor, value))
+                {
+                    Properties.Settings.Default.PreferedTextEditor = value;
                     Properties.Settings.Default.Save();
                 }
             }

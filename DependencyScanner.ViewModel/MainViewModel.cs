@@ -17,6 +17,7 @@ namespace DependencyScanner.ViewModel
         public RelayCommand ClearNuspec { get; }
         public RelayCommand<string> OpenCmdCommand { get; }
         public RelayCommand<string> OpenLinkCommand { get; }
+        public RelayCommand<string> OpenTextFileCommand { get; }
 
         public AppSettings MainSettings { get; } = AppSettings.Instance;
         public BrowseViewModel BrowseVM { get; }
@@ -56,6 +57,12 @@ namespace DependencyScanner.ViewModel
 
             OpenCmdCommand = new RelayCommand<string>(a =>
             {
+                if (string.IsNullOrEmpty(a))
+                {
+                    return;
+                    // todo log here
+                }
+
                 var startInfo = new ProcessStartInfo
                 {
                     WorkingDirectory = a,
@@ -119,6 +126,31 @@ namespace DependencyScanner.ViewModel
                     // log here!
                 }
             });
+
+            OpenTextFileCommand = new RelayCommand<string>(a =>
+            {
+                //if (string.IsNullOrEmpty(a))
+                //{
+                //    return;
+                //    // todo log here
+                //}
+
+                var startInfo = new ProcessStartInfo
+                {
+                    Arguments = a,
+                    WindowStyle = ProcessWindowStyle.Normal,
+                    FileName = GetPreferedTextEditor()
+                };
+
+                try
+                {
+                    Process.Start(startInfo);
+                }
+                catch
+                {
+                    // todo log here
+                }
+            });
         }
 
         private string GetTerminalTool()
@@ -128,6 +160,18 @@ namespace DependencyScanner.ViewModel
             if (string.IsNullOrEmpty(terminalTool))
             {
                 terminalTool = "cmd.exe";
+            }
+
+            return terminalTool;
+        }
+
+        private string GetPreferedTextEditor()
+        {
+            string terminalTool = AppSettings.Instance.PreferedTextEditor;
+
+            if (string.IsNullOrEmpty(terminalTool))
+            {
+                terminalTool = "notepad";
             }
 
             return terminalTool;
