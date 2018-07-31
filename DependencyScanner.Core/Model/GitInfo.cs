@@ -11,10 +11,12 @@ namespace DependencyScanner.Core.Model
     public class GitInfo : ObservableObject
     {
         public FileInfo Root { get; }
-        public string RemoteUrl { get; private set; }
-        public IEnumerable<string> BranchList { get; private set; }
-        public bool IsClean { get => Status.Contains("working tree clean"); }
-        public bool IsBehind { get => Status.Contains("Your branch is behind"); }
+
+        private string _remoteUrl;
+        public string RemoteUrl { get => _remoteUrl; private set => Set(ref _remoteUrl, value); }
+
+        private IEnumerable<string> _branchList;
+        public IEnumerable<string> BranchList { get => _branchList; private set => Set(ref _branchList, value); }
 
         private string _currentBranch;
         public string CurrentBranch
@@ -24,7 +26,7 @@ namespace DependencyScanner.Core.Model
             {
                 if (Set(ref _currentBranch, value))
                 {
-                    Task.Run(() => 
+                    Task.Run(() =>
                     {
                         Checkout(value);
                         Status = GitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
@@ -47,25 +49,12 @@ namespace DependencyScanner.Core.Model
         }
 
         public RelayCommand PullCommand { get; }
+        public bool IsClean { get => Status.Contains("working tree clean"); }
+        public bool IsBehind { get => Status.Contains("Your branch is behind"); }
 
         public GitInfo(string root)
         {
             Root = new FileInfo(root);
-
-            if (FileScanner.ExecuteGitFetchWitScan)
-            {
-                GitEngine.GitProcess(Root.DirectoryName, GitCommand.UpdateRemote);
-            }
-
-            var branches = GitEngine.GitProcess(Root.DirectoryName, GitCommand.BranchList);
-
-            BranchList = GitParser.GetBranchList(branches);
-
-            _currentBranch = GitParser.GetCurrentBranch(branches);
-
-            Status = GitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
-
-            RemoteUrl = GitEngine.GitExecute(Root.DirectoryName, GitCommand.RemoteBranch, a => GitParser.GetRemoteUrl(a));
 
             PullCommand = new RelayCommand(() =>
             {
@@ -74,6 +63,24 @@ namespace DependencyScanner.Core.Model
                     Pull();
                     Status = GitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
                 });
+            });
+
+            Task.Run(() =>
+            {
+                if (FileScanner.ExecuteGitFetchWitScan)
+                {
+                    var result = GitEngine.GitProcess(Root.DirectoryName, GitCommand.UpdateRemote);
+                }
+
+                var branches = GitEngine.GitProcess(Root.DirectoryName, GitCommand.BranchList);
+
+                BranchList = GitParser.GetBranchList(branches);
+
+                _currentBranch = GitParser.GetCurrentBranch(branches);
+
+                Status = GitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
+
+                RemoteUrl = GitEngine.GitExecute(Root.DirectoryName, GitCommand.RemoteBranch, a => GitParser.GetRemoteUrl(a));
             });
         }
 
