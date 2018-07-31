@@ -12,7 +12,8 @@ namespace DependencyScanner.Core.Model
         public string Status { get; private set; }
         public string RemoteUrl { get; private set; }
         public IEnumerable<string> BranchList { get; private set; }
-        public bool UpToDate { get => Status.Contains("working tree clean"); }
+        public bool IsClean { get => Status.Contains("working tree clean"); }
+        public bool IsBehind { get => Status.Contains("Your branch is behind"); }
 
         public GitInfo(string root)
         {

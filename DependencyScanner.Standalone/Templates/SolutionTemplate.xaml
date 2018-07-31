@@ -46,7 +46,11 @@
                 <Label.Style>
                     <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding GitInformation.UpToDate}" Value="False">
+                            <DataTrigger Binding="{Binding GitInformation.IsBehind}" Value="True">
+                                <Setter Property="Foreground" Value="Green"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding GitInformation.IsClean}" Value="False">
                                 <Setter Property="Foreground" Value="Red"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -115,7 +119,7 @@
                     <MultiBinding Converter="{StaticResource BoolAnd}">
                         <Binding RelativeSource="{RelativeSource AncestorType={x:Type Window}}" Path="DataContext.MainSettings.ShowOpenUrlButton"/>
                         <Binding Converter="{StaticResource NullToFalse}" Path="GitInformation"/>
-                    </MultiBinding> 
+                    </MultiBinding>
                 </Button.Visibility>
                 <iconPack:PackIconFontAwesome Kind="EdgeBrands" />
             </Button>

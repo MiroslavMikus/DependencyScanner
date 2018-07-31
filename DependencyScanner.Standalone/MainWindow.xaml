@@ -156,7 +156,7 @@
                                 </TextBox>
                                 <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0" Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenCmdCommand}"/>
                             </StackPanel>
-                            <TextBlock Text="Prefered web browser" Margin="0 10 0 0"/>
+                            <TextBlock Text="Prefered web browser:" Margin="0 10 0 0"/>
                             <StackPanel Orientation="Horizontal" >
                                 <TextBox Margin="0 10 20 0" Width="300"
                                      Controls:TextBoxHelper.ClearTextButton="True"
@@ -166,7 +166,7 @@
                                 <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0" Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenLinkCommand}"
                                     CommandParameter="https://github.com/MiroslavMikus/"/>
                             </StackPanel>
-                            <TextBlock Text="Prefered text editor" Margin="0 10 0 0"/>
+                            <TextBlock Text="Prefered text editor:" Margin="0 10 0 0"/>
                             <StackPanel Orientation="Horizontal" >
                                 <TextBox Margin="0 10 20 0" Width="300"
                                      Controls:TextBoxHelper.ClearTextButton="True"
