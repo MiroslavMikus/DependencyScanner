@@ -32,22 +32,16 @@
                    >
         </TextBlock>
         <StackPanel Orientation="Horizontal" Margin="4" Grid.Row="2" Visibility="{Binding GitInformation, Converter={StaticResource NullToCollapse}}">
-            <Label>
-                <iconPack:PackIconFontAwesome Kind="CodeBranchSolid" Margin="0 0 4 0" />
-                <Label.ToolTip>
-                    <StackPanel>
-                        <Label Content="All local branches:" FontWeight="Bold"/>
-                        <ListView ItemsSource="{Binding GitInformation.BranchList}"/>
-                    </StackPanel>
-                </Label.ToolTip>
-            </Label>
-
-            <Label>
+            <TextBlock VerticalAlignment="Center" Grid.Column="0" 
+                       Text="Status:"
+                       Margin="0 0 5 0"
+                       />
+            <Label Margin="0 0 5 0">
                 <Label.Style>
                     <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding GitInformation.IsBehind}" Value="True">
-                                <Setter Property="Foreground" Value="Green"/>
+                                <Setter Property="Foreground" Value="Lime"/>
                             </DataTrigger>
 
                             <DataTrigger Binding="{Binding GitInformation.IsClean}" Value="False">
@@ -56,7 +50,7 @@
                         </Style.Triggers>
                     </Style>
                 </Label.Style>
-                <iconPack:PackIconFontAwesome Kind="InfoCircleSolid" Margin="0 0 4 0" />
+                <iconPack:PackIconFontAwesome Kind="InfoCircleSolid" />
                 <Label.ToolTip>
                     <StackPanel>
                         <Label Content="Git status" FontWeight="Bold"/>
@@ -64,15 +58,20 @@
                     </StackPanel>
                 </Label.ToolTip>
             </Label>
+            
+            <Button Height="25" Width="25" Padding="1" Margin="0 0 5 0" ToolTip="Git Pull"
+                    IsEnabled="{Binding GitInformation.IsClean}"
+                    Command="{Binding GitInformation.PullCommand}">
 
-            <TextBlock VerticalAlignment="Center" Grid.Column="0" Text="{Binding GitInformation.CurrentBranch, StringFormat='Branch: {0}'}"/>
-
+                <iconPack:PackIconFontAwesome Kind="CodeBranchSolid" />
+            </Button>
+            <ComboBox ItemsSource="{Binding GitInformation.BranchList}" 
+                      MinWidth="100" 
+                      Margin="2 0 5 0"
+                      HorizontalAlignment="left"    
+                      SelectedItem="{Binding GitInformation.CurrentBranch, Mode=TwoWay}"
+                      IsEnabled="{Binding GitInformation.IsClean}"/>
         </StackPanel>
-        <!--<ComboBox Grid.Column="1"
-                      ItemsSource="{Binding GitInformation.BranchList}" 
-                      Width="200" 
-                      HorizontalAlignment="left"/>-->
-        <!--</Grid>-->
         <StackPanel Grid.Row="3" Orientation="Horizontal" >
             <StackPanel.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
