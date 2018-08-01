@@ -75,6 +75,7 @@
     <Compile Include="Model\DefaultProgress.cs" />
     <Compile Include="Model\GitInfo.cs" />
     <Compile Include="Model\ProgressMessage.cs" />
+    <Compile Include="Model\ProjectReference.cs" />
     <Compile Include="Model\ProjectResult.cs" />
     <Compile Include="ProjectComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

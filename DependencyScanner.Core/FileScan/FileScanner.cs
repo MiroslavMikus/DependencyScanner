@@ -56,10 +56,6 @@ namespace DependencyScanner.Core
                     var packageInfo = new FileInfo(packagePaths.First());
 
                     projectResult = new ProjectResult(projectInfo, packageInfo);
-
-                    var file = new PackageReferenceFile(packageInfo.FullName);
-
-                    projectResult.References.AddRange(file.GetPackageReferences().Select(a => new ProjectReference(a)));
                 }
                 else
                 {

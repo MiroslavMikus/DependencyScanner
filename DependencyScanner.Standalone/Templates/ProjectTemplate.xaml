@@ -28,10 +28,15 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="{Binding ProjectInfo.Name}" FontWeight="Bold" FontSize="14"/>
         <Label Grid.Row="1" Content="{Binding ProjectInfo.FullName}" FontWeight="Regular" FontSize="11"/>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" >
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Label Content="Framework version: "/>
+            <Label Content="{Binding FrameworkVersion}" FontWeight="Bold"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" >
             <Button Margin="2" Content="Nuspec" 
                     Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenTextFileCommand}"
                     CommandParameter="{Binding NuspecInfo.FullName}"
