@@ -21,7 +21,13 @@ namespace DependencyScanner.Standalone
     /// </summary>
     public partial class App : Application
     {
-        public static readonly string LogPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "DependencyScanner", "Log.txt");
+        private const string AppName = "DependencyScanner";
+
+        public static readonly string DebugPath = GetLogPath("Debug.txt");
+        public static readonly string LogPath = GetLogPath("Info.txt");
+        public static readonly string FatalPath = GetLogPath("Fatal.txt");
+
+        private static string GetLogPath(string fileName) => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), AppName, fileName);
 
         public App()
         {
@@ -31,12 +37,12 @@ namespace DependencyScanner.Standalone
 
         private void Current_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            // todo log here
+            Log.Logger.Fatal(e.Exception, "DispatcherUnhandledException");
         }
 
         private void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            // todo log here
+            Log.Logger.Fatal("CurrentDomain.UnhandledException -> {obj}", e.ExceptionObject);
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -51,11 +57,19 @@ namespace DependencyScanner.Standalone
             // Services
             builder.Register(a =>
             {
-                return new LoggerConfiguration()
+                var logger = new LoggerConfiguration()
+#if DEBUG
                             .MinimumLevel.Debug()
-                            .WriteTo.File(LogPath)
+                            .WriteTo.Logger(l => l.MinimumLevel.Debug().WriteTo.File(DebugPath, rollingInterval: RollingInterval.Day))
+#endif
+                            .WriteTo.Logger(l => l.MinimumLevel.Information().WriteTo.File(LogPath))
+                            .WriteTo.Logger(l => l.WriteTo.File(FatalPath), Serilog.Events.LogEventLevel.Fatal)
                             .CreateLogger();
-            });
+
+                Log.Logger = logger;
+
+                return logger;
+            }).As<ILogger>();
 
             builder.RegisterType<FileScanner>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<Messenger>().AsImplementedInterfaces().InstancePerLifetimeScope();
