@@ -203,7 +203,7 @@ namespace DependencyScanner.ViewModel
 
         private Task Scan(CancellationToken Token)
         {
-            return Task.Run(() =>
+            return Task.Run(async () =>
             {
                 var progress = new DefaultProgress
                 {
@@ -216,7 +216,7 @@ namespace DependencyScanner.ViewModel
                     ProgressMessage = a.Message;
                 };
 
-                var scanResult = _scanner.ScanSolutions(WorkingDirectory, progress);
+                var scanResult = await _scanner.ScanSolutions(WorkingDirectory, progress);
 
                 PrimaryCollectoion = new ObservableCollection<SolutionResult>(scanResult);
 

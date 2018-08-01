@@ -49,8 +49,8 @@ namespace DependencyScanner.Core.Model
         }
 
         public RelayCommand PullCommand { get; }
-        public bool IsClean { get => Status.Contains("working tree clean"); }
-        public bool IsBehind { get => Status.Contains("Your branch is behind"); }
+        public bool IsClean { get => Status?.Contains("working tree clean") == true; }
+        public bool IsBehind { get => Status?.Contains("Your branch is behind") == true; }
 
         public GitInfo(string root)
         {
@@ -64,8 +64,11 @@ namespace DependencyScanner.Core.Model
                     Status = GitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
                 });
             });
+        }
 
-            Task.Run(() =>
+        internal async Task Init()
+        {
+            await Task.Run(() =>
             {
                 if (FileScanner.ExecuteGitFetchWitScan)
                 {
@@ -77,6 +80,8 @@ namespace DependencyScanner.Core.Model
                 BranchList = GitParser.GetBranchList(branches);
 
                 _currentBranch = GitParser.GetCurrentBranch(branches);
+
+                RaisePropertyChanged(nameof(CurrentBranch));
 
                 Status = GitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
 

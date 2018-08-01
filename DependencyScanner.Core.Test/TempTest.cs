@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DependencyScanner.Core.Test
@@ -25,11 +26,11 @@ namespace DependencyScanner.Core.Test
         }
 
         [TestMethod]
-        public void CheckConsolidateSolution()
+        public async Task CheckConsolidateSolution()
         {
             var scan = new FileScanner();
 
-            var solution = scan.ScanSolution(@"F:\s\Serva.Application.OperationControlCenter");
+            var solution = await scan.ScanSolution(@"F:\s\Serva.Application.OperationControlCenter");
 
             var comparer = new ProjectComparer();
 

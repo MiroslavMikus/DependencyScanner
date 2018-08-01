@@ -26,7 +26,7 @@ namespace DependencyScanner.Core
         string[] GetNuspec(string rootDirectory) => Directory.GetFiles(rootDirectory, NuspecPattern, SearchOption.TopDirectoryOnly);
         string[] GetGitFolder(DirectoryInfo dir) => Directory.GetDirectories(dir.FullName, GitPattern, SearchOption.TopDirectoryOnly);
 
-        public SolutionResult ScanSolution(string rootDirectory)
+        public async Task<SolutionResult> ScanSolution(string rootDirectory)
         {
             var solutions = GetSolutions(rootDirectory);
 
@@ -35,10 +35,10 @@ namespace DependencyScanner.Core
                 throw new ArgumentException("There should be exactly one solution. Currently found: " + solutions.Count());
             }
 
-            return ExecuteSolutionScan(solutions[0]);
+            return await ExecuteSolutionScan(solutions[0]);
         }
 
-        private SolutionResult ExecuteSolutionScan(string solution)
+        private async Task<SolutionResult> ExecuteSolutionScan(string solution)
         {
             var result = new SolutionResult(new FileInfo(solution));
 
@@ -81,18 +81,22 @@ namespace DependencyScanner.Core
             if (!string.IsNullOrEmpty(gitPath))
             {
                 result.GitInformation = new GitInfo(gitPath);
+
+                await result.GitInformation.Init();
             }
 
             return result;
         }
 
-        public IEnumerable<SolutionResult> ScanSolutions(string rootDirectory, ICancelableProgress<ProgressMessage> progress)
+        public async Task<IEnumerable<SolutionResult>> ScanSolutions(string rootDirectory, ICancelableProgress<ProgressMessage> progress)
         {
             progress.Report(new ProgressMessage { Value = 0D, Message = "Searching for solutions" });
 
             var solutions = GetSolutions(rootDirectory);
 
             double Progress(int current) => Math.Round(current / (solutions.Count() / 100D), 2);
+
+            List<Task<SolutionResult>> SolutionsTask = new List<Task<SolutionResult>>();
 
             for (int i = 0; i < solutions.Length; i++)
             {
@@ -104,20 +108,15 @@ namespace DependencyScanner.Core
                 {
                     throw new OperationCanceledException("Operation was canceled by user");
                 }
-
-                yield return ExecuteSolutionScan(solution);
+                
+                SolutionsTask.Add(ExecuteSolutionScan(solution));
             }
-        }
 
-        public IEnumerable<SolutionResult> ScanMultipleDirectories(IEnumerable<string> directores, ICancelableProgress<ProgressMessage> progress)
-        {
-            foreach (var directory in directores)
-            {
-                foreach (var result in ScanSolutions(directory, progress))
-                {
-                    yield return result;
-                }
-            }
+            progress.Report(new ProgressMessage { Value = 0, Message = "Finishing scan" });
+
+            await Task.WhenAll(SolutionsTask);
+
+            return SolutionsTask.Select(a => a.Result);
         }
 
         private string SearchGit(string directory)
