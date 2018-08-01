@@ -10,10 +10,9 @@ namespace DependencyScanner.Core.Test
     public class NuspecUpdateTest
     {
         [TestMethod]
-        [Ignore]
         public void AddTags_Test()
         {
-            var docu = GetDocument(@"F:\s\Serva.Base\Serva.Base\Serva.Base.nuspec");
+            var docu = GetDocument(@"TestData\Markdig.Wpf.Editor.nuspec");
 
             var addResult = AddDependency(docu, "SomeNewPackage");
 
@@ -21,10 +20,9 @@ namespace DependencyScanner.Core.Test
         }
 
         [TestMethod]
-        [Ignore]
         public void ReadAllDependencies_Test()
         {
-            var docu = GetDocument(@"F:\s\Serva.Base\Serva.Base\Serva.Base.nuspec");
+            var docu = GetDocument(@"TestData\Markdig.Wpf.Editor.nuspec");
 
             var result = GetDependencies(docu);
         }

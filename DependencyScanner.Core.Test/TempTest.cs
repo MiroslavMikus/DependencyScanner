@@ -30,7 +30,7 @@ namespace DependencyScanner.Core.Test
         {
             var scan = new FileScanner();
 
-            var solution = await scan.ScanSolution(@"F:\s\Serva.Application.OperationControlCenter");
+            var solution = await scan.ScanSolution(@"F:\Projects\_GitHub\Exercise.DynamicProxy");
 
             var comparer = new ProjectComparer();
 

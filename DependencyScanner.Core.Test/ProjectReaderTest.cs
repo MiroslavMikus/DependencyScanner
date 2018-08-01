@@ -11,13 +11,12 @@ using static DependencyScanner.Core.FileScan.ProjectReader;
 namespace DependencyScanner.Core.Test
 {
     [TestClass]
-    [Ignore]
     public class ProjectReaderTest
     {
         [TestMethod]
         public void GetReferences_Test()
         {
-            var docu = GetDocument(@"F:\Projects\_Exercises_local\NewDependencies\NewDependencies\NewDependencies.csproj");
+            var docu = GetDocument(@"TestData\NewDependencies.csproj");
 
             var result = ReadPackageReferences(docu);
 
@@ -27,7 +26,7 @@ namespace DependencyScanner.Core.Test
         [TestMethod]
         public void ReadFrameworkVersion_Test()
         {
-            var docu = GetDocument(@"F:\Projects\_Exercises_local\NewDependencies\NewDependencies\NewDependencies.csproj");
+            var docu = GetDocument(@"TestData\NewDependencies.csproj");
 
             var result = ReadFrameworkVersion(docu);
 
