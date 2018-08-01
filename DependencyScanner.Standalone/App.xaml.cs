@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using DependencyScanner.Core;
+using DependencyScanner.Standalone.Properties;
 using DependencyScanner.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using MahApps.Metro;
@@ -31,8 +32,30 @@ namespace DependencyScanner.Standalone
 
         public App()
         {
+            string[] args = Environment.GetCommandLineArgs();
+
+            if (args.Contains("cleansettings"))
+            {
+                Settings.Default.Reset();
+                DependencyScanner.ViewModel.Properties.Settings.Default.Reset();
+            }
+
             AppDomain.CurrentDomain.UnhandledException += UnhandledException;
+
             Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            SetColors();
+
+            ILifetimeScope scope = BuildScope();
+
+            var window = scope.Resolve<MainWindow>();
+
+            window.Show();
+
+            Log.Logger.Debug("Starting app");
         }
 
         private void Current_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -45,13 +68,8 @@ namespace DependencyScanner.Standalone
             Log.Logger.Fatal("CurrentDomain.UnhandledException -> {obj}", e.ExceptionObject);
         }
 
-        protected override void OnStartup(StartupEventArgs e)
+        private static ILifetimeScope BuildScope()
         {
-            // set colors
-            var theme = ThemeManager.GetAppTheme(Standalone.Properties.Settings.Default.Theme_Name);
-            var accent = ThemeManager.GetAccent(Standalone.Properties.Settings.Default.Accent_Name);
-            ThemeManager.ChangeAppStyle(Current, accent, theme);
-
             var builder = new ContainerBuilder();
 
             // Services
@@ -81,17 +99,19 @@ namespace DependencyScanner.Standalone
             builder.RegisterType<BrowseViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<ConsolidateSolutionsViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<ConsolidateProjectsViewModel>().InstancePerLifetimeScope();
-            
+
             // View
             builder.Register(a => new MainWindow() { DataContext = a.Resolve<MainViewModel>() });
 
             var scope = builder.Build().BeginLifetimeScope();
+            return scope;
+        }
 
-            var window = scope.Resolve<MainWindow>();
-
-            window.Show();
-
-            Log.Logger.Debug("Starting app");
+        private static void SetColors()
+        {
+            var theme = ThemeManager.GetAppTheme(Standalone.Properties.Settings.Default.Theme_Name);
+            var accent = ThemeManager.GetAccent(Standalone.Properties.Settings.Default.Accent_Name);
+            ThemeManager.ChangeAppStyle(Current, accent, theme);
         }
 
         protected override void OnExit(ExitEventArgs e)

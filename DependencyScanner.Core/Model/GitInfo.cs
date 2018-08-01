@@ -70,7 +70,7 @@ namespace DependencyScanner.Core.Model
         {
             await Task.Run(() =>
             {
-                if (FileScanner.ExecuteGitFetchWitScan)
+                if (FileScanner.ExecuteGitFetchWithScan)
                 {
                     var result = GitEngine.GitProcess(Root.DirectoryName, GitCommand.UpdateRemote);
                 }

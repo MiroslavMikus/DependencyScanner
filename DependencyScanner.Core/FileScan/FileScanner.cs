@@ -12,7 +12,7 @@ namespace DependencyScanner.Core
 {
     public class FileScanner : IScanner
     {
-        public static bool ExecuteGitFetchWitScan { get; set; } = false;
+        public static bool ExecuteGitFetchWithScan { get; set; } = false;
 
         private const string PackagePattern = "packages.config";
         private const string SolutionPattern = "*.sln";

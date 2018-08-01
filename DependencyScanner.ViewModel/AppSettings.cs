@@ -10,7 +10,7 @@ namespace DependencyScanner.ViewModel
     {
         static AppSettings()
         {
-            FileScanner.ExecuteGitFetchWitScan = Properties.Settings.Default.ExecuteGitFetchWitScan;
+            FileScanner.ExecuteGitFetchWithScan = Properties.Settings.Default.ExecuteGitFetchWithScan;
         }
 
         private static AppSettings _instance;
@@ -114,7 +114,7 @@ namespace DependencyScanner.ViewModel
             }
         }
 
-        private bool _executeGitFetchWitScan = Properties.Settings.Default.ExecuteGitFetchWitScan;
+        private bool _executeGitFetchWitScan = Properties.Settings.Default.ExecuteGitFetchWithScan;
         public bool ExecuteGitFetchWitScan
         {
             get { return _executeGitFetchWitScan; }
@@ -122,8 +122,8 @@ namespace DependencyScanner.ViewModel
             {
                 if (Set(ref _executeGitFetchWitScan, value))
                 {
-                    FileScanner.ExecuteGitFetchWitScan = value;
-                    Properties.Settings.Default.ExecuteGitFetchWitScan = value;
+                    FileScanner.ExecuteGitFetchWithScan = value;
+                    Properties.Settings.Default.ExecuteGitFetchWithScan = value;
                     Properties.Settings.Default.Save();
                 }
             }

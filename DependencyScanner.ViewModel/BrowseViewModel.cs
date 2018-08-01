@@ -47,7 +47,7 @@ namespace DependencyScanner.ViewModel
         private ObservableCollection<string> _workingDirectories;
         public ObservableCollection<string> WorkingDirectories { get => _workingDirectories; set => Set(ref _workingDirectories, value); }
 
-        private string _workingDirectory;
+        private string _workingDirectory = null;
         public string WorkingDirectory
         {
             get => _workingDirectory;
@@ -200,7 +200,10 @@ namespace DependencyScanner.ViewModel
                 Properties.Settings.Default.Save();
             };
 
-            WorkingDirectory = Properties.Settings.Default.WorkingDirectory;
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.WorkingDirectory))
+            {
+                WorkingDirectory = Properties.Settings.Default.WorkingDirectory;
+            }
         }
 
         private Task Scan(CancellationToken Token)
