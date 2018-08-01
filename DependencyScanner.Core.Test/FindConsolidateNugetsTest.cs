@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace DependencyScanner.Core.Test
 {
     [TestClass]
+    [Ignore]
     public class FindConsolidateNugetsTest
     {
         private FileInfo FakeInfo() => new System.IO.FileInfo(@"C:\");

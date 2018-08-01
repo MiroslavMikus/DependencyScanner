@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace DependencyScanner.Core.FileScan
+namespace DependencyScanner.Core.Nuspec
 {
     public static class NuspecUpdater
     {
@@ -35,6 +35,16 @@ namespace DependencyScanner.Core.FileScan
             dep.Remove();
 
             return document;
+        }
+
+        internal static IEnumerable<string> GetDependencies(XDocument document)
+        {
+            return document
+                    .Element("package")
+                    .Element("metadata")
+                    .Element("dependencies")
+                    .Elements("dependency")
+                    .Select(a => a.Attribute("id").Value);
         }
     }
 }

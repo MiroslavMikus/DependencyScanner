@@ -11,6 +11,7 @@ using static DependencyScanner.Core.FileScan.ProjectReader;
 namespace DependencyScanner.Core.Test
 {
     [TestClass]
+    [Ignore]
     public class ProjectReaderTest
     {
         [TestMethod]
@@ -33,20 +34,5 @@ namespace DependencyScanner.Core.Test
             Assert.AreEqual("v4.6.1", result);
         }
     }
-
-    [TestClass]
-    public class NuspecUpdateTest
-    {
-        [TestMethod]
-        public void AddTags()
-        {
-            var docu = GetDocument(@"F:\s\Serva.Base\Serva.Base\Serva.Base.nuspec");
-
-            var addResult = NuspecUpdater.AddDependency(docu, "SomeNewPackage");
-
-            var removeResult = NuspecUpdater.RemoveDependency(docu, "SomeNewPackage");
-        }
-    }
-
 }
 

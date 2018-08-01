@@ -14,7 +14,9 @@ namespace DependencyScanner.Core.Test.GitTests
     {
         private string _exampleBranchList = "  fix/SyncWithUi\r\n* master\r\n";
         private string _exampleRemote = @"origin\thttps://github.com/MiroslavMikus/DependencyScanner.git (fetch)\r\norigin\thttps://github.com/MiroslavMikus/DependencyScanner.git (push)\r\n";
+
         [TestMethod]
+        [Ignore]
         public void Parser()
         {
             var processResult = GitEngine.GitProcess(Environment.CurrentDirectory, GitCommand.BranchList);

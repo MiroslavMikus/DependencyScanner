@@ -64,7 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileScan\FileScanner.cs" />
-    <Compile Include="NuspecUpdater\NuspecUpdater.cs" />
+    <Compile Include="Nuspec\NuspecComparer.cs" />
+    <Compile Include="Nuspec\NuspecUpdater.cs" />
     <Compile Include="FileScan\ProjectReader.cs" />
     <Compile Include="GitClient\GitCommand.cs" />
     <Compile Include="GitClient\GitEngine.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Model\ProgressMessage.cs" />
     <Compile Include="Model\ProjectReference.cs" />
     <Compile Include="Model\ProjectResult.cs" />
+    <Compile Include="Model\ProjectNuspecResult.cs" />
     <Compile Include="ProjectComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\SolutionResult.cs" />

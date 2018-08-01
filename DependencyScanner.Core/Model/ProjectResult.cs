@@ -12,7 +12,7 @@ namespace DependencyScanner.Core.Model
     {
         public FileInfo ProjectInfo { get; }
         public FileInfo PackageInfo { get; }
-        public FileInfo NuspecInfo { get; set; }
+        public FileInfo NuspecInfo { get; internal set; }
         public string FrameworkVersion { get; }
         public bool HasNuspec { get => NuspecInfo != null; }
 
@@ -33,6 +33,7 @@ namespace DependencyScanner.Core.Model
         public ProjectResult(FileInfo projectInfo, FileInfo packageInfo)
         {
             ProjectInfo = projectInfo;
+
             PackageInfo = packageInfo;
 
             // there are package references
