@@ -69,8 +69,6 @@
                                     Margin="0 10 0 0"
                                     CommandParameter="https://github.com/MiroslavMikus/DependencyScanner/issues"/>
                 <Label Content="Scan: " />
-                <Controls:ToggleSwitch OnLabel="Execute after picking directory" OffLabel="Do not execute scan after picking directory" 
-                                               IsChecked="{Binding AutoScanAfterPickingDirectory}"/>
                 <Controls:ToggleSwitch OnLabel="Update remote references while scanning" OffLabel="Do not update remote references while scanning" 
                                                IsChecked="{Binding ExecuteGitFetchWitScan}"
                                                >

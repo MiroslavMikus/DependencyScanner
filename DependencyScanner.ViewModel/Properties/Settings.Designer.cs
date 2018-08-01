@@ -109,18 +109,6 @@ namespace DependencyScanner.ViewModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AutoScanAfterPickingDirectory {
-            get {
-                return ((bool)(this["AutoScanAfterPickingDirectory"]));
-            }
-            set {
-                this["AutoScanAfterPickingDirectory"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ShowOpenUrlButton {
             get {

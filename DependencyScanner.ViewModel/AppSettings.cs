@@ -63,7 +63,7 @@ namespace DependencyScanner.ViewModel
         {
             get { return _preferedConsoleTool; }
             set
-            {
+           {
                 if (Set(ref _preferedConsoleTool, value))
                 {
                     Properties.Settings.Default.PreferedConsoleTool = value;
@@ -81,20 +81,6 @@ namespace DependencyScanner.ViewModel
                 if (Set(ref _preferencedWebBrowser, value))
                 {
                     Properties.Settings.Default.PreferencedWebBrowser = value;
-                    Properties.Settings.Default.Save();
-                }
-            }
-        }
-
-        private bool _autoScanAfterPickingDirectory = Properties.Settings.Default.AutoScanAfterPickingDirectory;
-        public bool AutoScanAfterPickingDirectory
-        {
-            get { return _autoScanAfterPickingDirectory; }
-            set
-            {
-                if (Set(ref _autoScanAfterPickingDirectory, value))
-                {
-                    Properties.Settings.Default.AutoScanAfterPickingDirectory = value;
                     Properties.Settings.Default.Save();
                 }
             }

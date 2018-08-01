@@ -124,11 +124,6 @@ namespace DependencyScanner.ViewModel
                             {
                                 WorkingDirectories.Add(WorkingDirectory);
                             }
-
-                            if (AppSettings.Instance.AutoScanAfterPickingDirectory && !AppSettings.Instance.ScanAfterDirectoryChange)
-                            {
-                                ScanCommand.Execute(null);
-                            }
                         }
                     }
                 });
@@ -225,7 +220,10 @@ namespace DependencyScanner.ViewModel
 
                 PrimaryCollectoion = new ObservableCollection<SolutionResult>(scanResult);
 
-                _messenger.Send<IEnumerable<SolutionResult>>(PrimaryCollectoion);
+                DispacherInvoke(() =>
+                {
+                    _messenger.Send<IEnumerable<SolutionResult>>(PrimaryCollectoion);
+                });
             });
         }
 
