@@ -367,6 +367,9 @@
                     </Grid>
                 </Grid>
             </TabItem>
+            <TabItem Header="Nuspec updater">
+                <components:NuspecUpdater DataContext="{Binding NuspecUpdaterViewModel}"/>
+            </TabItem>
         </TabControl>
     </Grid>
 </Controls:MetroWindow>

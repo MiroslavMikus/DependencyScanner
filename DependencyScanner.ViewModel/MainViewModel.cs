@@ -25,6 +25,7 @@ namespace DependencyScanner.ViewModel
         public BrowseViewModel BrowseVM { get; }
         public ConsolidateSolutionsViewModel ConsolidateSolutionsVM { get; }
         public ConsolidateProjectsViewModel ConsolidateProjectsViewModel { get; }
+        public NuspecUpdaterViewModel NuspecUpdaterViewModel { get; }
 
         public MainViewModel()
         {
@@ -34,11 +35,13 @@ namespace DependencyScanner.ViewModel
         public MainViewModel(BrowseViewModel browseViewModel,
                              ConsolidateSolutionsViewModel consolidateSolutionsViewModel,
                              ConsolidateProjectsViewModel consolidateProjectsViewModel,
+                             NuspecUpdaterViewModel nuspecUpdaterViewModel,
                              ILogger logger)
         {
             BrowseVM = browseViewModel;
             ConsolidateSolutionsVM = consolidateSolutionsViewModel;
             ConsolidateProjectsViewModel = consolidateProjectsViewModel;
+            NuspecUpdaterViewModel = nuspecUpdaterViewModel;
 
             _logger = logger;
 

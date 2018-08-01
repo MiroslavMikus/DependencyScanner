@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using DependencyScanner.Core;
+using DependencyScanner.Core.Nuspec;
 using DependencyScanner.Standalone.Properties;
 using DependencyScanner.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
@@ -17,9 +18,6 @@ using System.Windows.Threading;
 
 namespace DependencyScanner.Standalone
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         private const string AppName = "DependencyScanner";
@@ -93,12 +91,14 @@ namespace DependencyScanner.Standalone
             builder.RegisterType<Messenger>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<SolutionComparer>().InstancePerLifetimeScope();
             builder.RegisterType<ProjectComparer>().InstancePerLifetimeScope();
+            builder.RegisterType<NuspecComparer>().InstancePerLifetimeScope();
 
             // View Models
             builder.RegisterType<MainViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<BrowseViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<ConsolidateSolutionsViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<ConsolidateProjectsViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<NuspecUpdaterViewModel>().InstancePerLifetimeScope();
 
             // View
             builder.Register(a => new MainWindow() { DataContext = a.Resolve<MainViewModel>() });

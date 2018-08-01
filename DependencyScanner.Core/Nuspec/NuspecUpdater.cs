@@ -30,7 +30,7 @@ namespace DependencyScanner.Core.Nuspec
                     .Element("metadata")
                     .Element("dependencies")
                     .Elements("dependency")
-                    .Where(a => ids.Any(b => b== a.Attribute("id").Value));
+                    .Where(a => ids.Any(b => b == a.Attribute("id").Value));
 
             dep.Remove();
 
@@ -39,12 +39,20 @@ namespace DependencyScanner.Core.Nuspec
 
         internal static IEnumerable<string> GetDependencies(XDocument document)
         {
-            return document
-                    .Element("package")
-                    .Element("metadata")
-                    .Element("dependencies")
+            var docu = document
+                        .Element("package")
+                        .Element("metadata");
+
+            if (docu.Descendants("dependencies").Any())
+            {
+                return docu.Element("dependencies")
                     .Elements("dependency")
                     .Select(a => a.Attribute("id").Value);
+            }
+            else
+            {
+                return Enumerable.Empty<string>();
+            }
         }
     }
 }

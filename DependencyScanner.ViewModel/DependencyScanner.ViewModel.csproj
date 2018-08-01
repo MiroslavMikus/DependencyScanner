@@ -77,6 +77,8 @@
     <Compile Include="Events\ClearResultEvent.cs" />
     <Compile Include="Base\FilterViewModelBase.cs" />
     <Compile Include="MainViewModel.cs" />
+    <Compile Include="Model\SolutionNuspecCheckResult.cs" />
+    <Compile Include="NuspecUpdaterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -84,8 +86,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Base\SolutionBaseViewModel.cs" />
-    <Compile Include="SolutionProjectCompareResult.cs" />
-    <Compile Include="SolutionSelectionViewModel.cs" />
+    <Compile Include="Model\SolutionProjectCompareResult.cs" />
+    <Compile Include="Model\SolutionSelectionViewModel.cs" />
     <Compile Include="Tools\DispatcherTools.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -38,7 +38,7 @@
         </StackPanel>
         <StackPanel Grid.Row="3" Orientation="Horizontal" >
             <Button Margin="2" Content="Nuspec" 
-                    Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenTextFileCommand}"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenTextFileCommand}"
                     CommandParameter="{Binding NuspecInfo.FullName}"
                     Visibility="{Binding NuspecInfo, Converter={StaticResource NullToCollaps}}"
                     >
@@ -50,7 +50,7 @@
                 </Button.ToolTip>
             </Button>
             <Button Margin="4 2 2 2" Content="Package" 
-                    Command="{Binding ElementName=TheMainWindow, Path=DataContext.OpenTextFileCommand}"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenTextFileCommand}"
                     CommandParameter="{Binding PackageInfo.FullName}"
                     Visibility="{Binding PackageInfo, Converter={StaticResource NullToCollaps}}">
                 <Button.ToolTip>

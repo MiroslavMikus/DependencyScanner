@@ -20,6 +20,7 @@ namespace DependencyScanner.ViewModel
             set
             {
                 Set(ref _solutionFilter, value);
+
                 FilterScanResult?.Refresh();
             }
         }
