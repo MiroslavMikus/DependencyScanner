@@ -51,6 +51,7 @@ namespace DependencyScanner.Core.FileScan
         internal static string ReadFrameworkVersion(string path)
         {
             var docu = GetDocument(path);
+
             return ReadFrameworkVersion(docu);
         }
     }

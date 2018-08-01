@@ -27,6 +27,7 @@ namespace DependencyScanner.ViewModel
     {
         private readonly IScanner _scanner;
         private readonly IMessenger _messenger;
+        private readonly Serilog.ILogger _logger;
         private CancellationTokenSource _cancellationTokenSource;
 
         private bool _isScanning;
@@ -99,10 +100,11 @@ namespace DependencyScanner.ViewModel
             WorkingDirectory = "Selected directory";
         }
 
-        public BrowseViewModel(IScanner scanner, IMessenger messenger)
+        public BrowseViewModel(IScanner scanner, IMessenger messenger, Serilog.ILogger logger)
         {
             _scanner = scanner;
             _messenger = messenger;
+            _logger = logger;
 
             PickWorkingDirectoryCommand = new RelayCommand(() =>
             {
@@ -205,7 +207,7 @@ namespace DependencyScanner.ViewModel
         {
             return Task.Run(async () =>
             {
-                var progress = new DefaultProgress
+                var progress = new DefaultProgress(_logger)
                 {
                     Token = Token
                 };

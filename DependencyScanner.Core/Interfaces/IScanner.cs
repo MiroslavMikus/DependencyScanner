@@ -7,6 +7,6 @@ namespace DependencyScanner.Core.Interfaces
     public interface IScanner
     {
         Task<IEnumerable<SolutionResult>> ScanSolutions(string rootDirectory, ICancelableProgress<ProgressMessage> progress);
-        Task<SolutionResult> ScanSolution(string rootDirectory);
+        Task<SolutionResult> ScanSolution(string rootDirectory, ICancelableProgress<ProgressMessage> progress);
     }
 }

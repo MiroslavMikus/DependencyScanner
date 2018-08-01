@@ -39,6 +39,7 @@ namespace DependencyScanner.Core.GitClient
             {
                 sb.AppendLine(proc.StandardOutput.ReadLine());
             }
+
             return sb.ToString();
         }
     }

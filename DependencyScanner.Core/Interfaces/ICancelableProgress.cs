@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Threading;
 
 namespace DependencyScanner.Core.Interfaces
@@ -9,5 +10,6 @@ namespace DependencyScanner.Core.Interfaces
     public interface ICancelableProgress<T> : IProgress<T>
     {
         CancellationToken Token { get; }
+        ILogger Logger { get; }
     }
 }

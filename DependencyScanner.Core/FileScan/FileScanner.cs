@@ -26,19 +26,23 @@ namespace DependencyScanner.Core
         string[] GetNuspec(string rootDirectory) => Directory.GetFiles(rootDirectory, NuspecPattern, SearchOption.TopDirectoryOnly);
         string[] GetGitFolder(DirectoryInfo dir) => Directory.GetDirectories(dir.FullName, GitPattern, SearchOption.TopDirectoryOnly);
 
-        public async Task<SolutionResult> ScanSolution(string rootDirectory)
+        public async Task<SolutionResult> ScanSolution(string rootDirectory, ICancelableProgress<ProgressMessage> progress)
         {
             var solutions = GetSolutions(rootDirectory);
 
             if (solutions.Count() != 1)
             {
-                throw new ArgumentException("There should be exactly one solution. Currently found: " + solutions.Count());
+                var ex = new ArgumentException("There should be exactly one solution. Currently found: " + solutions.Count());
+
+                progress.Logger.Error(ex, "Exception in ScanSolution");
+
+                throw ex;
             }
 
-            return await ExecuteSolutionScan(solutions[0]);
+            return await ExecuteSolutionScan(solutions[0], progress);
         }
 
-        private async Task<SolutionResult> ExecuteSolutionScan(string solution)
+        private async Task<SolutionResult> ExecuteSolutionScan(string solution, ICancelableProgress<ProgressMessage> progress)
         {
             var result = new SolutionResult(new FileInfo(solution));
 
@@ -102,10 +106,12 @@ namespace DependencyScanner.Core
 
                 if (progress.Token.IsCancellationRequested)
                 {
+                    progress.Logger.Information("Cancelling scan");
+
                     throw new OperationCanceledException("Operation was canceled by user");
                 }
                 
-                SolutionsTask.Add(ExecuteSolutionScan(solution));
+                SolutionsTask.Add(ExecuteSolutionScan(solution, progress));
             }
 
             progress.Report(new ProgressMessage { Value = 0, Message = "Finishing scan" });

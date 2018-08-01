@@ -90,6 +90,15 @@ namespace DependencyScanner.Standalone
             var window = scope.Resolve<MainWindow>();
 
             window.Show();
+
+            Log.Logger.Debug("Starting app");
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            Log.Logger.Debug("Closing app");
+
+            base.OnExit(e);
         }
     }
 }
