@@ -1,7 +1,7 @@
 ﻿using DependencyScanner.Core.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using NuGet;
+using Serilog;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -13,6 +13,8 @@ namespace DependencyScanner.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+        private readonly ILogger _logger;
+
         public RelayCommand<string> RunCommand { get; }
         public RelayCommand ClearNuspec { get; }
         public RelayCommand<string> OpenCmdCommand { get; }
@@ -31,18 +33,22 @@ namespace DependencyScanner.ViewModel
 
         public MainViewModel(BrowseViewModel browseViewModel,
                              ConsolidateSolutionsViewModel consolidateSolutionsViewModel,
-                             ConsolidateProjectsViewModel consolidateProjectsViewModel)
+                             ConsolidateProjectsViewModel consolidateProjectsViewModel,
+                             ILogger logger)
         {
             BrowseVM = browseViewModel;
             ConsolidateSolutionsVM = consolidateSolutionsViewModel;
             ConsolidateProjectsViewModel = consolidateProjectsViewModel;
 
+            _logger = logger;
+
             RunCommand = new RelayCommand<string>(a =>
             {
                 if (string.IsNullOrEmpty(a))
                 {
+                    _logger.Warning($"Cant execute {nameof(RunCommand)}, the parameter is null or empty");
+
                     return;
-                    // todo log here
                 }
 
                 try
@@ -51,7 +57,7 @@ namespace DependencyScanner.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    // todo log here
+                    _logger.Error(ex, $"Error while executing {nameof(RunCommand)}");
                 }
             });
 
@@ -59,8 +65,9 @@ namespace DependencyScanner.ViewModel
             {
                 if (string.IsNullOrEmpty(a))
                 {
+                    _logger.Warning($"Cant execute {nameof(OpenCmdCommand)}, the parameter is null or empty");
+
                     return;
-                    // todo log here
                 }
 
                 var startInfo = new ProcessStartInfo
@@ -74,15 +81,16 @@ namespace DependencyScanner.ViewModel
                 {
                     Process.Start(startInfo);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // todo log here
+                    _logger.Error(ex, $"Error while executing {nameof(OpenCmdCommand)}");
                 }
             });
 
             OpenLinkCommand = new RelayCommand<string>(a =>
             {
                 string browser = AppSettings.Instance.PreferencedWebBrowser;
+
                 try
                 {
                     if (!string.IsNullOrEmpty(browser))
@@ -96,7 +104,7 @@ namespace DependencyScanner.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    // todo log here
+                    _logger.Error(ex, $"Error while executing {nameof(OpenLinkCommand)}");
                 }
             });
 
@@ -106,8 +114,9 @@ namespace DependencyScanner.ViewModel
 
                 if (string.IsNullOrEmpty(path))
                 {
+                    _logger.Warning($"Cant execute {nameof(ClearNuspec)}, the parameter is null or empty");
+
                     return;
-                    // todo log here
                 }
 
                 var startInfo = new ProcessStartInfo
@@ -121,20 +130,14 @@ namespace DependencyScanner.ViewModel
                 {
                     Process.Start(startInfo);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // log here!
+                    _logger.Error(ex, $"Error while executing {nameof(ClearNuspec)}");
                 }
             });
 
             OpenTextFileCommand = new RelayCommand<string>(a =>
             {
-                //if (string.IsNullOrEmpty(a))
-                //{
-                //    return;
-                //    // todo log here
-                //}
-
                 var startInfo = new ProcessStartInfo
                 {
                     Arguments = a,
@@ -146,9 +149,9 @@ namespace DependencyScanner.ViewModel
                 {
                     Process.Start(startInfo);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // todo log here
+                    _logger.Error(ex, $"Error while executing {nameof(OpenTextFileCommand)}");
                 }
             });
         }
