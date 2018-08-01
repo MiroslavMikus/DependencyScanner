@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using DependencyScanner.Core.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Serilog;
 
 namespace DependencyScanner.Core.Test
 {
@@ -9,12 +12,19 @@ namespace DependencyScanner.Core.Test
     [TestClass]
     public class TempTest
     {
+        ILogger logger = (new LoggerConfiguration().WriteTo.Console().CreateLogger());
+
         [TestMethod]
         public void ScanSolution()
         {
             var scan = new FileScanner();
 
-            var result = scan.ScanSolution(@"F:\Projects\_GitHub\Exercise.DynamicProxy");
+            var progress = new DefaultProgress(logger)
+            {
+                Token = default(CancellationToken)
+            };
+
+            var result = scan.ScanSolution(@"F:\Projects\_GitHub\Exercise.DynamicProxy", progress);
         }
 
         [TestMethod]
@@ -30,7 +40,12 @@ namespace DependencyScanner.Core.Test
         {
             var scan = new FileScanner();
 
-            var solution = await scan.ScanSolution(@"F:\Projects\_GitHub\Exercise.DynamicProxy");
+            var progress = new DefaultProgress(logger)
+            {
+                Token = default(CancellationToken)
+            };
+
+            var solution = await scan.ScanSolution(@"F:\Projects\_GitHub\Exercise.DynamicProxy", progress);
 
             var comparer = new ProjectComparer();
 
