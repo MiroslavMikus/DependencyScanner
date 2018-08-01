@@ -18,7 +18,7 @@ namespace DependencyScanner.Core.Model
             Info = info;
         }
 
-        public IEnumerable<PackageReference> GetSolutionReferences()
+        public IEnumerable<ProjectReference> GetSolutionReferences()
         {
             return Projects.SelectMany(a => a.References);
         }

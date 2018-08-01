@@ -82,7 +82,7 @@ namespace DependencyScanner.ViewModel
 
             var reference1 = new PackageReference("Nuget", new SemanticVersion(new Version(1, 1, 1, 2)), null, new System.Runtime.Versioning.FrameworkName("dot.Net", new Version(1, 2)), false);
             var project1 = new ProjectResult(FakeInfo(), FakeInfo());
-            project1.References.Add(reference1);
+            project1.References.Add(new ProjectReference(reference1));
             var solution1 = new SolutionResult(FakeInfo());
             solution1.Projects.Add(project1);
 

@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileScan\FileScanner.cs" />
+    <Compile Include="FileScan\ProjectReader.cs" />
     <Compile Include="GitClient\GitCommand.cs" />
     <Compile Include="GitClient\GitEngine.cs" />
     <Compile Include="GitClient\GitParser.cs" />
