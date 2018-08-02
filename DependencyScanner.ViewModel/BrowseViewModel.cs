@@ -68,38 +68,6 @@ namespace DependencyScanner.ViewModel
             }
         }
 
-        public BrowseViewModel()
-        {
-            if (!IsInDesignMode)
-            {
-                throw new Exception("Allowed only at design time");
-            }
-
-            IsScanning = true;
-            Progress = 50D;
-            ProgressMessage = "Scanning in designer";
-
-            FileInfo FakeInfo() => new FileInfo(@"F:\Projects\_GitHub\DependencyScanner\DependencyScanner.sln");
-
-            var reference1 = new PackageReference("Nuget", new SemanticVersion(new Version(1, 1, 1, 2)), null, new System.Runtime.Versioning.FrameworkName("dot.Net", new Version(1, 2)), false);
-            var project1 = new ProjectResult(FakeInfo(), FakeInfo());
-            project1.References.Add(new ProjectReference(reference1));
-            var solution1 = new SolutionResult(FakeInfo());
-            solution1.Projects.Add(project1);
-
-            PrimaryCollectoion = new ObservableCollection<SolutionResult>()
-            {
-                solution1
-            };
-
-            WorkingDirectories = new ObservableCollection<string>()
-            {
-                "First directory",
-                "Second directory"
-            };
-            WorkingDirectory = "Selected directory";
-        }
-
         public BrowseViewModel(IScanner scanner, IMessenger messenger, Serilog.ILogger logger)
         {
             _scanner = scanner;

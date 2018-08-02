@@ -20,25 +20,26 @@ namespace DependencyScanner.Core.Model
         public ICollection<ProjectResult> Projects { get => _projects; protected set => Set(ref _projects, value); }
 
         private GitInfo _gitInformation;
+        private readonly FileScanner _fileScanner;
+
         public GitInfo GitInformation { get => _gitInformation; internal set => Set(ref _gitInformation, value); }
 
         public RelayCommand RefreshCommand { get; }
 
-
-        public SolutionResult(FileInfo info)
+        public SolutionResult(FileInfo info, FileScanner fileScanner)
         {
             Info = info;
 
+            _fileScanner = fileScanner;
+
             RefreshCommand = new RelayCommand(async () =>
             {
-                var scanner = new FileScanner();
-
                 var progress = new DefaultProgress(Log.Logger)
                 {
                     Token = default(CancellationToken)
                 };
 
-                var result = await scanner.ScanSolution(Info.DirectoryName, progress);
+                var result = await _fileScanner.ScanSolution(Info.DirectoryName, progress);
 
                 Projects = result.Projects;
 

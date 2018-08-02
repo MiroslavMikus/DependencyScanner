@@ -29,13 +29,15 @@ namespace DependencyScanner.Core.Model
                     Task.Run(() =>
                     {
                         Checkout(value);
-                        Status = GitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
+                        Status = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
                     });
                 }
             }
         }
 
         private string _status;
+        private readonly GitEngine _gitEngine;
+
         public string Status
         {
             get => _status;
@@ -49,11 +51,14 @@ namespace DependencyScanner.Core.Model
         }
 
         public RelayCommand PullCommand { get; }
+
         public bool IsClean { get => Status?.Contains("working tree clean") == true; }
         public bool IsBehind { get => Status?.Contains("Your branch is behind") == true; }
 
-        public GitInfo(string root)
+        public GitInfo(string root, GitEngine gitEngine)
         {
+            _gitEngine = gitEngine;
+
             Root = new FileInfo(root);
 
             PullCommand = new RelayCommand(() =>
@@ -61,7 +66,7 @@ namespace DependencyScanner.Core.Model
                 Task.Run(() =>
                 {
                     Pull();
-                    Status = GitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
+                    Status = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
                 });
             });
         }
@@ -72,10 +77,10 @@ namespace DependencyScanner.Core.Model
             {
                 if (FileScanner.ExecuteGitFetchWithScan)
                 {
-                    var result = GitEngine.GitProcess(Root.DirectoryName, GitCommand.UpdateRemote);
+                    var result = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.UpdateRemote);
                 }
 
-                var branches = GitEngine.GitProcess(Root.DirectoryName, GitCommand.BranchList);
+                var branches = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.BranchList);
 
                 BranchList = GitParser.GetBranchList(branches);
 
@@ -83,9 +88,9 @@ namespace DependencyScanner.Core.Model
 
                 RaisePropertyChanged(nameof(CurrentBranch));
 
-                Status = GitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
+                Status = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
 
-                RemoteUrl = GitEngine.GitExecute(Root.DirectoryName, GitCommand.RemoteBranch, a => GitParser.GetRemoteUrl(a));
+                RemoteUrl = _gitEngine.GitExecute(Root.DirectoryName, GitCommand.RemoteBranch, a => GitParser.GetRemoteUrl(a));
             });
         }
 
@@ -93,7 +98,7 @@ namespace DependencyScanner.Core.Model
         {
             if (BranchList.Contains(branch))
             {
-                return GitEngine.GitProcess(Root.DirectoryName, GitCommand.SwitchBranch, branch);
+                return _gitEngine.GitProcess(Root.DirectoryName, GitCommand.SwitchBranch, branch);
             }
 
             return $"Branch '{branch}' doesnt exist in scan results!";
@@ -101,7 +106,7 @@ namespace DependencyScanner.Core.Model
 
         public string Pull()
         {
-            return GitEngine.GitProcess(Root.DirectoryName, GitCommand.Pull);
+            return _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Pull);
         }
     }
 }

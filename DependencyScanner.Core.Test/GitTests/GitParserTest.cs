@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+using static DependencyScanner.Core.Test.TestTools;
 
 namespace DependencyScanner.Core.Test.GitTests
 {
@@ -19,7 +20,7 @@ namespace DependencyScanner.Core.Test.GitTests
         [Ignore]
         public void Parser()
         {
-            var processResult = GitEngine.GitProcess(Environment.CurrentDirectory, GitCommand.BranchList);
+            var processResult = Git.GitProcess(Environment.CurrentDirectory, GitCommand.BranchList);
             var result = GitParser.SplitString(processResult);
 
             AreEqual("  fix/SyncWithUi", result.First());

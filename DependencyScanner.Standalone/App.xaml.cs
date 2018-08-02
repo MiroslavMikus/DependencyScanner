@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using DependencyScanner.Core;
+using DependencyScanner.Core.GitClient;
 using DependencyScanner.Core.Nuspec;
 using DependencyScanner.Standalone.Properties;
 using DependencyScanner.ViewModel;
@@ -76,7 +77,7 @@ namespace DependencyScanner.Standalone
                 var logger = new LoggerConfiguration()
 #if DEBUG
                             .MinimumLevel.Debug()
-                            .WriteTo.Logger(l => l.MinimumLevel.Debug().WriteTo.File(DebugPath, rollingInterval: RollingInterval.Day))
+                            .WriteTo.Logger(l => l.MinimumLevel.Debug().WriteTo.File(DebugPath))
 #endif
                             .WriteTo.Logger(l => l.MinimumLevel.Information().WriteTo.File(LogPath))
                             .WriteTo.Logger(l => l.WriteTo.File(FatalPath), Serilog.Events.LogEventLevel.Fatal)
@@ -92,6 +93,7 @@ namespace DependencyScanner.Standalone
             builder.RegisterType<SolutionComparer>().InstancePerLifetimeScope();
             builder.RegisterType<ProjectComparer>().InstancePerLifetimeScope();
             builder.RegisterType<NuspecComparer>().InstancePerLifetimeScope();
+            builder.RegisterType<GitEngine>().InstancePerLifetimeScope();
 
             // View Models
             builder.RegisterType<MainViewModel>().InstancePerLifetimeScope();

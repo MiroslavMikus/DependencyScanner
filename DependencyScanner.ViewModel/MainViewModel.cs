@@ -27,11 +27,6 @@ namespace DependencyScanner.ViewModel
         public ConsolidateProjectsViewModel ConsolidateProjectsViewModel { get; }
         public NuspecUpdaterViewModel NuspecUpdaterViewModel { get; }
 
-        public MainViewModel()
-        {
-            BrowseVM = new BrowseViewModel();
-        }
-
         public MainViewModel(BrowseViewModel browseViewModel,
                              ConsolidateSolutionsViewModel consolidateSolutionsViewModel,
                              ConsolidateProjectsViewModel consolidateProjectsViewModel,

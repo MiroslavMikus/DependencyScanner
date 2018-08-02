@@ -1,21 +1,31 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
 namespace DependencyScanner.Core.GitClient
 {
-    public static class GitEngine
+    public class GitEngine
     {
-        public static TResult GitExecute<TResult>(string workingDirectory, string command, Func<string, TResult> parse)
+        private readonly ILogger _logger;
+
+        public GitEngine(ILogger logger)
+        {
+            _logger = logger;
+        }
+
+        public TResult GitExecute<TResult>(string workingDirectory, string command, Func<string, TResult> parse)
         {
             var engineResult = GitProcess(workingDirectory, command);
 
             return parse(engineResult);
         }
 
-        public static string GitProcess(string workingDirectory, params string[] parameter)
+        public string GitProcess(string workingDirectory, params string[] parameter)
         {
+            _logger.Debug("GitProcess {WorkingDirectory}, {params}", workingDirectory, parameter);
+
             var parameters = parameter.Aggregate((a, b) => $"{a} {b}");
 
             var proc = new Process

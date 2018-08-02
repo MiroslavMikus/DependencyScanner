@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static DependencyScanner.Core.Test.TestTools;
 
 namespace DependencyScanner.Core.Test.GitTests
 {
@@ -16,7 +17,7 @@ namespace DependencyScanner.Core.Test.GitTests
         [TestMethod]
         public void MyTestMethod()
         {
-            var Status = GitEngine.GitProcess(Environment.CurrentDirectory, GitCommand.RemoteBranch);
+            var Status = Git.GitProcess(Environment.CurrentDirectory, GitCommand.RemoteBranch);
         }
 
         [TestMethod]
@@ -24,7 +25,7 @@ namespace DependencyScanner.Core.Test.GitTests
         {
             var wd = @"F:\Projects\_GitHub\DependencyScanner\.git";
 
-            var info = new GitInfo(wd);
+            var info = new GitInfo(wd, Git);
 
             //info.Checkout("mastesr");
         }

@@ -1,4 +1,5 @@
-﻿using DependencyScanner.Core.Interfaces;
+﻿using DependencyScanner.Core.GitClient;
+using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
 using NuGet;
 using System;
@@ -13,12 +14,18 @@ namespace DependencyScanner.Core
     public class FileScanner : IScanner
     {
         public static bool ExecuteGitFetchWithScan { get; set; } = false;
+        private readonly GitEngine _gitEngine;
 
         private const string PackagePattern = "packages.config";
         private const string SolutionPattern = "*.sln";
         private const string ProjectPattern = "*.csproj";
         private const string NuspecPattern = "*.nuspec";
         private const string GitPattern = ".git";
+
+        public FileScanner(GitEngine gitEngine)
+        {
+            _gitEngine = gitEngine;
+        }
 
         string[] GetPackages(string rootDirectory) => Directory.GetFiles(rootDirectory, PackagePattern, SearchOption.TopDirectoryOnly);
         string[] GetSolutions(string rootDirectory) => Directory.GetFiles(rootDirectory, SolutionPattern, SearchOption.AllDirectories);
@@ -44,7 +51,7 @@ namespace DependencyScanner.Core
 
         private async Task<SolutionResult> ExecuteSolutionScan(string solution, ICancelableProgress<ProgressMessage> progress)
         {
-            var result = new SolutionResult(new FileInfo(solution));
+            var result = new SolutionResult(new FileInfo(solution), this);
 
             foreach (var projectPath in GetProjects(result.Info.DirectoryName))
             {
@@ -87,7 +94,7 @@ namespace DependencyScanner.Core
 
             if (!string.IsNullOrEmpty(gitPath))
             {
-                result.GitInformation = new GitInfo(gitPath);
+                result.GitInformation = new GitInfo(gitPath, _gitEngine);
 
                 await result.GitInformation.Init();
             }
