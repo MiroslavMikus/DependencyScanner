@@ -55,6 +55,36 @@ namespace DependencyScanner.Standalone
             }
         }
 
+        public WindowState Window_State
+        {
+            get => Properties.Settings.Default.Window_State;
+            set
+            {
+                Properties.Settings.Default.Window_State = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public double Window_Top
+        {
+            get => Properties.Settings.Default.Window_Top;
+            set
+            {
+                Properties.Settings.Default.Window_Top = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public double Window_Left
+        {
+            get => Properties.Settings.Default.Window_Left;
+            set
+            {
+                Properties.Settings.Default.Window_Left = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
         public RelayCommand<string> SwitchTab { get; }
 
         public List<AppThemeMenuData> AppThemes { get; set; }

@@ -16,11 +16,14 @@
         Title="Dependency scanner"
         Height="{Binding ElementName=TheMainWindow, Path=WindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
         Width="{Binding ElementName=TheMainWindow, Path=WindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
+        WindowState="{Binding ElementName=TheMainWindow, Path=Window_State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
+        Top="{Binding ElementName=TheMainWindow, Path=Window_Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
+        Left="{Binding ElementName=TheMainWindow, Path=Window_Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
         MinWidth="500"
         x:Name="TheMainWindow"
         RightWindowCommandsOverlayBehavior="Never"
-        d:DataContext="{d:DesignInstance viewModel:MainViewModel , IsDesignTimeCreatable=True}"
         >
+        <!--d:DataContext="{d:DesignInstance viewModel:MainViewModel , IsDesignTimeCreatable=True}"-->
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button Content="Settings" Click="Settings_Click"/>

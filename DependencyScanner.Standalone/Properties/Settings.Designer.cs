@@ -82,5 +82,41 @@ namespace DependencyScanner.Standalone.Properties {
                 this["Theme_Name"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Maximized")]
+        public global::System.Windows.WindowState Window_State {
+            get {
+                return ((global::System.Windows.WindowState)(this["Window_State"]));
+            }
+            set {
+                this["Window_State"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Window_Top {
+            get {
+                return ((double)(this["Window_Top"]));
+            }
+            set {
+                this["Window_Top"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double Window_Left {
+            get {
+                return ((double)(this["Window_Left"]));
+            }
+            set {
+                this["Window_Left"] = value;
+            }
+        }
     }
 }
