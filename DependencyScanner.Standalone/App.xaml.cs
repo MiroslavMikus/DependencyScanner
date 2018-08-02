@@ -54,7 +54,7 @@ namespace DependencyScanner.Standalone
 
             window.Show();
 
-            Log.Logger.Debug("Starting app");
+            Log.Logger.Information("Starting app");
         }
 
         private void Current_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
@@ -118,7 +118,7 @@ namespace DependencyScanner.Standalone
 
         protected override void OnExit(ExitEventArgs e)
         {
-            Log.Logger.Debug("Closing app");
+            Log.Logger.Information("Closing app");
 
             base.OnExit(e);
         }
