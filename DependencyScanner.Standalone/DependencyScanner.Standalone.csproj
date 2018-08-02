@@ -128,9 +128,6 @@
     <Compile Include="Templates\SolutionNuspecCheckTemplate.xaml.cs">
       <DependentUpon>SolutionNuspecCheckTemplate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Templates\SolutionProjectCompareTemplate.xaml.cs">
-      <DependentUpon>SolutionProjectCompareTemplate.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Templates\SolutionTemplate.xaml.cs">
       <DependentUpon>SolutionTemplate.xaml</DependentUpon>
     </Compile>
@@ -167,10 +164,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Templates\SolutionNuspecCheckTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Templates\SolutionProjectCompareTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

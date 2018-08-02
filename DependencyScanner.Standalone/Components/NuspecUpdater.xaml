@@ -8,6 +8,7 @@
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:model="clr-namespace:DependencyScanner.Core.Model;assembly=DependencyScanner.Core"
              xmlns:converter="clr-namespace:DependencyScanner.Standalone.Converters"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:templates="clr-namespace:DependencyScanner.Standalone.Templates"
              xmlns:viewModel="clr-namespace:DependencyScanner.ViewModel;assembly=DependencyScanner.ViewModel"
              d:DesignHeight="450" d:DesignWidth="800"
@@ -23,7 +24,7 @@
         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
             <Button Content="Search issues" Command="{Binding SearchForIssuesCommand}" Margin="5" HorizontalAlignment="Left"
                     />
-                    <!--IsEnabled="{Binding ElementName=ProjectScanResult, Path=SelectedItem, Converter={StaticResource NullToFalse}}"-->
+            <!--IsEnabled="{Binding ElementName=ProjectScanResult, Path=SelectedItem, Converter={StaticResource NullToFalse}}"-->
         </StackPanel>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -31,12 +32,12 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="{Binding ElementName=TheMainWindow, Path=SolutionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
+                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=SolutionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
                                   MinWidth="250"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*" MinWidth="50"/>
-                <ColumnDefinition Width="auto" MinWidth="50"/>
-                <ColumnDefinition Width="auto" MinWidth="50"/>
+                <ColumnDefinition Width="3*" MinWidth="50"/>
+                <ColumnDefinition Width="2*" MinWidth="50"/>
+                <ColumnDefinition Width="2*" MinWidth="50"/>
             </Grid.ColumnDefinitions>
             <GridSplitter Width="5" Grid.Column="1" Grid.Row="1" ResizeBehavior="PreviousAndNext"/>
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
@@ -46,11 +47,23 @@
                          Controls:TextBoxHelper.ClearTextButton="True"
                          Controls:TextBoxHelper.Watermark="Search...">
                 </TextBox>
+                <CheckBox Margin="10 2 2 2" IsChecked="{Binding FilterForConsolidates}" Content="Filter consolidates"/>
             </StackPanel>
             <ListBox x:Name="ProjectScanResult" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FilterScanResult}" Margin="5">
                 <ListBox.Resources>
-                    <DataTemplate DataType="{x:Type viewModel:SolutionNuspecCheckResult}">
-                        <templates:SolutionTemplate DataContext="{Binding Result}"/>
+                    <DataTemplate DataType="{x:Type viewModel:SolutionNuspecCheckResult}" x:Name="SolutionDataTemplate">
+                        <Border>
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding HasConsolidates}" Value="True">
+                                            <Setter Property="Background" Value="LightPink"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <templates:SolutionTemplate DataContext="{Binding Result}"/>
+                        </Border>
                     </DataTemplate>
                 </ListBox.Resources>
             </ListBox>
@@ -60,7 +73,16 @@
                      ItemsSource="{Binding ElementName=ProjectScanResult, Path=SelectedItem.ProjectResult}">
                 <ListBox.Resources>
                     <DataTemplate DataType="{x:Type model:ProjectNuspecResult}">
-                        <templates:ProjectTemplate DataContext="{Binding Project}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Margin="5 0 10 0" VerticalAlignment="Center" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.UpdateNuspecCommand}"
+                                    CommandParameter="{Binding}">
+                                <StackPanel Orientation="Vertical">
+                                    <iconPacks:PackIconFontAwesome Kind="EditSolid" HorizontalAlignment="Center"/>
+                                    <Label Content="Update"/>
+                                </StackPanel>
+                            </Button>
+                            <templates:ProjectTemplate DataContext="{Binding Project}"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.Resources>
             </ListBox>

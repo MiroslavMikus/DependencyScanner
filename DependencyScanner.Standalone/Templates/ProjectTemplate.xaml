@@ -11,18 +11,6 @@
         <converter:NullToVisibilityConverter x:Key="NullToCollaps" Positive="Collapsed" Negative="Visible"/>
         <converter:NullToBoolConverter x:Key="NullToFalse" Positive="True" Negative="False"/>
     </UserControl.Resources>
-    <UserControl.Style>
-        <Style TargetType="UserControl">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding HasNuspec}" Value="True">
-                    <Setter Property="Background" Value="Wheat"/>
-                </DataTrigger>
-                <!--<Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="HotPink"/>
-                </Trigger>-->
-            </Style.Triggers>
-        </Style>
-    </UserControl.Style>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -57,6 +45,17 @@
                     <StackPanel>
                         <Label Content="Open package.config" FontWeight="Bold"/>
                         <Label Content="{Binding PackageInfo.FullName}"/>
+                    </StackPanel>
+                </Button.ToolTip>
+            </Button>
+            <Button Margin="4 2 2 2" Content="csproj" 
+                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenTextFileCommand}"
+                    CommandParameter="{Binding ProjectInfo.FullName}"
+                    Visibility="{Binding ProjectInfo, Converter={StaticResource NullToCollaps}}">
+                <Button.ToolTip>
+                    <StackPanel>
+                        <Label Content="Open csproj file" FontWeight="Bold"/>
+                        <Label Content="{Binding ProjectInfo.FullName}"/>
                     </StackPanel>
                 </Button.ToolTip>
             </Button>

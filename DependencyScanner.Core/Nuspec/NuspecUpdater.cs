@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DependencyScanner.Core.FileScan;
+using DependencyScanner.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,35 @@ namespace DependencyScanner.Core.Nuspec
 {
     public static class NuspecUpdater
     {
+        public static bool UpdateNuspec(ProjectNuspecResult input)
+        {
+            var docu = ProjectReader.GetDocument(input.Project.NuspecInfo.FullName);
+
+            docu = UpdateNuspec(docu, input.MissingPackages, input.UselessPackages);
+
+            var allDependencies = GetDependencies(docu);
+
+            docu.Save(input.Project.NuspecInfo.FullName);
+
+            return input.MissingPackages.All(a => allDependencies.Contains(a)) &&
+                   input.UselessPackages.All(a => !allDependencies.Contains(a));
+        }
+
+        internal static XDocument UpdateNuspec(XDocument document, IEnumerable<string> Missing, IEnumerable<string> Useless)
+        {
+            if (Missing.Count() > 0)
+            {
+                AddDependency(document, Missing.ToArray());
+            }
+
+            if (Useless.Count() > 0)
+            {
+                RemoveDependency(document, Useless.ToArray());
+            }
+
+            return document;
+        }
+
         internal static XDocument AddDependency(XDocument document, params string[] ids)
         {
             var dep = document

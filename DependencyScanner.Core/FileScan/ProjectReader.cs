@@ -20,10 +20,18 @@ namespace DependencyScanner.Core.FileScan
             {
                 var references = document
                     .Element(msbuild + "Project")
-                    .Elements(msbuild + "ItemGroup")
-                    .Elements(msbuild + "PackageReference");
+                    .Elements(msbuild + "ItemGroup");
 
-                return references.Select(a => new ProjectReference(a.Attribute("Include").Value, a.Value));
+                if (references.Descendants("PackageReference").Any())
+                {
+                    return references.Elements(msbuild + "PackageReference")
+                            .Select(a => new ProjectReference(a.Attribute("Include").Value, a.Value));
+                }
+                else
+                {
+                    return Enumerable.Empty<ProjectReference>();
+                }
+
             }
             catch (NullReferenceException)
             {

@@ -18,7 +18,18 @@ namespace DependencyScanner.ViewModel
         private readonly NuspecComparer _comparer;
 
         public RelayCommand SearchForIssuesCommand { get; }
+        public RelayCommand<ProjectNuspecResult> UpdateNuspecCommand { get; }
 
+        private bool _filterForConsolidates;
+        public bool FilterForConsolidates
+        {
+            get => _filterForConsolidates;
+            set
+            {
+                Set(ref _filterForConsolidates, value);
+                FilterScanResult?.Refresh();
+            }
+        }
 
         public NuspecUpdaterViewModel(IMessenger messenger, NuspecComparer comparer)
         {
@@ -31,6 +42,11 @@ namespace DependencyScanner.ViewModel
                 {
                     sln.ProjectResult = _comparer.ConsolidateSolution(sln.Result);
                 }
+            });
+
+            UpdateNuspecCommand = new RelayCommand<ProjectNuspecResult>(a =>
+            {
+                NuspecUpdater.UpdateNuspec(a);
             });
 
             _messenger.Register<IEnumerable<SolutionResult>>(this, a =>
@@ -51,18 +67,22 @@ namespace DependencyScanner.ViewModel
 
         protected override bool FilterJob(object value)
         {
+            bool filterName = true;
+            bool filterConsolidates = true;
+
             if (value is SolutionNuspecCheckResult input)
             {
-                if (string.IsNullOrEmpty(SolutionFilter))
+                if (!string.IsNullOrEmpty(SolutionFilter))
                 {
-                    return true;
+                    filterName = input.Result.Info.Name.IndexOf(SolutionFilter, StringComparison.OrdinalIgnoreCase) >= 0;
                 }
-                else
+
+                if (FilterForConsolidates)
                 {
-                    return input.Result.Info.Name.IndexOf(SolutionFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+                    filterConsolidates = input.HasConsolidates;
                 }
             }
-            return false;
+            return filterName && filterConsolidates;
         }
     }
 }

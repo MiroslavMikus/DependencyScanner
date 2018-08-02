@@ -178,7 +178,7 @@
                             </ListBox.Resources>
                         </ListBox>
                         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
-                        <Label Content="Projects: " />
+                            <Label Content="Projects: " />
                             <TextBox Margin="2" Width="180"
                                      Text="{Binding SecondaryFilter, Delay=300, UpdateSourceTrigger=PropertyChanged}"
                                      Controls:TextBoxHelper.ClearTextButton="True"
@@ -189,7 +189,18 @@
                                  ItemsSource="{Binding SecondaryFilterResult}">
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type model:ProjectResult}">
-                                    <templates:ProjectTemplate DataContext="{Binding}"/>
+                                    <Border>
+                                        <Border.Style>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding HasNuspec}" Value="True">
+                                                        <Setter Property="Background" Value="Wheat"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <templates:ProjectTemplate DataContext="{Binding}"/>
+                                    </Border>
                                 </DataTemplate>
                             </ListBox.Resources>
                         </ListBox>
@@ -334,7 +345,18 @@
                         <ListBox x:Name="ProjectScanResult" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FilterScanResult}" Margin="5">
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type viewModel:SolutionProjectCompareResult}">
-                                    <templates:SolutionProjectCompareTemplate DataContext="{Binding}"/>
+                                    <Border>
+                                        <Border.Style>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding HasConsolidates}" Value="True">
+                                                        <Setter Property="Background" Value="LightPink"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <templates:SolutionTemplate DataContext="{Binding Result}"/>
+                                    </Border>
                                 </DataTemplate>
                             </ListBox.Resources>
                         </ListBox>
