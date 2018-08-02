@@ -82,7 +82,7 @@ namespace DependencyScanner.ViewModel
             get { return _primarySelectedImtem; }
             set
             {
-                if (Set(ref _primarySelectedImtem, value))
+                if (Set(ref _primarySelectedImtem, value) && value != null)
                 {
                     SecondaryCollection = new ObservableCollection<TSecondary>(GetSecondaryCollection(value));
 
