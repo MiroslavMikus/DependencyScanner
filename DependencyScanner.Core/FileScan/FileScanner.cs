@@ -2,6 +2,7 @@
 using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
 using NuGet;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,7 @@ namespace DependencyScanner.Core
     public class FileScanner : IScanner
     {
         public static bool ExecuteGitFetchWithScan { get; set; } = false;
+
         private readonly GitEngine _gitEngine;
 
         private const string PackagePattern = "packages.config";
@@ -41,7 +43,7 @@ namespace DependencyScanner.Core
             {
                 var ex = new ArgumentException("There should be exactly one solution. Currently found: " + solutions.Count());
 
-                progress.Logger.Error(ex, "Exception in ScanSolution");
+                Log.Error(ex, "Exception in ScanSolution");
 
                 throw ex;
             }
@@ -57,7 +59,7 @@ namespace DependencyScanner.Core
             {
                 if (progress.Token.IsCancellationRequested)
                 {
-                    progress.Logger.Information("Cancelling scan");
+                    Log.Information("Cancelling scan");
 
                     throw new OperationCanceledException("Operation was canceled by user");
                 }
@@ -120,7 +122,7 @@ namespace DependencyScanner.Core
 
                 if (progress.Token.IsCancellationRequested)
                 {
-                    progress.Logger.Information("Cancelling scan");
+                    Log.Information("Cancelling scan");
 
                     throw new OperationCanceledException("Operation was canceled by user");
                 }

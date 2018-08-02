@@ -34,7 +34,7 @@ namespace DependencyScanner.Core.Model
 
             RefreshCommand = new RelayCommand(async () =>
             {
-                var progress = new DefaultProgress(Log.Logger)
+                var progress = new DefaultProgress()
                 {
                     Token = default(CancellationToken)
                 };

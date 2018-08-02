@@ -51,6 +51,8 @@ namespace DependencyScanner.ViewModel
 
                 try
                 {
+                    _logger.Information("Starting process {@command}", a);
+
                     Process.Start(a);
                 }
                 catch (Exception ex)
@@ -72,11 +74,14 @@ namespace DependencyScanner.ViewModel
                 {
                     WorkingDirectory = a,
                     WindowStyle = ProcessWindowStyle.Normal,
-                    FileName = GetTerminalTool()
+                    FileName = GetTerminalTool(),
+                    UseShellExecute = false
                 };
 
                 try
                 {
+                    _logger.Information("Starting process {@process}", new { startInfo.Arguments, startInfo.FileName });
+
                     Process.Start(startInfo);
                 }
                 catch (Exception ex)
@@ -93,10 +98,14 @@ namespace DependencyScanner.ViewModel
                 {
                     if (!string.IsNullOrEmpty(browser))
                     {
+                        _logger.Information("Starting process {@site}", a);
+
                         Process.Start(browser, a);
                     }
                     else
                     {
+                        _logger.Information("Starting process {@site}", a);
+
                         Process.Start(a);
                     }
                 }
@@ -126,6 +135,8 @@ namespace DependencyScanner.ViewModel
 
                 try
                 {
+                    _logger.Information("Starting process {@process}", new { startInfo.Arguments, startInfo.FileName });
+
                     Process.Start(startInfo);
                 }
                 catch (Exception ex)

@@ -13,12 +13,6 @@ namespace DependencyScanner.Core.Model
     {
         public Action<ProgressMessage> ReportAction { get; set; }
         public CancellationToken Token { get; set; }
-        public ILogger Logger { get; }
-
-        public DefaultProgress(ILogger logger)
-        {
-            Logger = logger;
-        }
 
         public void Report(ProgressMessage value)
         {

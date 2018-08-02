@@ -178,7 +178,7 @@ namespace DependencyScanner.ViewModel
         {
             return Task.Run(async () =>
             {
-                var progress = new DefaultProgress(_logger)
+                var progress = new DefaultProgress()
                 {
                     Token = Token
                 };

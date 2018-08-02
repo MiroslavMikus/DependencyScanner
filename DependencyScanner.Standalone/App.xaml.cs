@@ -54,17 +54,17 @@ namespace DependencyScanner.Standalone
 
             window.Show();
 
-            Log.Logger.Information("Starting app");
+            Log.Information("Starting app");
         }
 
         private void Current_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            Log.Logger.Fatal(e.Exception, "DispatcherUnhandledException");
+            Log.Fatal(e.Exception, "DispatcherUnhandledException");
         }
 
         private void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Log.Logger.Fatal("CurrentDomain.UnhandledException -> {obj}", e.ExceptionObject);
+            Log.Fatal("CurrentDomain.UnhandledException -> {obj}", e.ExceptionObject);
         }
 
         private static ILifetimeScope BuildScope()
@@ -78,15 +78,18 @@ namespace DependencyScanner.Standalone
 #if DEBUG
                             .MinimumLevel.Debug()
                             .WriteTo.Logger(l => l.MinimumLevel.Debug().WriteTo.File(DebugPath))
-#endif
+#else
+                            .MinimumLevel.Information()
                             .WriteTo.Logger(l => l.MinimumLevel.Information().WriteTo.File(LogPath))
+#endif
                             .WriteTo.Logger(l => l.WriteTo.File(FatalPath), Serilog.Events.LogEventLevel.Fatal)
                             .CreateLogger();
 
                 Log.Logger = logger;
 
                 return logger;
-            }).As<ILogger>();
+
+            }).As<ILogger>().SingleInstance();
 
             builder.RegisterType<FileScanner>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<Messenger>().AsImplementedInterfaces().InstancePerLifetimeScope();
@@ -106,6 +109,7 @@ namespace DependencyScanner.Standalone
             builder.Register(a => new MainWindow() { DataContext = a.Resolve<MainViewModel>() });
 
             var scope = builder.Build().BeginLifetimeScope();
+
             return scope;
         }
 

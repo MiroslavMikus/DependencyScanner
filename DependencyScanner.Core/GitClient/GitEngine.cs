@@ -8,13 +8,6 @@ namespace DependencyScanner.Core.GitClient
 {
     public class GitEngine
     {
-        private readonly ILogger _logger;
-
-        public GitEngine(ILogger logger)
-        {
-            _logger = logger;
-        }
-
         public TResult GitExecute<TResult>(string workingDirectory, string command, Func<string, TResult> parse)
         {
             var engineResult = GitProcess(workingDirectory, command);
@@ -24,7 +17,7 @@ namespace DependencyScanner.Core.GitClient
 
         public string GitProcess(string workingDirectory, params string[] parameter)
         {
-            _logger.Debug("GitProcess {WorkingDirectory}, {params}", workingDirectory, parameter);
+            Log.Debug("GitProcess {WorkingDirectory}, {params}", workingDirectory, parameter);
 
             var parameters = parameter.Aggregate((a, b) => $"{a} {b}");
 
