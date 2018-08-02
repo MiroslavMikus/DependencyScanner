@@ -269,6 +269,13 @@
                                   Grid.Row="1" Grid.Column="2"
                                   Margin="5"
                                   ItemsSource="{Binding ResultReferences}" AutoGenerateColumns="False" CanUserAddRows="False">
+                            <!--<DataGrid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Copy to Clipboard" 
+                                              Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.CopyToClipCommand}"
+                                              CommandParameter="{Binding Id}"/>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>-->
                             <DataGrid.Columns>
                                 <DataGridTextColumn IsReadOnly="True" Header="Id" Binding="{Binding Id}"/>
                             </DataGrid.Columns>

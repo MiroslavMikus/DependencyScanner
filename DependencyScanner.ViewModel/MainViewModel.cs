@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DependencyScanner.ViewModel
 {
@@ -20,6 +21,7 @@ namespace DependencyScanner.ViewModel
         public RelayCommand<string> OpenCmdCommand { get; }
         public RelayCommand<string> OpenLinkCommand { get; }
         public RelayCommand<string> OpenTextFileCommand { get; }
+        public RelayCommand<string> CopyToClipCommand { get; }
 
         public AppSettings MainSettings { get; } = AppSettings.Instance;
         public BrowseViewModel BrowseVM { get; }
@@ -161,6 +163,14 @@ namespace DependencyScanner.ViewModel
                 catch (Exception ex)
                 {
                     _logger.Error(ex, $"Error while executing {nameof(OpenTextFileCommand)}");
+                }
+            });
+
+            CopyToClipCommand = new RelayCommand<string>(a =>
+            {
+                if (!string.IsNullOrEmpty(a))
+                {
+                    Clipboard.SetText(a);
                 }
             });
         }
