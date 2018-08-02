@@ -47,6 +47,10 @@ namespace DependencyScanner.ViewModel
             UpdateNuspecCommand = new RelayCommand<ProjectNuspecResult>(a =>
             {
                 NuspecUpdater.UpdateNuspec(a);
+
+                //var solution = ScanResult.Single(b => b.ProjectResult.Any(c => c.Project.Equals(a.Project)));
+
+                //solution.Result.RefreshCommand.Execute(null);
             });
 
             _messenger.Register<IEnumerable<SolutionResult>>(this, a =>

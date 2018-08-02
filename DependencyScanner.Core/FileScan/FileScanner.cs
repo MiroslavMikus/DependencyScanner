@@ -48,6 +48,13 @@ namespace DependencyScanner.Core
 
             foreach (var projectPath in GetProjects(result.Info.DirectoryName))
             {
+                if (progress.Token.IsCancellationRequested)
+                {
+                    progress.Logger.Information("Cancelling scan");
+
+                    throw new OperationCanceledException("Operation was canceled by user");
+                }
+
                 var projectInfo = new FileInfo(projectPath);
 
                 var packagePaths = GetPackages(projectInfo.DirectoryName);

@@ -1,21 +1,49 @@
-﻿using NuGet;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using NuGet;
+using Serilog;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace DependencyScanner.Core.Model
 {
     [DebuggerDisplay("{Info.Name}")]
-    public class SolutionResult
+    public class SolutionResult : ObservableObject
     {
-        public FileInfo Info { get; }
-        public ICollection<ProjectResult> Projects { get; protected set; } = new List<ProjectResult>();
-        public GitInfo GitInformation { get; internal set; }
+        private FileInfo _info;
+        public FileInfo Info { get => _info; private set => Set(ref _info, value); }
+
+        private ICollection<ProjectResult> _projects = new List<ProjectResult>();
+        public ICollection<ProjectResult> Projects { get => _projects; protected set => Set(ref _projects, value); }
+
+        private GitInfo _gitInformation;
+        public GitInfo GitInformation { get => _gitInformation; internal set => Set(ref _gitInformation, value); }
+
+        public RelayCommand RefreshCommand { get; }
+
 
         public SolutionResult(FileInfo info)
         {
             Info = info;
+
+            RefreshCommand = new RelayCommand(async () =>
+            {
+                var scanner = new FileScanner();
+
+                var progress = new DefaultProgress(Log.Logger)
+                {
+                    Token = default(CancellationToken)
+                };
+
+                var result = await scanner.ScanSolution(Info.DirectoryName, progress);
+
+                Projects = result.Projects;
+
+                GitInformation = result.GitInformation;
+            });
         }
 
         public IEnumerable<ProjectReference> GetSolutionReferences()

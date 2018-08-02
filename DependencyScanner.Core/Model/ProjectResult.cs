@@ -43,5 +43,19 @@ namespace DependencyScanner.Core.Model
 
             FrameworkVersion = ReadFrameworkVersion(ProjectInfo.FullName);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is ProjectResult result)
+            {
+                return ProjectInfo.FullName == result.ProjectInfo.FullName;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return ProjectInfo.FullName.GetHashCode();
+        }
     }
 }
