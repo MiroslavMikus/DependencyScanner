@@ -44,8 +44,15 @@ namespace DependencyScanner.Core.Nuspec
         {
             var dep = document
                     .Element("package")
-                    .Element("metadata")
-                    .Element("dependencies");
+                    .Element("metadata");
+
+            if (!dep.Descendants("dependencies").Any())
+            {
+                dep.Add(new XElement("dependencies"));
+            }
+
+            dep = dep.Element("dependencies");
+
 
             foreach (var id in ids)
             {
