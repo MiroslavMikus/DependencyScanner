@@ -48,9 +48,14 @@ namespace DependencyScanner.ViewModel
             {
                 NuspecUpdater.UpdateNuspec(a);
 
-                //var solution = ScanResult.Single(b => b.ProjectResult.Any(c => c.Project.Equals(a.Project)));
+                var solution = ScanResult.FirstOrDefault(b => b.Result.Projects.Any(c => c.Equals(a.Project)));
 
-                //solution.Result.RefreshCommand.Execute(null);
+                if(solution != null)
+                {
+                    solution.Result.RefreshCommand.Execute(null);
+
+                    solution.ProjectResult = _comparer.ConsolidateSolution(solution.Result);
+                }
             });
 
             _messenger.Register<IEnumerable<SolutionResult>>(this, a =>
