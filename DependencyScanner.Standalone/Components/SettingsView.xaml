@@ -134,11 +134,12 @@
                                      ToolTip="Clear to use your default browser."
                                      />
                     <Button Content="Clear" Width="70" Height="20" Margin="0 10 0 0" 
-                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClearNuspec}">
+                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClearNuspec}">
                         <Button.ToolTip>
                             <StackPanel>
                                 <Label Content="Clear nuget" FontWeight="Bold" Margin="5"/>
-                                <TextBlock Text="Clear global nuget cache with nuget.exe locals all -clear command" Margin="5"/>
+                                <TextBlock Text="Clear global nuget cache with 'nuget.exe locals all -clear' command" Margin="5"/>
+                                <TextBlock Text="You can use shortcut Ctrl+Q" Margin="5"/>
                             </StackPanel>
                         </Button.ToolTip>
                     </Button>
