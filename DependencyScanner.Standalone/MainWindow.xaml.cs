@@ -21,9 +21,6 @@ using System.Windows.Shapes;
 
 namespace DependencyScanner.Standalone
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : MetroWindow, INotifyPropertyChanged
     {
         public GridLength SolutionWidth

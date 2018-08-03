@@ -83,6 +83,12 @@
         <converter:BoolToVisibilityConverter x:Key="TrueToVisible"/>
         <converter:BoolToVisibilityConverter x:Key="FalseToCollapsed" Negative="Collapsed"/>
         <converter:BoolToBoolConverter x:Key="InvertBool" Positive="False" Negative="True"/>
+        
+        <ContextMenu x:Key="ClipContext" >
+            <MenuItem Header="Copy to Clipboard" Command="{Binding Source={x:Reference Name=TheMainWindow}, Path=DataContext.CopyToClipCommand}"
+                      CommandParameter="{Binding Source={x:Reference Name=References}, Path=SelectedItem.Id}"
+                      />
+        </ContextMenu>
     </Controls:MetroWindow.Resources>
     <Grid>
         <Grid.Resources>
@@ -269,13 +275,9 @@
                                   Grid.Row="1" Grid.Column="2"
                                   Margin="5"
                                   ItemsSource="{Binding ResultReferences}" AutoGenerateColumns="False" CanUserAddRows="False">
-                            <!--<DataGrid.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="Copy to Clipboard" 
-                                              Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.CopyToClipCommand}"
-                                              CommandParameter="{Binding Id}"/>
-                                </ContextMenu>
-                            </DataGrid.ContextMenu>-->
+                            <DataGrid.ContextMenu>
+                                <StaticResource ResourceKey="ClipContext"/>
+                            </DataGrid.ContextMenu>
                             <DataGrid.Columns>
                                 <DataGridTextColumn IsReadOnly="True" Header="Id" Binding="{Binding Id}"/>
                             </DataGrid.Columns>
