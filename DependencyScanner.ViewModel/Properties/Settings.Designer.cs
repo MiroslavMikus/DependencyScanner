@@ -156,7 +156,7 @@ namespace DependencyScanner.ViewModel.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ScanAfterDirectoryChange {
             get {
                 return ((bool)(this["ScanAfterDirectoryChange"]));
@@ -175,6 +175,18 @@ namespace DependencyScanner.ViewModel.Properties {
             }
             set {
                 this["PreferedTextEditor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowOpenFileButton {
+            get {
+                return ((bool)(this["ShowOpenFileButton"]));
+            }
+            set {
+                this["ShowOpenFileButton"] = value;
             }
         }
     }

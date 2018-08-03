@@ -89,6 +89,7 @@
                 <Controls:ToggleSwitch OnLabel="Show folder" OffLabel="Hide folder" IsChecked="{Binding ShowFolderButton}"/>
                 <Controls:ToggleSwitch OnLabel="Show open solution" OffLabel="Hide open solution" IsChecked="{Binding ShowOpenButton}"/>
                 <Controls:ToggleSwitch OnLabel="Show open url" OffLabel="Hide open url" IsChecked="{Binding ShowOpenUrlButton}"/>
+                <Controls:ToggleSwitch OnLabel="Show open as text file" OffLabel="Hide open as text file" IsChecked="{Binding ShowOpenFileButton}"/>
                 <Label Content="Preferences:" />
                 <TextBlock Text="Prefered console tool:"/>
                 <StackPanel Orientation="Horizontal" >

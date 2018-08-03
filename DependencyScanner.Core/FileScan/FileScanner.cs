@@ -39,16 +39,16 @@ namespace DependencyScanner.Core
         {
             var solutions = GetSolutions(rootDirectory);
 
-            if (solutions.Count() != 1)
+            if (!solutions.Any())
             {
-                var ex = new ArgumentException("There should be exactly one solution. Currently found: " + solutions.Count());
+                var ex = new ArgumentException("No solutions were found");
 
                 Log.Error(ex, "Exception in ScanSolution");
 
                 throw ex;
             }
 
-            return await ExecuteSolutionScan(solutions[0], progress);
+            return await ExecuteSolutionScan(solutions.First(), progress);
         }
 
         private async Task<SolutionResult> ExecuteSolutionScan(string solution, ICancelableProgress<ProgressMessage> progress)

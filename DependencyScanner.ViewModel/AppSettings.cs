@@ -30,6 +30,20 @@ namespace DependencyScanner.ViewModel
             }
         }
 
+        private bool _showOpenFileButton = Properties.Settings.Default.ShowOpenFileButton;
+        public bool ShowOpenFileButton
+        {
+            get { return _showOpenFileButton; }
+            set
+            {
+                if (Set(ref _showOpenFileButton, value))
+                {
+                    Properties.Settings.Default.ShowOpenFileButton = value;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
+
         private bool _showFolderButton = Properties.Settings.Default.ShowFolderButton;
         public bool ShowFolderButton
         {
