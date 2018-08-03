@@ -23,16 +23,6 @@ namespace DependencyScanner.Standalone
 {
     public partial class MainWindow : MetroWindow, INotifyPropertyChanged
     {
-        public GridLength SolutionWidth
-        {
-            get => Properties.Settings.Default.Browse_Solution_Width;
-            set
-            {
-                Properties.Settings.Default.Browse_Solution_Width = value;
-                Properties.Settings.Default.Save();
-                OnPropertyChanged();
-            }
-        }
         public double WindowHeight
         {
             get => Properties.Settings.Default.Window_Height;

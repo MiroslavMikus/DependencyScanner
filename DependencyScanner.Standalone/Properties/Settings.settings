@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DependencyScanner.Standalone.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Browse_Solution_Width" Type="System.Windows.GridLength" Scope="User">
-      <Value Profile="(Default)">250</Value>
-    </Setting>
     <Setting Name="Window_Height" Type="System.Double" Scope="User">
       <Value Profile="(Default)">500</Value>
     </Setting>

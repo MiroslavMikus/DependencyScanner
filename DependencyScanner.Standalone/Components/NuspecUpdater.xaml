@@ -32,14 +32,14 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=SolutionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
+                <ColumnDefinition Width="auto"
                                   MinWidth="250"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="3*" MinWidth="50"/>
                 <ColumnDefinition Width="2*" MinWidth="50"/>
                 <ColumnDefinition Width="2*" MinWidth="50"/>
             </Grid.ColumnDefinitions>
-            <GridSplitter Width="5" Grid.Column="1" Grid.Row="1" ResizeBehavior="PreviousAndNext"/>
+            <Border Width="5" Grid.Column="1" Grid.Row="1" Background="LightGray"/>
             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
                 <Label Content="Solutions: " VerticalAlignment="Center" ToolTip="Select solution to check."/>
                 <TextBox Margin="2" Width="180"
