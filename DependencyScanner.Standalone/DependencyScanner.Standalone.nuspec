@@ -14,8 +14,7 @@
     <!--<iconUrl>http://cdn.rawgit.com/__REPLACE_YOUR_REPO__/master/icons/bob.png</iconUrl>-->
     <copyright>Copyright 2018</copyright>
     <!-- If there is a license Url available, it is required for the community feed -->
-<licenseUrl>https://github.com/MiroslavMikus/DependencyScanner/blob/master/LICENSE</licenseUrl>
-    <requireLicenseAcceptance>true</requireLicenseAcceptance>-->
+	<licenseUrl>https://github.com/MiroslavMikus/DependencyScanner/blob/master/LICENSE</licenseUrl>
     <!--<projectSourceUrl>Software Source Location - is the software FOSS somewhere? Link to it with this</projectSourceUrl>-->
     <!--<docsUrl>At what url are the software docs located?</docsUrl>-->
     <!--<mailingListUrl></mailingListUrl>-->
