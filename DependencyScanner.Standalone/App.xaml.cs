@@ -11,8 +11,10 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -22,6 +24,8 @@ namespace DependencyScanner.Standalone
     public partial class App : Application
     {
         private const string AppName = "DependencyScanner";
+
+        public static readonly string ProductVersion = GetProductVersion();
 
         public static readonly string DebugPath = GetLogPath("Debug.txt");
         public static readonly string LogPath = GetLogPath("Info.txt");
@@ -38,6 +42,8 @@ namespace DependencyScanner.Standalone
                 Settings.Default.Reset();
                 DependencyScanner.ViewModel.Properties.Settings.Default.Reset();
             }
+
+            Settings.Default.Upgrade();
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledException;
 
@@ -125,6 +131,13 @@ namespace DependencyScanner.Standalone
             Log.Logger.Information("Closing app");
 
             base.OnExit(e);
+        }
+
+        private static string GetProductVersion()
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fileVersionInfo.ProductVersion;
         }
     }
 }
