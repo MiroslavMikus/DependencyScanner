@@ -1,18 +1,47 @@
-<?xml version="1.0"?>
-<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
-    <id>DependencyScanner.Standalone</id>
-    <version>$version$</version>
+    <id>Dependency.Scanner</id>
+    <version>1.0.0</version>
+    <packageSourceUrl>https://github.com/MiroslavMikus/DependencyScanner</packageSourceUrl>
+    <owners>Miroslav Mikus</owners>
+    <!-- == SOFTWARE SPECIFIC SECTION == -->
+    <!-- This section is about the software itself -->
     <title>Dependency Scanner</title>
     <authors>Miroslav Mikus</authors>
-    <owners>Miroslav Mikus</owners>
-	<projectUrl>https://github.com/MiroslavMikus/DependencyScanner</projectUrl>
-    <iconUrl>https://www.nuget.org/Content/gallery/img/default-package-icon-256x256.png</iconUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Solution management for dot net projects.</description>
+    <!-- projectUrl is required for the community feed -->
+    <projectUrl>https://github.com/MiroslavMikus/DependencyScanner</projectUrl>
+    <!--<iconUrl>http://cdn.rawgit.com/__REPLACE_YOUR_REPO__/master/icons/bob.png</iconUrl>-->
     <copyright>Copyright 2018</copyright>
+    <!-- If there is a license Url available, it is required for the community feed -->
+<licenseUrl>https://github.com/MiroslavMikus/DependencyScanner/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>-->
+    <!--<projectSourceUrl>Software Source Location - is the software FOSS somewhere? Link to it with this</projectSourceUrl>-->
+    <!--<docsUrl>At what url are the software docs located?</docsUrl>-->
+    <!--<mailingListUrl></mailingListUrl>-->
+    <bugTrackerUrl>https://github.com/MiroslavMikus/DependencyScanner/issues</bugTrackerUrl>
+    <tags>dotnet,scanner,dependency,nuget,consolidate</tags>
+    <summary>Simple tool to help you mantain dependencies of any dot net project.</summary>
+    <description>Dependency scanner is free solution management software for dot net projects.
+
+## Main features
+
+-  Browse your solutions
+- Consolidate NuGet packages versions within one solution.
+- Consolidate NuGet packages solution independent. This is a great help if multiple solutions have to have the same NuGet versions.
+- Nuspec updater. You can update all dependencies of your nuspec files with one click.
+
+## Other great features
+
+- Build in simple git client:
+  - The client can update all remote (git update remote) references while searching for your solutions so you can always compare the latest source code.
+  - You can see the current (git) status of all your solutions.
+  - You can quickly switch between all your local branches *so far the state allows*.
+	</description>
+    <releaseNotes>Initial release</releaseNotes>
   </metadata>
   <files>
-    <file src="bin\$configuration$\DependencyScanner.Standalone.exe" />
+    <file src="bin\Release\*" />
+	<file src="choco\*" target="tools" />
   </files>
 </package>
