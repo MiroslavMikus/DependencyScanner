@@ -3,4 +3,6 @@ Verification is intended to assist the Chocolatey moderators and community
 in verifying that this package's contents are trustworthy.
  
 I'm the developer of Dependency Scanner. 
-Checksum sha256 E828512D35F95C238B4069EE6CE6C47B0E414EA41602DA9202C3993136653FCC.
+
+SHA256 checksum for DependencyScanner.Standalone.exe:
+
