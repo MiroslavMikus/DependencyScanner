@@ -19,7 +19,7 @@
     <!--<docsUrl>At what url are the software docs located?</docsUrl>-->
     <!--<mailingListUrl></mailingListUrl>-->
     <bugTrackerUrl>https://github.com/MiroslavMikus/DependencyScanner/issues</bugTrackerUrl>
-    <tags>dotnet,scanner,dependency,nuget,consolidate</tags>
+    <tags>dotnet scanner dependency nuget consolidate git</tags>
     <summary>Simple tool to help you mantain dependencies of any dot net project.</summary>
     <description>Dependency scanner is free solution management software for dot net projects.
 
