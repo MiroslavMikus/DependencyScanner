@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
-    <id>Dependency.Scanner</id>
-    <version>1.0.0</version>
+    <id>dependency-scanner</id>
+    <version>0.1.0.1</version>
     <packageSourceUrl>https://github.com/MiroslavMikus/DependencyScanner</packageSourceUrl>
     <owners>Miroslav Mikus</owners>
     <!-- == SOFTWARE SPECIFIC SECTION == -->
@@ -40,7 +40,7 @@
     <releaseNotes>Initial release</releaseNotes>
   </metadata>
   <files>
-    <file src="bin\Release\*" />
+    <file src="bin\Release\DependencyScanner.Standalone.exe" />
 	<file src="choco\*" target="tools" />
   </files>
 </package>
