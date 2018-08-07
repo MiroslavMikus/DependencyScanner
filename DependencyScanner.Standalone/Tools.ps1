@@ -5,8 +5,27 @@
 # pack
 # push
 
-Get-FileHash "F:\Projects\_GitHub\DependencyScanner\DependencyScanner.Standalone\bin\Release\DependencyScanner.Standalone.exe"
+## Update verification hash
+$currentPath = (Get-Item -Path ".\").FullName
+
+$exePath = Join-Path $currentPath 'bin\Release\DependencyScanner.Standalone.exe'
+
+$hash = (Get-FileHash $exePath).Hash 
+
+$verificationPath = Join-Path $currentPath 'choco\VERIFICATION.txt'
+$verificationContent = get-content $verificationPath
+
+$newcontent = $verificationContent | select -SkipLast 1
+$newcontent += $hash
+
+$newcontent | Out-File $verificationPath
+###
+
+
+## Pack and push
+$fileVersion = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($exePath).FileVersion
+$nupkgName = "Dependency.Scanner.$fileVersion.nupkg"
 
 choco pack .\DependencyScanner.Standalone.nuspec
 
-choco push Dependency.Scanner.0.1.0.1.nupkg --source https://push.chocolatey.org/
+choco push $nupkgName --source https://push.chocolatey.org/

@@ -202,7 +202,7 @@ namespace DependencyScanner.ViewModel
 
         protected override bool PrimaryFilterJob(object value)
         {
-            if (value is SolutionResult input && !string.IsNullOrEmpty(PrimaryFilter))
+            if (!string.IsNullOrEmpty(PrimaryFilter) && value is SolutionResult input)
             {
                 return input.Info.Name.IndexOf(PrimaryFilter, StringComparison.OrdinalIgnoreCase) >= 0;
             }
@@ -211,7 +211,7 @@ namespace DependencyScanner.ViewModel
 
         protected override bool SecondaryFilterJob(object value)
         {
-            if (value is ProjectResult input && !string.IsNullOrEmpty(SecondaryFilter))
+            if (!string.IsNullOrEmpty(SecondaryFilter) && value is ProjectResult input)
             {
                 return input.ProjectInfo.Name.IndexOf(SecondaryFilter, StringComparison.OrdinalIgnoreCase) >= 0;
             }

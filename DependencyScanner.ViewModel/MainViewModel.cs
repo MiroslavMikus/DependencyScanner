@@ -162,7 +162,7 @@ namespace DependencyScanner.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex, $"Error while executing {nameof(OpenTextFileCommand)}");
+                    _logger.Error(ex, $"Error while executing {nameof(OpenTextFileCommand)}: {a}");
                 }
             });
 
