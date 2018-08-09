@@ -16,7 +16,11 @@ namespace DependencyScanner.Standalone
         {
             var search = SearchInChoco();
 
-            return IsOutdated(search);
+            var result = IsOutdated(search);
+
+            Log.Information($"New version was {(result ? "" : "not ")}found");
+
+            return result;
         }
 
         private bool IsOutdated(string input)
@@ -25,7 +29,7 @@ namespace DependencyScanner.Standalone
 
             foreach (var line in lines)
             {
-                if( line.IndexOf(PackageId, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (line.IndexOf(PackageId, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     return true;
                 }
@@ -59,6 +63,25 @@ namespace DependencyScanner.Standalone
             }
 
             return sb.ToString();
+        }
+
+        public void Update()
+        {
+            Log.Info("Updating with choco");
+
+            var proc = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "powershell",
+                    Arguments = $"choco upgrade {PackageId} -y",
+                    UseShellExecute = true,
+                    CreateNoWindow = true,
+                    Verb = "runas"
+                }
+            };
+
+            proc.Start();
         }
     }
 }
