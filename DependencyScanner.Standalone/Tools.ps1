@@ -21,6 +21,9 @@ $newcontent += $hash
 $newcontent | Out-File $verificationPath
 ###
 
+## setup gui shrim
+New-Item "bin\Release\DependencyScanner.Standalone.exe.gui" -type file -force | Out-Null
+
 
 ## Pack and push
 $fileVersion = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($exePath).FileVersion
@@ -29,3 +32,8 @@ $nupkgName = "Dependency.Scanner.$fileVersion.nupkg"
 choco pack .\DependencyScanner.Standalone.nuspec
 
 choco push $nupkgName --source https://push.chocolatey.org/
+
+
+Start-Process (Join-Path ([System.Environment]::GetFolderPath('CommonPrograms')) 'DependencyScanner.Standalone.lnk')
+
+choco upgrade dependency-scanner -y

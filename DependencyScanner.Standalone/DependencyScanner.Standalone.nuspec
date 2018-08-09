@@ -41,6 +41,7 @@
   </metadata>
   <files>
     <file src="bin\Release\DependencyScanner.Standalone.exe" />
-	<file src="choco\*" target="tools" />
+    <file src="bin\Release\DependencyScanner.Standalone.exe.gui" />
+    <file src="choco\*" target="tools" />
   </files>
 </package>

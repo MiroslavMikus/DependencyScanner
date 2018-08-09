@@ -54,6 +54,15 @@ namespace DependencyScanner.Standalone
         {
             SetColors();
 
+            //var updater = new ChocoUpdater();
+
+            //if(updater.IsNewVersionAvailable())
+            //{
+            //    updater.Update();
+
+            //    Current.Shutdown();
+            //}
+
             ILifetimeScope scope = BuildScope();
 
             var window = scope.Resolve<MainWindow>();

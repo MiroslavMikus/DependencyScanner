@@ -67,14 +67,16 @@ namespace DependencyScanner.Standalone
 
         public void Update()
         {
-            Log.Info("Updating with choco");
+            Log.Information("Updating with choco");
+
+            var runDependencyScanner = "Start-Process (Join-Path ([System.Environment]::GetFolderPath('CommonPrograms')) 'DependencyScanner.Standalone.lnk')";
 
             var proc = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
                     FileName = "powershell",
-                    Arguments = $"choco upgrade {PackageId} -y",
+                    Arguments = $"choco upgrade {PackageId} -y;{runDependencyScanner}",
                     UseShellExecute = true,
                     CreateNoWindow = true,
                     Verb = "runas"
