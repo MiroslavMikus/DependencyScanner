@@ -21,10 +21,6 @@
     <bugTrackerUrl>https://github.com/MiroslavMikus/DependencyScanner/issues</bugTrackerUrl>
     <tags>dotnet scanner dependency nuget consolidate git</tags>
     <summary>Simple tool to help you mantain dependencies of any dot net project.</summary>
-    <dependencies>
-      <dependency id="nuget-credentialprovider-vss" />
-      <dependency id="nuget.commandline" />
-    </dependencies>
     <description>Dependency scanner is free solution management software for dot net projects.
 
 ## Main features
