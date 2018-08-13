@@ -75,8 +75,8 @@
                     <Controls:ToggleSwitch.ToolTip>
                         <StackPanel>
                             <Label Content="Update references" FontWeight="Bold" Margin="5"/>
-                            <TextBlock Text="This will execute git remote update command which will update your remote references/branches." Margin="5"/>
-                            <TextBlock Text="Updating your references can make scannig process up to 10 times slower." Margin="5"/>
+                            <TextBlock Text="This will execute git fetch command which will update your remote references/branches." Margin="5"/>
+                            <TextBlock Text="Updating your references can make scanning process signific slower." Margin="5"/>
                         </StackPanel>
                     </Controls:ToggleSwitch.ToolTip>
                 </Controls:ToggleSwitch>
