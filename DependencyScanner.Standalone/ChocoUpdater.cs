@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using DependencyScanner.Core.ProcessTools;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,9 +13,9 @@ namespace DependencyScanner.Standalone
     {
         public const string PackageId = "dependency-scanner";
 
-        public bool IsNewVersionAvailable()
+        public async Task<bool> IsNewVersionAvailable()
         {
-            var search = SearchInChoco();
+            var search = await SearchInChoco();
 
             var result = IsOutdated(search);
 
@@ -37,42 +38,22 @@ namespace DependencyScanner.Standalone
             return false;
         }
 
-        private string SearchInChoco()
+        private async Task<string> SearchInChoco()
         {
             Log.Debug("Checking latest version");
 
-            var proc = new Process
+            var info = new ProcessStartInfo
             {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = "choco",
-                    Arguments = "outdated",
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true
-                }
+                FileName = "choco",
+                Arguments = "outdated",
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                CreateNoWindow = true
             };
 
-            try
-            {
-                proc.Start();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Cant start choco outdated");
-
-                return string.Empty;
-            }
-
-            StringBuilder sb = new StringBuilder();
-
-            while (!proc.StandardOutput.EndOfStream)
-            {
-                sb.AppendLine(proc.StandardOutput.ReadLine());
-            }
-
-            return sb.ToString();
+            return await new AsyncProcess(info).StartAsync();
         }
+
 
         public void Update()
         {
@@ -80,26 +61,16 @@ namespace DependencyScanner.Standalone
 
             var runDependencyScanner = "Start-Process (Join-Path ([System.Environment]::GetFolderPath('CommonPrograms')) 'DependencyScanner.Standalone.lnk')";
 
-            var proc = new Process
+            var info = new ProcessStartInfo
             {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = "powershell",
-                    Arguments = $"choco upgrade {PackageId} -y;{runDependencyScanner}",
-                    UseShellExecute = true,
-                    CreateNoWindow = true,
-                    Verb = "runas"
-                }
+                FileName = "powershell",
+                Arguments = $"choco upgrade {PackageId} -y;{runDependencyScanner}",
+                UseShellExecute = true,
+                CreateNoWindow = true,
+                Verb = "runas"
             };
 
-            try
-            {
-                proc.Start();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Cant start choco upgrade");
-            }
+            new Process { StartInfo = info }.Start();
         }
     }
 }

@@ -2,12 +2,14 @@
 using GalaSoft.MvvmLight.Command;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -98,6 +100,37 @@ namespace DependencyScanner.Standalone
                                            .ToList();
 
             InitializeComponent();
+
+#if !DEBUG
+            Task.Factory.StartNew(async () =>
+            {
+                var updater = new ChocoUpdater();
+
+                if (await updater.IsNewVersionAvailable())
+                {
+                    var mySettings = new MetroDialogSettings()
+                    {
+                        DefaultButtonFocus = MessageDialogResult.Affirmative,
+                        AffirmativeButtonText = "Update",
+                        NegativeButtonText = "Do not update",
+                        FirstAuxiliaryButtonText = "Cancel"
+                    };
+
+                    var result = await this.ShowMessageAsync("Newer version was detected!", "Do you want to update dependency-scanner",
+                        MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+
+                    if (result == MessageDialogResult.Affirmative)
+                    {
+                        updater.Update();
+
+                        await Dispatcher.BeginInvoke((Action)delegate ()
+                        {
+                            Application.Current.Shutdown();
+                        });
+                    }
+                }
+            }, default(CancellationToken), TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+#endif
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
