@@ -77,7 +77,7 @@ namespace DependencyScanner.Core.Model
             {
                 if (FileScanner.ExecuteGitFetchWithScan)
                 {
-                    var result = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.UpdateRemote);
+                    var result = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Fetch);
                 }
 
                 var branches = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.BranchList);

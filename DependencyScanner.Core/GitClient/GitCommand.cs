@@ -7,6 +7,6 @@
         public const string Status = "status";
         public const string SwitchBranch = "checkout";
         public const string RemoteBranch = "remote -v";
-        public const string UpdateRemote = "remote update";
+        public const string Fetch = "fetch";
     }
 }
