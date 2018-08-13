@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DependencyScanner.Core.ProcessTools
+namespace DependencyScanner.Core.Tools
 {
     public class AsyncProcess
     {

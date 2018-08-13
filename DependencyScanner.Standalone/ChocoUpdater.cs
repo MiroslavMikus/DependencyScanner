@@ -1,4 +1,4 @@
-﻿using DependencyScanner.Core.ProcessTools;
+﻿using DependencyScanner.Core.Tools;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -53,7 +53,6 @@ namespace DependencyScanner.Standalone
 
             return await new AsyncProcess(info).StartAsync();
         }
-
 
         public void Update()
         {
