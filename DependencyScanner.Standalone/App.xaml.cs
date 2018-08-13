@@ -54,15 +54,27 @@ namespace DependencyScanner.Standalone
         {
             SetColors();
 
-            //var updater = new ChocoUpdater();
+#if !DEBUG
+            Task.Run(() =>
+            {
+                var updater = new ChocoUpdater();
 
-            //if(updater.IsNewVersionAvailable())
-            //{
-            //    updater.Update();
+                if (updater.IsNewVersionAvailable())
+                {
+                    var result = MessageBox.Show("Do you want to update dependency-scanner?", "Newer version was detected.", MessageBoxButton.YesNo);
 
-            //    Current.Shutdown();
-            //}
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        updater.Update();
 
+                        Dispatcher.BeginInvoke((Action)delegate ()
+                        {
+                            Current.Shutdown();
+                        });
+                    }
+                }
+            });
+#endif
             ILifetimeScope scope = BuildScope();
 
             var window = scope.Resolve<MainWindow>();
