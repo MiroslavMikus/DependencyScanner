@@ -42,12 +42,9 @@ $nupkgName = "dependency-scanner.$fileVersion.nupkg"
 
 Write-Host "`nDetected file version $fileVersion"
 
-$packResult = Read-Host "Do you want to pack $nupkgName (y/n)"
+Write-Host "`nChoco pack"
+choco pack .\DependencyScanner.Standalone.nuspec
 
-if($packResult -contains "y"){
-
-    choco pack .\DependencyScanner.Standalone.nuspec
-}
 
 $pushResult = Read-Host "Do you want push $nupkgName to https://push.chocolatey.org/ (y/n)"
 
