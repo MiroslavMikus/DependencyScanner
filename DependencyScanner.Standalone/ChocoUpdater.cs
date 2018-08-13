@@ -53,7 +53,16 @@ namespace DependencyScanner.Standalone
                 }
             };
 
-            proc.Start();
+            try
+            {
+                proc.Start();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Cant start choco outdated");
+
+                return string.Empty;
+            }
 
             StringBuilder sb = new StringBuilder();
 
@@ -83,7 +92,14 @@ namespace DependencyScanner.Standalone
                 }
             };
 
-            proc.Start();
+            try
+            {
+                proc.Start();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Cant start choco upgrade");
+            }
         }
     }
 }
