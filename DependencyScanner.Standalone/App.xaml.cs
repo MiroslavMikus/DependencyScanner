@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -27,14 +28,17 @@ namespace DependencyScanner.Standalone
 
         public static readonly string ProductVersion = GetProductVersion();
 
-        public static readonly string DebugPath = GetLogPath("Debug.txt");
-        public static readonly string LogPath = GetLogPath("Info.txt");
-        public static readonly string FatalPath = GetLogPath("Fatal.txt");
+        public static readonly string DebugPath = GetProgramdataPath("Debug.txt");
+        public static readonly string LogPath = GetProgramdataPath("Info.txt");
+        public static readonly string FatalPath = GetProgramdataPath("Fatal.txt");
 
-        private static string GetLogPath(string fileName) => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), AppName, fileName);
+        private static string GetProgramdataPath(string fileName) => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), AppName, fileName);
 
         public App()
         {
+            ProfileOptimization.SetProfileRoot(GetProgramdataPath(""));
+            ProfileOptimization.StartProfile("Startup.Profile");
+
             string[] args = Environment.GetCommandLineArgs();
 
             if (args.Contains("cleansettings"))
