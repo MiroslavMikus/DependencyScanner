@@ -48,10 +48,11 @@ choco pack .\DependencyScanner.Standalone.nuspec
 
 $pushResult = Read-Host "Do you want push $nupkgName to https://push.chocolatey.org/ (y/n)"
 
-if($puahResult -contains "y"){
+if($pushResult -contains "y"){
 
     Write-Host "`nPushing  $nupkgName"
-    #choco push $nupkgName --source https://push.chocolatey.org/
+	
+    choco push $nupkgName --source https://push.chocolatey.org/
 }
 
 Read-Host "`nDone press enter to exit"
