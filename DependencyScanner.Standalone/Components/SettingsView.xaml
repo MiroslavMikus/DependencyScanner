@@ -1,13 +1,12 @@
 ﻿<UserControl x:Class="DependencyScanner.Standalone.Components.SettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:local="clr-namespace:DependencyScanner.Standalone.Components"
-             mc:Ignorable="d" 
-             d:DesignHeight="900" d:DesignWidth="800"
-             >
+             mc:Ignorable="d"
+             d:DesignHeight="900" d:DesignWidth="800">
              <!--Background="White"-->
     <ScrollViewer>
         <DockPanel LastChildFill="True" DataContext="{Binding MainSettings}">
@@ -56,91 +55,84 @@
             <StackPanel Margin="20">
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Controls:ToggleSwitch}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}">
-                        <Setter Property="Margin" Value="0 10 0 0"/>
+                        <Setter Property="Margin" Value="0 10 0 0" />
                     </Style>
                     <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-                        <Setter Property="FontSize" Value="18"/>
-                        <Setter Property="Margin" Value="5 20 0 0"/>
+                        <Setter Property="FontSize" Value="18" />
+                        <Setter Property="Margin" Value="5 20 0 0" />
                     </Style>
                 </StackPanel.Resources>
-                <Label Content="Feedback: " Margin="5 0 0 0"/>
-                <TextBlock Text="Your feedback make this app better."/>
+                <Label Content="Feedback: " Margin="5 0 0 0" />
+                <TextBlock Text="Your feedback make this app better." />
                 <Button Content="Feedback on github" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenLinkCommand}"
                                     Margin="0 10 0 0"
-                                    CommandParameter="https://github.com/MiroslavMikus/DependencyScanner/issues"/>
+                                    CommandParameter="https://github.com/MiroslavMikus/DependencyScanner/issues" />
                 <Label Content="Scan: " />
-                <Controls:ToggleSwitch OnLabel="Update remote references while scanning" OffLabel="Do not update remote references while scanning" 
-                                               IsChecked="{Binding ExecuteGitFetchWitScan}"
-                                               >
+                <Controls:ToggleSwitch OnLabel="Update remote references while scanning" OffLabel="Do not update remote references while scanning"
+                                               IsChecked="{Binding ExecuteGitFetchWitScan}">
                     <Controls:ToggleSwitch.ToolTip>
                         <StackPanel>
-                            <Label Content="Update references" FontWeight="Bold" Margin="5"/>
-                            <TextBlock Text="This will execute git fetch command which will update your remote references/branches." Margin="5"/>
-                            <TextBlock Text="Updating your references can make scanning process signific slower." Margin="5"/>
+                            <Label Content="Update references" FontWeight="Bold" Margin="5" />
+                            <TextBlock Text="This will execute git fetch command which will update your remote references/branches." Margin="5" />
+                            <TextBlock Text="Updating your references can make scanning process signific slower." Margin="5" />
                         </StackPanel>
                     </Controls:ToggleSwitch.ToolTip>
                 </Controls:ToggleSwitch>
-                <Controls:ToggleSwitch OnLabel="Trigger new scan after directory change" OffLabel="Do not trigger new scan after directory change" 
-                                               IsChecked="{Binding ScanAfterDirectoryChange}"
-                                               />
+                <Controls:ToggleSwitch OnLabel="Trigger new scan after directory change" OffLabel="Do not trigger new scan after directory change"
+                                               IsChecked="{Binding ScanAfterDirectoryChange}" />
 
-                <Label Content="Show / Hide action buttons in solution detail"/>
-                <Controls:ToggleSwitch OnLabel="Show terminal" OffLabel="Hide terminal" IsChecked="{Binding ShowCmdButton}"/>
-                <Controls:ToggleSwitch OnLabel="Show folder" OffLabel="Hide folder" IsChecked="{Binding ShowFolderButton}"/>
-                <Controls:ToggleSwitch OnLabel="Show open solution" OffLabel="Hide open solution" IsChecked="{Binding ShowOpenButton}"/>
-                <Controls:ToggleSwitch OnLabel="Show open url" OffLabel="Hide open url" IsChecked="{Binding ShowOpenUrlButton}"/>
-                <Controls:ToggleSwitch OnLabel="Show open as text file" OffLabel="Hide open as text file" IsChecked="{Binding ShowOpenFileButton}"/>
+                <Label Content="Show / Hide action buttons in solution detail" />
+                <Controls:ToggleSwitch OnLabel="Show terminal" OffLabel="Hide terminal" IsChecked="{Binding ShowCmdButton}" />
+                <Controls:ToggleSwitch OnLabel="Show folder" OffLabel="Hide folder" IsChecked="{Binding ShowFolderButton}" />
+                <Controls:ToggleSwitch OnLabel="Show open solution" OffLabel="Hide open solution" IsChecked="{Binding ShowOpenButton}" />
+                <Controls:ToggleSwitch OnLabel="Show open url" OffLabel="Hide open url" IsChecked="{Binding ShowOpenUrlButton}" />
+                <Controls:ToggleSwitch OnLabel="Show open as text file" OffLabel="Hide open as text file" IsChecked="{Binding ShowOpenFileButton}" />
                 <Label Content="Preferences:" />
-                <TextBlock Text="Prefered console tool:"/>
-                <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Prefered console tool:" />
+                <StackPanel Orientation="Horizontal">
                     <TextBox Margin="0 10 20 0" Width="300"
                                      Controls:TextBoxHelper.ClearTextButton="True"
                                      Text="{Binding PreferedConsoleTool, Mode=TwoWay, Delay=350}"
-                                     ToolTip="Clear to use CMD."
-                                     >
+                                     ToolTip="Clear to use CMD.">
                     </TextBox>
-                    <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0" 
+                    <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0"
                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenCmdCommand}"
-                            CommandParameter="C:\"/>
+                            CommandParameter="C:\" />
                 </StackPanel>
-                <TextBlock Text="Prefered web browser:" Margin="0 10 0 0"/>
-                <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Prefered web browser:" Margin="0 10 0 0" />
+                <StackPanel Orientation="Horizontal">
                     <TextBox Margin="0 10 20 0" Width="300"
                                      Controls:TextBoxHelper.ClearTextButton="True"
                                      Text="{Binding PreferencedWebBrowser, Mode=TwoWay, Delay=350}"
-                                     ToolTip="Clear to use your default browser."
-                                     />
+                                     ToolTip="Clear to use your default browser." />
                     <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0"
                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenLinkCommand}"
-                            CommandParameter="https://github.com/MiroslavMikus/"/>
+                            CommandParameter="https://github.com/MiroslavMikus/" />
                 </StackPanel>
-                <TextBlock Text="Prefered text editor:" Margin="0 10 0 0"/>
-                <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Prefered text editor:" Margin="0 10 0 0" />
+                <StackPanel Orientation="Horizontal">
                     <TextBox Margin="0 10 20 0" Width="300"
                                      Controls:TextBoxHelper.ClearTextButton="True"
                                      Text="{Binding PreferedTextEditor, Mode=TwoWay, Delay=350}"
-                                     ToolTip="Clear to use your notepad."
-                                     />
-                    <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0" 
-                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenTextFileCommand}"
-                            />
+                                     ToolTip="Clear to use your notepad." />
+                    <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0"
+                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenTextFileCommand}" />
                 </StackPanel>
 
                 <Label Content="Clear nuspec" />
-                <TextBlock Text="Path to nuspec.exe" Margin="0 10 0 0"/>
-                <StackPanel Orientation="Horizontal" >
+                <TextBlock Text="Path to nuspec.exe" Margin="0 10 0 0" />
+                <StackPanel Orientation="Horizontal">
                     <TextBox Margin="0 10 20 0" Width="300"
                                      Controls:TextBoxHelper.ClearTextButton="True"
                                      Text="{Binding PathToNuspec, Mode=TwoWay, Delay=350}"
-                                     ToolTip="Clear to use your default browser."
-                                     />
-                    <Button Content="Clear" Width="70" Height="20" Margin="0 10 0 0" 
+                                     ToolTip="Clear to use your default browser." />
+                    <Button Content="Clear" Width="70" Height="20" Margin="0 10 0 0"
                             Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClearNuspec}">
                         <Button.ToolTip>
                             <StackPanel>
-                                <Label Content="Clear nuget" FontWeight="Bold" Margin="5"/>
-                                <TextBlock Text="Clear global nuget cache with 'nuget.exe locals all -clear' command" Margin="5"/>
-                                <TextBlock Text="You can use shortcut Ctrl+Q" Margin="5"/>
+                                <Label Content="Clear nuget" FontWeight="Bold" Margin="5" />
+                                <TextBlock Text="Clear global nuget cache with 'nuget.exe locals all -clear' command" Margin="5" />
+                                <TextBlock Text="You can use shortcut Ctrl+Q" Margin="5" />
                             </StackPanel>
                         </Button.ToolTip>
                     </Button>

@@ -1,12 +1,9 @@
 ﻿using DependencyScanner.Core.GitClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 using static DependencyScanner.Core.Test.TestTools;
+using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace DependencyScanner.Core.Test.GitTests
 {

@@ -1,11 +1,5 @@
-﻿using DependencyScanner.Core.FileScan;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using static DependencyScanner.Core.FileScan.ProjectReader;
 
 namespace DependencyScanner.Core.Test
@@ -34,4 +28,3 @@ namespace DependencyScanner.Core.Test
         }
     }
 }
-

@@ -1,10 +1,8 @@
 ﻿using DependencyScanner.Core.Tools;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DependencyScanner.Standalone

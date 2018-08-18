@@ -1,24 +1,17 @@
 ﻿using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
 using DependencyScanner.ViewModel.Events;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Threading;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows;
-using System.IO;
-using System.Windows.Forms;
-using System.Threading.Tasks;
-using NuGet;
-using System.ComponentModel;
-using System.Windows.Data;
-using System.Globalization;
-using System.Threading;
 using System.Collections.Specialized;
 using System.Linq;
-using GalaSoft.MvvmLight.Threading;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DependencyScanner.ViewModel
 {
@@ -47,6 +40,7 @@ namespace DependencyScanner.ViewModel
         public ObservableCollection<string> WorkingDirectories { get => _workingDirectories; set => Set(ref _workingDirectories, value); }
 
         private string _workingDirectory = null;
+
         public string WorkingDirectory
         {
             get => _workingDirectory;
@@ -142,7 +136,6 @@ namespace DependencyScanner.ViewModel
 
                 WorkingDirectories.Remove(a);
             });
-
 
             if (Properties.Settings.Default.WorkingDirectories != null)
             {

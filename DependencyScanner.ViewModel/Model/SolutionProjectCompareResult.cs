@@ -1,11 +1,7 @@
 ﻿using DependencyScanner.Core.Model;
 using GalaSoft.MvvmLight;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DependencyScanner.ViewModel
 {
@@ -15,6 +11,7 @@ namespace DependencyScanner.ViewModel
         public SolutionResult Result { get => _result; set => Set(ref _result, value); }
 
         private IEnumerable<ConsolidateProject> _projectResult;
+
         public IEnumerable<ConsolidateProject> ProjectResult
         {
             get => _projectResult;

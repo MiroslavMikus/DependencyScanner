@@ -11,6 +11,7 @@ namespace DependencyScanner.ViewModel
         public SolutionResult Result { get => _result; set => Set(ref _result, value); }
 
         private IEnumerable<ProjectNuspecResult> _projectResult;
+
         public IEnumerable<ProjectNuspecResult> ProjectResult
         {
             get => _projectResult;

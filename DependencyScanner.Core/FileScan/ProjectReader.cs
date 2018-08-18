@@ -1,12 +1,9 @@
 ﻿using DependencyScanner.Core.Model;
-using NuGet;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace DependencyScanner.Core.FileScan
@@ -14,12 +11,12 @@ namespace DependencyScanner.Core.FileScan
     internal static class ProjectReader
     {
         internal static readonly XNamespace msbuild = "http://schemas.microsoft.com/developer/msbuild/2003";
+
         internal static XDocument GetDocument(string path)
         {
             try
             {
                 return XDocument.Load(path);
-
             }
             catch (FileNotFoundException ex)
             {
@@ -45,7 +42,6 @@ namespace DependencyScanner.Core.FileScan
                 {
                     return Enumerable.Empty<ProjectReference>();
                 }
-
             }
             catch (NullReferenceException)
             {

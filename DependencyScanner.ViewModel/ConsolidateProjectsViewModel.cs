@@ -1,7 +1,6 @@
 ﻿using DependencyScanner.Core;
 using DependencyScanner.Core.Model;
 using DependencyScanner.ViewModel.Events;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
@@ -21,6 +20,7 @@ namespace DependencyScanner.ViewModel
         public RelayCommand CompareAllCommand { get; }
 
         private bool _filterForConsolidates;
+
         public bool FilterForConsolidates
         {
             get => _filterForConsolidates;
@@ -87,7 +87,7 @@ namespace DependencyScanner.ViewModel
             {
                 if (!string.IsNullOrEmpty(SolutionFilter))
                 {
-                    filterName = input.Result.Info.Name.IndexOf(SolutionFilter, StringComparison.OrdinalIgnoreCase) >= 0; 
+                    filterName = input.Result.Info.Name.IndexOf(SolutionFilter, StringComparison.OrdinalIgnoreCase) >= 0;
                 }
 
                 if (FilterForConsolidates)

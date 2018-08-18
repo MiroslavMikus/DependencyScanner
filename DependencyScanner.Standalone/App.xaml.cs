@@ -9,15 +9,11 @@ using GalaSoft.MvvmLight.Threading;
 using MahApps.Metro;
 using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -101,7 +97,6 @@ namespace DependencyScanner.Standalone
                 Log.Logger = logger;
 
                 return logger;
-
             }).As<ILogger>().SingleInstance();
 
             builder.RegisterType<FileScanner>().AsImplementedInterfaces().InstancePerLifetimeScope();

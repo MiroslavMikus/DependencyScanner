@@ -1,5 +1,4 @@
-﻿using Serilog;
-using System;
+﻿using System;
 using System.Threading;
 
 namespace DependencyScanner.Core.Interfaces

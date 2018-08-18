@@ -1,10 +1,6 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using DependencyScanner.Core.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Serilog;
 using static DependencyScanner.Core.Test.TestTools;
 
 namespace DependencyScanner.Core.Test

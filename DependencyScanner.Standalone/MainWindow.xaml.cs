@@ -2,24 +2,12 @@
 using GalaSoft.MvvmLight.Command;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DependencyScanner.Standalone
 {
@@ -34,6 +22,7 @@ namespace DependencyScanner.Standalone
                 Properties.Settings.Default.Save();
             }
         }
+
         public double WindowWidth
         {
             get => Properties.Settings.Default.Windows_Width;
@@ -134,6 +123,7 @@ namespace DependencyScanner.Standalone
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         protected virtual void OnPropertyChanged([CallerMemberName]string a_propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(a_propertyName));

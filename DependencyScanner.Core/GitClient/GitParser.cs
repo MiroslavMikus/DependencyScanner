@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace DependencyScanner.Core.GitClient
 {
@@ -42,7 +41,7 @@ namespace DependencyScanner.Core.GitClient
 
             var endPosition = input.IndexOf("(");
 
-            if(startPosition == -1 || endPosition == -1)
+            if (startPosition == -1 || endPosition == -1)
             {
                 return string.Empty;
             }

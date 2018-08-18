@@ -1,8 +1,6 @@
 ﻿using Serilog;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,7 +23,7 @@ namespace DependencyScanner.Core.Tools
         {
             var proc = new Process
             {
-                StartInfo = _info, 
+                StartInfo = _info,
                 EnableRaisingEvents = true
             };
 

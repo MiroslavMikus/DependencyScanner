@@ -1,11 +1,7 @@
 ﻿using DependencyScanner.Core.FileScan;
 using DependencyScanner.Core.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace DependencyScanner.Core.Nuspec
 {
@@ -25,11 +21,11 @@ namespace DependencyScanner.Core.Nuspec
 
                 var useless = CheckUselessPackages(dependencies, ParseReferences(project.References));
 
-                if(missing.Any() || useless.Any())
+                if (missing.Any() || useless.Any())
                 {
                     yield return new ProjectNuspecResult
                     {
-                        Project = project, 
+                        Project = project,
                         MissingPackages = missing,
                         UselessPackages = useless
                     };

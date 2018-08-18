@@ -12,6 +12,7 @@ namespace DependencyScanner.ViewModel
         // maybe clear secondary filter -> should add some performance
 
         private ObservableCollection<TPrimary> _primaryCollection;
+
         public ObservableCollection<TPrimary> PrimaryCollectoion
         {
             get
@@ -30,6 +31,7 @@ namespace DependencyScanner.ViewModel
         }
 
         private ObservableCollection<TSecondary> _secondaryCollection;
+
         public ObservableCollection<TSecondary> SecondaryCollection
         {
             get => _secondaryCollection;
@@ -37,6 +39,7 @@ namespace DependencyScanner.ViewModel
         }
 
         private string _primaryFilter;
+
         public string PrimaryFilter
         {
             get { return _primaryFilter; }
@@ -50,6 +53,7 @@ namespace DependencyScanner.ViewModel
         }
 
         private string _secondaryFilter;
+
         public string SecondaryFilter
         {
             get { return _secondaryFilter; }
@@ -63,6 +67,7 @@ namespace DependencyScanner.ViewModel
         }
 
         private ICollectionView _primaryFilterResult;
+
         public ICollectionView PrimaryFilterResult
         {
             get => _primaryFilterResult;
@@ -70,6 +75,7 @@ namespace DependencyScanner.ViewModel
         }
 
         private ICollectionView _secondaryFilterResult;
+
         public ICollectionView SecondaryFilterResult
         {
             get => _secondaryFilterResult;
@@ -77,6 +83,7 @@ namespace DependencyScanner.ViewModel
         }
 
         private TPrimary _primarySelectedImtem;
+
         public TPrimary PrimarySelectedItem
         {
             get { return _primarySelectedImtem; }
@@ -96,7 +103,9 @@ namespace DependencyScanner.ViewModel
         }
 
         protected abstract bool PrimaryFilterJob(object value);
+
         protected abstract bool SecondaryFilterJob(object value);
+
         protected abstract IEnumerable<TSecondary> GetSecondaryCollection(TPrimary primary);
     }
 }

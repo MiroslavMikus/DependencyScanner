@@ -2,10 +2,6 @@
 using DependencyScanner.Core.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static DependencyScanner.Core.Test.TestTools;
 
 namespace DependencyScanner.Core.Test.GitTests

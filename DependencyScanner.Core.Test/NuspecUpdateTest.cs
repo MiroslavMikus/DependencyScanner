@@ -33,7 +33,7 @@ namespace DependencyScanner.Core.Test
             var comparer = new NuspecComparer();
 
             var package = new string[] { "package1", "package2", "package3", "package4" };
-            var nuspec = new string[] { "package1", "package2", "package3"};
+            var nuspec = new string[] { "package1", "package2", "package3" };
 
             var result = comparer.CheckMissingPackages(nuspec, package);
 
@@ -47,7 +47,7 @@ namespace DependencyScanner.Core.Test
             var comparer = new NuspecComparer();
 
             var package = new string[] { "package1", "package2", "package4" };
-            var nuspec = new string[] { "package1", "package2", "package3" , "package4" };
+            var nuspec = new string[] { "package1", "package2", "package3", "package4" };
 
             var result = comparer.CheckMissingPackages(nuspec, package);
 
@@ -82,4 +82,3 @@ namespace DependencyScanner.Core.Test
         }
     }
 }
-

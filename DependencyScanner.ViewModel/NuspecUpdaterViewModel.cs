@@ -6,8 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace DependencyScanner.ViewModel
@@ -21,6 +19,7 @@ namespace DependencyScanner.ViewModel
         public RelayCommand<ProjectNuspecResult> UpdateNuspecCommand { get; }
 
         private bool _filterForConsolidates;
+
         public bool FilterForConsolidates
         {
             get => _filterForConsolidates;
@@ -50,7 +49,7 @@ namespace DependencyScanner.ViewModel
 
                 var solution = ScanResult.FirstOrDefault(b => b.Result.Projects.Any(c => c.Equals(a.Project)));
 
-                if(solution != null)
+                if (solution != null)
                 {
                     solution.Result.RefreshCommand.Execute(null);
 

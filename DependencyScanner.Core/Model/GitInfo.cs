@@ -19,6 +19,7 @@ namespace DependencyScanner.Core.Model
         public IEnumerable<string> BranchList { get => _branchList; private set => Set(ref _branchList, value); }
 
         private string _currentBranch;
+
         public string CurrentBranch
         {
             get => _currentBranch;

@@ -1,5 +1,4 @@
-﻿using DependencyScanner.Core.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace DependencyScanner.Core.Model
 {

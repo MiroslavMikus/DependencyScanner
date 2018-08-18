@@ -1,15 +1,11 @@
 ﻿using DependencyScanner.Core;
 using DependencyScanner.Core.Model;
 using DependencyScanner.ViewModel.Events;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Windows.Data;
 
@@ -25,6 +21,7 @@ namespace DependencyScanner.ViewModel
         public RelayCommand DeSelectAllCommand { get; }
 
         private bool _filterForConsolidates;
+
         public bool FilterForSelected
         {
             get => _filterForConsolidates;

@@ -1,10 +1,7 @@
 ﻿using DependencyScanner.Core.FileScan;
 using DependencyScanner.Core.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace DependencyScanner.Core.Nuspec
@@ -53,7 +50,6 @@ namespace DependencyScanner.Core.Nuspec
 
             dep = dep.Element("dependencies");
 
-
             foreach (var id in ids)
             {
                 dep.Add(new XElement("dependency", new XAttribute("id", id)));
@@ -61,6 +57,7 @@ namespace DependencyScanner.Core.Nuspec
 
             return document;
         }
+
         internal static XDocument RemoveDependency(XDocument document, params string[] ids)
         {
             var dep = document

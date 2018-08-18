@@ -2,9 +2,6 @@
 using NuGet;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static DependencyScanner.Core.Tools.VersionComparer;
 
 namespace DependencyScanner.Core.Test

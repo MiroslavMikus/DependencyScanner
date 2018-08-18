@@ -1,7 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using NuGet;
-using Serilog;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
