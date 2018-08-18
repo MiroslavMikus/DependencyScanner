@@ -85,12 +85,6 @@
         <converter:BoolToVisibilityConverter x:Key="TrueToVisible"/>
         <converter:BoolToVisibilityConverter x:Key="FalseToCollapsed" Negative="Collapsed"/>
         <converter:BoolToBoolConverter x:Key="InvertBool" Positive="False" Negative="True"/>
-        
-        <ContextMenu x:Key="ClipContext" >
-            <MenuItem Header="Copy to Clipboard" Command="{Binding Source={x:Reference Name=TheMainWindow}, Path=DataContext.CopyToClipCommand}"
-                      CommandParameter="{Binding Source={x:Reference Name=References}, Path=SelectedItem.Id}"
-                      />
-        </ContextMenu>
     </Controls:MetroWindow.Resources>
     <Grid>
         <Grid.Resources>
@@ -277,10 +271,20 @@
                                   Grid.Row="1" Grid.Column="2"
                                   Margin="5"
                                   ItemsSource="{Binding ResultReferences}" AutoGenerateColumns="False" CanUserAddRows="False">
-                            <DataGrid.ContextMenu>
-                                <StaticResource ResourceKey="ClipContext"/>
-                            </DataGrid.ContextMenu>
-                            <DataGrid.Columns>
+                             <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="#">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                                <Button Margin="2" ToolTip="Copy nuget id to clip" 
+                                                        Command="{Binding ElementName=TheMainWindow, Path=DataContext.CopyToClipCommand}"
+                                                        CommandParameter="{Binding Id}">
+                                                    <iconPacks:PackIconFontAwesome Kind="CopySolid" />
+                                                </Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn IsReadOnly="True" Header="Id" Binding="{Binding Id}"/>
                             </DataGrid.Columns>
                         </DataGrid>
