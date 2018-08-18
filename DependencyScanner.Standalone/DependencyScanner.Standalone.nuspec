@@ -11,7 +11,7 @@
     <authors>Miroslav Mikus</authors>
     <!-- projectUrl is required for the community feed -->
     <projectUrl>https://github.com/MiroslavMikus/DependencyScanner</projectUrl>
-    <iconUrl>https://cdn.rawgit.com/MiroslavMikus/DependencyScanner/9530ca6b/DependencyScanner.Standalone/res/Flat-Enigma.png</iconUrl>
+    <iconUrl>https://cdn.rawgit.com/MiroslavMikus/DependencyScanner/658ec1dd/DependencyScanner.Standalone/res/Flat-Enigma.png</iconUrl>
     <copyright>Copyright 2018 Miroslav Mikus</copyright>
     <!-- If there is a license Url available, it is required for the community feed -->
     <licenseUrl>https://github.com/MiroslavMikus/DependencyScanner/blob/master/LICENSE</licenseUrl>
