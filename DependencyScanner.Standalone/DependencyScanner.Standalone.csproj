@@ -51,7 +51,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>res\Flat-Enigma.png</ApplicationIcon>
+    <ApplicationIcon>Flat-Enigma.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -232,7 +232,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\Flat-Enigma.png" />
+    <None Include="res\Flat-Enigma.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Flat-Enigma.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\Flat-Enigma.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
