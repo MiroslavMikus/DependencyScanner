@@ -5,6 +5,7 @@ using DependencyScanner.Core.Nuspec;
 using DependencyScanner.Standalone.Properties;
 using DependencyScanner.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Threading;
 using MahApps.Metro;
 using Serilog;
 using System;
@@ -38,6 +39,8 @@ namespace DependencyScanner.Standalone
         {
             ProfileOptimization.SetProfileRoot(GetProgramdataPath(""));
             ProfileOptimization.StartProfile("Startup.Profile");
+
+            DispatcherHelper.Initialize();
 
             string[] args = Environment.GetCommandLineArgs();
 

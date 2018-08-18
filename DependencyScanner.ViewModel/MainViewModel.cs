@@ -1,6 +1,7 @@
 ﻿using DependencyScanner.Core.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Threading;
 using Serilog;
 using System;
 using System.Diagnostics;

@@ -16,10 +16,9 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Globalization;
 using System.Threading;
-using DependencyScanner.ViewModel.Tools;
-using static DependencyScanner.ViewModel.Tools.DispatcherTools;
 using System.Collections.Specialized;
 using System.Linq;
+using GalaSoft.MvvmLight.Threading;
 
 namespace DependencyScanner.ViewModel
 {
@@ -76,7 +75,7 @@ namespace DependencyScanner.ViewModel
 
             PickWorkingDirectoryCommand = new RelayCommand(() =>
             {
-                DispacherInvoke(() =>
+                DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
                     using (var dialog = new FolderBrowserDialog())
                     {
@@ -193,7 +192,7 @@ namespace DependencyScanner.ViewModel
 
                 PrimaryCollectoion = new ObservableCollection<SolutionResult>(scanResult);
 
-                DispacherInvoke(() =>
+                DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
                     _messenger.Send<IEnumerable<SolutionResult>>(PrimaryCollectoion);
                 });
