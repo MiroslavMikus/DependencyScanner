@@ -1,6 +1,7 @@
 ﻿using DependencyScanner.Core.GitClient;
 using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
+using DependencyScanner.Core.Tools;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace DependencyScanner.Core
 
         private string[] GetNuspec(string rootDirectory) => Directory.GetFiles(rootDirectory, NuspecPattern, SearchOption.TopDirectoryOnly);
 
-        private string[] GetGitFolder(DirectoryInfo dir) => Directory.GetDirectories(dir.FullName, GitPattern, SearchOption.TopDirectoryOnly);
+        private string[] GetGitFolder(string dir) => Directory.GetDirectories(dir, GitPattern, SearchOption.TopDirectoryOnly);
 
         public async Task<SolutionResult> ScanSolution(string rootDirectory, ICancelableProgress<ProgressMessage> progress)
         {
@@ -94,7 +95,7 @@ namespace DependencyScanner.Core
                 result.Projects.Add(projectResult);
             }
 
-            var gitPath = SearchGit(solution);
+            var gitPath = DirectoryTools.SearchDirectory(solution, GetGitFolder);
 
             if (!string.IsNullOrEmpty(gitPath))
             {
@@ -137,30 +138,6 @@ namespace DependencyScanner.Core
             await Task.WhenAll(SolutionsTask);
 
             return SolutionsTask.Select(a => a.Result);
-        }
-
-        private string SearchGit(string directory)
-        {
-            var current = Directory.GetParent(directory);
-
-            while (true)
-            {
-                if (current == null)
-                {
-                    return string.Empty;
-                }
-
-                var folders = GetGitFolder(current);
-
-                if (folders.Count() == 0)
-                {
-                    current = current.Parent;
-                }
-                else
-                {
-                    return folders.First();
-                }
-            }
         }
     }
 }
