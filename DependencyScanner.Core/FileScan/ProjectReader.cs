@@ -33,13 +33,15 @@ namespace DependencyScanner.Core.FileScan
                     .Element(msbuild + "Project")
                     .Elements(msbuild + "ItemGroup");
 
-                if (references.Descendants("PackageReference").Any())
+                try
                 {
                     return references.Elements(msbuild + "PackageReference")
                             .Select(a => new ProjectReference(a.Attribute("Include").Value, a.Value));
                 }
-                else
+                catch (Exception ex)
                 {
+                    Log.Error(ex, "Cant find PackageReference");
+
                     return Enumerable.Empty<ProjectReference>();
                 }
             }
@@ -62,7 +64,7 @@ namespace DependencyScanner.Core.FileScan
             }
             catch (NullReferenceException)
             {
-                return String.Empty;
+                return string.Empty;
             }
         }
 
