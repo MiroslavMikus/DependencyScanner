@@ -58,6 +58,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -70,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileScan\FileScanner.cs" />
+    <Compile Include="NugetReference\NugetReferenceScan.cs" />
     <Compile Include="Nuspec\NuspecComparer.cs" />
     <Compile Include="Nuspec\NuspecUpdater.cs" />
     <Compile Include="FileScan\ProjectReader.cs" />
@@ -91,6 +94,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\SolutionResult.cs" />
     <Compile Include="SolutionComparer.cs" />
+    <Compile Include="Tools\DirectoryTools.cs" />
     <Compile Include="Tools\VersionComparer.cs" />
   </ItemGroup>
   <ItemGroup>
