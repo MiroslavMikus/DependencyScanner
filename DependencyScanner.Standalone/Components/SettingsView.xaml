@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:DependencyScanner.Standalone.Components"
              mc:Ignorable="d"
              d:DesignHeight="900" d:DesignWidth="800">
-             <!--Background="White"-->
+    <!--Background="White"-->
     <ScrollViewer>
         <DockPanel LastChildFill="True" DataContext="{Binding MainSettings}">
             <DockPanel.Resources>
@@ -65,8 +65,13 @@
                 <Label Content="Feedback: " Margin="5 0 0 0" />
                 <TextBlock Text="Your feedback make this app better." />
                 <Button Content="Feedback on github" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenLinkCommand}"
-                                    Margin="0 10 0 0"
-                                    CommandParameter="https://github.com/MiroslavMikus/DependencyScanner/issues" />
+                        Margin="0 10 0 0"
+                        CommandParameter="https://github.com/MiroslavMikus/DependencyScanner/issues" />
+
+                <Button Content="Show changeset" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenLinkCommand}"
+                        Margin="0 10 0 0"
+                        CommandParameter="https://github.com/MiroslavMikus/DependencyScanner/blob/master/DependencyScanner.Standalone/res/Changeset.md" />
+
                 <Label Content="Scan: " />
                 <Controls:ToggleSwitch OnLabel="Update remote references while scanning" OffLabel="Do not update remote references while scanning"
                                                IsChecked="{Binding ExecuteGitFetchWitScan}">
