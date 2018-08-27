@@ -47,6 +47,7 @@ namespace DependencyScanner.Standalone
             }
 
             Settings.Default.Upgrade();
+            DependencyScanner.ViewModel.Properties.Settings.Default.Upgrade();
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledException;
 

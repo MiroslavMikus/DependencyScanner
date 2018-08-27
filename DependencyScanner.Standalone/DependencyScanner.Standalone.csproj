@@ -202,6 +202,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="DeployChoco.ps1" />
+    <None Include="res\Changeset.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
