@@ -6,6 +6,7 @@ Features:
 
 - Changeset was added
   - *Show changeset* button was added to the settings view
+- Settings page now contains application version
 
 Bugs:
 
