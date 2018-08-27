@@ -1,5 +1,7 @@
 # Changeset
 
+## Coming in the new release
+
 Features:
 
 - Changeset was added
@@ -8,6 +10,8 @@ Features:
 Bugs:
 
 - Project reference scanning logic was updated
+- Fix Settings upater 
+  - Settings migration from an older version to newer should now run smoothly
 
 ## 18.8.2018 v0.1.0.0
 

@@ -2,10 +2,14 @@
 using GalaSoft.MvvmLight.Command;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
@@ -105,7 +109,7 @@ namespace DependencyScanner.Standalone
                         FirstAuxiliaryButtonText = "Cancel"
                     };
 
-                    var result = await this.ShowMessageAsync("Newer version was detected!", "Do you want to update dependency-scanner",
+                    var result = await this.ShowMessageAsync("Newer version was detected!", "Do you want to update dependency-scanner?",
                         MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
                     if (result == MessageDialogResult.Affirmative)
