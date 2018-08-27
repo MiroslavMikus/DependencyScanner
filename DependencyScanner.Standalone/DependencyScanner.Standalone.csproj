@@ -110,6 +110,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AppModule.cs" />
     <Compile Include="ChocoUpdater.cs" />
     <Compile Include="Components\NuspecUpdater.xaml.cs">
       <DependentUpon>NuspecUpdater.xaml</DependentUpon>

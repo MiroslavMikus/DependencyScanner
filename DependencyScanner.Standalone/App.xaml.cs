@@ -24,16 +24,11 @@ namespace DependencyScanner.Standalone
         private const string AppName = "DependencyScanner";
 
         public static readonly string ProductVersion = GetProductVersion();
-
-        public static readonly string DebugPath = GetProgramdataPath("Debug.txt");
-        public static readonly string LogPath = GetProgramdataPath("Info.txt");
-        public static readonly string FatalPath = GetProgramdataPath("Fatal.txt");
-
-        private static string GetProgramdataPath(string fileName) => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), AppName, fileName);
+        internal static string GetProgramdataPath() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), AppName);
 
         public App()
         {
-            ProfileOptimization.SetProfileRoot(GetProgramdataPath(""));
+            ProfileOptimization.SetProfileRoot(GetProgramdataPath());
             ProfileOptimization.StartProfile("Startup.Profile");
 
             DispatcherHelper.Initialize();
@@ -81,41 +76,7 @@ namespace DependencyScanner.Standalone
         {
             var builder = new ContainerBuilder();
 
-            // Services
-            builder.Register(a =>
-            {
-                var logger = new LoggerConfiguration()
-#if DEBUG
-                            .MinimumLevel.Debug()
-                            .WriteTo.Logger(l => l.MinimumLevel.Debug().WriteTo.File(DebugPath))
-#else
-                            .MinimumLevel.Information()
-                            .WriteTo.Logger(l => l.MinimumLevel.Information().WriteTo.File(LogPath))
-#endif
-                            .WriteTo.Logger(l => l.WriteTo.File(FatalPath), Serilog.Events.LogEventLevel.Fatal)
-                            .CreateLogger();
-
-                Log.Logger = logger;
-
-                return logger;
-            }).As<ILogger>().SingleInstance();
-
-            builder.RegisterType<FileScanner>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<Messenger>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<SolutionComparer>().InstancePerLifetimeScope();
-            builder.RegisterType<ProjectComparer>().InstancePerLifetimeScope();
-            builder.RegisterType<NuspecComparer>().InstancePerLifetimeScope();
-            builder.RegisterType<GitEngine>().InstancePerLifetimeScope();
-
-            // View Models
-            builder.RegisterType<MainViewModel>().InstancePerLifetimeScope();
-            builder.RegisterType<BrowseViewModel>().InstancePerLifetimeScope();
-            builder.RegisterType<ConsolidateSolutionsViewModel>().InstancePerLifetimeScope();
-            builder.RegisterType<ConsolidateProjectsViewModel>().InstancePerLifetimeScope();
-            builder.RegisterType<NuspecUpdaterViewModel>().InstancePerLifetimeScope();
-
-            // View
-            builder.Register(a => new MainWindow() { DataContext = a.Resolve<MainViewModel>() });
+            builder.RegisterModule(new AppModule());
 
             var scope = builder.Build().BeginLifetimeScope();
 
