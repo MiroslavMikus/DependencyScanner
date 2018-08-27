@@ -1,5 +1,6 @@
 ﻿using DependencyScanner.Standalone.ViewModel;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Threading;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -116,10 +117,10 @@ namespace DependencyScanner.Standalone
                     {
                         updater.Update();
 
-                        await Dispatcher.BeginInvoke((Action)delegate ()
+                        await DispatcherHelper.RunAsync(() =>
                         {
                             Application.Current.Shutdown();
-                        });
+                        }).Task;
                     }
                 }
             }, default(CancellationToken), TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
