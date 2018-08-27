@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>dependency-scanner</id>
-    <version>0.1.0.0</version>
+    <version>0.1.0.1</version>
     <packageSourceUrl>https://github.com/MiroslavMikus/DependencyScanner/tree/master/DependencyScanner.Standalone</packageSourceUrl>
     <owners>Miroslav Mikus</owners>
     <!-- == SOFTWARE SPECIFIC SECTION == -->
@@ -21,22 +21,23 @@
     <bugTrackerUrl>https://github.com/MiroslavMikus/DependencyScanner/issues</bugTrackerUrl>
     <tags>dotnet scanner dependency nuget consolidate git</tags>
     <summary>Simple tool to help you mantain dependencies of any dot net project.</summary>
-    <description>Dependency scanner is free solution management software for dot net projects.
+    <description>
+      Dependency scanner is free solution management software for dot net projects.
 
-## Main features
+      ## Main features
 
--  Browse your solutions
-- Consolidate NuGet packages versions within one solution.
-- Consolidate NuGet packages solution independent. This is a great help if multiple solutions have to have the same NuGet versions.
-- Nuspec updater. You can update all dependencies of your nuspec files with one click.
+      -  Browse your solutions
+      - Consolidate NuGet packages versions within one solution.
+      - Consolidate NuGet packages solution independent. This is a great help if multiple solutions have to have the same NuGet versions.
+      - Nuspec updater. You can update all dependencies of your nuspec files with one click.
 
-## Other great features
+      ## Other great features
 
-- Build in simple git client:
-  - The client can update all remote (git update remote) references while searching for your solutions so you can always compare the latest source code.
-  - You can see the current (git) status of all your solutions.
-  - You can quickly switch between all your local branches *so far the state allows*.
-	</description>
+      - Build in simple git client:
+      - The client can update all remote (git update remote) references while searching for your solutions so you can always compare the latest source code.
+      - You can see the current (git) status of all your solutions.
+      - You can quickly switch between all your local branches *so far the state allows*.
+    </description>
     <releaseNotes>Initial release</releaseNotes>
   </metadata>
   <files>
