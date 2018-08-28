@@ -1,8 +1,12 @@
 # Changeset
 
 <!---
-## Coming in the new release
 -->
+## Coming in the new release
+
+**Bug-Fix**:
+
+- Fixed failing Nuspec-updater 
 
 ## 27.8.2018 0.1.0.1
 **Features**:
@@ -12,7 +16,7 @@
   - Changeset webpage will now open after each update
 - Settings page now contains application version
 
-**Bugs**:
+**Bug-Fix**:
 
 - Project reference scanning logic was updated
 - Fix Settings upater 
