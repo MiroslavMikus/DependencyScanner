@@ -10,5 +10,9 @@ namespace DependencyScanner.Core.Test
     [TestClass]
     public class NugetReferenceTest : BaseTest
     {
+        [TestMethod]
+        public void NugetReferenceScan_ScanNugetReferences()
+        {
+        }
     }
 }

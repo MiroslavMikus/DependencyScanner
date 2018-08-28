@@ -2,13 +2,14 @@
 using DependencyScanner.Core.Tools;
 using NuGet;
 using Serilog;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+
+//                                                       id                                                version                                                            dependencies
+using T_Result = System.Collections.Generic.Dictionary<string, System.Collections.Generic.Dictionary<NuGet.SemanticVersion, System.Collections.Generic.IEnumerable<NuGet.PackageDependencySet>>>;
 
 namespace DependencyScanner.Core.NugetReference
 {
@@ -24,10 +25,9 @@ namespace DependencyScanner.Core.NugetReference
 
         internal string[] GetPackagesFolder(string dir) => Directory.GetDirectories(dir, PackagesDirName, SearchOption.TopDirectoryOnly);
 
-        internal Dictionary<string, Dictionary<string, IEnumerable<PackageDependencySet>>> ReadDependencies(string solutionFolder)
+        internal T_Result ReadDependencies(string solutionFolder)
         {
-            //                          id                version              dependencies
-            var result = new Dictionary<string, Dictionary<string, IEnumerable<PackageDependencySet>>>();
+            var result = new T_Result();
 
             var packagesDirectory = DirectoryTools.SearchDirectory(solutionFolder, GetPackagesFolder);
 
@@ -51,7 +51,7 @@ namespace DependencyScanner.Core.NugetReference
 
                 var id = package.Id;
 
-                var version = package.Version.ToString();
+                var version = package.Version;
 
                 var dependencies = package.DependencySets;
 
@@ -61,7 +61,7 @@ namespace DependencyScanner.Core.NugetReference
                 }
                 else
                 {
-                    var temp = new Dictionary<string, IEnumerable<PackageDependencySet>>()
+                    var temp = new Dictionary<SemanticVersion, IEnumerable<PackageDependencySet>>()
                     {
                         {version, dependencies }
                     };
@@ -73,37 +73,19 @@ namespace DependencyScanner.Core.NugetReference
             return result;
         }
 
-        public IEnumerable<NugetReferenceResult> ScanNugetReferences(IEnumerable<SolutionResult> input)
+        public IEnumerable<NugetReferenceResult> ScanNugetReferences(IEnumerable<ProjectReference> References, string solutionFolder, string rootLabel)
         {
-            // copy all packages nuspecs to temp folder
+            // get all dependencies with no structure
+            var allDependencies = ReadDependencies(solutionFolder);
 
             // execute scan
 
-            // generate report
-
-            // delete temp folder
-
-            //var packagesDirectories = Directory.GetDirectories(packagesDirectory);
-
-            //var ScanResult = new Dictionary<string, IEnumerable<NugetReferenceResult>>();
-
-            //foreach (var reference in input)
-            //{
-            //    if (ScanResult.ContainsKey(reference.Id))
-            //    {
-            //        // already done
-            //        continue;
-            //    }
-
-            //    ScanResult.Add(reference.Id, ResolveNugetDependency(reference.Id, a => packagesDirectories.FirstOrDefault(b => b.Contains(a))));
-            //}
-
-            //return ScanResult.SelectMany(a => a.Value);
+            // generate report to programdata folder
 
             return null;
         }
 
-        public IEnumerable<NugetReferenceResult> ResolveNugetDependency(string packageDir, Func<string, string> getPackageFolder)
+        public IEnumerable<NugetReferenceResult> ResolveNugetDependency(T_Result input, string rootLabel)
         {
             return null;
         }
