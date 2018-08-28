@@ -1,5 +1,7 @@
 ﻿using DependencyScanner.Core.FileScan;
 using DependencyScanner.Core.Model;
+using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -74,18 +76,26 @@ namespace DependencyScanner.Core.Nuspec
 
         internal static IEnumerable<string> GetDependencies(XDocument document)
         {
-            var docu = document
-                        .Element("package")
-                        .Element("metadata");
+            try
+            {
+                var docu = document
+                    .Element("package")
+                    .Element("metadata");
 
-            if (docu.Descendants("dependencies").Any())
-            {
-                return docu.Element("dependencies")
-                    .Elements("dependency")
-                    .Select(a => a.Attribute("id").Value);
+                if (docu.Descendants("dependencies").Any())
+                {
+                    return docu.Element("dependencies")
+                        .Elements("dependency")
+                        .Select(a => a.Attribute("id").Value);
+                }
+                else
+                {
+                    return Enumerable.Empty<string>();
+                }
             }
-            else
+            catch (Exception ex)
             {
+                Log.Error(ex, "Cant read {document}", document);
                 return Enumerable.Empty<string>();
             }
         }
