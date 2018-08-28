@@ -42,8 +42,8 @@ namespace DependencyScanner.Core.Nuspec
         internal static XDocument AddDependency(XDocument document, params string[] ids)
         {
             var dep = document
-                    .Element("package")
-                    .Element("metadata");
+                .Element("package")
+                .Element("metadata");
 
             if (!dep.Descendants("dependencies").Any())
             {
@@ -63,11 +63,11 @@ namespace DependencyScanner.Core.Nuspec
         internal static XDocument RemoveDependency(XDocument document, params string[] ids)
         {
             var dep = document
-                    .Element("package")
-                    .Element("metadata")
-                    .Element("dependencies")
-                    .Elements("dependency")
-                    .Where(a => ids.Any(b => b == a.Attribute("id").Value));
+                .Element("package")
+                .Element("metadata")
+                .Element("dependencies")
+                .Elements("dependency")
+                .Where(a => ids.Any(b => b == a.Attribute("id").Value));
 
             dep.Remove();
 
@@ -94,6 +94,7 @@ namespace DependencyScanner.Core.Nuspec
                 }
             }
             catch (Exception ex)
+            // occurs if the nuspec is using wrong namespace -> for example choco nuspec
             {
                 Log.Error(ex, "Cant read {document}", document);
                 return Enumerable.Empty<string>();
