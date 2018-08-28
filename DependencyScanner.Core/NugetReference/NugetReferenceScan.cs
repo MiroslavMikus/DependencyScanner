@@ -1,5 +1,6 @@
 ﻿using DependencyScanner.Core.Model;
 using DependencyScanner.Core.Tools;
+using NuGet;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -23,93 +24,58 @@ namespace DependencyScanner.Core.NugetReference
 
         internal string[] GetPackagesFolder(string dir) => Directory.GetDirectories(dir, PackagesDirName, SearchOption.TopDirectoryOnly);
 
-        /// <summary>
-        /// Create temp directory, unzip and copy all nuspecs
-        /// </summary>
-        /// <param name="solutionFolters"></param>
-        /// <returns></returns>
-        internal string PrepareScan(string[] solutionFolters)
+        internal Dictionary<string, Dictionary<string, IEnumerable<PackageDependencySet>>> ReadDependencies(string solutionFolder)
         {
-            string targetPath = Path.Combine(_programDataPath, Path.GetRandomFileName());
+            //                          id                version              dependencies
+            var result = new Dictionary<string, Dictionary<string, IEnumerable<PackageDependencySet>>>();
 
-            Directory.CreateDirectory(targetPath);
+            var packagesDirectory = DirectoryTools.SearchDirectory(solutionFolder, GetPackagesFolder);
 
-            foreach (var solutionDirectory in solutionFolters)
+            if (string.IsNullOrEmpty(packagesDirectory))
             {
-                var packagesDirectory = DirectoryTools.SearchDirectory(solutionDirectory, GetPackagesFolder);
+                Log.Error("Cant fing packages folder in {solutionDirectory}. Aborting nuget reference scan", solutionFolder);
+                return null;
+            }
 
-                if (string.IsNullOrEmpty(packagesDirectory))
+            foreach (var folder in Directory.GetDirectories(packagesDirectory))
+            {
+                var nuspec = Directory.GetFiles(folder, "*.nupkg", SearchOption.TopDirectoryOnly).FirstOrDefault();
+
+                if (nuspec == null)
                 {
-                    Log.Error("Cant fing packages folder in {solutionDirectory}. Aborting nuget reference scan", solutionDirectory);
-
+                    Log.Error("Cant find nuspec in {source}", folder);
                     continue;
                 }
 
-                CopyNuspecs(solutionDirectory, targetPath);
-            }
-            return targetPath;
-        }
+                var package = new ZipPackage(nuspec);
 
-        /// <summary>
-        /// Unzip and copy nuspec
-        /// </summary>
-        /// <param name="source">Package folder of the current directory</param>
-        /// <param name="target">Target 'temp' folder </param>
-        internal void CopyNuspecs(string source, string target)
-        {
-            foreach (var folder in Directory.GetDirectories(source))
-            {
-                CopyNuspec(folder, target);
-            }
-        }
+                var id = package.Id;
 
-        internal void CopyNuspec(string source, string target)
-        {
-            var nuspec = Directory.GetFiles(source, "*.nupkg", SearchOption.TopDirectoryOnly).FirstOrDefault();
+                var version = package.Version.ToString();
 
-            if (nuspec == null)
-            {
-                Log.Error("Cant find nuspec in {source}", source);
-                return;
-            }
+                var dependencies = package.DependencySets;
 
-            using (ZipArchive zip = ZipFile.Open(nuspec, ZipArchiveMode.Read))
-            {
-                var entry = zip.Entries.Single(a => a.Name.Contains("nuspec"));
-
-                string version;
-                using (var stream = entry.Open())
-                using (var reader = new StreamReader(stream))
+                if (result.ContainsKey(id))
                 {
-                    version = ReadNuspecVerion(reader.ReadToEnd());
+                    result[id].Add(version, dependencies);
                 }
-
-                if (!string.IsNullOrEmpty(version))
+                else
                 {
-                    var fileName = Path.GetFileNameWithoutExtension(entry.Name) + "." + version + Path.GetExtension(entry.Name);
+                    var temp = new Dictionary<string, IEnumerable<PackageDependencySet>>()
+                    {
+                        {version, dependencies }
+                    };
+
+                    result.Add(id, temp);
                 }
-
-                entry.ExtractToFile(Path.Combine(target, entry.Name), true);
             }
-        }
 
-        internal string ReadNuspecVerion(string content)
-        {
-            var doc = new XDocument(content);
-
-            var version = doc.Element("package").Element("metadata").Element("version").Value;
-
-            return version;
-        }
-
-        internal void CleanUpScan()
-        {
+            return result;
         }
 
         public IEnumerable<NugetReferenceResult> ScanNugetReferences(IEnumerable<SolutionResult> input)
         {
             // copy all packages nuspecs to temp folder
-            PrepareScan(input.Select(a => a.Info.FullName).ToArray());
 
             // execute scan
 
