@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
+    <Compile Include="FrameworkNameExtensionsTest.cs" />
     <Compile Include="GitTests\GitExamples.cs" />
     <Compile Include="GitTests\GitParserTest.cs" />
     <Compile Include="NugetReferenceTest.cs" />

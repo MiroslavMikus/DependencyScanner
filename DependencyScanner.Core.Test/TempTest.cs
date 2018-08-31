@@ -2,7 +2,9 @@
 using DependencyScanner.Core.NugetReference;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NuGet;
+using System;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
 using static DependencyScanner.Core.Test.TestTools;
 
