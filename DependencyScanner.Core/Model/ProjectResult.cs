@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.Versioning;
 using static DependencyScanner.Core.FileScan.ProjectReader;
 
 namespace DependencyScanner.Core.Model
@@ -13,6 +14,7 @@ namespace DependencyScanner.Core.Model
         public FileInfo ProjectInfo { get; }
         public FileInfo PackageInfo { get; }
         public FileInfo NuspecInfo { get; internal set; }
+        public FrameworkName FrameworkId { get; set; }
         public string FrameworkVersion { get; }
         public bool HasNuspec { get => NuspecInfo != null; }
 
