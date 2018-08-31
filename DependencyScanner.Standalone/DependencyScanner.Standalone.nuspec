@@ -38,7 +38,7 @@
       - You can see the current (git) status of all your solutions.
       - You can quickly switch between all your local branches *so far the state allows*.
     </description>
-    <releaseNotes>Initial release</releaseNotes>
+    <releaseNotes>https://github.com/MiroslavMikus/DependencyScanner/blob/master/DependencyScanner.Standalone/res/Changeset.md</releaseNotes>
   </metadata>
   <files>
     <file src="bin\Release\DependencyScanner.Standalone.exe" />
