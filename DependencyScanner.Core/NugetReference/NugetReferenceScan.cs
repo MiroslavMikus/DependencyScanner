@@ -1,10 +1,12 @@
 ﻿using DependencyScanner.Core.FileScan;
 using DependencyScanner.Core.Model;
 using DependencyScanner.Core.Tools;
+using Newtonsoft.Json;
 using NuGet;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -97,10 +99,14 @@ namespace DependencyScanner.Core.NugetReference
                 // add current dependency
                 ResolveNugetDependency(dep, allDependencies, dep.ToString(), a => result.Add(a));
 
-                result.Add(new NugetReferenceResult(project.ProjectInfo.Name, dep.ToString()));
+                result.Add(new NugetReferenceResult(project.ProjectInfo.Name, dep.ToString()) { color = "red" });
             }
 
             // generate report to programdata folder
+
+            var test = JsonConvert.SerializeObject(result);
+
+            Debug.WriteLine(test);
 
             return result;
         }
@@ -109,11 +115,20 @@ namespace DependencyScanner.Core.NugetReference
         {
             if (input.ContainsKey(reference.Id))
             {
-                var compatibleVersion = input[reference.Id]
-                    .Where(a => a.Key.Version.Major == reference.Version.Version.Major)
-                    .Select(a => a.Key)
-                    .OrderByDescending(a => a.Version)
-                    .FirstOrDefault();
+                SemanticVersion compatibleVersion = default(SemanticVersion);
+
+                if (reference.Version == null)
+                {
+                    compatibleVersion = input[reference.Id].First().Key;
+                }
+                else
+                {
+                    compatibleVersion = input[reference.Id]
+                        .Where(a => a.Key.Version.Major == reference.Version.Version.Major)
+                        .Select(a => a.Key)
+                        .OrderByDescending(a => a.Version)
+                        .FirstOrDefault();
+                }
 
                 IEnumerable<PackageDependencySet> currentDependencies = input[reference.Id][compatibleVersion];
 
@@ -142,7 +157,17 @@ namespace DependencyScanner.Core.NugetReference
 
                 var castDependencies = compatibleFrameworkDependencies
                     .Dependencies
-                    .Select(a => new ProjectReference(a.Id, a.VersionSpec.MinVersion.ToString(), compatibleFrameworkDependencies.TargetFramework));
+                    .Select(a =>
+                    {
+                        var version = a.VersionSpec?.MinVersion?.ToString();
+
+                        if (version == null)
+                        {
+                            return new ProjectReference(a.Id, compatibleFrameworkDependencies.TargetFramework ?? reference.Framework);
+                        }
+
+                        return new ProjectReference(a.Id, a.VersionSpec?.MinVersion?.ToString(), compatibleFrameworkDependencies.TargetFramework ?? reference.Framework);
+                    });
 
                 foreach (var dep in castDependencies)
                 {
@@ -191,5 +216,6 @@ namespace DependencyScanner.Core.NugetReference
 
         public string source { get; set; }
         public string target { get; set; }
+        public string color { get; set; }
     }
 }

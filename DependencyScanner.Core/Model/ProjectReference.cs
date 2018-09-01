@@ -28,9 +28,19 @@ namespace DependencyScanner.Core.Model
             Framework = frameworkId;
         }
 
+        public ProjectReference(string id, FrameworkName frameworkId)
+        {
+            Id = id;
+            Framework = frameworkId;
+        }
+
         public override string ToString()
         {
-            return $"{Id}.{Version.ToString()}";
+            if (Version != null)
+            {
+                return $"{Id}.{Version.ToString()}";
+            }
+            return Id;
         }
     }
 }
