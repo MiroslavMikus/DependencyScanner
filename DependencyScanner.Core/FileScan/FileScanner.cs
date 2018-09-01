@@ -54,9 +54,9 @@ namespace DependencyScanner.Core
             return await ExecuteSolutionScan(solutions.First(), progress);
         }
 
-        private async Task<SolutionResult> ExecuteSolutionScan(string solution, ICancelableProgress<ProgressMessage> progress)
+        private async Task<SolutionResult> ExecuteSolutionScan(string solutionPath, ICancelableProgress<ProgressMessage> progress)
         {
-            var result = new SolutionResult(new FileInfo(solution), this);
+            var result = new SolutionResult(new FileInfo(solutionPath), this);
 
             foreach (var projectPath in GetProjects(result.Info.DirectoryName))
             {
@@ -95,7 +95,7 @@ namespace DependencyScanner.Core
                 result.Projects.Add(projectResult);
             }
 
-            var gitPath = DirectoryTools.SearchDirectory(solution, GetGitFolder);
+            var gitPath = DirectoryTools.SearchDirectory(solutionPath, GetGitFolder);
 
             if (!string.IsNullOrEmpty(gitPath))
             {

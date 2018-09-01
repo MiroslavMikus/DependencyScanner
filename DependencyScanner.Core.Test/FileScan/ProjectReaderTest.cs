@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Runtime.Versioning;
 using static DependencyScanner.Core.FileScan.ProjectReader;
+using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace DependencyScanner.Core.Test
 {
@@ -15,9 +16,13 @@ namespace DependencyScanner.Core.Test
         {
             var docu = GetDocument(@"TestData\NewDependencies.csproj");
 
-            var result = ReadPackageReferences(docu);
+            var framework = new FrameworkName(SupportedFrameworks.Standard, new Version("2.0"));
 
-            Assert.AreEqual(2, result.Count());
+            var actual = ReadPackageReferences(docu, framework);
+
+            AreEqual(2, actual.Count());
+
+            IsTrue(actual.All(a => a.Framework == framework));
         }
 
         [TestMethod]
@@ -30,7 +35,7 @@ namespace DependencyScanner.Core.Test
         {
             var actual = GetVersion(input);
 
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -42,7 +47,7 @@ namespace DependencyScanner.Core.Test
 
             var expected = new FrameworkName(SupportedFrameworks.Standard, new Version("2.0"));
 
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -54,7 +59,7 @@ namespace DependencyScanner.Core.Test
 
             var expected = new FrameworkName(SupportedFrameworks.Core, new Version("2.1"));
 
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -68,7 +73,7 @@ namespace DependencyScanner.Core.Test
 
             var expectedResult = new FrameworkName(SupportedFrameworks.UWP, new Version(expected));
 
-            Assert.AreEqual(expectedResult, actual);
+            AreEqual(expectedResult, actual);
         }
 
         [TestMethod]
@@ -82,7 +87,7 @@ namespace DependencyScanner.Core.Test
 
             var expectedResult = new FrameworkName(SupportedFrameworks.DotNet, new Version(expected));
 
-            Assert.AreEqual(expectedResult, actual);
+            AreEqual(expectedResult, actual);
         }
     }
 }

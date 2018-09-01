@@ -1,7 +1,9 @@
-﻿using DependencyScanner.Core.Model;
+﻿using DependencyScanner.Core.FileScan;
+using DependencyScanner.Core.Model;
 using DependencyScanner.Core.Tools;
 using NuGet;
 using Serilog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -73,21 +75,86 @@ namespace DependencyScanner.Core.NugetReference
             return result;
         }
 
-        public IEnumerable<NugetReferenceResult> ScanNugetReferences(IEnumerable<ProjectReference> References, string solutionFolder, string rootLabel)
+        public IEnumerable<NugetReferenceResult> ScanNugetReferences(ProjectResult project)
         {
+            var packagesPath = DirectoryTools.SearchDirectory(project.ProjectInfo.DirectoryName, a => Directory.GetDirectories(a, "packages", SearchOption.TopDirectoryOnly));
+
+            if (packagesPath == string.Empty)
+            {
+                Log.Error("Cant find packages directory. Project: {Project}", project.ProjectInfo.DirectoryName);
+
+                return Enumerable.Empty<NugetReferenceResult>();
+            }
+
             // get all dependencies with no structure
-            var allDependencies = ReadDependencies(solutionFolder);
+            var allDependencies = ReadDependencies(packagesPath);
 
             // execute scan
+            var result = new List<NugetReferenceResult>();
+
+            foreach (var dep in project.References)
+            {
+                // add current dependency
+                ResolveNugetDependency(dep, allDependencies, dep.ToString(), a => result.Add(a));
+
+                result.Add(new NugetReferenceResult(project.ProjectInfo.Name, dep.ToString()));
+            }
 
             // generate report to programdata folder
 
-            return null;
+            return result;
         }
 
-        public IEnumerable<NugetReferenceResult> ResolveNugetDependency(T_Result input, string rootLabel)
+        public void ResolveNugetDependency(ProjectReference reference, T_Result input, string parent, Action<NugetReferenceResult> report)
         {
-            return null;
+            if (input.ContainsKey(reference.Id))
+            {
+                var compatibleVersion = input[reference.Id]
+                    .Where(a => a.Key.Version.Major == reference.Version.Version.Major)
+                    .Select(a => a.Key)
+                    .OrderByDescending(a => a.Version)
+                    .FirstOrDefault();
+
+                IEnumerable<PackageDependencySet> currentDependencies = input[reference.Id][compatibleVersion];
+
+                PackageDependencySet compatibleFrameworkDependencies = default(PackageDependencySet);
+
+                if (currentDependencies.Count() == 1 && currentDependencies.First().TargetFramework == null)
+                // there are not specified target frameworks -> just use all available
+                {
+                    compatibleFrameworkDependencies = currentDependencies.First();
+                }
+                else
+                {
+                    var targetFrameworks = currentDependencies.Select(a => a.TargetFramework);
+
+                    // Search for same framework with same version or less
+                    var compatibleFramework = targetFrameworks.FindCompatibleFramework(reference.Framework);
+
+                    // we will work with the found framework dependencies
+                    compatibleFrameworkDependencies = currentDependencies.FirstOrDefault(a => a.TargetFramework == compatibleFramework);
+                }
+
+                if (compatibleFrameworkDependencies == null)
+                {
+                    return;
+                }
+
+                var castDependencies = compatibleFrameworkDependencies
+                    .Dependencies
+                    .Select(a => new ProjectReference(a.Id, a.VersionSpec.MinVersion.ToString(), compatibleFrameworkDependencies.TargetFramework));
+
+                foreach (var dep in castDependencies)
+                {
+                    report(new NugetReferenceResult(parent, dep.ToString()));
+
+                    ResolveNugetDependency(dep, input, dep.ToString(), report);
+                }
+
+                return;
+            }
+
+            return;
         }
 
         public async Task<string> GetNuspec(string packageDirectory)
@@ -116,6 +183,12 @@ namespace DependencyScanner.Core.NugetReference
 
     public class NugetReferenceResult
     {
+        public NugetReferenceResult(string source, string target)
+        {
+            this.source = source;
+            this.target = target;
+        }
+
         public string source { get; set; }
         public string target { get; set; }
     }

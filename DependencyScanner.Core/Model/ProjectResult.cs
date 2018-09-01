@@ -28,9 +28,9 @@ namespace DependencyScanner.Core.Model
             // package reference was not found
             var docu = GetDocument(ProjectInfo.FullName);
 
-            References = ReadPackageReferences(docu).ToList();
-
             FrameworkId = GetFrameworkName(docu);
+
+            References = ReadPackageReferences(docu, FrameworkId).ToList();
         }
 
         public ProjectResult(FileInfo projectInfo, FileInfo packageInfo)

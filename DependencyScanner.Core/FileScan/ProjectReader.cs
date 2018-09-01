@@ -27,7 +27,7 @@ namespace DependencyScanner.Core.FileScan
             }
         }
 
-        internal static IEnumerable<ProjectReference> ReadPackageReferences(XDocument document)
+        internal static IEnumerable<ProjectReference> ReadPackageReferences(XDocument document, FrameworkName frameworkId)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace DependencyScanner.Core.FileScan
                 try
                 {
                     return references.Elements(msbuild + "PackageReference")
-                            .Select(a => new ProjectReference(a.Attribute("Include").Value, a.Value));
+                        .Select(a => new ProjectReference(a.Attribute("Include").Value, a.Value, frameworkId));
                 }
                 catch (Exception ex)
                 {
@@ -78,6 +78,7 @@ namespace DependencyScanner.Core.FileScan
             }
 
             if (TryReadFromPropertyGroup(project, "TargetFrameworkVersion", msbuild, out string fullFramework))
+            // framework will be full dot net
             {
                 var version = GetVersion(fullFramework);
 
@@ -87,7 +88,7 @@ namespace DependencyScanner.Core.FileScan
                 }
             }
 
-            return new FrameworkName(SupportedFrameworks.Unknown, new Version("0.0")); ;
+            return new FrameworkName(SupportedFrameworks.Unknown, new Version("0.0"));
         }
 
         private static FrameworkName CheckFramework(string framework, string frameworkName)
