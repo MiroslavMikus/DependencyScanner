@@ -14,8 +14,9 @@ namespace DependencyScanner.Core.Model
         public FileInfo ProjectInfo { get; }
         public FileInfo PackageInfo { get; }
         public FileInfo NuspecInfo { get; internal set; }
-        public FrameworkName FrameworkId { get; set; }
-        public string FrameworkVersion { get; }
+        public FrameworkName FrameworkId { get; }
+        public string FrameworkName { get => FrameworkId.Identifier; }
+        public string FrameworkVersion { get => FrameworkId.Version.ToString(); }
         public bool HasNuspec { get => NuspecInfo != null; }
 
         public ICollection<ProjectReference> References { get; } = new List<ProjectReference>();

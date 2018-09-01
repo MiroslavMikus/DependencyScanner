@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:DependencyScanner.Standalone.Templates"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
+    <!--Background="White"-->
     <UserControl.Resources>
         <converter:NullToVisibilityConverter x:Key="NullToCollaps" Positive="Collapsed" Negative="Visible" />
         <converter:NullToBoolConverter x:Key="NullToFalse" Positive="True" Negative="False" />
@@ -21,6 +22,8 @@
         <Label Grid.Row="0" Content="{Binding ProjectInfo.Name}" FontWeight="Bold" FontSize="14" />
         <Label Grid.Row="1" Content="{Binding ProjectInfo.FullName}" FontWeight="Regular" FontSize="11" />
         <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Label Content="Framework name: " />
+            <Label Content="{Binding FrameworkName}" FontWeight="Bold" />
             <Label Content="Framework version: " />
             <Label Content="{Binding FrameworkVersion}" FontWeight="Bold" />
         </StackPanel>
