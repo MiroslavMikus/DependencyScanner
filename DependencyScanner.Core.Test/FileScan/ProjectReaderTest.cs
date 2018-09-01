@@ -58,15 +58,17 @@ namespace DependencyScanner.Core.Test
         }
 
         [TestMethod]
-        public void ReadUWPFramework()
+        [DataRow(@"TestData\UWP.csproj", "10.0.15063.0")]
+        [DataRow(@"TestData\Xamarin.UWP.csproj", "10.0.14393.0")]
+        public void ReadUWPFramework(string path, string expected)
         {
-            var docu = GetDocument(@"TestData\UWP.csproj");
+            var docu = GetDocument(path);
 
             var actual = GetFrameworkName(docu);
 
-            var expected = new FrameworkName(SupportedFrameworks.UWP, new Version("10.0.15063.0"));
+            var expectedResult = new FrameworkName(SupportedFrameworks.UWP, new Version(expected));
 
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expectedResult, actual);
         }
 
         [TestMethod]

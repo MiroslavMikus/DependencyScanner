@@ -53,30 +53,6 @@ namespace DependencyScanner.Core.FileScan
             }
         }
 
-        //internal static string ReadFrameworkVersion(XDocument document)
-        //{
-        //    try
-        //    {
-        //        return document
-        //            .Element(msbuild + "Project")
-        //            .Elements(msbuild + "PropertyGroup")
-        //            .Elements(msbuild + "TargetFrameworkVersion")
-        //            .Select(a => a.Value)
-        //            .FirstOrDefault();
-        //    }
-        //    catch (NullReferenceException)
-        //    {
-        //        return string.Empty;
-        //    }
-        //}
-
-        //internal static string ReadFrameworkVersion(string path)
-        //{
-        //    var docu = GetDocument(path);
-
-        //    return ReadFrameworkVersion(docu);
-        //}
-
         internal static FrameworkName GetFrameworkName(string projectPath)
         {
             return GetFrameworkName(GetDocument(projectPath));
@@ -111,7 +87,7 @@ namespace DependencyScanner.Core.FileScan
                 }
             }
 
-            return null;
+            return new FrameworkName(SupportedFrameworks.Unknown, new Version("0.0")); ;
         }
 
         private static FrameworkName CheckFramework(string framework, string frameworkName)

@@ -2,6 +2,7 @@
 {
     public static class SupportedFrameworks
     {
+        public const string Unknown = "unknown";
         public const string DotNet = ".NETFramework";
         public const string Core = "netcoreapp";
         public const string Standard = "netstandard";
