@@ -66,16 +66,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
-    <Compile Include="FrameworkNameExtensionsTest.cs" />
+    <Compile Include="FileScan\FrameworkNameExtensionsTest.cs" />
     <Compile Include="GitTests\GitExamples.cs" />
     <Compile Include="GitTests\GitParserTest.cs" />
-    <Compile Include="NugetReferenceTest.cs" />
-    <Compile Include="NuspecUpdateTest.cs" />
-    <Compile Include="ProjectReaderTest.cs" />
+    <Compile Include="NugetReference\NugetReferenceTest.cs" />
+    <Compile Include="Nuspec\NuspecUpdateTest.cs" />
+    <Compile Include="FileScan\ProjectReaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SemanticVersionTest.cs" />
+    <Compile Include="Tools\SemanticVersionTest.cs" />
     <Compile Include="TempTest.cs" />
     <Compile Include="TestTools.cs" />
+    <Compile Include="Tools\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -109,10 +110,12 @@
     <None Include="TestData\Core.csproj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="TestData\Full.csproj" />
-    <Content Include="TestData\NewDependencies.csproj">
+    <None Include="TestData\Full.csproj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
+    <None Include="TestData\NewDependencies.csproj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

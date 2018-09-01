@@ -10,9 +10,9 @@ using static DependencyScanner.Core.Test.TestTools;
 
 namespace DependencyScanner.Core.Test
 {
-    //[Ignore]
+    [Ignore]
     [TestClass]
-    public class TempTest : BaseTest
+    public class TempTest : TestBase
     {
         [TestMethod]
         public void ScanSolution()

@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using static DependencyScanner.Core.Test.TestTools;
 using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace DependencyScanner.Core.Test.GitTests
@@ -17,7 +16,7 @@ namespace DependencyScanner.Core.Test.GitTests
         [Ignore]
         public void Parser()
         {
-            var processResult = Git.GitProcess(Environment.CurrentDirectory, GitCommand.BranchList);
+            var processResult = TestBase.Git.GitProcess(Environment.CurrentDirectory, GitCommand.BranchList);
             var result = GitParser.SplitString(processResult);
 
             AreEqual("  fix/SyncWithUi", result.First());

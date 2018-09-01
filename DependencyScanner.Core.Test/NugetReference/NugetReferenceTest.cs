@@ -8,7 +8,7 @@ using System.Xml.Linq;
 namespace DependencyScanner.Core.Test
 {
     [TestClass]
-    public class NugetReferenceTest : BaseTest
+    public class NugetReferenceTest : TestBase
     {
         [TestMethod]
         public void NugetReferenceScan_ScanNugetReferences()
