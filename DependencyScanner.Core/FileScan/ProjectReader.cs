@@ -1,9 +1,11 @@
 ﻿using DependencyScanner.Core.Model;
+using DependencyScanner.Core.Tools;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Xml.Linq;
 
 namespace DependencyScanner.Core.FileScan
@@ -51,28 +53,122 @@ namespace DependencyScanner.Core.FileScan
             }
         }
 
-        internal static string ReadFrameworkVersion(XDocument document)
+        //internal static string ReadFrameworkVersion(XDocument document)
+        //{
+        //    try
+        //    {
+        //        return document
+        //            .Element(msbuild + "Project")
+        //            .Elements(msbuild + "PropertyGroup")
+        //            .Elements(msbuild + "TargetFrameworkVersion")
+        //            .Select(a => a.Value)
+        //            .FirstOrDefault();
+        //    }
+        //    catch (NullReferenceException)
+        //    {
+        //        return string.Empty;
+        //    }
+        //}
+
+        //internal static string ReadFrameworkVersion(string path)
+        //{
+        //    var docu = GetDocument(path);
+
+        //    return ReadFrameworkVersion(docu);
+        //}
+
+        internal static FrameworkName GetFrameworkName(string projectPath)
         {
-            try
-            {
-                return document
-                      .Element(msbuild + "Project")
-                      .Elements(msbuild + "PropertyGroup")
-                      .Elements(msbuild + "TargetFrameworkVersion")
-                      .Select(a => a.Value)
-                      .FirstOrDefault();
-            }
-            catch (NullReferenceException)
-            {
-                return string.Empty;
-            }
+            return GetFrameworkName(GetDocument(projectPath));
         }
 
-        internal static string ReadFrameworkVersion(string path)
+        internal static FrameworkName GetFrameworkName(XDocument project)
         {
-            var docu = GetDocument(path);
+            if (TryReadFromPropertyGroup(project, "TargetFramework", out string framework))
+            // framework will be core or standard
+            {
+                return CheckFramework(framework, SupportedFrameworks.Core) ?? CheckFramework(framework, SupportedFrameworks.Standard);
+            }
 
-            return ReadFrameworkVersion(docu);
+            if (TryReadFromPropertyGroup(project, "TargetPlatformMinVersion", msbuild, out string uwpFramework))
+            // framework will be UWP
+            {
+                var version = GetVersion(uwpFramework);
+
+                if (version != string.Empty)
+                {
+                    return new FrameworkName(SupportedFrameworks.UWP, new Version(version));
+                }
+            }
+
+            if (TryReadFromPropertyGroup(project, "TargetFrameworkVersion", msbuild, out string fullFramework))
+            {
+                var version = GetVersion(fullFramework);
+
+                if (version != string.Empty)
+                {
+                    return new FrameworkName(SupportedFrameworks.DotNet, new Version(version));
+                }
+            }
+
+            return null;
+        }
+
+        private static FrameworkName CheckFramework(string framework, string frameworkName)
+        {
+            if (framework.ContainsCaseInvariant(frameworkName))
+            {
+                var version = GetVersion(framework);
+
+                if (version != string.Empty)
+                {
+                    return new FrameworkName(frameworkName, new Version(version));
+                }
+            }
+            return null;
+        }
+
+        private static bool TryReadFromPropertyGroup(XDocument document, string tag, out string value)
+        {
+            value = document
+                ?.Element("Project")
+                ?.Elements("PropertyGroup")
+                ?.Elements(tag)
+                ?.FirstOrDefault()
+                ?.Value
+                ?? string.Empty;
+
+            return value != string.Empty;
+        }
+
+        private static bool TryReadFromPropertyGroup(XDocument document, string tag, XNamespace @namespace, out string value)
+        {
+            value = document
+                ?.Element(@namespace + "Project")
+                ?.Elements(@namespace + "PropertyGroup")
+                ?.Elements(@namespace + tag)
+                ?.FirstOrDefault()
+                ?.Value
+                ?? string.Empty;
+
+            return value != string.Empty;
+        }
+
+        /// <summary>
+        /// Example input: 'netstandard2.0', netcoreapp2.1
+        /// </summary>
+        /// <param name="frameworkWithVersion"></param>
+        /// <returns></returns>
+        internal static string GetVersion(string frameworkWithVersion)
+        {
+            if (frameworkWithVersion.Any(a => char.IsDigit(a)))
+            {
+                char firstDigit = frameworkWithVersion.FirstOrDefault(a => Char.IsDigit(a));
+                int versionIndex = frameworkWithVersion.IndexOf(firstDigit);
+
+                return frameworkWithVersion.Substring(versionIndex);
+            }
+            return string.Empty;
         }
     }
 }

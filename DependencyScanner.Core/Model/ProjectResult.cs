@@ -29,7 +29,7 @@ namespace DependencyScanner.Core.Model
 
             References = ReadPackageReferences(docu).ToList();
 
-            FrameworkVersion = ReadFrameworkVersion(docu);
+            FrameworkId = GetFrameworkName(docu);
         }
 
         public ProjectResult(FileInfo projectInfo, FileInfo packageInfo)
@@ -43,7 +43,7 @@ namespace DependencyScanner.Core.Model
 
             References.AddRange(file.GetPackageReferences().Select(a => new ProjectReference(a)));
 
-            FrameworkVersion = ReadFrameworkVersion(ProjectInfo.FullName);
+            FrameworkId = GetFrameworkName(ProjectInfo.FullName);
         }
 
         public override bool Equals(object obj)

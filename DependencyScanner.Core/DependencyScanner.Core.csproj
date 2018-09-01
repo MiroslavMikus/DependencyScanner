@@ -97,6 +97,7 @@
     <Compile Include="Model\SolutionResult.cs" />
     <Compile Include="SolutionComparer.cs" />
     <Compile Include="Tools\DirectoryTools.cs" />
+    <Compile Include="Tools\StringExtensions.cs" />
     <Compile Include="Tools\VersionComparer.cs" />
   </ItemGroup>
   <ItemGroup>
