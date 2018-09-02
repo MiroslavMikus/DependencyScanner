@@ -112,6 +112,9 @@
     </ApplicationDefinition>
     <Compile Include="AppModule.cs" />
     <Compile Include="ChocoUpdater.cs" />
+    <Compile Include="Components\NugetScanView.xaml.cs">
+      <DependentUpon>NugetScanView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\NuspecUpdater.xaml.cs">
       <DependentUpon>NuspecUpdater.xaml</DependentUpon>
     </Compile>
@@ -135,6 +138,10 @@
     </Compile>
     <Compile Include="ViewModel\AccentColorMenuData.cs" />
     <Compile Include="ViewModel\AppThemeMenuData.cs" />
+    <Page Include="Components\NugetScanView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\NuspecUpdater.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

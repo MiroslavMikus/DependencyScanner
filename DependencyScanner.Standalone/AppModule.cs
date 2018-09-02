@@ -57,6 +57,7 @@ namespace DependencyScanner.Standalone
             builder.RegisterType<ConsolidateSolutionsViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<ConsolidateProjectsViewModel>().InstancePerLifetimeScope();
             builder.RegisterType<NuspecUpdaterViewModel>().InstancePerLifetimeScope();
+            builder.RegisterType<NugetScanViewModel>().InstancePerLifetimeScope();
 
             // View
             builder.Register(a => new MainWindow() { DataContext = a.Resolve<MainViewModel>() });

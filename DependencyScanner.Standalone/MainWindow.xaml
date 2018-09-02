@@ -22,7 +22,7 @@
         MinWidth="500"
         x:Name="TheMainWindow"
         RightWindowCommandsOverlayBehavior="Never">
-        <!--d:DataContext="{d:DesignInstance viewModel:MainViewModel , IsDesignTimeCreatable=True}"-->
+    <!--d:DataContext="{d:DesignInstance viewModel:MainViewModel , IsDesignTimeCreatable=True}"-->
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button Content="Settings" Click="Settings_Click" />
@@ -263,7 +263,7 @@
                                   Grid.Row="1" Grid.Column="2"
                                   Margin="5"
                                   ItemsSource="{Binding ResultReferences}" AutoGenerateColumns="False" CanUserAddRows="False">
-                             <DataGrid.Columns>
+                            <DataGrid.Columns>
                                 <DataGridTemplateColumn Header="#">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -402,6 +402,9 @@
             </TabItem>
             <TabItem Header="Nuspec updater">
                 <components:NuspecUpdater DataContext="{Binding NuspecUpdaterViewModel}" />
+            </TabItem>
+            <TabItem Header="Nuget scan">
+                <components:NugetScanView DataContext="{Binding NugetScanViewModel}" />
             </TabItem>
         </TabControl>
     </Grid>

@@ -36,6 +36,7 @@ namespace DependencyScanner.Core.Test.NugetReference
         }
 
         [TestMethod]
+        [Ignore]
         public async Task TestEndToEnd()
         {
             var targetPath = @"TestData\StorageTest";
