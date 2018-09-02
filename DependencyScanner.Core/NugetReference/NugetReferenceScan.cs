@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
 //                                                       id                                                version                                                            dependencies
@@ -97,9 +98,9 @@ namespace DependencyScanner.Core.NugetReference
             foreach (var dep in project.References)
             {
                 // add current dependency
-                ResolveNugetDependency(dep, allDependencies, dep.ToString(), a => result.Add(a));
+                ResolveProjectDependency(dep, allDependencies, a => result.Add(a));
 
-                result.Add(new NugetReferenceResult(project.ProjectInfo.Name, dep.ToString()) { color = "red" });
+                result.Add(new NugetReferenceResult(Path.GetFileNameWithoutExtension(project.ProjectInfo.Name), dep.ToString()) { color = "red" });
             }
 
             // generate report to programdata folder
@@ -111,75 +112,142 @@ namespace DependencyScanner.Core.NugetReference
             return result;
         }
 
-        public void ResolveNugetDependency(ProjectReference reference, T_Result input, string parent, Action<NugetReferenceResult> report)
+        internal void ResolveProjectDependency(ProjectReference reference, T_Result input, Action<NugetReferenceResult> report)
         {
-            if (input.ContainsKey(reference.Id))
+            if (!input.ContainsKey(reference.Id)) return;
+
+            SemanticVersion compatibleVersion = default(SemanticVersion);
+
+            if (reference.Version == null)
+            // Version is not specified -> just take the first one
             {
-                SemanticVersion compatibleVersion = default(SemanticVersion);
+                compatibleVersion = input[reference.Id].First().Key;
+            }
+            else
+            {
+                compatibleVersion = reference.Version;
+            }
 
-                if (reference.Version == null)
-                {
-                    compatibleVersion = input[reference.Id].First().Key;
-                }
-                else
-                {
-                    compatibleVersion = input[reference.Id]
-                        .Where(a => a.Key.Version.Major == reference.Version.Version.Major)
-                        .Select(a => a.Key)
-                        .OrderByDescending(a => a.Version)
-                        .FirstOrDefault();
-                }
+            IEnumerable<PackageDependencySet> currentDependencies = input[reference.Id][compatibleVersion];
 
-                IEnumerable<PackageDependencySet> currentDependencies = input[reference.Id][compatibleVersion];
+            PackageDependencySet compatibleFrameworkDependencies = default(PackageDependencySet);
 
-                PackageDependencySet compatibleFrameworkDependencies = default(PackageDependencySet);
+            if (currentDependencies.Count() == 1 && currentDependencies.First().TargetFramework == null)
+            // there are not specified target frameworks -> just use all available
+            {
+                compatibleFrameworkDependencies = currentDependencies.First();
+            }
+            else
+            {
+                compatibleFrameworkDependencies = FindCompatibleFramework(currentDependencies, reference.Framework);
+            }
 
-                if (currentDependencies.Count() == 1 && currentDependencies.First().TargetFramework == null)
-                // there are not specified target frameworks -> just use all available
-                {
-                    compatibleFrameworkDependencies = currentDependencies.First();
-                }
-                else
-                {
-                    var targetFrameworks = currentDependencies.Select(a => a.TargetFramework);
-
-                    // Search for same framework with same version or less
-                    var compatibleFramework = targetFrameworks.FindCompatibleFramework(reference.Framework);
-
-                    // we will work with the found framework dependencies
-                    compatibleFrameworkDependencies = currentDependencies.FirstOrDefault(a => a.TargetFramework == compatibleFramework);
-                }
-
-                if (compatibleFrameworkDependencies == null)
-                {
-                    return;
-                }
-
-                var castDependencies = compatibleFrameworkDependencies
-                    .Dependencies
-                    .Select(a =>
-                    {
-                        var version = a.VersionSpec?.MinVersion?.ToString();
-
-                        if (version == null)
-                        {
-                            return new ProjectReference(a.Id, compatibleFrameworkDependencies.TargetFramework ?? reference.Framework);
-                        }
-
-                        return new ProjectReference(a.Id, a.VersionSpec?.MinVersion?.ToString(), compatibleFrameworkDependencies.TargetFramework ?? reference.Framework);
-                    });
-
-                foreach (var dep in castDependencies)
-                {
-                    report(new NugetReferenceResult(parent, dep.ToString()));
-
-                    ResolveNugetDependency(dep, input, dep.ToString(), report);
-                }
-
+            if (compatibleFrameworkDependencies == null)
+            {
                 return;
             }
 
-            return;
+            IEnumerable<NugetDefinition> castDependencies = CastDependencies(input, compatibleFrameworkDependencies);
+
+            ReportDependencies(castDependencies, input, report, reference.ToString());
+        }
+
+        internal void ResolveNugetDependency(NugetDefinition nugetDependency, T_Result input, Action<NugetReferenceResult> report)
+        {
+            if (!input.ContainsKey(nugetDependency.Id)) return;
+
+            SemanticVersion compatibleVersion = default(SemanticVersion);
+
+            if (input[nugetDependency.Id].ContainsKey(nugetDependency.CurrentVersion))
+            // Version was specified and packages folder contains the desired version
+            {
+                compatibleVersion = nugetDependency.CurrentVersion;
+            }
+            else
+            // Search for compatible framework version. Since target and installed version can differ from each other.
+            {
+                compatibleVersion = input[nugetDependency.Id]
+                    .Where(a => a.Key.Version.Major == nugetDependency.CurrentVersion.Version.Major)
+                    .Select(a => a.Key)
+                    .OrderByDescending(a => a.Version)
+                    .FirstOrDefault();
+            }
+
+            IEnumerable<PackageDependencySet> currentDependencies = input[nugetDependency.Id][compatibleVersion];
+
+            PackageDependencySet compatibleFrameworkDependencies = default(PackageDependencySet);
+
+            if (currentDependencies.Count() == 1 && currentDependencies.First().TargetFramework == null
+                || nugetDependency.Framework == null)
+            // there are not specified target frameworks -> just use all available
+            {
+                compatibleFrameworkDependencies = currentDependencies.First();
+            }
+            else
+            {
+                compatibleFrameworkDependencies = FindCompatibleFramework(currentDependencies, nugetDependency.Framework);
+            }
+
+            if (compatibleFrameworkDependencies == null)
+            {
+                return;
+            }
+
+            IEnumerable<NugetDefinition> castDependencies = CastDependencies(input, compatibleFrameworkDependencies);
+
+            ReportDependencies(castDependencies, input, report, nugetDependency.ToString());
+        }
+
+        private PackageDependencySet FindCompatibleFramework(IEnumerable<PackageDependencySet> currentDependencies, FrameworkName desiredFramework)
+        {
+            var targetFrameworks = currentDependencies.Select(a => a.TargetFramework);
+
+            // Search for same framework with same version or less
+            var compatibleFramework = targetFrameworks.FindCompatibleFramework(desiredFramework);
+
+            // we will work with the found framework dependencies
+            return currentDependencies.FirstOrDefault(a => a.TargetFramework == compatibleFramework);
+        }
+
+        private void ReportDependencies(IEnumerable<NugetDefinition> input, T_Result data, Action<NugetReferenceResult> report, string parent)
+        {
+            foreach (var dep in input)
+            {
+                report(new NugetReferenceResult(parent, dep.ToString()));
+
+                if (dep.Dependencies != null)
+                {
+                    ResolveNugetDependency(dep, data, report);
+                }
+            }
+        }
+
+        private static IEnumerable<NugetDefinition> CastDependencies(T_Result input, PackageDependencySet compatibleFrameworkDependencies)
+        {
+            return compatibleFrameworkDependencies
+                .Dependencies
+                .Select(a =>
+                {
+                    var version = input[a.Id].Select(b => b.Key).First(b => a.VersionSpec.Satisfies(b));
+
+                    PackageDependencySet dep = default(PackageDependencySet);
+
+                    if (input[a.Id][version].Count() == 1 && compatibleFrameworkDependencies.TargetFramework == null)
+                    {
+                        dep = input[a.Id][version].First();
+                    }
+                    else
+                    {
+                        dep = input[a.Id][version].FirstOrDefault(b => b.TargetFramework == compatibleFrameworkDependencies.TargetFramework);
+                    }
+
+                    return new NugetDefinition()
+                    {
+                        Id = a.Id,
+                        CurrentVersion = version,
+                        Dependencies = dep
+                    };
+                });
         }
 
         public async Task<string> GetNuspec(string packageDirectory)
@@ -217,5 +285,18 @@ namespace DependencyScanner.Core.NugetReference
         public string source { get; set; }
         public string target { get; set; }
         public string color { get; set; }
+    }
+
+    public class NugetDefinition
+    {
+        public string Id { get; set; }
+        public SemanticVersion CurrentVersion { get; set; }
+        public PackageDependencySet Dependencies { get; set; }
+        public FrameworkName Framework { get => Dependencies?.TargetFramework; }
+
+        public override string ToString()
+        {
+            return $"{Id}.{CurrentVersion.ToString()}";
+        }
     }
 }
