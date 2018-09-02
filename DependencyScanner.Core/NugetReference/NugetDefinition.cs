@@ -1,8 +1,6 @@
 ﻿using NuGet;
 using System.Runtime.Versioning;
 
-//                                                       id                                                version                                                            dependencies
-
 namespace DependencyScanner.Core.NugetReference
 {
     public class NugetDefinition

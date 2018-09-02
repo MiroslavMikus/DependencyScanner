@@ -1,6 +1,4 @@
-﻿//                                                       id                                                version                                                            dependencies
-
-namespace DependencyScanner.Core.NugetReference
+﻿namespace DependencyScanner.Core.NugetReference
 {
     public class NugetReferenceResult
     {
