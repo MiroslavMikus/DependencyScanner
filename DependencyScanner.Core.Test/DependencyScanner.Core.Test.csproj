@@ -70,6 +70,7 @@
     <Compile Include="GitTests\GitExamples.cs" />
     <Compile Include="GitTests\GitParserTest.cs" />
     <Compile Include="NugetReference\NugetReferenceTest.cs" />
+    <Compile Include="NugetReference\StorageTest.cs" />
     <Compile Include="Nuspec\NuspecUpdateTest.cs" />
     <Compile Include="FileScan\ProjectReaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -114,6 +115,27 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TestData\NewDependencies.csproj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestData\StorageData\file1.1.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestData\StorageData\file1.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\StorageData\file2.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\StorageData\file3.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestData\StorageData\file2.1.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

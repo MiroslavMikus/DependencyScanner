@@ -80,7 +80,10 @@
     <Compile Include="NugetReference\NugetDefinition.cs" />
     <Compile Include="NugetReference\NugetReferenceResult.cs" />
     <Compile Include="NugetReference\NugetReferenceScan.cs" />
+    <Compile Include="NugetReference\NugetScanFacade.cs" />
     <Compile Include="NugetReference\ReportGenerator.cs" />
+    <Compile Include="NugetReference\ReportStorage.cs" />
+    <Compile Include="NugetReference\StorageKey.cs" />
     <Compile Include="Nuspec\NuspecComparer.cs" />
     <Compile Include="Nuspec\NuspecUpdater.cs" />
     <Compile Include="FileScan\ProjectReader.cs" />

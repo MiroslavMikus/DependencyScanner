@@ -65,8 +65,8 @@ namespace DependencyScanner.Core.Test
         {
             var scan = new NugetReferenceScan(@"C:\ProgramData\DependencyScanner");
 
-            var project = new ProjectResult(new FileInfo(@"C:\s\Serva.Base.Plugin\Serva.Base.Plugin\Serva.Base.Plugin\Serva.Base.Plugin.csproj"),
-                                            new FileInfo(@"C:\s\Serva.Base.Plugin\Serva.Base.Plugin\Serva.Base.Plugin\packages.config"));
+            var project = new ProjectResult(new FileInfo(@"F:\Projects\_GitHub\DependencyScanner\DependencyScanner.Standalone\DependencyScanner.Standalone.csproj"),
+                                            new FileInfo(@"F:\Projects\_GitHub\DependencyScanner\DependencyScanner.Standalone\packages.config"));
 
             var actual = scan.ScanNugetReferences(project);
 
@@ -79,6 +79,8 @@ namespace DependencyScanner.Core.Test
             var docu = XDocument.Parse(result);
 
             var node = docu.Nodes().OfType<XProcessingInstruction>().ToList();
+
+            var key = new StorageKey(node);
         }
     }
 }
