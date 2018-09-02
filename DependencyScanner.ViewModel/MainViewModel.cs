@@ -23,17 +23,20 @@ namespace DependencyScanner.ViewModel
         public ConsolidateSolutionsViewModel ConsolidateSolutionsVM { get; }
         public ConsolidateProjectsViewModel ConsolidateProjectsViewModel { get; }
         public NuspecUpdaterViewModel NuspecUpdaterViewModel { get; }
+        public NugetScanViewModel NugetScanViewModel { get; }
 
         public MainViewModel(BrowseViewModel browseViewModel,
                              ConsolidateSolutionsViewModel consolidateSolutionsViewModel,
                              ConsolidateProjectsViewModel consolidateProjectsViewModel,
                              NuspecUpdaterViewModel nuspecUpdaterViewModel,
+                             NugetScanViewModel nugetScanViewModel,
                              ILogger logger)
         {
             BrowseVM = browseViewModel;
             ConsolidateSolutionsVM = consolidateSolutionsViewModel;
             ConsolidateProjectsViewModel = consolidateProjectsViewModel;
             NuspecUpdaterViewModel = nuspecUpdaterViewModel;
+            NugetScanViewModel = nugetScanViewModel;
 
             _logger = logger;
 
