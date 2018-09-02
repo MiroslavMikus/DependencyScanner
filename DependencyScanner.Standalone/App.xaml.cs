@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using DependencyScanner.Core;
 using DependencyScanner.Core.GitClient;
+using DependencyScanner.Core.NugetReference;
 using DependencyScanner.Core.Nuspec;
 using DependencyScanner.Standalone.Properties;
 using DependencyScanner.ViewModel;

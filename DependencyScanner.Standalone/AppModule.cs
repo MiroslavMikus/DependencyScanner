@@ -36,17 +36,20 @@ namespace DependencyScanner.Standalone
 
                 return logger;
             }).As<ILogger>().SingleInstance();
-
-            builder.RegisterType<FileScanner>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<Messenger>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            // Core Services
+            builder.RegisterType<FileScanner>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<SolutionComparer>().InstancePerLifetimeScope();
             builder.RegisterType<ProjectComparer>().InstancePerLifetimeScope();
             builder.RegisterType<NuspecComparer>().InstancePerLifetimeScope();
             builder.RegisterType<GitEngine>().InstancePerLifetimeScope();
-            builder.RegisterType<NugetReferenceScan>().InstancePerLifetimeScope();
 
-            // constants
-            builder.Register(a => App.ProductVersion);
+            // NugetReferenceScan
+            builder.RegisterType<ReportGenerator>().InstancePerLifetimeScope();
+            builder.RegisterType<NugetReferenceScan>().InstancePerLifetimeScope();
+            builder.RegisterType<ReportStorage>().WithParameter(new TypedParameter(typeof(string), GetProgramdataPath("Reports"))).InstancePerLifetimeScope();
+            builder.RegisterType<NugetScanFacade>().WithParameter(new TypedParameter(typeof(string), App.ProductVersion)).InstancePerLifetimeScope();
 
             // View Models
             builder.RegisterType<MainViewModel>().InstancePerLifetimeScope();

@@ -16,6 +16,7 @@ namespace DependencyScanner.Core.NugetReference
             ReportGenerator = reportGenerator ?? throw new ArgumentNullException(nameof(reportGenerator));
             Scan = scan ?? throw new ArgumentNullException(nameof(scan));
             Storage = storage ?? throw new ArgumentNullException(nameof(storage));
+            ProductVersion = productVersion;
         }
 
         public KeyValuePair<DateTime, string> ExecuteScan(ProjectResult project)

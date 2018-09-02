@@ -15,6 +15,11 @@ namespace DependencyScanner.Core.NugetReference
 
         public ReportStorage(string storageDirectory)
         {
+            if (!Directory.Exists(storageDirectory))
+            {
+                Directory.CreateDirectory(storageDirectory);
+            }
+
             _storageDirectory = storageDirectory;
 
             _storage = ReadStorage(_storageDirectory);
