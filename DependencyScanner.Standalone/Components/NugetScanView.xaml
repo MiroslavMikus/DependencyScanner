@@ -7,6 +7,7 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:templates="clr-namespace:DependencyScanner.Standalone.Templates"
         xmlns:converter="clr-namespace:DependencyScanner.Standalone.Converters"
+        xmlns:viewModel="clr-namespace:DependencyScanner.ViewModel.Model;assembly=DependencyScanner.ViewModel"
         xmlns:model="clr-namespace:DependencyScanner.Core.Model;assembly=DependencyScanner.Core"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
@@ -28,8 +29,8 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" MinWidth="260" />
                     <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" MinWidth="100" />
-                    <ColumnDefinition Width="*" MinWidth="100" />
+                    <ColumnDefinition Width="2*" MinWidth="100" />
+                    <ColumnDefinition Width="1*" MinWidth="100" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
@@ -46,7 +47,8 @@
                 <ListBox x:Name="AllSolutions" Grid.Row="1" Grid.Column="0"
                                  Margin="5"
                                  ItemsSource="{Binding PrimaryFilterResult}"
-                                 SelectedItem="{Binding PrimarySelectedItem, Delay=250}">
+                                 SelectedItem="{Binding PrimarySelectedItem, Delay=250}"
+                                 IsSynchronizedWithCurrentItem="True">
                     <ListBox.Resources>
                         <DataTemplate DataType="{x:Type model:SolutionResult}">
                             <templates:SolutionTemplate DataContext="{Binding}" />
@@ -62,34 +64,37 @@
                 </StackPanel>
                 <ListBox Margin="5" x:Name="Projects"
                                  Grid.Row="1" Grid.Column="2"
-                                 ItemsSource="{Binding SecondaryFilterResult}">
+                                 ItemsSource="{Binding SecondaryFilterResult}" IsSynchronizedWithCurrentItem="True">
                     <ListBox.Resources>
                         <DataTemplate DataType="{x:Type model:ProjectResult}">
-                            <Border>
-                                <Border.Style>
-                                    <Style TargetType="{x:Type Border}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding HasNuspec}" Value="True">
-                                                <Setter Property="Background" Value="Wheat" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Border.Style>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Margin="5 0 10 0" VerticalAlignment="Center" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.GenerateReportCommand}"
+                                    CommandParameter="{Binding}">
+                                    <StackPanel Orientation="Vertical">
+                                        <iconPacks:PackIconFontAwesome Kind="EditSolid" HorizontalAlignment="Center" />
+                                        <Label Content="Create Report" />
+                                    </StackPanel>
+                                </Button>
                                 <templates:ProjectTemplate DataContext="{Binding}" />
-                            </Border>
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.Resources>
                 </ListBox>
-                <Label Content="Packages: " Grid.Row="0" Grid.Column="3" />
-                <DataGrid Margin="5" SelectionMode="Single"
-                                  Grid.Row="1" Grid.Column="3"
-                                  ItemsSource="{Binding ElementName=Projects, Path=SelectedItem.References}"
-                                  IsReadOnly="True" AutoGenerateColumns="False" CanUserAddRows="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
-                        <DataGridTextColumn Header="Version" Binding="{Binding Version}" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                <Label Content="Reports: " Grid.Row="0" Grid.Column="3" />
+                <ListView Margin="5" SelectionMode="Single"
+                          Grid.Row="1" Grid.Column="3"
+                          ItemsSource="{Binding Reports}">
+                    <ListBox.Resources>
+                        <DataTemplate DataType="{x:Type viewModel:Report}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Date, StringFormat='{}{0:yyyy:mm:dd HH:mm:ss}'}" VerticalAlignment="Center" />
+                                <Button Content="Open report" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenLinkCommand}"
+                                        Margin="10 5 5 5"
+                                        CommandParameter="{Binding Path}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.Resources>
+                </ListView>
             </Grid>
         </Grid>
     </Grid>

@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -82,6 +83,8 @@ namespace DependencyScanner.ViewModel
             protected set => Set(ref _secondaryFilterResult, value);
         }
 
+        public event EventHandler PrimarySelectionUpdated;
+
         private TPrimary _primarySelectedImtem;
 
         public TPrimary PrimarySelectedItem
@@ -98,6 +101,8 @@ namespace DependencyScanner.ViewModel
                     SecondaryFilterResult.Filter = SecondaryFilterJob;
 
                     SecondaryFilterResult?.Refresh();
+
+                    PrimarySelectionUpdated?.Invoke(this, EventArgs.Empty);
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿using DependencyScanner.Core.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DependencyScanner.Core.NugetReference
 {
@@ -23,9 +24,13 @@ namespace DependencyScanner.Core.NugetReference
         {
             var scanResult = Scan.ScanNugetReferences(project);
 
-            var report = ReportGenerator.GenerateReport(scanResult, project.ProjectInfo.FullName, ProductVersion);
+            if (scanResult.Any())
+            {
+                var report = ReportGenerator.GenerateReport(scanResult, project.ProjectInfo.FullName, ProductVersion);
 
-            return Storage.Store(report);
+                return Storage.Store(report);
+            }
+            return new KeyValuePair<DateTime, string>();
         }
     }
 }

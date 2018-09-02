@@ -1,5 +1,7 @@
 ﻿using DependencyScanner.Core.Model;
 using DependencyScanner.Core.NugetReference;
+using DependencyScanner.ViewModel.Model;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
@@ -16,16 +18,55 @@ namespace DependencyScanner.ViewModel
         private readonly IMessenger _messenger;
         private readonly NugetScanFacade _nugetScan;
 
+        public RelayCommand<ProjectResult> GenerateReportCommand { get; }
+
+        private ObservableCollection<Report> _reports;
+        public ObservableCollection<Report> Reports { get => _reports; set => Set(ref _reports, value); }
+
         public NugetScanViewModel(NugetScanFacade nugetScan, IMessenger messenger, Serilog.ILogger logger)
         {
             _nugetScan = nugetScan;
             _messenger = messenger;
             _logger = logger;
 
+            GenerateReportCommand = new RelayCommand<ProjectResult>(a =>
+            {
+                var result = _nugetScan.ExecuteScan(a);
+
+                if (result.Key != null)
+                {
+                    UpdateReports();
+                }
+            });
+
             _messenger.Register<IEnumerable<SolutionResult>>(this, a =>
             {
                 PrimaryCollectoion = new ObservableCollection<SolutionResult>(a);
+
+                PrimarySelectionUpdated += (s, e) =>
+                {
+                    SecondaryFilterResult.CurrentChanged += (ss, ee) =>
+                    {
+                        UpdateReports();
+                    };
+                };
             });
+        }
+
+        private void UpdateReports()
+        {
+            var selected = SecondaryFilterResult.CurrentItem as ProjectResult;
+
+            var path = selected.ProjectInfo.FullName;
+
+            if (_nugetScan.Storage.Contains(path, out Dictionary<DateTime, string> result))
+            {
+                Reports = new ObservableCollection<Report>(result.Select(a => new Report(a)));
+            }
+            else
+            {
+                Reports?.Clear();
+            }
         }
 
         protected override bool PrimaryFilterJob(object value)
