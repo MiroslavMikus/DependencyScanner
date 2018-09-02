@@ -20,12 +20,6 @@ namespace DependencyScanner.Core.NugetReference
     public class NugetReferenceScan
     {
         private const string PackagesDirName = "packages";
-        private readonly string _programDataPath;
-
-        public NugetReferenceScan(string programDataPath)
-        {
-            _programDataPath = programDataPath;
-        }
 
         internal string[] GetPackagesFolder(string dir) => Directory.GetDirectories(dir, PackagesDirName, SearchOption.TopDirectoryOnly);
 

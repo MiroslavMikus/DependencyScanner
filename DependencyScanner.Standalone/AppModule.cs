@@ -43,7 +43,7 @@ namespace DependencyScanner.Standalone
             builder.RegisterType<ProjectComparer>().InstancePerLifetimeScope();
             builder.RegisterType<NuspecComparer>().InstancePerLifetimeScope();
             builder.RegisterType<GitEngine>().InstancePerLifetimeScope();
-            builder.Register<NugetReferenceScan>(a => new NugetReferenceScan(App.GetProgramdataPath())).InstancePerLifetimeScope();
+            builder.RegisterType<NugetReferenceScan>().InstancePerLifetimeScope();
 
             // constants
             builder.Register(a => App.ProductVersion);

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 
 namespace DependencyScanner.Core.NugetReference
 {
+    [DebuggerDisplay("{Date}-{Project}")]
     public struct StorageKey : IEquatable<StorageKey>
     {
         private const string ProjectInformation = "xml-sourceProject";

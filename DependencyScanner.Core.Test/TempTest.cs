@@ -30,29 +30,9 @@ namespace DependencyScanner.Core.Test
         }
 
         [TestMethod]
-        public void NugetScan_CopyNuspec_Test()
-        {
-            var scan = new NugetReferenceScan(@"C:\ProgramData\DependencyScanner");
-        }
-
-        [TestMethod]
-        public void NugetScan_CopyNuspecs_Test()
-        {
-            var scan = new NugetReferenceScan(@"C:\ProgramData\DependencyScanner");
-        }
-
-        [TestMethod]
-        public void NugetScan_ReadNuspec()
-        {
-            var scan = new NugetReferenceScan(@"C:\ProgramData\DependencyScanner");
-
-            var actual = scan.ReadDependencies(@"F:\Projects\_GitHub\DependencyScanner\packages");
-        }
-
-        [TestMethod]
         public void ScanNugerRef_Test()
         {
-            var scan = new NugetReferenceScan(@"C:\ProgramData\DependencyScanner");
+            var scan = new NugetReferenceScan();
 
             var project = new ProjectResult(new FileInfo(@"C:\s\Serva.Base.Plugin\Serva.Base.Plugin\Serva.Base.Plugin\Serva.Base.Plugin.csproj"),
                                             new FileInfo(@"C:\s\Serva.Base.Plugin\Serva.Base.Plugin\Serva.Base.Plugin\packages.config"));
@@ -63,7 +43,7 @@ namespace DependencyScanner.Core.Test
         [TestMethod]
         public void TestGenerateReport()
         {
-            var scan = new NugetReferenceScan(@"C:\ProgramData\DependencyScanner");
+            var scan = new NugetReferenceScan();
 
             var project = new ProjectResult(new FileInfo(@"F:\Projects\_GitHub\DependencyScanner\DependencyScanner.Standalone\DependencyScanner.Standalone.csproj"),
                                             new FileInfo(@"F:\Projects\_GitHub\DependencyScanner\DependencyScanner.Standalone\packages.config"));

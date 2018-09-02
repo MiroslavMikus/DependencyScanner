@@ -11,7 +11,7 @@ namespace DependencyScanner.Core.NugetReference
         public ReportStorage Storage { get; }
         public string ProductVersion { get; }
 
-        public NugetScanFacade(ReportGenerator reportGenerator, NugetReferenceScan scan, ReportStorage storage)
+        public NugetScanFacade(ReportGenerator reportGenerator, NugetReferenceScan scan, ReportStorage storage, string productVersion)
         {
             ReportGenerator = reportGenerator ?? throw new ArgumentNullException(nameof(reportGenerator));
             Scan = scan ?? throw new ArgumentNullException(nameof(scan));
