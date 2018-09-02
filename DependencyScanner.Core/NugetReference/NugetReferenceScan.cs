@@ -213,9 +213,11 @@ namespace DependencyScanner.Core.NugetReference
         {
             foreach (var dep in input)
             {
+                // Report
                 report(new NugetReferenceResult(parent, dep.ToString()));
 
                 if (dep.Dependencies != null)
+                // start recrusion here
                 {
                     ResolveNugetDependency(dep, data, report);
                 }
@@ -248,55 +250,6 @@ namespace DependencyScanner.Core.NugetReference
                         Dependencies = dep
                     };
                 });
-        }
-
-        public async Task<string> GetNuspec(string packageDirectory)
-        {
-            var nugpkgFilePath = Directory.GetFiles(packageDirectory, "*.nupkg", SearchOption.TopDirectoryOnly).FirstOrDefault();
-
-            if (string.IsNullOrEmpty(nugpkgFilePath))
-            {
-                Log.Error("Cant find nuspec file in {packageDirectory}", packageDirectory);
-
-                return string.Empty;
-            }
-
-            using (ZipArchive archive = ZipFile.OpenRead(nugpkgFilePath))
-            {
-                var nuspecZipFile = archive.Entries.Single(a => a.Name.Contains(".nuspec"));
-
-                using (var nuspecStream = nuspecZipFile.Open())
-                using (var streamReader = new StreamReader(nuspecStream))
-                {
-                    return await streamReader.ReadToEndAsync();
-                }
-            }
-        }
-    }
-
-    public class NugetReferenceResult
-    {
-        public NugetReferenceResult(string source, string target)
-        {
-            this.source = source;
-            this.target = target;
-        }
-
-        public string source { get; set; }
-        public string target { get; set; }
-        public string color { get; set; }
-    }
-
-    public class NugetDefinition
-    {
-        public string Id { get; set; }
-        public SemanticVersion CurrentVersion { get; set; }
-        public PackageDependencySet Dependencies { get; set; }
-        public FrameworkName Framework { get => Dependencies?.TargetFramework; }
-
-        public override string ToString()
-        {
-            return $"{Id}.{CurrentVersion.ToString()}";
         }
     }
 }

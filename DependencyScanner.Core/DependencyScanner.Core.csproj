@@ -77,6 +77,8 @@
     <Compile Include="FileScan\FileScanner.cs" />
     <Compile Include="FileScan\FrameworkNameExtensions.cs" />
     <Compile Include="FileScan\SupportedFrameworks.cs" />
+    <Compile Include="NugetReference\NugetDefinition.cs" />
+    <Compile Include="NugetReference\NugetReferenceResult.cs" />
     <Compile Include="NugetReference\NugetReferenceScan.cs" />
     <Compile Include="Nuspec\NuspecComparer.cs" />
     <Compile Include="Nuspec\NuspecUpdater.cs" />
