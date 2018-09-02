@@ -106,7 +106,7 @@ namespace DependencyScanner.Core.NugetReference
 
             var test = JsonConvert.SerializeObject(result);
 
-            Debug.WriteLine(test);
+            Debug.WriteLine(JsonConvert.SerializeObject(result));
 
             return result;
         }

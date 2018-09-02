@@ -1,9 +1,11 @@
 ﻿using DependencyScanner.Core.Model;
 using DependencyScanner.Core.NugetReference;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DependencyScanner.Core.Test
 {
@@ -56,6 +58,27 @@ namespace DependencyScanner.Core.Test
                                             new FileInfo(@"C:\s\Serva.Base.Plugin\Serva.Base.Plugin\Serva.Base.Plugin\packages.config"));
 
             var actual = scan.ScanNugetReferences(project);
+        }
+
+        [TestMethod]
+        public void TestGenerateReport()
+        {
+            var scan = new NugetReferenceScan(@"C:\ProgramData\DependencyScanner");
+
+            var project = new ProjectResult(new FileInfo(@"C:\s\Serva.Base.Plugin\Serva.Base.Plugin\Serva.Base.Plugin\Serva.Base.Plugin.csproj"),
+                                            new FileInfo(@"C:\s\Serva.Base.Plugin\Serva.Base.Plugin\Serva.Base.Plugin\packages.config"));
+
+            var actual = scan.ScanNugetReferences(project);
+
+            var generator = new ReportGenerator();
+
+            var result = generator.GenerateReport(actual, "DependencyScanner", "1.2.3.4");
+
+            Debug.WriteLine(result);
+
+            var docu = XDocument.Parse(result);
+
+            var node = docu.Nodes().OfType<XProcessingInstruction>().ToList();
         }
     }
 }
