@@ -17,7 +17,7 @@
             <script src="https://d3js.org/d3.v3.min.js"></script>
         -->
         <script src="d3.v3.min.js"> </script>
-        <script>
+         <script>
             // set the view size
             var svgWidthMargin = 30;
             var svgHeightMargin = 60;
@@ -42,102 +42,158 @@
 
             // add a SVG to the body for our viz
             var svg = d3.select('body').append('svg')
-            .attr('width', width)
-            .attr('height', height)
-            .style("marker-end", "url(#suit)")
-            .style("border", "1px solid black");
+                .attr('width', width)
+                .attr('height', height)
+                .style("marker-end", "url(#suit)")
+                .style("border", "1px solid black");
 
             svg.append("defs").selectAll("marker")
-            .data(["suit", "licensing", "resolved"])
-            .enter().append("marker")
-            .attr("id", function (d) { return d; })
-            .attr("viewBox", "0 -5 10 10")
-            .attr("refX", 28)
-            .attr("refY", 0)
-            .attr("markerWidth", 6)
-            .attr("markerHeight", 6)
-            .attr("orient", "auto")
-            .append("path")
-            .attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
-            .style("stroke", "#4679BD")
-            .style("opacity", "0.6");
+                .data(["suit", "licensing", "resolved"])
+                .enter().append("marker")
+                .attr("id", function (d) { return d; })
+                .attr("viewBox", "0 -5 10 10")
+                .attr("refX", 28)
+                .attr("refY", 0)
+                .attr("markerWidth", 6)
+                .attr("markerHeight", 6)
+                .attr("orient", "auto")
+                .append("path")
+                .attr("d", "M0,-5L10,0L0,5 L10,0 L0, -5")
+                .style("stroke", "#4679BD")
+                .style("opacity", "0.6");
 
             // use the force
             var force = d3.layout.force() //build the layout
-            .charge(-500)
-            .size([width, height]) //specified earlier
-            .nodes(d3.values(nodes)) //add nodes
-            .links(data) //add links
-            .on("tick", tick) //what to do
-            .linkDistance(80) //set for proper svg size
-            .start(); //kick the party off!
+                .charge(-500)
+                .size([width, height]) //specified earlier
+                .nodes(d3.values(nodes)) //add nodes
+                .links(data) //add links
+                .on("tick", tick) //what to do
+                .linkDistance(90) //set for proper svg size
+                .start(); //kick the party off!
 
             window.onresize = function (event) {
 
-            var width = window.innerWidth - svgWidthMargin, height = window.innerHeight - svgHeightMargin;
+                var width = window.innerWidth - svgWidthMargin, height = window.innerHeight - svgHeightMargin;
 
-            svg.attr('width', width)
-            .attr('height', height);
+                svg.attr('width', width)
+                .attr('height', height);
 
-            force.size([width, height]);
+                force.size([width, height]);
             }
 
             // add the links
             var link = svg.selectAll('.link')
-            .data(data)
-            .enter().append('line')
-            .attr("stroke", function (d) {
-            if (d.color == null) {
-            return "#ccc";
-            }
-            return d.color;
-            });
+                .data(data)
+                .enter().append('line')
+                .attr("stroke", function (d) {
+                    if (d.color == null) {
+                        return "#ccc";
+                    }
+                    return d.color;
+                });
 
             var node = svg.selectAll(".node")
-            .data(force.nodes())
-            .enter().append("g")
-            .attr("class", "node")
-            .call(force.drag);
+                .data(force.nodes())
+                .enter().append("g")
+                .attr("class", "node")
+                .call(force.drag)
+                .on('dblclick', connectedNodes);;
 
             node.append("circle")
-            .attr("r", 10)
-            .attr("fill", function (d) {
-            if (d.color == null) {
-            return "#ccc";
-            }
-            return d.color;
-            });
+                .attr("r", 10)
+                .attr("fill", function (d) {
+                    if (d.color == null) {
+                        return "#ccc";
+                    }
+                    return d.color;
+                });
 
             node.append("text")
-            .attr("dx", 15)
-            .attr("dy", ".35em")
-            .text(function (d) { return d.name });
+                .attr("dx", 15)
+                .attr("dy", ".35em")
+                .text(function (d) { return d.name });
 
             function tick(e) {
 
-            node.attr('cx', function (d) { return d.x; })
-            .attr('cy', function (d) { return d.y; })
-            .call(force.drag);
+                node.attr('cx', function (d) { return d.x; })
+                    .attr('cy', function (d) { return d.y; })
+                    .call(force.drag);
 
-            link.attr('x1', function (d) { return d.source.x; })
-            .attr('y1', function (d) { return d.source.y; })
-            .attr('x2', function (d) { return d.target.x; })
-            .attr('y2', function (d) { return d.target.y; });
+                link.attr('x1', function (d) { return d.source.x; })
+                    .attr('y1', function (d) { return d.source.y; })
+                    .attr('x2', function (d) { return d.target.x; })
+                    .attr('y2', function (d) { return d.target.y; });
 
-            d3.selectAll("circle").attr("cx", function (d) {
-            return d.x;
-            })
-            .attr("cy", function (d) {
-            return d.y;
-            });
+                d3.selectAll("circle")
+                    .attr("cx", function (d) {
+                        return d.x;
+                    })
+                    .attr("cy", function (d) {
+                        return d.y;
+                    });
 
-            d3.selectAll("text").attr("x", function (d) {
-            return d.x;
-            })
-            .attr("y", function (d) {
-            return d.y;
-            });
+                d3.selectAll("text")
+                    .attr("x", function (d) {
+                        return d.x;
+                    })
+                    .attr("y", function (d) {
+                        return d.y;
+                    });
             }
+
+            // toogle logic 
+            var toggle = 0;
+
+            //Create an array logging what is connected to what
+            var linkedByIndex = {};
+
+            var tempArray = new Array(nodes.length);
+            var i=0;
+
+            tempArray.forEach(function (d) {
+                linkedByIndex[i + "," + i] = 1;
+                i++;
+            });
+
+            // Linq to xml cant read lessThan char
+            // for (i = 0; i lessThan nodes.length; i++) {
+            //     linkedByIndex[i + "," + i] = 1;
+            // };
+
+            data.forEach(function (d) {
+                linkedByIndex[d.source.index + "," + d.target.index] = 1;
+            });
+
+            function neighboring(a, b) {
+                return linkedByIndex[a.index + "," + b.index];
+            }
+
+            function connectedNodes(d) {
+                if (toggle == 0) {
+                    //Reduce the opacity of all but the neighbouring nodes
+                    d = d3.select(this).node().__data__;
+                    
+                    node.style("opacity", function (o) {
+                        if (o.index == d.index){
+                            return 1;
+                        }
+                        return neighboring(d, o) | neighboring(o, d) ? 1 : 0.2;
+                    });
+                    
+                    link.style("opacity", function (o) {
+                        return d.index==o.source.index | d.index==o.target.index ? 1 : 0.2;
+                    });
+                    
+                    toggle = 1;
+                } else {
+                    //Put them back to opacity=1
+                    node.style("opacity", 1);
+                    link.style("opacity", 1);
+                    toggle = 0;
+                }
+            }
+
         </script>
     </body>
 </html>
