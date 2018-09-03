@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace DependencyScanner.Core.Test
 {
-    //[Ignore]
+    [Ignore]
     [TestClass]
     public class TempTest : TestBase
     {

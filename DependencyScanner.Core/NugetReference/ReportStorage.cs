@@ -13,11 +13,20 @@ namespace DependencyScanner.Core.NugetReference
         private readonly string _storageDirectory;
         private Dictionary<StorageKey, string> _storage;
 
+        private const string d3jsPath = "d3.v3.min.js";
+
         public ReportStorage(string storageDirectory)
         {
             if (!Directory.Exists(storageDirectory))
             {
                 Directory.CreateDirectory(storageDirectory);
+            }
+
+            var d3jsFullPath = Path.Combine(storageDirectory, d3jsPath);
+
+            if (!File.Exists(d3jsFullPath))
+            {
+                File.WriteAllText(d3jsFullPath, Properties.Resources.d3_v3_min);
             }
 
             _storageDirectory = storageDirectory;
