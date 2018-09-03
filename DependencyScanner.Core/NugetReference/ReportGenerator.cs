@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace DependencyScanner.Core.NugetReference
 {
@@ -26,7 +27,7 @@ namespace DependencyScanner.Core.NugetReference
 
             template = template.Replace("{sourceProject}", sourceProject);
             template = template.Replace("{appVersion}", appVersion);
-            template = template.Replace("{date}", DateTime.Now.ToString());
+            template = template.Replace("{date}", DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture));
             template = template.Replace("{data}", data);
 
             return template;

@@ -71,7 +71,7 @@
                                 <Button Margin="5 0 10 0" VerticalAlignment="Center" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.GenerateReportCommand}"
                                     CommandParameter="{Binding}">
                                     <StackPanel Orientation="Vertical">
-                                        <iconPacks:PackIconFontAwesome Kind="EditSolid" HorizontalAlignment="Center" />
+                                        <iconPacks:PackIconFontAwesome Kind="FileMedicalAltSolid" HorizontalAlignment="Center" />
                                         <Label Content="Create Report" />
                                     </StackPanel>
                                 </Button>
