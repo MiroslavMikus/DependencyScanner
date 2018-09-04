@@ -11,9 +11,11 @@
 ![Menubar](pic/2018-09-04.png)
   - The diagramm will open in web browser as 'force-layout' graph
 ![ForceLayout](pic/2018-09-04_1.gif)
-  - You can highlight direct dependencies by doubleclicking on any node 
+  - You can highlight direct dependencies by 'doubleclicking' on any node 
 ![Highlighting](pic/2018-09-04_2.gif)
 
+**Improvements**:
+- Tabs order was changed
 
 **Bug-Fix**:
 
