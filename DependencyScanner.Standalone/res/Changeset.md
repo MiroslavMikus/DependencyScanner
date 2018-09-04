@@ -6,10 +6,14 @@
 
 **Features**:
 - Nuget dependency scan
-  - Now you will be able to see all direct and transitive dependencies of your project
+  - Now you will be able to see all direct and transitive dependencies of your project. The project and his direct dependencies will be shown in the red colour.
   - This new function is under new tab in the main menu
+![Menubar](pic/2018-09-04.png)
+  - The diagramm will open in web browser as 'force-layout' graph
+![ForceLayout](pic/2018-09-04_1.gif)
+  - You can highlight direct dependencies by doubleclicking on any node 
+![Highlighting](pic/2018-09-04_2.gif)
 
-![Screenshot 1](pic/2018-09-04.png)
 
 **Bug-Fix**:
 
