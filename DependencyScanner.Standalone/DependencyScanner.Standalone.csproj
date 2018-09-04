@@ -250,6 +250,9 @@
     <Resource Include="res\Enigma-ENG-128.png" />
     <Resource Include="res\Flat-Enigma-1024.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="res\pic\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

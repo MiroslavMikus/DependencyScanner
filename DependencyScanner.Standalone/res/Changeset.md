@@ -4,6 +4,13 @@
 -->
 ## Coming in the new release
 
+**Features**:
+- Nuget dependency scan
+  - Now you will be able to see all direct and transitive dependencies of your project
+  - This new function is under new tab in the main menu
+
+![Screenshot 1](pic/2018-09-04 20_19_51.png)
+
 **Bug-Fix**:
 
 - Fixed failing Nuspec-updater 
