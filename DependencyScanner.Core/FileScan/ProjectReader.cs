@@ -42,7 +42,7 @@ namespace DependencyScanner.Core.FileScan
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Cant find PackageReference");
+                    Log.Error(ex, "Can't find PackageReference");
 
                     return Enumerable.Empty<ProjectReference>();
                 }

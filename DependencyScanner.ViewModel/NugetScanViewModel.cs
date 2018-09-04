@@ -45,6 +45,8 @@ namespace DependencyScanner.ViewModel
 
                 PrimarySelectionUpdated += (s, e) =>
                 {
+                    Reports?.Clear();
+
                     SecondaryFilterResult.CurrentChanged += (ss, ee) =>
                     {
                         UpdateReports();

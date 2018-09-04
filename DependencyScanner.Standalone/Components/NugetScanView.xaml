@@ -87,10 +87,10 @@
                     <ListBox.Resources>
                         <DataTemplate DataType="{x:Type viewModel:Report}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Date, StringFormat='{}{0:yyyy:mm:dd HH:mm:ss}'}" VerticalAlignment="Center" />
                                 <Button Content="Open report" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenLinkCommand}"
                                         Margin="10 5 5 5"
                                         CommandParameter="{Binding Path}" />
+                                <TextBlock Text="{Binding Date, StringFormat='{}{0:yyyy:mm:dd HH:mm:ss}'}" VerticalAlignment="Center" />
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.Resources>

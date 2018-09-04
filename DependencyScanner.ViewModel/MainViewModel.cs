@@ -44,7 +44,7 @@ namespace DependencyScanner.ViewModel
             {
                 if (string.IsNullOrEmpty(a))
                 {
-                    _logger.Warning($"Cant execute {nameof(RunCommand)}, the parameter is null or empty");
+                    _logger.Warning($"Can't execute {nameof(RunCommand)}, the parameter is null or empty");
 
                     return;
                 }
@@ -65,7 +65,7 @@ namespace DependencyScanner.ViewModel
             {
                 if (string.IsNullOrEmpty(a))
                 {
-                    _logger.Warning($"Cant execute {nameof(OpenCmdCommand)}, the parameter is null or empty");
+                    _logger.Warning($"Can't execute {nameof(OpenCmdCommand)}, the parameter is null or empty");
 
                     return;
                 }
@@ -121,7 +121,7 @@ namespace DependencyScanner.ViewModel
 
                 if (string.IsNullOrEmpty(path))
                 {
-                    _logger.Warning($"Cant execute {nameof(ClearNuspec)}, the parameter is null or empty");
+                    _logger.Warning($"Can't execute {nameof(ClearNuspec)}, the parameter is null or empty");
 
                     return;
                 }

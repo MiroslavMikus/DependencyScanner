@@ -17,7 +17,7 @@ namespace DependencyScanner.Core.GitClient
 
         public string GitProcess(string workingDirectory, params string[] parameter)
         {
-            Log.Debug("GitProcess {WorkingDirectory}, {params}", workingDirectory, parameter);
+            Log.Verbose("GitProcess {WorkingDirectory}, {params}", workingDirectory, parameter);
 
             var parameters = parameter.Aggregate((a, b) => $"{a} {b}");
 

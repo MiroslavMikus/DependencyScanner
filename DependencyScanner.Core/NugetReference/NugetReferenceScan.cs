@@ -31,7 +31,7 @@ namespace DependencyScanner.Core.NugetReference
 
             if (string.IsNullOrEmpty(packagesDirectory))
             {
-                Log.Error("Cant fing packages folder in {solutionDirectory}. Aborting nuget reference scan", solutionFolder);
+                Log.Error("Can't fing packages folder in {solutionDirectory}. Aborting nuget reference scan", solutionFolder);
                 return null;
             }
 
@@ -41,7 +41,7 @@ namespace DependencyScanner.Core.NugetReference
 
                 if (nuspec == null)
                 {
-                    Log.Error("Cant find nuspec in {source}", folder);
+                    Log.Error("Can't find nuspec in {source}", folder);
                     continue;
                 }
 
@@ -77,7 +77,7 @@ namespace DependencyScanner.Core.NugetReference
 
             if (packagesPath == string.Empty)
             {
-                Log.Error("Cant find packages directory. Project: {Project}", project.ProjectInfo.DirectoryName);
+                Log.Error("Can't find packages directory. Project: {Project}", project.ProjectInfo.DirectoryName);
 
                 return Enumerable.Empty<NugetReferenceResult>();
             }
