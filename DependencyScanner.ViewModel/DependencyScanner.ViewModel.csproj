@@ -91,6 +91,7 @@
     <Compile Include="Model\SolutionProjectCompareResult.cs" />
     <Compile Include="Model\SolutionSelectionViewModel.cs" />
     <Compile Include="Services\CommandManager.cs" />
+    <Compile Include="Services\EventSink.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

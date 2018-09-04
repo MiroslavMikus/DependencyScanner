@@ -4,6 +4,7 @@ using DependencyScanner.Core.GitClient;
 using DependencyScanner.Core.NugetReference;
 using DependencyScanner.Core.Nuspec;
 using DependencyScanner.ViewModel;
+using DependencyScanner.ViewModel.Services;
 using GalaSoft.MvvmLight.Messaging;
 using Serilog;
 using System.IO;
@@ -19,6 +20,10 @@ namespace DependencyScanner.Standalone
         protected override void Load(ContainerBuilder builder)
         {
             // Services
+            var eventSink = new EventSink(null); // -> catch all logger events and provide errors and fatals to the UI
+
+            builder.RegisterInstance(eventSink);
+
             builder.Register(a =>
             {
                 var logger = new LoggerConfiguration()
@@ -30,6 +35,7 @@ namespace DependencyScanner.Standalone
                             .WriteTo.Logger(l => l.MinimumLevel.Information().WriteTo.File(LogPath))
 #endif
                             .WriteTo.Logger(l => l.WriteTo.File(FatalPath), Serilog.Events.LogEventLevel.Fatal)
+                            .WriteTo.EventSink(sink: eventSink)
                             .CreateLogger();
 
                 Log.Logger = logger;
