@@ -90,6 +90,7 @@
     <Compile Include="Base\SolutionBaseViewModel.cs" />
     <Compile Include="Model\SolutionProjectCompareResult.cs" />
     <Compile Include="Model\SolutionSelectionViewModel.cs" />
+    <Compile Include="Services\CommandManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

@@ -6,6 +6,7 @@
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:local="clr-namespace:DependencyScanner.Standalone.Components"
              xmlns:root="clr-namespace:DependencyScanner.Standalone"
+             xmlns:command="clr-namespace:DependencyScanner.ViewModel.Services;assembly=DependencyScanner.ViewModel"
              mc:Ignorable="d"
              d:DesignHeight="1000" d:DesignWidth="800">
     <!--Background="White"-->
@@ -65,11 +66,13 @@
                 </StackPanel.Resources>
                 <Label Content="Feedback: " Margin="5 0 0 0" />
                 <TextBlock Text="Your feedback make this app better." />
-                <Button Content="Feedback on github" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenLinkCommand}"
+                <Button Content="Feedback on github"
+                        Command="{x:Static command:CommandManager.OpenLinkCommand}"
                         Margin="0 10 0 0"
                         CommandParameter="https://github.com/MiroslavMikus/DependencyScanner/issues" />
 
-                <Button Content="Show changeset" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenLinkCommand}"
+                <Button Content="Show changeset"
+                        Command="{x:Static command:CommandManager.OpenLinkCommand}"
                         Margin="0 10 0 0"
                         CommandParameter="https://github.com/MiroslavMikus/DependencyScanner/blob/master/DependencyScanner.Standalone/res/Changeset.md" />
 
@@ -102,7 +105,7 @@
                                      ToolTip="Clear to use CMD.">
                     </TextBox>
                     <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0"
-                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenCmdCommand}"
+                            Command="{x:Static command:CommandManager.OpenCmdCommand}"
                             CommandParameter="C:\" />
                 </StackPanel>
                 <TextBlock Text="Prefered web browser:" Margin="0 10 0 0" />
@@ -112,17 +115,17 @@
                                      Text="{Binding PreferencedWebBrowser, Mode=TwoWay, Delay=350}"
                                      ToolTip="Clear to use your default browser." />
                     <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0"
-                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenLinkCommand}"
+                            Command="{x:Static command:CommandManager.OpenLinkCommand}"
                             CommandParameter="https://github.com/MiroslavMikus/" />
                 </StackPanel>
                 <TextBlock Text="Prefered text editor:" Margin="0 10 0 0" />
                 <StackPanel Orientation="Horizontal">
                     <TextBox Margin="0 10 20 0" Width="300"
-                                     Controls:TextBoxHelper.ClearTextButton="True"
-                                     Text="{Binding PreferedTextEditor, Mode=TwoWay, Delay=350}"
-                                     ToolTip="Clear to use your notepad." />
+                             Controls:TextBoxHelper.ClearTextButton="True"
+                             Text="{Binding PreferedTextEditor, Mode=TwoWay, Delay=350}"
+                             ToolTip="Clear to use notepad." />
                     <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0"
-                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenTextFileCommand}" />
+                            Command="{x:Static command:CommandManager.OpenTextFileCommand}" />
                 </StackPanel>
 
                 <Label Content="Clear nuspec" />
@@ -130,10 +133,9 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBox Margin="0 10 20 0" Width="300"
                                      Controls:TextBoxHelper.ClearTextButton="True"
-                                     Text="{Binding PathToNuspec, Mode=TwoWay, Delay=350}"
-                                     ToolTip="Clear to use your default browser." />
+                                     Text="{Binding PathToNuspec, Mode=TwoWay, Delay=350}" />
                     <Button Content="Clear" Width="70" Height="20" Margin="0 10 0 0"
-                            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ClearNuspec}">
+                            Command="{x:Static command:CommandManager.ClearNuspec}">
                         <Button.ToolTip>
                             <StackPanel>
                                 <Label Content="Clear nuget" FontWeight="Bold" Margin="5" />

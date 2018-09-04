@@ -5,6 +5,7 @@
              xmlns:converter="clr-namespace:DependencyScanner.Standalone.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:DependencyScanner.Standalone.Templates"
+             xmlns:command="clr-namespace:DependencyScanner.ViewModel.Services;assembly=DependencyScanner.ViewModel"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <!--Background="White"-->
@@ -29,7 +30,7 @@
         </StackPanel>
         <StackPanel Grid.Row="3" Orientation="Horizontal">
             <Button Margin="2" Content="Nuspec"
-                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenTextFileCommand}"
+                    Command="{x:Static command:CommandManager.OpenTextFileCommand}"
                     CommandParameter="{Binding NuspecInfo.FullName}"
                     Visibility="{Binding NuspecInfo, Converter={StaticResource NullToCollaps}}">
                 <Button.ToolTip>
@@ -40,7 +41,7 @@
                 </Button.ToolTip>
             </Button>
             <Button Margin="4 2 2 2" Content="Package"
-                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenTextFileCommand}"
+                    Command="{x:Static command:CommandManager.OpenTextFileCommand}"
                     CommandParameter="{Binding PackageInfo.FullName}"
                     Visibility="{Binding PackageInfo, Converter={StaticResource NullToCollaps}}">
                 <Button.ToolTip>
@@ -51,7 +52,7 @@
                 </Button.ToolTip>
             </Button>
             <Button Margin="4 2 2 2" Content="csproj"
-                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.OpenTextFileCommand}"
+                    Command="{x:Static command:CommandManager.OpenTextFileCommand}"
                     CommandParameter="{Binding ProjectInfo.FullName}"
                     Visibility="{Binding ProjectInfo, Converter={StaticResource NullToCollaps}}">
                 <Button.ToolTip>
