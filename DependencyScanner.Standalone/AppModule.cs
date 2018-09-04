@@ -8,10 +8,11 @@ using DependencyScanner.ViewModel.Services;
 using GalaSoft.MvvmLight.Messaging;
 using Serilog;
 using System.IO;
+using System.Reflection;
 
 namespace DependencyScanner.Standalone
 {
-    public class AppModule : Module
+    public class AppModule : Autofac.Module
     {
         private readonly string DebugPath = GetProgramdataPath("Debug.txt");
         private readonly string LogPath = GetProgramdataPath("Info.txt");
@@ -57,13 +58,10 @@ namespace DependencyScanner.Standalone
             builder.RegisterType<ReportStorage>().WithParameter(new TypedParameter(typeof(string), GetProgramdataPath("Reports"))).InstancePerLifetimeScope();
             builder.RegisterType<NugetScanFacade>().WithParameter(new TypedParameter(typeof(string), App.ProductVersion)).InstancePerLifetimeScope();
 
-            // View Models
-            builder.RegisterType<MainViewModel>().InstancePerLifetimeScope();
-            builder.RegisterType<BrowseViewModel>().InstancePerLifetimeScope();
-            builder.RegisterType<ConsolidateSolutionsViewModel>().InstancePerLifetimeScope();
-            builder.RegisterType<ConsolidateProjectsViewModel>().InstancePerLifetimeScope();
-            builder.RegisterType<NuspecUpdaterViewModel>().InstancePerLifetimeScope();
-            builder.RegisterType<NugetScanViewModel>().InstancePerLifetimeScope();
+            // View Models from DependencyScanner.ViewModel assembly
+            builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(MainViewModel)))
+                .Where(t => t.Name.EndsWith("ViewModel"))
+                .InstancePerLifetimeScope();
 
             // View
             builder.Register(a => new MainWindow() { DataContext = a.Resolve<MainViewModel>() });
