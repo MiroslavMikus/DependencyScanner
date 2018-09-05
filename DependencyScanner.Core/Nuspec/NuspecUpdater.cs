@@ -96,7 +96,7 @@ namespace DependencyScanner.Core.Nuspec
             catch (Exception ex)
             // occurs if the nuspec is using wrong namespace -> for example choco nuspec
             {
-                Log.Error(ex, "Can't read {document}", document);
+                Log.Error(ex, "Document has wrong format {document}", document);
                 return Enumerable.Empty<string>();
             }
         }

@@ -1,11 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DependencyScanner.ViewModel.Services
@@ -29,7 +25,7 @@ namespace DependencyScanner.ViewModel.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"Error while executing {nameof(RunCommand)}");
+                Log.Error(ex, "RunCommand: Error while executing process {process}", a);
             }
         });
 
@@ -39,7 +35,7 @@ namespace DependencyScanner.ViewModel.Services
 
             if (string.IsNullOrEmpty(path))
             {
-                Log.Warning($"Can't execute {nameof(ClearNuspec)}, the parameter is null or empty");
+                Log.Error($"Can't execute clear nuspec action, the path parameter is null or empty.");
 
                 return;
             }
@@ -88,7 +84,7 @@ namespace DependencyScanner.ViewModel.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"Error while executing {nameof(OpenCmdCommand)}");
+                Log.Error(ex, "OpenCmdCommand: Error while executing {paht}", a);
             }
         });
 
@@ -113,7 +109,7 @@ namespace DependencyScanner.ViewModel.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"Error while executing {nameof(OpenLinkCommand)}");
+                Log.Error(ex, "OpenLinkCommand: Error while executing {Process}", a);
             }
         });
 
@@ -132,7 +128,7 @@ namespace DependencyScanner.ViewModel.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"Error while executing {nameof(OpenTextFileCommand)}: {a}");
+                Log.Error(ex, "OpenTextFileCommand: Error while executing {a}", a);
             }
         });
 

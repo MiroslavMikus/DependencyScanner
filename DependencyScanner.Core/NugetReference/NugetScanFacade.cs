@@ -1,4 +1,5 @@
 ﻿using DependencyScanner.Core.Model;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,13 +25,24 @@ namespace DependencyScanner.Core.NugetReference
         {
             var scanResult = Scan.ScanNugetReferences(project);
 
+            if (scanResult == null)
+            {
+                // error was already logged
+                return new KeyValuePair<DateTime, string>();
+            }
+
             if (scanResult.Any())
             {
                 var report = ReportGenerator.GenerateReport(scanResult, project.ProjectInfo.FullName, ProductVersion);
 
                 return Storage.Store(report);
             }
-            return new KeyValuePair<DateTime, string>();
+            else
+            {
+                Log.Error("No dependencies were found. Project: {project}", project.ProjectInfo.FullName);
+
+                return new KeyValuePair<DateTime, string>();
+            }
         }
     }
 }

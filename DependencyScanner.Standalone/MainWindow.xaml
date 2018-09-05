@@ -11,6 +11,7 @@
         xmlns:local="clr-namespace:DependencyScanner.Standalone"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:templates="clr-namespace:DependencyScanner.Standalone.Templates"
+        xmlns:command="clr-namespace:DependencyScanner.ViewModel.Services;assembly=DependencyScanner.ViewModel"
         xmlns:model="clr-namespace:DependencyScanner.Core.Model;assembly=DependencyScanner.Core"
         mc:Ignorable="d"
         Title="Dependency scanner"
@@ -59,6 +60,23 @@
                         </ProgressBar>
                     </Grid>
                 </StackPanel>
+            </Controls:Flyout>
+
+            <Controls:Flyout Position="Bottom"
+                             IsOpen="{Binding OpenNotificationBar}"
+                             Height="auto"
+                             MinHeight="110">
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Height="30" Grid.Column="0"
+                            Content="Open log"
+                            Command="{x:Static command:CommandManager.OpenTextFileCommand}"
+                            CommandParameter="{Binding LogPath}" />
+                    <TextBlock Grid.Column="1" Margin="20" Text="{Binding Notification}" TextWrapping="Wrap" FontSize="17" VerticalAlignment="Center" />
+                </Grid>
             </Controls:Flyout>
 
             <Controls:Flyout x:Name="settingsFlyout"

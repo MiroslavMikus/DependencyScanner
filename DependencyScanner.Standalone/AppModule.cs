@@ -14,9 +14,9 @@ namespace DependencyScanner.Standalone
 {
     public class AppModule : Autofac.Module
     {
-        private readonly string DebugPath = GetProgramdataPath("Debug.txt");
-        private readonly string LogPath = GetProgramdataPath("Info.txt");
-        private readonly string FatalPath = GetProgramdataPath("Fatal.txt");
+        private readonly static string DebugPath = GetProgramdataPath("Debug.txt");
+        private readonly static string LogPath = GetProgramdataPath("Info.txt");
+        private readonly static string FatalPath = GetProgramdataPath("Fatal.txt");
 
         protected override void Load(ContainerBuilder builder)
         {
@@ -64,7 +64,14 @@ namespace DependencyScanner.Standalone
                 .InstancePerLifetimeScope();
 
             // View
-            builder.Register(a => new MainWindow() { DataContext = a.Resolve<MainViewModel>() });
+            builder.Register(a => new MainWindow()
+            {
+#if DEBUG
+                DataContext = a.Resolve<MainViewModel>(new TypedParameter(typeof(string), DebugPath))
+#else
+                DataContext = a.Resolve<MainViewModel>(new TypedParameter(typeof(string), LogPath))
+#endif
+            });
         }
 
         private static string GetProgramdataPath(string fileName) => Path.Combine(App.GetProgramdataPath(), fileName);
