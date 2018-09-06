@@ -9,6 +9,7 @@
              xmlns:command="clr-namespace:DependencyScanner.ViewModel.Services;assembly=DependencyScanner.ViewModel"
              xmlns:converter="clr-namespace:DependencyScanner.Standalone.Converters"
              xmlns:viewModel="clr-namespace:DependencyScanner.ViewModel.Model;assembly=DependencyScanner.ViewModel"
+             xmlns:nugetReference="clr-namespace:DependencyScanner.Core.NugetReference;assembly=DependencyScanner.Core"
              xmlns:model="clr-namespace:DependencyScanner.Core.Model;assembly=DependencyScanner.Core"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
@@ -87,7 +88,7 @@
                           Grid.Row="1" Grid.Column="3"
                           ItemsSource="{Binding Reports}">
                     <ListBox.Resources>
-                        <DataTemplate DataType="{x:Type viewModel:Report}">
+                        <DataTemplate DataType="{x:Type nugetReference:StorageKey}">
                             <StackPanel Orientation="Horizontal">
                                 <Button Content="Open report"
                                         Command="{x:Static command:CommandManager.OpenLinkCommand}"

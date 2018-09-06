@@ -11,7 +11,7 @@ namespace DependencyScanner.Core.NugetReference
     public class ReportStorage
     {
         private readonly string _storageDirectory;
-        private Dictionary<StorageKey, string> _storage;
+        private List<StorageKey> _storage;
 
         private const string d3jsPath = "d3.v3.min.js";
 
@@ -31,31 +31,30 @@ namespace DependencyScanner.Core.NugetReference
 
             _storageDirectory = storageDirectory;
 
-            _storage = ReadStorage(_storageDirectory);
+            _storage = ReadStorage(_storageDirectory).ToList();
         }
 
-        public bool Contains(string key, out Dictionary<DateTime, string> result)
+        public bool Contains(string project, out IEnumerable<StorageKey> result)
         {
-            result = _storage.Where(a => a.Key.Project == key).ToDictionary(a => a.Key.Date, a => a.Value);
+            result = _storage.Where(a => a.Project == project).Select(a => a);
 
             return result.Any();
         }
 
-        public bool Contains(string key)
+        public bool Contains(string project)
         {
-            return _storage.Where(a => a.Key.Project == key).Any();
+            return _storage.Any(a => a.Project == project);
         }
 
-        internal Dictionary<StorageKey, string> ReadStorage(string storageDirectory)
+        internal IEnumerable<StorageKey> ReadStorage(string storageDirectory)
         {
             var files = Directory.GetFiles(storageDirectory, "*.html", SearchOption.TopDirectoryOnly);
 
-            return files.Select(a => CreateKeyValue(a))
-                .Distinct(new StorageKeyComparer())
-                .ToDictionary(a => a.Key, b => b.Value);
+            return files.Select(a => CreateKeyValue(a));
+            //.Distinct(new StorageKeyComparer());
         }
 
-        public KeyValuePair<DateTime, string> Store(string report)
+        public StorageKey Store(string report)
         {
             var fileName = string.Format(@"{0}.html", Guid.NewGuid());
 
@@ -65,20 +64,24 @@ namespace DependencyScanner.Core.NugetReference
 
             var newReport = CreateKeyValue(path);
 
-            _storage.Add(newReport.Key, newReport.Value);
+            _storage.Add(newReport);
 
-            return new KeyValuePair<DateTime, string>(newReport.Key.Date, newReport.Value);
+            return newReport;
         }
 
-        private static KeyValuePair<StorageKey, string> CreateKeyValue(string a)
+        public bool Remove(StorageKey key)
+        {
+            //var test = _storage[key];
+            return true;
+        }
+
+        private static StorageKey CreateKeyValue(string a)
         {
             var docu = XDocument.Load(a);
 
             var infos = docu.Nodes().OfType<XProcessingInstruction>();
 
-            var key = new StorageKey(infos);
-
-            return new KeyValuePair<StorageKey, string>(key, a);
+            return new StorageKey(infos) { Path = a };
         }
     }
 }

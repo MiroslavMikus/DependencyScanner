@@ -14,29 +14,34 @@ namespace DependencyScanner.ViewModel
 {
     public class NugetScanViewModel : FilterViewModelBase<SolutionResult, ProjectResult>
     {
-        private readonly Serilog.ILogger _logger;
         private readonly IMessenger _messenger;
         private readonly NugetScanFacade _nugetScan;
 
         public RelayCommand<ProjectResult> GenerateReportCommand { get; }
 
-        private ObservableCollection<Report> _reports;
-        public ObservableCollection<Report> Reports { get => _reports; set => Set(ref _reports, value); }
+        public RelayCommand<StorageKey> DeleteReportCommand { get; }
 
-        public NugetScanViewModel(NugetScanFacade nugetScan, IMessenger messenger, Serilog.ILogger logger)
+        private ObservableCollection<StorageKey> _reports;
+        public ObservableCollection<StorageKey> Reports { get => _reports; set => Set(ref _reports, value); }
+
+        public NugetScanViewModel(NugetScanFacade nugetScan, IMessenger messenger)
         {
             _nugetScan = nugetScan;
             _messenger = messenger;
-            _logger = logger;
 
             GenerateReportCommand = new RelayCommand<ProjectResult>(a =>
             {
                 var result = _nugetScan.ExecuteScan(a);
 
-                if (result.Key != null)
+                if (result != null)
                 {
                     UpdateReports();
                 }
+            });
+
+            DeleteReportCommand = new RelayCommand<StorageKey>(a =>
+            {
+                //var key = new StorageKey()
             });
 
             _messenger.Register<IEnumerable<SolutionResult>>(this, a =>
@@ -61,9 +66,9 @@ namespace DependencyScanner.ViewModel
 
             var path = selected.ProjectInfo.FullName;
 
-            if (_nugetScan.Storage.Contains(path, out Dictionary<DateTime, string> result))
+            if (_nugetScan.Storage.Contains(path, out IEnumerable<StorageKey> result))
             {
-                Reports = new ObservableCollection<Report>(result.Select(a => new Report(a)));
+                Reports = new ObservableCollection<StorageKey>(result);
             }
             else
             {

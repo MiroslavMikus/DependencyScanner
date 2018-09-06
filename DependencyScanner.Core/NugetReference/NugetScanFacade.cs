@@ -21,14 +21,14 @@ namespace DependencyScanner.Core.NugetReference
             ProductVersion = productVersion;
         }
 
-        public KeyValuePair<DateTime, string> ExecuteScan(ProjectResult project)
+        public StorageKey ExecuteScan(ProjectResult project)
         {
             var scanResult = Scan.ScanNugetReferences(project);
 
             if (scanResult == null)
             {
                 // error was already logged
-                return new KeyValuePair<DateTime, string>();
+                return null;
             }
 
             if (scanResult.Any())
@@ -41,7 +41,7 @@ namespace DependencyScanner.Core.NugetReference
             {
                 Log.Error("No dependencies were found. Project: {project}", project.ProjectInfo.FullName);
 
-                return new KeyValuePair<DateTime, string>();
+                return null;
             }
         }
     }

@@ -29,10 +29,10 @@ namespace DependencyScanner.Core.Test.NugetReference
         {
             var storage = new ReportStorage(@"TestData\StorageData");
 
-            IsTrue(storage.Contains("DependencyScanner1", out Dictionary<DateTime, string> result));
+            IsTrue(storage.Contains("DependencyScanner1", out IEnumerable<StorageKey> result));
 
-            IsTrue(result[DateTime.Parse("02/05/2018 15:41:59")] == @"TestData\StorageData\file1.1.html");
-            IsTrue(result[DateTime.Parse("02/06/2018 15:41:59")] == @"TestData\StorageData\file1.html");
+            IsTrue(result.First(a => a.Date == DateTime.Parse("02/05/2018 15:41:59")).Path == @"TestData\StorageData\file1.1.html");
+            IsTrue(result.First(a => a.Date == DateTime.Parse("02/06/2018 15:41:59")).Path == @"TestData\StorageData\file1.html");
         }
 
         [TestMethod]
