@@ -29,7 +29,7 @@ namespace DependencyScanner.ViewModel.Services
             }
         });
 
-        public static RelayCommand ClearNuspec { get; } = new RelayCommand(() =>
+        public static RelayCommand ClearNuspecCommand { get; } = new RelayCommand(() =>
         {
             string path = AppSettings.Instance.PathToNuspec;
 
@@ -55,7 +55,7 @@ namespace DependencyScanner.ViewModel.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, $"Error while executing {nameof(ClearNuspec)}");
+                Log.Error(ex, "Error while executing clear nuspec command.");
             }
         });
 
@@ -63,7 +63,7 @@ namespace DependencyScanner.ViewModel.Services
         {
             if (string.IsNullOrEmpty(a))
             {
-                Log.Warning($"Can't execute {nameof(OpenCmdCommand)}, the parameter is null or empty");
+                Log.Warning($"Can't execute {nameof(OpenCmdCommand)}, the parameter is null or empty.");
 
                 return;
             }

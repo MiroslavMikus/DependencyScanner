@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:DependencyScanner.Standalone.Components"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:templates="clr-namespace:DependencyScanner.Standalone.Templates"
-        xmlns:converter="clr-namespace:DependencyScanner.Standalone.Converters"
-        xmlns:viewModel="clr-namespace:DependencyScanner.ViewModel.Model;assembly=DependencyScanner.ViewModel"
-        xmlns:model="clr-namespace:DependencyScanner.Core.Model;assembly=DependencyScanner.Core"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:templates="clr-namespace:DependencyScanner.Standalone.Templates"
+             xmlns:command="clr-namespace:DependencyScanner.ViewModel.Services;assembly=DependencyScanner.ViewModel"
+             xmlns:converter="clr-namespace:DependencyScanner.Standalone.Converters"
+             xmlns:viewModel="clr-namespace:DependencyScanner.ViewModel.Model;assembly=DependencyScanner.ViewModel"
+             xmlns:model="clr-namespace:DependencyScanner.Core.Model;assembly=DependencyScanner.Core"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -87,7 +88,8 @@
                     <ListBox.Resources>
                         <DataTemplate DataType="{x:Type viewModel:Report}">
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="Open report" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenLinkCommand}"
+                                <Button Content="Open report"
+                                        Command="{x:Static command:CommandManager.OpenLinkCommand}"
                                         Margin="10 5 5 5"
                                         CommandParameter="{Binding Path}" />
                                 <TextBlock Text="{Binding Date, StringFormat='{}{0:yyyy:mm:dd HH:mm:ss}'}" VerticalAlignment="Center" />
