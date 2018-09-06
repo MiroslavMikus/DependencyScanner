@@ -186,7 +186,9 @@
                         <ListBox x:Name="AllSolutions" Grid.Row="1" Grid.Column="0"
                                  Margin="5"
                                  ItemsSource="{Binding PrimaryFilterResult}"
-                                 SelectedItem="{Binding PrimarySelectedItem}">
+                                 SelectedItem="{Binding PrimarySelectedItem}"
+                                 VirtualizingStackPanel.VirtualizationMode="Recycling"
+                                 >
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type model:SolutionResult}">
                                     <templates:SolutionTemplate DataContext="{Binding}" />
