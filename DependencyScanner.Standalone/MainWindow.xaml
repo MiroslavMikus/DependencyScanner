@@ -186,7 +186,7 @@
                         <ListBox x:Name="AllSolutions" Grid.Row="1" Grid.Column="0"
                                  Margin="5"
                                  ItemsSource="{Binding PrimaryFilterResult}"
-                                 SelectedItem="{Binding PrimarySelectedItem, Delay=250}">
+                                 SelectedItem="{Binding PrimarySelectedItem}">
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type model:SolutionResult}">
                                     <templates:SolutionTemplate DataContext="{Binding}" />

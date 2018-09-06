@@ -25,7 +25,7 @@ namespace DependencyScanner.ViewModel.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "RunCommand: Error while executing process {process}", a);
+                Log.Error(ex, "Run ommand: Error while executing process {process}", a);
             }
         });
 
@@ -84,7 +84,7 @@ namespace DependencyScanner.ViewModel.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "OpenCmdCommand: Error while executing {paht}", a);
+                Log.Error(ex, "Open terminal command: Error while executing {paht}", a);
             }
         });
 
@@ -109,7 +109,7 @@ namespace DependencyScanner.ViewModel.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "OpenLinkCommand: Error while executing {Process}", a);
+                Log.Error(ex, "Open link command: Error while executing {Process}", a);
             }
         });
 
@@ -128,7 +128,7 @@ namespace DependencyScanner.ViewModel.Services
             }
             catch (Exception ex)
             {
-                Log.Error(ex, "OpenTextFileCommand: Error while executing {a}", a);
+                Log.Error(ex, "Open text file command: Error while executing {a}", a);
             }
         });
 
