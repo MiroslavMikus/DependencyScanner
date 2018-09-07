@@ -178,5 +178,20 @@ namespace DependencyScanner.ViewModel
                 }
             }
         }
+
+        private bool _autoOpenNugetScan = Properties.Settings.Default.AutoOpenNugetScan;
+
+        public bool AutoOpenNugetScan
+        {
+            get { return _autoOpenNugetScan; }
+            set
+            {
+                if (Set(ref _autoOpenNugetScan, value))
+                {
+                    Properties.Settings.Default.AutoOpenNugetScan = value;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
     }
 }

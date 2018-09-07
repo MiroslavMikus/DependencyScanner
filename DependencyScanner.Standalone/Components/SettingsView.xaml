@@ -76,7 +76,7 @@
                         Margin="0 10 0 0"
                         CommandParameter="https://github.com/MiroslavMikus/DependencyScanner/blob/master/DependencyScanner.Standalone/res/Changeset.md" />
 
-                <Label Content="Scan: " />
+                <Label Content="Browse: " />
                 <Controls:ToggleSwitch OnLabel="Update remote references while scanning" OffLabel="Do not update remote references while scanning"
                                                IsChecked="{Binding ExecuteGitFetchWitScan}">
                     <Controls:ToggleSwitch.ToolTip>
@@ -96,6 +96,9 @@
                 <Controls:ToggleSwitch OnLabel="Show open solution" OffLabel="Hide open solution" IsChecked="{Binding ShowOpenButton}" />
                 <Controls:ToggleSwitch OnLabel="Show open url" OffLabel="Hide open url" IsChecked="{Binding ShowOpenUrlButton}" />
                 <Controls:ToggleSwitch OnLabel="Show open as text file" OffLabel="Hide open as text file" IsChecked="{Binding ShowOpenFileButton}" />
+                <Label Content="Nuget scan:" />
+                <Controls:ToggleSwitch OnLabel="Automatically open generated report" OffLabel="Do not automatically open generated report" IsChecked="{Binding AutoOpenNugetScan}" />
+
                 <Label Content="Preferences:" />
                 <TextBlock Text="Prefered console tool:" />
                 <StackPanel Orientation="Horizontal">

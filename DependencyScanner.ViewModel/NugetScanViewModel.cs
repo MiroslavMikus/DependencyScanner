@@ -1,6 +1,7 @@
 ﻿using DependencyScanner.Core.Model;
 using DependencyScanner.Core.NugetReference;
 using DependencyScanner.ViewModel.Model;
+using DependencyScanner.ViewModel.Services;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
@@ -35,7 +36,12 @@ namespace DependencyScanner.ViewModel
 
                 if (result != null)
                 {
-                    UpdateReports();
+                    Reports.Add(result);
+
+                    if (Properties.Settings.Default.AutoOpenNugetScan)
+                    {
+                        CommandManager.OpenLinkCommand.Execute(result.Path);
+                    }
                 }
             });
 
@@ -43,7 +49,7 @@ namespace DependencyScanner.ViewModel
             {
                 if (_nugetScan.Storage.Remove(a))
                 {
-                    UpdateReports();
+                    Reports.Remove(a);
                 }
             });
 
