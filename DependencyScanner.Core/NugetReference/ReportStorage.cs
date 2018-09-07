@@ -51,7 +51,6 @@ namespace DependencyScanner.Core.NugetReference
             var files = Directory.GetFiles(storageDirectory, "*.html", SearchOption.TopDirectoryOnly);
 
             return files.Select(a => CreateKeyValue(a));
-            //.Distinct(new StorageKeyComparer());
         }
 
         public StorageKey Store(string report)
@@ -71,8 +70,15 @@ namespace DependencyScanner.Core.NugetReference
 
         public bool Remove(StorageKey key)
         {
-            //var test = _storage[key];
-            return true;
+            if (File.Exists(key.Path))
+            {
+                File.Delete(key.Path);
+
+                _storage.Remove(key);
+
+                return true;
+            }
+            return false;
         }
 
         private static StorageKey CreateKeyValue(string a)

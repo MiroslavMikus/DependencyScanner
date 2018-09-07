@@ -47,17 +47,4 @@ namespace DependencyScanner.Core.NugetReference
             return Project.GetHashCode() ^ 3;
         }
     }
-
-    public class StorageKeyComparer : IEqualityComparer<KeyValuePair<StorageKey, string>>
-    {
-        public bool Equals(KeyValuePair<StorageKey, string> x, KeyValuePair<StorageKey, string> y)
-        {
-            return x.Key.Project == y.Key.Project && x.Key.Date == y.Key.Date;
-        }
-
-        public int GetHashCode(KeyValuePair<StorageKey, string> obj)
-        {
-            return obj.Key.Project.GetHashCode() ^ 3;
-        }
-    }
 }

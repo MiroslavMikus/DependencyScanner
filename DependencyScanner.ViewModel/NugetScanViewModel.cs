@@ -41,7 +41,10 @@ namespace DependencyScanner.ViewModel
 
             DeleteReportCommand = new RelayCommand<StorageKey>(a =>
             {
-                //var key = new StorageKey()
+                if (_nugetScan.Storage.Remove(a))
+                {
+                    UpdateReports();
+                }
             });
 
             _messenger.Register<IEnumerable<SolutionResult>>(this, a =>
