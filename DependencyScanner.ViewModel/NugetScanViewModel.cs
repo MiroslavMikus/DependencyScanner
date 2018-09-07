@@ -36,7 +36,14 @@ namespace DependencyScanner.ViewModel
 
                 if (result != null)
                 {
-                    Reports.Add(result);
+                    if (Reports == null)
+                    {
+                        Reports = new ObservableCollection<StorageKey>() { result };
+                    }
+                    else
+                    {
+                        Reports.Add(result);
+                    }
 
                     if (Properties.Settings.Default.AutoOpenNugetScan)
                     {
