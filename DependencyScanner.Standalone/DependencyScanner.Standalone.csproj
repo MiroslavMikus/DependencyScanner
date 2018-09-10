@@ -244,11 +244,11 @@
     <Resource Include="Flat-Enigma.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\Flat-Enigma.ico" />
+    <None Include="res\Flat-Enigma.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="res\Enigma-ENG-128.png" />
-    <Resource Include="res\Flat-Enigma-1024.png" />
+    <None Include="res\Enigma-ENG-128.png" />
+    <None Include="res\Flat-Enigma-1024.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="res\pic\" />
