@@ -23,6 +23,7 @@
 **Bug-Fix**:
 
 - Fixed failing Nuspec-updater.
+- [#4](https://github.com/MiroslavMikus/DependencyScanner/issues/4) Reading framework version of .net core and standard doesnt work
 
 ## 27.8.2018 0.1.0.1
 **Features**:
