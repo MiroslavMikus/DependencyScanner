@@ -11,6 +11,8 @@ namespace DependencyScanner.Core.Model
     [DebuggerDisplay("{Info.Name}")]
     public class SolutionResult : ObservableObject
     {
+        private readonly FileScanner _fileScanner;
+
         private FileInfo _info;
         public FileInfo Info { get => _info; private set => Set(ref _info, value); }
 
@@ -18,8 +20,6 @@ namespace DependencyScanner.Core.Model
         public ICollection<ProjectResult> Projects { get => _projects; protected set => Set(ref _projects, value); }
 
         private GitInfo _gitInformation;
-        private readonly FileScanner _fileScanner;
-
         public GitInfo GitInformation { get => _gitInformation; internal set => Set(ref _gitInformation, value); }
 
         public RelayCommand RefreshCommand { get; }

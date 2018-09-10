@@ -28,7 +28,7 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="1" >
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" MinWidth="260" />
                     <ColumnDefinition Width="auto" />
@@ -73,7 +73,7 @@
                         <DataTemplate DataType="{x:Type model:ProjectResult}">
                             <StackPanel Orientation="Horizontal">
                                 <Button Margin="5 0 10 0" VerticalAlignment="Center" Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=DataContext.GenerateReportCommand}"
-                                    CommandParameter="{Binding}">
+                                        CommandParameter="{Binding}">
                                     <StackPanel Orientation="Vertical">
                                         <iconPacks:PackIconFontAwesome Kind="FileMedicalAltSolid" HorizontalAlignment="Center" />
                                         <Label Content="Create Report" />

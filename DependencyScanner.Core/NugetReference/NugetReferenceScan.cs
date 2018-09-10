@@ -117,6 +117,13 @@ namespace DependencyScanner.Core.NugetReference
                 compatibleVersion = reference.Version;
             }
 
+            if (!input[reference.Id].ContainsKey(compatibleVersion))
+            {
+                Log.Error("Target package {package} - {version} is not installed. The nuget map will be incomplete. Try to build your solution and try again.", reference.Id, compatibleVersion);
+
+                return;
+            }
+
             IEnumerable<PackageDependencySet> currentDependencies = input[reference.Id][compatibleVersion];
 
             PackageDependencySet compatibleFrameworkDependencies = default(PackageDependencySet);
@@ -219,6 +226,8 @@ namespace DependencyScanner.Core.NugetReference
                 .Dependencies
                 .Select(a =>
                 {
+                    if (!input.ContainsKey(a.Id)) return null;
+
                     var version = input[a.Id].Select(b => b.Key).First(b => a.VersionSpec.Satisfies(b));
 
                     PackageDependencySet dep = default(PackageDependencySet);
@@ -238,7 +247,7 @@ namespace DependencyScanner.Core.NugetReference
                         CurrentVersion = version,
                         Dependencies = dep
                     };
-                });
+                }).Where(a => a != null);
         }
     }
 }
