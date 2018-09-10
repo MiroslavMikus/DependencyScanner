@@ -1,8 +1,9 @@
 # Changeset
 
 <!---
--->
 ## Coming in the new release
+-->
+## 10.9.2018 0.1.0.2
 
 **Features**:
 - Nuget dependency scan
