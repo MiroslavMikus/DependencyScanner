@@ -48,7 +48,7 @@
       ![Highlighting](https://github.com/MiroslavMikus/DependencyScanner/blob/master/DependencyScanner.Standalone/res/pic/2018-09-04_2.gif)
       - Settings were extended with the 'Automatically open generated report' option.
       - User can now directly read all errors and open the log file.
-      ![ErrorProvider](https://github.com/MiroslavMikus/DependencyScanner/blob/master/DependencyScanner.Standalone/res/pic/2018-09-07.png)
+      ![ErrorProvider](https://raw.githubusercontent.com/MiroslavMikus/DependencyScanner/master/DependencyScanner.Standalone/res/pic/2018-09-07.png)
 
       **Improvements**:
       - Tabs order was changed.
