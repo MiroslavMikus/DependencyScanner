@@ -187,8 +187,7 @@
                                  Margin="5"
                                  ItemsSource="{Binding PrimaryFilterResult}"
                                  SelectedItem="{Binding PrimarySelectedItem}"
-                                 VirtualizingStackPanel.VirtualizationMode="Recycling"
-                                 >
+                                 VirtualizingStackPanel.VirtualizationMode="Recycling">
                             <ListBox.Resources>
                                 <DataTemplate DataType="{x:Type model:SolutionResult}">
                                     <templates:SolutionTemplate DataContext="{Binding}" />
@@ -372,7 +371,7 @@
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <Button Margin="2" ToolTip="Copy nuget id to clip"
-                                                        Command="{Binding ElementName=TheMainWindow, Path=DataContext.CopyToClipCommand}"
+                                                        Command="{x:Static command:CommandManager.CopyToClipCommand}"
                                                         CommandParameter="{Binding Id}">
                                                     <iconPacks:PackIconFontAwesome Kind="CopySolid" />
                                                 </Button>

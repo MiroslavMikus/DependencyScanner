@@ -1,8 +1,14 @@
 # Changeset
 
 <!---
-## Coming in the new release
 -->
+## Coming in the new release
+
+**Bug-Fix**:
+
+- [5#](https://github.com/MiroslavMikus/DependencyScanner/issues/5) Copy button doesnt work
+
+
 ## 10.9.2018 0.1.0.2
 
 **Features**:
