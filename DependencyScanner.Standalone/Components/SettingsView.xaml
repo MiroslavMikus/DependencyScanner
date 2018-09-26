@@ -8,8 +8,8 @@
              xmlns:root="clr-namespace:DependencyScanner.Standalone"
              xmlns:command="clr-namespace:DependencyScanner.ViewModel.Services;assembly=DependencyScanner.ViewModel"
              mc:Ignorable="d"
+    Background="White"
              d:DesignHeight="1000" d:DesignWidth="800">
-    <!--Background="White"-->
     <ScrollViewer>
         <DockPanel LastChildFill="True" DataContext="{Binding MainSettings}">
             <DockPanel.Resources>
@@ -132,7 +132,7 @@
                 </StackPanel>
 
                 <Label Content="Clear nuspec" />
-                <TextBlock Text="Path to nuspec.exe" Margin="0 10 0 0" />
+                <TextBlock Text="Path to nuget.exe" Margin="0 10 0 0" />
                 <StackPanel Orientation="Horizontal">
                     <TextBox Margin="0 10 20 0" Width="300"
                                      Controls:TextBoxHelper.ClearTextButton="True"

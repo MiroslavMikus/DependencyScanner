@@ -7,6 +7,7 @@
 **Bug-Fix**:
 
 - [5#](https://github.com/MiroslavMikus/DependencyScanner/issues/5) Copy button doesnt work
+- [6#](https://github.com/MiroslavMikus/DependencyScanner/issues/6) Fix typo in settings
 
 
 ## 10.9.2018 0.1.0.2
