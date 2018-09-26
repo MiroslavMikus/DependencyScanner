@@ -7,7 +7,13 @@ namespace DependencyScanner.ViewModel
     public abstract class SolutionBaseViewModel<T> : ViewModelBase
     {
         private ObservableCollection<T> _scanResult;
-        public ObservableCollection<T> ScanResult { get => _scanResult; set => Set(ref _scanResult, value); }
+
+        public ObservableCollection<T> ScanResult
+        {
+            get => _scanResult;
+            set => Set(ref _scanResult, value);
+        }
+
         private string _solutionFilter;
 
         public string SolutionFilter
@@ -22,7 +28,12 @@ namespace DependencyScanner.ViewModel
         }
 
         private ICollectionView _filterScanResult;
-        public ICollectionView FilterScanResult { get => _filterScanResult; protected set => Set(ref _filterScanResult, value); }
+
+        public ICollectionView FilterScanResult
+        {
+            get => _filterScanResult;
+            protected set => Set(ref _filterScanResult, value);
+        }
 
         protected abstract bool FilterJob(object value);
     }

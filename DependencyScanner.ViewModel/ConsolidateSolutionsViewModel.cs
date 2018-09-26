@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 
@@ -16,7 +17,7 @@ namespace DependencyScanner.ViewModel
         private readonly IMessenger _messenger;
         private readonly SolutionComparer _solutionComparer;
 
-        public RelayCommand ScanCommand { get; }
+        public RelayCommand CompareCommand { get; }
         public RelayCommand SelectAllCommand { get; }
         public RelayCommand DeSelectAllCommand { get; }
 
@@ -33,20 +34,51 @@ namespace DependencyScanner.ViewModel
         }
 
         private ObservableCollection<ConsolidateSolution> _resultReferences;
-        public ObservableCollection<ConsolidateSolution> ResultReferences { get => _resultReferences; set => Set(ref _resultReferences, value); }
+
+        public ObservableCollection<ConsolidateSolution> ResultReferences
+        {
+            get => _resultReferences;
+            set => Set(ref _resultReferences, value);
+        }
+
+        private string _resultFilter;
+
+        public string ResultFilter
+        {
+            get { return _resultFilter; }
+            set
+            {
+                Set(ref _resultFilter, value);
+
+                FilterResultReferences?.Refresh();
+            }
+        }
+
+        private ICollectionView _filterResultReferences;
+
+        public ICollectionView FilterResultReferences
+        {
+            get => _filterResultReferences;
+            set => Set(ref _filterResultReferences, value);
+        }
 
         public ConsolidateSolutionsViewModel(IMessenger messenger, SolutionComparer solutionComparer)
         {
             _messenger = messenger;
+
             _solutionComparer = solutionComparer;
 
-            ScanCommand = new RelayCommand(() =>
+            CompareCommand = new RelayCommand(() =>
             {
                 var solutionsToCompare = ScanResult.Where(a => a.IsSelected).Select(b => b.Result);
 
                 var result = _solutionComparer.FindConsolidateReferences(solutionsToCompare);
 
                 ResultReferences = new ObservableCollection<ConsolidateSolution>(result);
+
+                FilterResultReferences = CollectionViewSource.GetDefaultView(ResultReferences);
+
+                FilterResultReferences.Filter = ResultFilterJob;
             });
 
             SelectAllCommand = new RelayCommand(() =>
@@ -88,6 +120,7 @@ namespace DependencyScanner.ViewModel
         {
             bool filterName = true;
             bool filterConsolidates = true;
+
             if (value is SolutionSelectionViewModel input)
             {
                 if (!string.IsNullOrEmpty(SolutionFilter))
@@ -101,6 +134,18 @@ namespace DependencyScanner.ViewModel
                 }
             }
             return filterName && filterConsolidates;
+        }
+
+        private bool ResultFilterJob(object value)
+        {
+            if (value is ConsolidateSolution input)
+            {
+                if (!string.IsNullOrEmpty(ResultFilter))
+                {
+                    return input.Id.IndexOf(ResultFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+                }
+            }
+            return true;
         }
     }
 }
