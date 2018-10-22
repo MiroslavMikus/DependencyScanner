@@ -1,8 +1,9 @@
 # Changeset
 
 <!---
--->
 ## Coming in the new release
+-->
+## 26.9.2018 0.1.0.3
 
 **Improvements**:
 - The consolidate-solutions tab has can now search within consolidate nugets
