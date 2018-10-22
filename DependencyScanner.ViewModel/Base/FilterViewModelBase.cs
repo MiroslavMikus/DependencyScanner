@@ -9,9 +9,6 @@ namespace DependencyScanner.ViewModel
 {
     public abstract class FilterViewModelBase<TPrimary, TSecondary> : ViewModelBase
     {
-        // todo implement in browser and check performance
-        // maybe clear secondary filter -> should add some performance
-
         private ObservableCollection<TPrimary> _primaryCollection;
 
         public ObservableCollection<TPrimary> PrimaryCollectoion
