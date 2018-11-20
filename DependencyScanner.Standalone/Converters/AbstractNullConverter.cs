@@ -2,13 +2,13 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace DependencyScanner.ViewModel.Converters
+namespace DependencyScanner.Standalone.Converters
 {
-    public abstract class AbstractBoolConverter<T> : IValueConverter
+    public abstract class AbstractNullConverter<T> : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool input && input)
+            if (value is null)
             {
                 return Positive;
             }

@@ -1,6 +1,6 @@
-﻿using DependencyScanner.ViewModel.Converters;
+﻿using DependencyScanner.Standalone.Converters;
 
-namespace DependencyScanner.ViewModel.Converters
+namespace DependencyScanner.Standalone.Converters
 {
     public class BoolToBoolConverter : AbstractBoolConverter<bool>
     {

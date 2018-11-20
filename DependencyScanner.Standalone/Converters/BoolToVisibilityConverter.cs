@@ -1,7 +1,7 @@
-﻿using DependencyScanner.ViewModel.Converters;
+﻿using DependencyScanner.Standalone.Converters;
 using System.Windows;
 
-namespace DependencyScanner.ViewModel.Converters
+namespace DependencyScanner.Standalone.Converters
 {
     public class BoolToVisibilityConverter : AbstractBoolConverter<Visibility>
     {

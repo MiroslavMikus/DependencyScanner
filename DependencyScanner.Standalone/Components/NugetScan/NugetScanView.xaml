@@ -7,7 +7,7 @@
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:templates="clr-namespace:DependencyScanner.Standalone.Templates"
              xmlns:command="clr-namespace:DependencyScanner.ViewModel.Services;assembly=DependencyScanner.ViewModel"
-             xmlns:converter="clr-namespace:DependencyScanner.ViewModel.Converters;assembly=DependencyScanner.ViewModel"
+             xmlns:converter="clr-namespace:DependencyScanner.Standalone.Converters"
              xmlns:viewModel="clr-namespace:DependencyScanner.ViewModel.Model;assembly=DependencyScanner.ViewModel"
              xmlns:nugetReference="clr-namespace:DependencyScanner.Core.NugetReference;assembly=DependencyScanner.Core"
              xmlns:model="clr-namespace:DependencyScanner.Core.Model;assembly=DependencyScanner.Core"

@@ -1,5 +1,6 @@
 ﻿using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
+using DependencyScanner.Standalone.Components;
 using DependencyScanner.ViewModel.Events;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;

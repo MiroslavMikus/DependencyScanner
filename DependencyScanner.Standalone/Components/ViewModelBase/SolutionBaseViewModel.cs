@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace DependencyScanner.ViewModel
+namespace DependencyScanner.Standalone.Components
 {
     public abstract class SolutionBaseViewModel<T> : ViewModelBase
     {

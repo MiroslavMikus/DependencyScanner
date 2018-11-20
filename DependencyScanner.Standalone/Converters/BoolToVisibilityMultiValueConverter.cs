@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace DependencyScanner.ViewModel.Converters
+namespace DependencyScanner.Standalone.Converters
 {
     public class BoolToVisibilityMultiValueConverter : IMultiValueConverter
     {

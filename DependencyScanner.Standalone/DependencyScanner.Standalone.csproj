@@ -137,6 +137,15 @@
     <Compile Include="Components\Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\ViewModelBase\FilterViewModelBase.cs" />
+    <Compile Include="Components\ViewModelBase\SolutionBaseViewModel.cs" />
+    <Compile Include="Converters\AbstractBoolConverter.cs" />
+    <Compile Include="Converters\AbstractNullConverter.cs" />
+    <Compile Include="Converters\BoolToBoolConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityMultiValueConverter.cs" />
+    <Compile Include="Converters\NullToBoolConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Templates\ProjectTemplate.xaml.cs">
       <DependentUpon>ProjectTemplate.xaml</DependentUpon>
     </Compile>

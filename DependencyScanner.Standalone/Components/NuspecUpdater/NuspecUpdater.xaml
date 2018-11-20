@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:model="clr-namespace:DependencyScanner.Core.Model;assembly=DependencyScanner.Core"
-             xmlns:converter="clr-namespace:DependencyScanner.ViewModel.Converters;assembly=DependencyScanner.ViewModel"
+             xmlns:converter="clr-namespace:DependencyScanner.Standalone.Converters"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:templates="clr-namespace:DependencyScanner.Standalone.Templates"
              xmlns:viewModel="clr-namespace:DependencyScanner.ViewModel;assembly=DependencyScanner.ViewModel"
