@@ -119,6 +119,7 @@
     </ApplicationDefinition>
     <Compile Include="AppModule.cs" />
     <Compile Include="ChocoUpdater.cs" />
+    <Compile Include="Components\AppSettings.cs" />
     <Compile Include="Components\Browse\BrowseViewModel.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectsViewModel.cs" />
     <Compile Include="Components\ConsolidateProject\SolutionProjectCompareResult.cs" />
@@ -146,6 +147,9 @@
     <Compile Include="Converters\BoolToVisibilityMultiValueConverter.cs" />
     <Compile Include="Converters\NullToBoolConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Events\ClearResultEvent.cs" />
+    <Compile Include="Services\CommandManager.cs" />
+    <Compile Include="Services\EventSink.cs" />
     <Compile Include="Templates\ProjectTemplate.xaml.cs">
       <DependentUpon>ProjectTemplate.xaml</DependentUpon>
     </Compile>

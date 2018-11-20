@@ -1,10 +1,11 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using DependencyScanner.ViewModel;
+using GalaSoft.MvvmLight.Command;
 using Serilog;
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace DependencyScanner.ViewModel.Services
+namespace DependencyScanner.Standalone.Services
 {
     public static class CommandManager
     {

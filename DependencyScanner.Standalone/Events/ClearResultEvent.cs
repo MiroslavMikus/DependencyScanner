@@ -1,4 +1,4 @@
-﻿namespace DependencyScanner.ViewModel.Events
+﻿namespace DependencyScanner.Standalone.Events
 {
     public class ClearResultEvent
     {
