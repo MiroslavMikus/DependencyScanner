@@ -1,8 +1,6 @@
 ﻿using DependencyScanner.Core.Model;
 using DependencyScanner.Core.NugetReference;
 using DependencyScanner.ViewModel;
-using DependencyScanner.ViewModel.Model;
-using DependencyScanner.ViewModel.Services;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;

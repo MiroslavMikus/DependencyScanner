@@ -1,10 +1,6 @@
-﻿using DependencyScanner.ViewModel;
-using DependencyScanner.ViewModel.Services;
+﻿using DependencyScanner.Standalone.Services;
+using DependencyScanner.ViewModel;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using Serilog;
-using System;
-using System.Diagnostics;
 
 namespace DependencyScanner.Standalone.Components
 {

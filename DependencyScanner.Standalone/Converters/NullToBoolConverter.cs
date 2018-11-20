@@ -1,6 +1,4 @@
-﻿using DependencyScanner.Standalone.Converters;
-
-namespace DependencyScanner.Standalone.Converters
+﻿namespace DependencyScanner.Standalone.Converters
 {
     public class NullToBoolConverter : AbstractNullConverter<bool>
     {

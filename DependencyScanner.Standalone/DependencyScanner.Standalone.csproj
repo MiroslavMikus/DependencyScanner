@@ -244,10 +244,6 @@
       <Project>{6e72af77-f76b-406b-93c2-8f0ffc3ef5e5}</Project>
       <Name>DependencyScanner.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DependencyScanner.ViewModel\DependencyScanner.ViewModel.csproj">
-      <Project>{047f2ed9-749b-414a-b6e2-80f7bba813a4}</Project>
-      <Name>DependencyScanner.ViewModel</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />

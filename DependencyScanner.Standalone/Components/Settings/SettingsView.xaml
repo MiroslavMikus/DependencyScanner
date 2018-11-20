@@ -6,7 +6,7 @@
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:local="clr-namespace:DependencyScanner.Standalone.Components"
              xmlns:root="clr-namespace:DependencyScanner.Standalone"
-             xmlns:command="clr-namespace:DependencyScanner.ViewModel.Services;assembly=DependencyScanner.ViewModel"
+             xmlns:command="clr-namespace:DependencyScanner.Standalone.Services"
              mc:Ignorable="d"
              d:DesignHeight="1000" d:DesignWidth="800">
     <!--Background="White"-->

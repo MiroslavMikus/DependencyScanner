@@ -145,10 +145,10 @@ namespace DependencyScanner.Standalone.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ShowFolderButton {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowFolderButton {
             get {
-                return ((string)(this["ShowFolderButton"]));
+                return ((bool)(this["ShowFolderButton"]));
             }
             set {
                 this["ShowFolderButton"] = value;

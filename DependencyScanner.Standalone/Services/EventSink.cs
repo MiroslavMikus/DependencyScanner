@@ -3,12 +3,8 @@ using Serilog.Configuration;
 using Serilog.Core;
 using Serilog.Events;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DependencyScanner.ViewModel.Services
+namespace DependencyScanner.Standalone.Services
 {
     public class EventSink : ILogEventSink
     {

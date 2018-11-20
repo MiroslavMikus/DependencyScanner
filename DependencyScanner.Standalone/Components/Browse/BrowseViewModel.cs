@@ -1,7 +1,7 @@
 ﻿using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
 using DependencyScanner.Standalone.Components;
-using DependencyScanner.ViewModel.Events;
+using DependencyScanner.Standalone.Events;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
@@ -49,9 +49,9 @@ namespace DependencyScanner.ViewModel
             {
                 if (Set(ref _workingDirectory, value))
                 {
-                    Properties.Settings.Default.WorkingDirectory = value;
+                    Standalone.Properties.Settings.Default.WorkingDirectory = value;
 
-                    Properties.Settings.Default.Save();
+                    Standalone.Properties.Settings.Default.Save();
 
                     if (AppSettings.Instance.ScanAfterDirectoryChange &&
                         !string.IsNullOrEmpty(value))
@@ -138,9 +138,9 @@ namespace DependencyScanner.ViewModel
                 WorkingDirectories.Remove(a);
             });
 
-            if (Properties.Settings.Default.WorkingDirectories != null)
+            if (Standalone.Properties.Settings.Default.WorkingDirectories != null)
             {
-                WorkingDirectories = new ObservableCollection<string>(Properties.Settings.Default.WorkingDirectories.OfType<string>());
+                WorkingDirectories = new ObservableCollection<string>(Standalone.Properties.Settings.Default.WorkingDirectories.OfType<string>());
             }
             else
             {
@@ -156,14 +156,14 @@ namespace DependencyScanner.ViewModel
                     collection.Add(item);
                 }
 
-                Properties.Settings.Default.WorkingDirectories = collection;
+                Standalone.Properties.Settings.Default.WorkingDirectories = collection;
 
-                Properties.Settings.Default.Save();
+                Standalone.Properties.Settings.Default.Save();
             };
 
-            if (!string.IsNullOrEmpty(Properties.Settings.Default.WorkingDirectory))
+            if (!string.IsNullOrEmpty(Standalone.Properties.Settings.Default.WorkingDirectory))
             {
-                WorkingDirectory = Properties.Settings.Default.WorkingDirectory;
+                WorkingDirectory = Standalone.Properties.Settings.Default.WorkingDirectory;
             }
         }
 

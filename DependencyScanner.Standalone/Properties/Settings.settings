@@ -32,8 +32,8 @@
     <Setting Name="ShowCmdButton" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="ShowFolderButton" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="ShowFolderButton" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="ShowOpenButton" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

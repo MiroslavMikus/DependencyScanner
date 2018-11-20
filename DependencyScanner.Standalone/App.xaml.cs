@@ -39,11 +39,9 @@ namespace DependencyScanner.Standalone
             if (args.Contains("cleansettings"))
             {
                 Settings.Default.Reset();
-                DependencyScanner.ViewModel.Properties.Settings.Default.Reset();
             }
 
             Settings.Default.Upgrade();
-            DependencyScanner.ViewModel.Properties.Settings.Default.Upgrade();
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledException;
 
@@ -86,8 +84,8 @@ namespace DependencyScanner.Standalone
 
         private static void SetColors()
         {
-            var theme = ThemeManager.GetAppTheme(Standalone.Properties.Settings.Default.Theme_Name);
-            var accent = ThemeManager.GetAccent(Standalone.Properties.Settings.Default.Accent_Name);
+            var theme = ThemeManager.GetAppTheme(Settings.Default.Theme_Name);
+            var accent = ThemeManager.GetAccent(Settings.Default.Accent_Name);
             ThemeManager.ChangeAppStyle(Current, accent, theme);
         }
 
