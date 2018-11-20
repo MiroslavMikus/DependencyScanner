@@ -12,7 +12,7 @@ namespace DependencyScanner.Standalone.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.7.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -104,6 +104,185 @@ namespace DependencyScanner.Standalone.Properties {
             }
             set {
                 this["Window_Left"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string WorkingDirectory {
+            get {
+                return ((string)(this["WorkingDirectory"]));
+            }
+            set {
+                this["WorkingDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ExecuteScanOnInit {
+            get {
+                return ((bool)(this["ExecuteScanOnInit"]));
+            }
+            set {
+                this["ExecuteScanOnInit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowCmdButton {
+            get {
+                return ((bool)(this["ShowCmdButton"]));
+            }
+            set {
+                this["ShowCmdButton"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ShowFolderButton {
+            get {
+                return ((string)(this["ShowFolderButton"]));
+            }
+            set {
+                this["ShowFolderButton"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowOpenButton {
+            get {
+                return ((bool)(this["ShowOpenButton"]));
+            }
+            set {
+                this["ShowOpenButton"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PreferedConsoleTool {
+            get {
+                return ((string)(this["PreferedConsoleTool"]));
+            }
+            set {
+                this["PreferedConsoleTool"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PreferencedWebBrowser {
+            get {
+                return ((string)(this["PreferencedWebBrowser"]));
+            }
+            set {
+                this["PreferencedWebBrowser"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowOpenUrlButton {
+            get {
+                return ((bool)(this["ShowOpenUrlButton"]));
+            }
+            set {
+                this["ShowOpenUrlButton"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PathToNuspec {
+            get {
+                return ((string)(this["PathToNuspec"]));
+            }
+            set {
+                this["PathToNuspec"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ExecuteGitFetchWithScan {
+            get {
+                return ((bool)(this["ExecuteGitFetchWithScan"]));
+            }
+            set {
+                this["ExecuteGitFetchWithScan"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection WorkingDirectories {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["WorkingDirectories"]));
+            }
+            set {
+                this["WorkingDirectories"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ScanAfterDirectoryChange {
+            get {
+                return ((bool)(this["ScanAfterDirectoryChange"]));
+            }
+            set {
+                this["ScanAfterDirectoryChange"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PreferedTextEditor {
+            get {
+                return ((string)(this["PreferedTextEditor"]));
+            }
+            set {
+                this["PreferedTextEditor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ShowOpenFileButton {
+            get {
+                return ((bool)(this["ShowOpenFileButton"]));
+            }
+            set {
+                this["ShowOpenFileButton"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoOpenNugetScan {
+            get {
+                return ((bool)(this["AutoOpenNugetScan"]));
+            }
+            set {
+                this["AutoOpenNugetScan"] = value;
             }
         }
     }
