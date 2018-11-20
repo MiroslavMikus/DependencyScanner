@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:converter="clr-namespace:DependencyScanner.Standalone.Converters"
+        xmlns:converter="clr-namespace:DependencyScanner.ViewModel.Converters;assembly=DependencyScanner.ViewModel"
         xmlns:components="clr-namespace:DependencyScanner.Standalone.Components"
         xmlns:properties="clr-namespace:DependencyScanner.Standalone.Properties"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"

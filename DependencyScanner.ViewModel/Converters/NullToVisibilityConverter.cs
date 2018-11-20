@@ -1,7 +1,7 @@
 ﻿using DependencyScanner.ViewModel.Converters;
 using System.Windows;
 
-namespace DependencyScanner.Standalone.Converters
+namespace DependencyScanner.ViewModel.Converters
 {
     public class NullToVisibilityConverter : AbstractNullConverter<Visibility>
     {
