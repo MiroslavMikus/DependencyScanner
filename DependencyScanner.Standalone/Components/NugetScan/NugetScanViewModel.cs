@@ -1,5 +1,6 @@
 ﻿using DependencyScanner.Core.Model;
 using DependencyScanner.Core.NugetReference;
+using DependencyScanner.ViewModel;
 using DependencyScanner.ViewModel.Model;
 using DependencyScanner.ViewModel.Services;
 using GalaSoft.MvvmLight.Command;
@@ -11,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DependencyScanner.ViewModel
+namespace DependencyScanner.Standalone.Components
 {
     public class NugetScanViewModel : FilterViewModelBase<SolutionResult, ProjectResult>
     {
@@ -38,10 +39,11 @@ namespace DependencyScanner.ViewModel
                 {
                     UpdateReports();
 
-                    if (Properties.Settings.Default.AutoOpenNugetScan)
-                    {
-                        CommandManager.OpenLinkCommand.Execute(result.Path);
-                    }
+                    // todo fix settings here
+                    //if (Properties.Settings.Default.AutoOpenNugetScan)
+                    //{
+                    //    CommandManager.OpenLinkCommand.Execute(result.Path);
+                    //}
                 }
             });
 

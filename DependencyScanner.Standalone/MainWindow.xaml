@@ -272,7 +272,7 @@
                         </StackPanel>
                         <ListBox x:Name="ProjectScanResult" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FilterScanResult}" Margin="5">
                             <ListBox.Resources>
-                                <DataTemplate DataType="{x:Type viewModel:SolutionProjectCompareResult}">
+                                <DataTemplate DataType="{x:Type components:SolutionProjectCompareResult}">
                                     <Border>
                                         <Border.Style>
                                             <Style TargetType="{x:Type Border}">
@@ -355,7 +355,7 @@
                         </StackPanel>
                         <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding FilterScanResult}" Margin="5">
                             <ListBox.Resources>
-                                <DataTemplate DataType="{x:Type viewModel:SolutionSelectionViewModel}">
+                                <DataTemplate DataType="{x:Type components:SolutionSelectionViewModel}">
                                     <templates:SelectableSolutionTemplate DataContext="{Binding}" />
                                 </DataTemplate>
                             </ListBox.Resources>

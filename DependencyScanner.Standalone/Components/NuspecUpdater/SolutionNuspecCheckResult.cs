@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DependencyScanner.ViewModel
+namespace DependencyScanner.Standalone.Components
 {
     public class SolutionNuspecCheckResult : ViewModelBase
     {

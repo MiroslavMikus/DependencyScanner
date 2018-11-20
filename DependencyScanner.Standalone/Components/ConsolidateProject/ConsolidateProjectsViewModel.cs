@@ -1,5 +1,6 @@
 ﻿using DependencyScanner.Core;
 using DependencyScanner.Core.Model;
+using DependencyScanner.ViewModel;
 using DependencyScanner.ViewModel.Events;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -9,7 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Data;
 
-namespace DependencyScanner.ViewModel
+namespace DependencyScanner.Standalone.Components
 {
     public class ConsolidateProjectsViewModel : SolutionBaseViewModel<SolutionProjectCompareResult>
     {

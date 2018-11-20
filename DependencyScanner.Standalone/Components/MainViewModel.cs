@@ -1,12 +1,12 @@
-﻿using DependencyScanner.ViewModel.Services;
+﻿using DependencyScanner.ViewModel;
+using DependencyScanner.ViewModel.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Serilog;
 using System;
 using System.Diagnostics;
-using System.Windows.Forms;
 
-namespace DependencyScanner.ViewModel
+namespace DependencyScanner.Standalone.Components
 {
     public class MainViewModel : ViewModelBase
     {

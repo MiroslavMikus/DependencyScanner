@@ -3,6 +3,7 @@ using DependencyScanner.Core;
 using DependencyScanner.Core.GitClient;
 using DependencyScanner.Core.NugetReference;
 using DependencyScanner.Core.Nuspec;
+using DependencyScanner.Standalone.Components;
 using DependencyScanner.ViewModel;
 using DependencyScanner.ViewModel.Services;
 using GalaSoft.MvvmLight.Messaging;
@@ -58,7 +59,7 @@ namespace DependencyScanner.Standalone
             builder.RegisterType<ReportStorage>().WithParameter(new TypedParameter(typeof(string), GetProgramdataPath("Reports"))).InstancePerLifetimeScope();
             builder.RegisterType<NugetScanFacade>().WithParameter(new TypedParameter(typeof(string), App.ProductVersion)).InstancePerLifetimeScope();
 
-            // View Models from DependencyScanner.ViewModel assembly
+            //View Models from DependencyScanner.ViewModel assembly
             builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(MainViewModel)))
                 .Where(t => t.Name.EndsWith("ViewModel"))
                 .InstancePerLifetimeScope();

@@ -1,5 +1,6 @@
 ﻿using DependencyScanner.Core.Model;
 using DependencyScanner.Core.Nuspec;
+using DependencyScanner.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
@@ -8,7 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Data;
 
-namespace DependencyScanner.ViewModel
+namespace DependencyScanner.Standalone.Components
 {
     public class NuspecUpdaterViewModel : SolutionBaseViewModel<SolutionNuspecCheckResult>
     {
@@ -45,7 +46,7 @@ namespace DependencyScanner.ViewModel
 
             UpdateNuspecCommand = new RelayCommand<ProjectNuspecResult>(a =>
             {
-                NuspecUpdater.UpdateNuspec(a);
+                Core.Nuspec.NuspecUpdater.UpdateNuspec(a);
 
                 var solution = ScanResult.FirstOrDefault(b => b.Result.Projects.Any(c => c.Equals(a.Project)));
 
