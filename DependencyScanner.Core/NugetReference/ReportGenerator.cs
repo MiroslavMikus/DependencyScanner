@@ -1,11 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using DependencyScanner.Core.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 
 namespace DependencyScanner.Core.NugetReference
 {
-    public class ReportGenerator
+    public class ReportGenerator : IService
     {
         public Lazy<string> LazyTemplate { get; }
 

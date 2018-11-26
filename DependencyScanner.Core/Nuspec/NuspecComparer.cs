@@ -1,11 +1,12 @@
 ﻿using DependencyScanner.Core.FileScan;
+using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace DependencyScanner.Core.Nuspec
 {
-    public class NuspecComparer
+    public class NuspecComparer : IService
     {
         public IEnumerable<ProjectNuspecResult> ConsolidateSolution(SolutionResult solution)
         {

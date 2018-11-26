@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace DependencyScanner.Core.Interfaces
 {
-    public interface IScanner
+    public interface IScanner : IService
     {
         Task<IEnumerable<SolutionResult>> ScanSolutions(string rootDirectory, ICancelableProgress<ProgressMessage> progress);
 

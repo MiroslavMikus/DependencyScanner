@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using DependencyScanner.Core.Interfaces;
+using Serilog;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace DependencyScanner.Core.GitClient
 {
-    public class GitEngine
+    public class GitEngine : IService
     {
         public TResult GitExecute<TResult>(string workingDirectory, string command, Func<string, TResult> parse)
         {

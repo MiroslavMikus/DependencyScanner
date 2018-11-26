@@ -1,11 +1,12 @@
-﻿using DependencyScanner.Core.Model;
+﻿using DependencyScanner.Core.Interfaces;
+using DependencyScanner.Core.Model;
 using System.Collections.Generic;
 using System.Linq;
 using static DependencyScanner.Core.Tools.VersionComparer;
 
 namespace DependencyScanner.Core
 {
-    public class SolutionComparer
+    public class SolutionComparer : IService
     {
         public IEnumerable<ConsolidateSolution> FindConsolidateReferences(IEnumerable<SolutionResult> solutions)
         {

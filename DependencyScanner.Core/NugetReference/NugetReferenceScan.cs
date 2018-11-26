@@ -1,4 +1,5 @@
 ﻿using DependencyScanner.Core.FileScan;
+using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
 using DependencyScanner.Core.Tools;
 using Newtonsoft.Json;
@@ -17,7 +18,7 @@ using T_Result = System.Collections.Generic.Dictionary<string, System.Collection
 
 namespace DependencyScanner.Core.NugetReference
 {
-    public class NugetReferenceScan
+    public class NugetReferenceScan : IService
     {
         private const string PackagesDirName = "packages";
 

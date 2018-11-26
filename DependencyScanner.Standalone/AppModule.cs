@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using DependencyScanner.Core;
 using DependencyScanner.Core.GitClient;
+using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.NugetReference;
 using DependencyScanner.Core.Nuspec;
 using DependencyScanner.Standalone.Components;
@@ -46,17 +47,21 @@ namespace DependencyScanner.Standalone
             builder.RegisterType<Messenger>().AsImplementedInterfaces().InstancePerLifetimeScope();
 
             // Core Services
-            builder.RegisterType<FileScanner>().AsImplementedInterfaces().InstancePerLifetimeScope();
-            builder.RegisterType<SolutionComparer>().InstancePerLifetimeScope();
-            builder.RegisterType<ProjectComparer>().InstancePerLifetimeScope();
-            builder.RegisterType<NuspecComparer>().InstancePerLifetimeScope();
-            builder.RegisterType<GitEngine>().InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(IService)))
+                .Where(t => t.GetInterface(typeof(IService).Name) != null)
+                .Except<ReportStorage>()
+                .Except<NugetScanFacade>()
+                .AsSelf()
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
 
-            // NugetReferenceScan
-            builder.RegisterType<ReportGenerator>().InstancePerLifetimeScope();
-            builder.RegisterType<NugetReferenceScan>().InstancePerLifetimeScope();
-            builder.RegisterType<ReportStorage>().WithParameter(new TypedParameter(typeof(string), GetProgramdataPath("Reports"))).InstancePerLifetimeScope();
-            builder.RegisterType<NugetScanFacade>().WithParameter(new TypedParameter(typeof(string), App.ProductVersion)).InstancePerLifetimeScope();
+            builder.RegisterType<ReportStorage>()
+                .WithParameter(new TypedParameter(typeof(string), GetProgramdataPath("Reports")))
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<NugetScanFacade>()
+                .WithParameter(new TypedParameter(typeof(string), App.ProductVersion))
+                .InstancePerLifetimeScope();
 
             //View Models from DependencyScanner.ViewModel assembly
             builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(MainViewModel)))
