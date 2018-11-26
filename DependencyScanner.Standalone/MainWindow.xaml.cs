@@ -84,14 +84,14 @@ namespace DependencyScanner.Standalone
             });
 
             // create accent color menu items for the demo
-            this.AccentColors = ThemeManager.Accents
-                                            .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })
-                                            .ToList();
+            AccentColors = ThemeManager.Accents
+                .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })
+                .ToList();
 
             // create metro theme color menu items for the demo
-            this.AppThemes = ThemeManager.AppThemes
-                                           .Select(a => new AppThemeMenuData() { Name = a.Name, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
-                                           .ToList();
+            AppThemes = ThemeManager.AppThemes
+                .Select(a => new AppThemeMenuData() { Name = a.Name, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
+                .ToList();
 
             InitializeComponent();
 

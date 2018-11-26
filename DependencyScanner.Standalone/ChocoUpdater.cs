@@ -27,15 +27,6 @@ namespace DependencyScanner.Standalone
             var lines = input.Split(new string[] { Environment.NewLine }, StringSplitOptions.None).Where(a => !string.IsNullOrEmpty(a));
 
             return lines.Any(a => a.IndexOf(PackageId, StringComparison.OrdinalIgnoreCase) >= 0);
-
-            //foreach (var line in lines)
-            //{
-            //    if (line.IndexOf(PackageId, StringComparison.OrdinalIgnoreCase) >= 0)
-            //    {
-            //        return true;
-            //    }
-            //}
-            //return false;
         }
 
         private async Task<string> SearchInChoco()
