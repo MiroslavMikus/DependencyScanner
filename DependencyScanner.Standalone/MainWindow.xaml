@@ -106,12 +106,6 @@
             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
         </Grid.Resources>
         <TabControl Controls:TabControlHelper.Underlined="SelectedTabItem" x:Name="MainTabControl">
-            <TabItem Header="Nuspec updater">
-                <components:NuspecUpdater DataContext="{Binding NuspecUpdaterViewModel}" />
-            </TabItem>
-            <TabItem Header="Nuget scan">
-                <components:NugetScanView DataContext="{Binding NugetScanViewModel}" />
-            </TabItem>
         </TabControl>
     </Grid>
 </Controls:MetroWindow>

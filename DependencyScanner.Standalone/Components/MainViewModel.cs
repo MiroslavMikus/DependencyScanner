@@ -7,8 +7,6 @@ namespace DependencyScanner.Standalone.Components
     public class MainViewModel : ViewModelBase
     {
         public AppSettings MainSettings { get; } = AppSettings.Instance;
-        public NuspecUpdaterViewModel NuspecUpdaterViewModel { get; }
-        public NugetScanViewModel NugetScanViewModel { get; }
 
         public string LogPath { get; }
 
@@ -32,13 +30,10 @@ namespace DependencyScanner.Standalone.Components
             set { Set(ref _openNotificationBar, value); }
         }
 
-        public MainViewModel(NuspecUpdaterViewModel nuspecUpdaterViewModel,
-                             NugetScanViewModel nugetScanViewModel,
+        public MainViewModel(NugetScanViewModel nugetScanViewModel,
                              EventSink eventSink,
                              string logPath)
         {
-            NuspecUpdaterViewModel = nuspecUpdaterViewModel;
-            NugetScanViewModel = nugetScanViewModel;
             LogPath = logPath;
 
             eventSink.NotifyEvent += (s, e) =>

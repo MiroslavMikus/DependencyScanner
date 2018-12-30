@@ -139,6 +139,7 @@
     </Compile>
     <Compile Include="Components\ConsolidateSolution\SolutionSelectionViewModel.cs" />
     <Compile Include="Components\MainViewModel.cs" />
+    <Compile Include="Components\NugetScan\NugetScanPlugin.cs" />
     <Compile Include="Components\NugetScan\NugetScanView.xaml.cs">
       <DependentUpon>NugetScanView.xaml</DependentUpon>
     </Compile>
@@ -146,6 +147,7 @@
     <Compile Include="Components\NuspecUpdater\NuspecUpdater.xaml.cs">
       <DependentUpon>NuspecUpdater.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\NuspecUpdater\NuspecUpdaterPlugin.cs" />
     <Compile Include="Components\NuspecUpdater\NuspecUpdaterViewModel.cs" />
     <Compile Include="Components\NuspecUpdater\SolutionNuspecCheckResult.cs" />
     <Compile Include="Components\Settings\SettingsView.xaml.cs">
