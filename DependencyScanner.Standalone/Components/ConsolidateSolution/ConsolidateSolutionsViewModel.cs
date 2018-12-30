@@ -11,7 +11,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 
-namespace DependencyScanner.Standalone.Components
+namespace DependencyScanner.Standalone.Components.Consolidate_Solution
 {
     public class ConsolidateSolutionsViewModel : SolutionBaseViewModel<SolutionSelectionViewModel>
     {

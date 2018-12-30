@@ -132,7 +132,11 @@
       <DependentUpon>ConsolidateProjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\ConsolidateProject\SolutionProjectCompareResult.cs" />
+    <Compile Include="Components\ConsolidateSolution\ConsolidateSolutionsPlugin.cs" />
     <Compile Include="Components\ConsolidateSolution\ConsolidateSolutionsViewModel.cs" />
+    <Compile Include="Components\ConsolidateSolution\ConsolidateSolutionView.xaml.cs">
+      <DependentUpon>ConsolidateSolutionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\ConsolidateSolution\SolutionSelectionViewModel.cs" />
     <Compile Include="Components\MainViewModel.cs" />
     <Compile Include="Components\NugetScan\NugetScanView.xaml.cs">
@@ -178,6 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Components\ConsolidateProject\ConsolidateProjectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\ConsolidateSolution\ConsolidateSolutionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

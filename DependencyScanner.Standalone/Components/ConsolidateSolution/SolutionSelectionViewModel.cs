@@ -1,7 +1,7 @@
 ﻿using DependencyScanner.Core.Model;
 using GalaSoft.MvvmLight;
 
-namespace DependencyScanner.Standalone.Components
+namespace DependencyScanner.Standalone.Components.Consolidate_Solution
 {
     public class SolutionSelectionViewModel : ObservableObject
     {
