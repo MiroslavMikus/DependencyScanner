@@ -68,6 +68,12 @@ namespace DependencyScanner.Standalone
                 .Where(t => t.Name.EndsWith("ViewModel"))
                 .InstancePerLifetimeScope();
 
+            // register all plugins
+            builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(MainViewModel)))
+                .Where(t => t.GetInterface(typeof(IPlugin).Name) != null)
+                .As<IPlugin>()
+                .InstancePerLifetimeScope();
+
             // View
             builder.Register(a => new MainWindow()
             {

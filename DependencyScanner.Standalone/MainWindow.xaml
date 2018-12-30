@@ -13,6 +13,7 @@
         xmlns:command="clr-namespace:DependencyScanner.Standalone.Services"
         xmlns:model="clr-namespace:DependencyScanner.Core.Model;assembly=DependencyScanner.Core"
         mc:Ignorable="d"
+        xmlns:plugin="clr-namespace:DependencyScanner.Core.Interfaces;assembly=DependencyScanner.Core"
         Title="Dependency scanner"
         Height="{Binding ElementName=TheMainWindow, Path=WindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
         Width="{Binding ElementName=TheMainWindow, Path=WindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
@@ -105,7 +106,19 @@
         <Grid.Resources>
             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
         </Grid.Resources>
-        <TabControl Controls:TabControlHelper.Underlined="SelectedTabItem" x:Name="MainTabControl">
+        <TabControl Controls:TabControlHelper.Underlined="SelectedTabItem" x:Name="MainTabControl"
+                    ItemsSource="{Binding Plugins}"
+                    SelectedIndex="0">
+            <TabControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type plugin:IPlugin}">
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate DataType="{x:Type plugin:IPlugin}">
+                    <ContentPresenter Content="{Binding ContentView}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
         </TabControl>
     </Grid>
 </Controls:MetroWindow>

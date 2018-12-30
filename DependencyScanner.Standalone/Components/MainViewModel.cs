@@ -1,6 +1,9 @@
-﻿using DependencyScanner.Standalone.Services;
+﻿using DependencyScanner.Core.Interfaces;
+using DependencyScanner.Standalone.Services;
 using DependencyScanner.ViewModel;
 using GalaSoft.MvvmLight;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DependencyScanner.Standalone.Components
 {
@@ -11,6 +14,17 @@ namespace DependencyScanner.Standalone.Components
         public string LogPath { get; }
 
         private string _notification;
+
+        private IEnumerable<IPlugin> _plugins;
+
+        public IEnumerable<IPlugin> Plugins
+        {
+            get { return _plugins; }
+            set
+            {
+                Set(ref _plugins, value);
+            }
+        }
 
         public string Notification
         {
@@ -30,10 +44,12 @@ namespace DependencyScanner.Standalone.Components
             set { Set(ref _openNotificationBar, value); }
         }
 
-        public MainViewModel(NugetScanViewModel nugetScanViewModel,
+        public MainViewModel(IEnumerable<IPlugin> plugins,
                              EventSink eventSink,
                              string logPath)
         {
+            Plugins = plugins.OrderBy(a => a.Order);
+
             LogPath = logPath;
 
             eventSink.NotifyEvent += (s, e) =>
