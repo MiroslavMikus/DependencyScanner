@@ -10,5 +10,9 @@ namespace DependencyScanner.Core.Test.GitTests
     [TestClass]
     public class GitConfigTest
     {
+        [TestMethod]
+        public void TestReadCurrentBranch()
+        {
+        }
     }
 }
