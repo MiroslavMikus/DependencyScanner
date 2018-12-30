@@ -11,6 +11,7 @@ namespace DependencyScanner.Core.Model
     public class GitInfo : ObservableObject
     {
         public FileInfo Root { get; }
+        public GitConfig Config { get; set; }
 
         private string _remoteUrl;
         public string RemoteUrl { get => _remoteUrl; private set => Set(ref _remoteUrl, value); }
@@ -62,6 +63,8 @@ namespace DependencyScanner.Core.Model
 
             Root = new FileInfo(root);
 
+            Config = new GitConfig(Root.FullName);
+
             PullCommand = new RelayCommand(() =>
             {
                 Task.Run(() =>
@@ -83,7 +86,7 @@ namespace DependencyScanner.Core.Model
 
                 var branches = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.BranchList);
 
-                BranchList = GitParser.GetBranchList(branches);
+                BranchList = Config.GetBranchList();
 
                 _currentBranch = GitParser.GetCurrentBranch(branches);
 
@@ -91,7 +94,7 @@ namespace DependencyScanner.Core.Model
 
                 Status = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
 
-                RemoteUrl = _gitEngine.GitExecute(Root.DirectoryName, GitCommand.RemoteBranch, a => GitParser.GetRemoteUrl(a));
+                RemoteUrl = Config.GetRemoteUrl();
             });
         }
 
