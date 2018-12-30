@@ -3,7 +3,7 @@ using GalaSoft.MvvmLight;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DependencyScanner.Standalone.Components
+namespace DependencyScanner.Standalone.Components.Consolidate_Project
 {
     public class SolutionProjectCompareResult : ViewModelBase
     {

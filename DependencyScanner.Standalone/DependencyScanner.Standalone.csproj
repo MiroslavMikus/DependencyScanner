@@ -95,6 +95,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -125,7 +126,11 @@
       <DependentUpon>BrowseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\Browse\BrowseViewModel.cs" />
+    <Compile Include="Components\ConsolidateProject\ConsolidateProjectPlugin.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectsViewModel.cs" />
+    <Compile Include="Components\ConsolidateProject\ConsolidateProjectView.xaml.cs">
+      <DependentUpon>ConsolidateProjectView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\ConsolidateProject\SolutionProjectCompareResult.cs" />
     <Compile Include="Components\ConsolidateSolution\ConsolidateSolutionsViewModel.cs" />
     <Compile Include="Components\ConsolidateSolution\SolutionSelectionViewModel.cs" />
@@ -169,6 +174,10 @@
     <Compile Include="ViewModel\AccentColorMenuData.cs" />
     <Compile Include="ViewModel\AppThemeMenuData.cs" />
     <Page Include="Components\Browse\BrowseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\ConsolidateProject\ConsolidateProjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
