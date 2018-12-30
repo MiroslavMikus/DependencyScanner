@@ -10,6 +10,7 @@ namespace DependencyScanner.Standalone.Components
     public class MainViewModel : ViewModelBase
     {
         public AppSettings MainSettings { get; } = AppSettings.Instance;
+        public ObservableProgress Progress { get; }
 
         public string LogPath { get; }
 
@@ -45,10 +46,13 @@ namespace DependencyScanner.Standalone.Components
         }
 
         public MainViewModel(IEnumerable<IPlugin> plugins,
+                             ObservableProgress progress,
                              EventSink eventSink,
                              string logPath)
         {
             Plugins = plugins.OrderBy(a => a.Order);
+
+            Progress = progress;
 
             LogPath = logPath;
 

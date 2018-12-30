@@ -11,7 +11,7 @@ namespace DependencyScanner.Core.Model
 
         public void Report(ProgressMessage value)
         {
-            ReportAction(value);
+            ReportAction?.Invoke(value);
         }
     }
 }

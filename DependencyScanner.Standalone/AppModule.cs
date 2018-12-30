@@ -55,6 +55,13 @@ namespace DependencyScanner.Standalone
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
 
+            // ViewModel Services
+            builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(MainViewModel)))
+                 .Where(t => t.GetInterface(typeof(IService).Name) != null)
+                 .AsSelf()
+                 .AsImplementedInterfaces()
+                 .InstancePerLifetimeScope();
+
             builder.RegisterType<ReportStorage>()
                 .WithParameter(new TypedParameter(typeof(string), GetProgramdataPath("Reports")))
                 .InstancePerLifetimeScope();

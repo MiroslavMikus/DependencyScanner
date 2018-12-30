@@ -165,6 +165,7 @@
     <Compile Include="Events\ClearResultEvent.cs" />
     <Compile Include="Services\CommandManager.cs" />
     <Compile Include="Services\EventSink.cs" />
+    <Compile Include="Services\ObservableProgress.cs" />
     <Compile Include="Templates\ProjectTemplate.xaml.cs">
       <DependentUpon>ProjectTemplate.xaml</DependentUpon>
     </Compile>

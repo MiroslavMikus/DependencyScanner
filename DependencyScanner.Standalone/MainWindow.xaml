@@ -31,8 +31,8 @@
     </Controls:MetroWindow.RightWindowCommands>
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout Position="Bottom" DataContext="{Binding BrowseVM}"
-                             IsOpen="{Binding IsScanning}"
+            <Controls:Flyout Position="Bottom" DataContext="{Binding Progress}"
+                             IsOpen="{Binding IsOpen}"
                              Height="110">
                 <StackPanel Orientation="Vertical">
                     <Label Content="{Binding ProgressMessage}"
@@ -46,18 +46,7 @@
                             <ColumnDefinition Width="90*" />
                             <ColumnDefinition Width="10*" />
                         </Grid.ColumnDefinitions>
-                        <ProgressBar Value="{Binding Progress}">
-                            <ProgressBar.Style>
-                                <Style TargetType="{x:Type ProgressBar}" BasedOn="{StaticResource MahApps.Metro.Styles.ProgressBar}">
-                                    <Setter Property="IsIndeterminate" Value="False" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Progress}" Value="0">
-                                            <Setter Property="IsIndeterminate" Value="True" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </ProgressBar.Style>
-                        </ProgressBar>
+                        <ProgressBar Value="{Binding Progress}" IsIndeterminate="{Binding IsMarquee}" />
                     </Grid>
                 </StackPanel>
             </Controls:Flyout>

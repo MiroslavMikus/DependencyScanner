@@ -2,6 +2,7 @@
 using DependencyScanner.Core.Model;
 using DependencyScanner.Standalone.Components;
 using DependencyScanner.Standalone.Events;
+using DependencyScanner.Standalone.Services;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
@@ -21,6 +22,8 @@ namespace DependencyScanner.ViewModel
         private readonly IScanner _scanner;
         private readonly IMessenger _messenger;
         private readonly Serilog.ILogger _logger;
+        public ObservableProgress _globalProgress { get; }
+
         private CancellationTokenSource _cancellationTokenSource;
 
         private bool _isScanning;
@@ -62,11 +65,12 @@ namespace DependencyScanner.ViewModel
             }
         }
 
-        public BrowseViewModel(IScanner scanner, IMessenger messenger, Serilog.ILogger logger)
+        public BrowseViewModel(IScanner scanner, IMessenger messenger, Serilog.ILogger logger, ObservableProgress progress)
         {
             _scanner = scanner;
             _messenger = messenger;
             _logger = logger;
+            _globalProgress = progress;
 
             PickWorkingDirectoryCommand = new RelayCommand(() =>
             {
@@ -97,11 +101,11 @@ namespace DependencyScanner.ViewModel
             {
                 try
                 {
-                    ProgressMessage = "Init scan";
+                    _globalProgress.ProgressMessage = "Init scan";
 
-                    Progress = 0D;
+                    _globalProgress.Progress = 0D;
 
-                    IsScanning = true;
+                    IsScanning = _globalProgress.IsOpen = true;
 
                     _cancellationTokenSource = new CancellationTokenSource();
 
@@ -112,7 +116,7 @@ namespace DependencyScanner.ViewModel
                 }
                 finally
                 {
-                    IsScanning = false;
+                    IsScanning = _globalProgress.IsOpen = false;
 
                     _cancellationTokenSource = null;
                 }
@@ -176,13 +180,9 @@ namespace DependencyScanner.ViewModel
                     Token = Token
                 };
 
-                progress.ReportAction = a =>
-                {
-                    Progress = a.Value;
-                    ProgressMessage = a.Message;
-                };
+                _globalProgress.RegisterProgress(progress);
 
-                var scanResult = await _scanner.ScanSolutions(WorkingDirectory, progress);
+                var scanResult = await _scanner.ScanSolutions(WorkingDirectory, _globalProgress);
 
                 PrimaryCollectoion = new ObservableCollection<SolutionResult>(scanResult);
 
