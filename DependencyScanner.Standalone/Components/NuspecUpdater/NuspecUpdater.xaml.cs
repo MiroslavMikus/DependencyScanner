@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DependencyScanner.Standalone.Components
+namespace DependencyScanner.Standalone.Components.Nuspec_Updater
 {
     /// <summary>
     /// Interaction logic for NuspecUpdater.xaml
     /// </summary>
-    public partial class NuspecUpdater : UserControl
+    public partial class NuspecUpdaterView : UserControl
     {
-        public NuspecUpdater()
+        public NuspecUpdaterView()
         {
             InitializeComponent();
         }

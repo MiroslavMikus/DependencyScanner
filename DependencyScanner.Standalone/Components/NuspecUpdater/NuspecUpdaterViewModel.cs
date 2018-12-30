@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Data;
 
-namespace DependencyScanner.Standalone.Components
+namespace DependencyScanner.Standalone.Components.Nuspec_Updater
 {
     public class NuspecUpdaterViewModel : SolutionBaseViewModel<SolutionNuspecCheckResult>
     {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace DependencyScanner.Standalone.Components.NuspecUpdater
+namespace DependencyScanner.Standalone.Components.Nuspec_Updater
 {
     public class NuspecUpdaterPlugin : IPlugin
     {
@@ -20,7 +20,7 @@ namespace DependencyScanner.Standalone.Components.NuspecUpdater
 
         public NuspecUpdaterPlugin(NuspecUpdaterViewModel viewModel)
         {
-            ContentView = new NuspecUpdater
+            ContentView = new NuspecUpdaterView
             {
                 DataContext = viewModel
             };
