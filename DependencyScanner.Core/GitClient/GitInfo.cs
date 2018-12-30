@@ -84,11 +84,9 @@ namespace DependencyScanner.Core.Model
                     var result = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Fetch);
                 }
 
-                var branches = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.BranchList);
-
                 BranchList = Config.GetBranchList();
 
-                _currentBranch = GitParser.GetCurrentBranch(branches);
+                _currentBranch = Config.GetCurrentBranch();
 
                 RaisePropertyChanged(nameof(CurrentBranch));
 

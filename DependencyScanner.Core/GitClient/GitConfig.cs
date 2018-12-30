@@ -9,6 +9,7 @@ namespace DependencyScanner.Core.GitClient
         public string Content { get; private set; }
         public string RootPath { get; }
         private string ConfigPath => Path.Combine(RootPath, "config");
+        private string HeadPath => Path.Combine(RootPath, "HEAD");
 
         public GitConfig(string path)
         {
@@ -55,18 +56,12 @@ namespace DependencyScanner.Core.GitClient
 
         public string GetCurrentBranch()
         {
-            var path = Path.Combine(RootPath, "HEAD");
-
-            return GetCurrentBranchFromConfig(File.ReadAllText(path));
+            return GetCurrentBranchFromHead(File.ReadAllLines(HeadPath).First());
         }
 
-        internal static string GetCurrentBranchFromConfig(string config)
+        internal static string GetCurrentBranchFromHead(string headContent)
         {
-            var result = config.Split(new[] { '\r', '\n' }).First();
-
-            var lastIndex = result.LastIndexOf('/');
-
-            return result.Substring(lastIndex + 1, result.Length - lastIndex - 1);
+            return headContent.Remove(0, "ref: refs/heads/".Count());
         }
     }
 }
