@@ -77,9 +77,7 @@ namespace DependencyScanner.Standalone
 
             builder.RegisterModule(new AppModule());
 
-            var scope = builder.Build().BeginLifetimeScope();
-
-            return scope;
+            return builder.Build();
         }
 
         private static void SetColors()
@@ -99,8 +97,8 @@ namespace DependencyScanner.Standalone
         private static string GetProductVersion()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-            return fileVersionInfo.ProductVersion;
+
+            return FileVersionInfo.GetVersionInfo(assembly.Location).ProductVersion;
         }
     }
 }
