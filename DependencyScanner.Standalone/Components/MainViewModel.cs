@@ -4,11 +4,91 @@ using DependencyScanner.ViewModel;
 using GalaSoft.MvvmLight;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 
 namespace DependencyScanner.Standalone.Components
 {
     public class MainViewModel : ViewModelBase
     {
+        #region window settings
+
+        private double _windowLeft = Properties.Settings.Default.Window_Left;
+
+        public double Window_Left
+        {
+            get => _windowLeft;
+            set
+            {
+                if (Set(ref _windowLeft, value))
+                {
+                    Properties.Settings.Default.Window_Left = value;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
+
+        private double _windowTop = Properties.Settings.Default.Window_Top;
+
+        public double Window_Top
+        {
+            get => _windowTop;
+            set
+            {
+                if (Set(ref _windowTop, value))
+                {
+                    Properties.Settings.Default.Window_Top = value;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
+
+        private WindowState _windowState = Properties.Settings.Default.Window_State;
+
+        public WindowState Window_State
+        {
+            get => _windowState;
+            set
+            {
+                if (Set(ref _windowState, value))
+                {
+                    Properties.Settings.Default.Window_State = value;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
+
+        private double _windowsWidth = Properties.Settings.Default.Windows_Width;
+
+        public double WindowWidth
+        {
+            get => _windowsWidth;
+            set
+            {
+                if (Set(ref _windowsWidth, value))
+                {
+                    Properties.Settings.Default.Windows_Width = value;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
+
+        private double _windowsHeight = Properties.Settings.Default.Window_Height;
+
+        public double WindowHeight
+        {
+            get => _windowsHeight;
+            set
+            {
+                if (Set(ref _windowsHeight, value))
+                {
+                    Properties.Settings.Default.Window_Height = value;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
+
+        #endregion window settings
+
         public AppSettings MainSettings { get; } = AppSettings.Instance;
         public ObservableProgress Progress { get; }
 

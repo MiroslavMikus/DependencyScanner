@@ -18,56 +18,6 @@ namespace DependencyScanner.Standalone
 {
     public partial class MainWindow : MetroWindow, INotifyPropertyChanged
     {
-        public double WindowHeight
-        {
-            get => Properties.Settings.Default.Window_Height;
-            set
-            {
-                Properties.Settings.Default.Window_Height = value;
-                Properties.Settings.Default.Save();
-            }
-        }
-
-        public double WindowWidth
-        {
-            get => Properties.Settings.Default.Windows_Width;
-            set
-            {
-                Properties.Settings.Default.Windows_Width = value;
-                Properties.Settings.Default.Save();
-            }
-        }
-
-        public WindowState Window_State
-        {
-            get => Properties.Settings.Default.Window_State;
-            set
-            {
-                Properties.Settings.Default.Window_State = value;
-                Properties.Settings.Default.Save();
-            }
-        }
-
-        public double Window_Top
-        {
-            get => Properties.Settings.Default.Window_Top;
-            set
-            {
-                Properties.Settings.Default.Window_Top = value;
-                Properties.Settings.Default.Save();
-            }
-        }
-
-        public double Window_Left
-        {
-            get => Properties.Settings.Default.Window_Left;
-            set
-            {
-                Properties.Settings.Default.Window_Left = value;
-                Properties.Settings.Default.Save();
-            }
-        }
-
         public List<AppThemeMenuData> AppThemes { get; set; }
         public List<AccentColorMenuData> AccentColors { get; set; }
 
