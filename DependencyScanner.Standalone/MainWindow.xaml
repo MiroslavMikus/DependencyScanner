@@ -78,12 +78,6 @@
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
-    <Controls:MetroWindow.InputBindings>
-        <KeyBinding Modifiers="Ctrl" Key="Y" Command="{Binding ElementName=TheMainWindow, Path=SwitchTab}" CommandParameter="0" />
-        <KeyBinding Modifiers="Ctrl" Key="X" Command="{Binding ElementName=TheMainWindow, Path=SwitchTab}" CommandParameter="1" />
-        <KeyBinding Modifiers="Ctrl" Key="C" Command="{Binding ElementName=TheMainWindow, Path=SwitchTab}" CommandParameter="2" />
-        <KeyBinding Modifiers="Ctrl" Key="Q" Command="{x:Static command:CommandManager.ClearNuspecCommand}" />
-    </Controls:MetroWindow.InputBindings>
     <Controls:MetroWindow.Resources>
         <converter:NullToVisibilityConverter x:Key="HideIfNull" Positive="Collapsed" Negative="Visible" />
         <converter:NullToBoolConverter x:Key="NullToFalse" Positive="False" Negative="True" />

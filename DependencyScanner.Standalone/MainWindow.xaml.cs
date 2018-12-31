@@ -68,21 +68,11 @@ namespace DependencyScanner.Standalone
             }
         }
 
-        public RelayCommand<string> SwitchTab { get; }
-
         public List<AppThemeMenuData> AppThemes { get; set; }
         public List<AccentColorMenuData> AccentColors { get; set; }
 
         public MainWindow()
         {
-            SwitchTab = new RelayCommand<string>(a =>
-            {
-                if (int.TryParse(a, out int result))
-                {
-                    MainTabControl.SelectedIndex = result;
-                }
-            });
-
             // create accent color menu items for the demo
             AccentColors = ThemeManager.Accents
                 .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })
