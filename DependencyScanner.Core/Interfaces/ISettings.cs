@@ -1,4 +1,4 @@
-﻿namespace DependencyScanner.Standalone.Setting
+﻿namespace DependencyScanner.Core.Interfaces
 {
     public interface ISettings
     {

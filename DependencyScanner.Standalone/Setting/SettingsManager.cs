@@ -1,4 +1,7 @@
-﻿using LiteDB;
+﻿using DependencyScanner.Core.Interfaces;
+using LiteDB;
+using System;
+using System.Reflection;
 
 namespace DependencyScanner.Standalone.Setting
 {
@@ -22,11 +25,35 @@ namespace DependencyScanner.Standalone.Setting
             return result == null ? new T() : result;
         }
 
+        /// <summary>
+        /// Reads settings from the lite database.
+        /// </summary>
+        /// <param name="collectionKey"></param>
+        /// <param name="settingsType">Providet type has to have an empty constructor!</param>
+        /// <returns></returns>
+        public object Load(string collectionKey, Type settingsType)
+        {
+            var collection = _database.GetCollection(collectionKey);
+
+            var result = collection.FindById(DefaultKey);
+
+            return result == null ? Activator.CreateInstance(settingsType) : BsonMapper.Global.ToObject(settingsType, result);
+        }
+
         public void Save<T>(T settings, string collectionKey) where T : ISettings
         {
             var collection = _database.GetCollection<T>(collectionKey);
 
             collection.Upsert(settings);
+        }
+
+        public void Save(object settings, string collectionKey, Type settingsType)
+        {
+            var collection = _database.GetCollection(collectionKey);
+
+            var document = BsonMapper.Global.ToDocument(settingsType, settings);
+
+            collection.Upsert(document);
         }
     }
 }

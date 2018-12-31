@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 
 namespace DependencyScanner.Core.Interfaces
 {
@@ -8,7 +9,18 @@ namespace DependencyScanner.Core.Interfaces
         string Description { get; }
         UserControl ContentView { get; }
         int Order { get; }
-        //Page Settings { get; }
+
         //Page Help { get; }
+    }
+
+    public interface IPlugin<out T> : IPlugin where T : ISettings
+    {
+        string CollectionKey { get; }
+
+        T Settings { get; }
+
+        void SetSettings(ISettings settings);
+
+        //Page Settings { get; }
     }
 }

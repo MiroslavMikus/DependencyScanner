@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using DependencyScanner.Core.Interfaces;
+using GalaSoft.MvvmLight;
 using LiteDB;
 
 namespace DependencyScanner.Standalone.Setting

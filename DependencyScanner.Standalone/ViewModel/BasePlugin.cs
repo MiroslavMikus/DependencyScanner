@@ -1,4 +1,5 @@
-﻿using DependencyScanner.Standalone.Setting;
+﻿using DependencyScanner.Core.Interfaces;
+using DependencyScanner.Standalone.Setting;
 using GalaSoft.MvvmLight;
 using System;
 
@@ -6,13 +7,13 @@ namespace DependencyScanner.Standalone.ViewModel
 {
     public class BasePlugin<T> : ViewModelBase, IDisposable where T : ISettings, new()
     {
-        private ISettings _settings;
+        private T _settings;
         private readonly ISettingsManager _settingsManager;
         private readonly string _settingsCollectionName;
 
-        public ISettings Settings
+        public T Settings
         {
-            get { return _settings ?? (_settings = _settingsManager.Load<T>(_settingsCollectionName)); ; }
+            get { return _settings != null ? _settings : (_settings = _settingsManager.Load<T>(_settingsCollectionName)); ; }
             set { Set(ref _settings, value); }
         }
 

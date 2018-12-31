@@ -127,6 +127,7 @@
       <DependentUpon>BrowseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\Browse\BrowseViewModel.cs" />
+    <Compile Include="Components\Browse\SomeTest.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectPlugin.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectsViewModel.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectView.xaml.cs">
@@ -167,7 +168,6 @@
     <Compile Include="Services\CommandManager.cs" />
     <Compile Include="Services\EventSink.cs" />
     <Compile Include="Services\ObservableProgress.cs" />
-    <Compile Include="Setting\ISettings.cs" />
     <Compile Include="Setting\ISettingsManager.cs" />
     <Compile Include="Components\MainViewSettings.cs" />
     <Compile Include="Setting\ObservableSettingsBase.cs" />

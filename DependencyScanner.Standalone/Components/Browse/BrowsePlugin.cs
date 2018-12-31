@@ -9,18 +9,40 @@ using System.Windows.Controls;
 
 namespace DependencyScanner.Standalone.Components.Browse
 {
-    public class BrowsePlugin : IPlugin
+    public abstract class BaseTest<T> : IPlugin<T> where T : ISettings
     {
-        public string Title => "Browse";
+        private ISettings _settings;
 
-        public string Description => "Scan and browse your solutions.";
+        public abstract string CollectionKey { get; }
 
-        public UserControl ContentView { get; }
+        public T Settings => (T)_settings;
 
-        public int Order => 1;
+        public abstract string Title { get; }
+
+        public abstract string Description { get; }
+
+        public virtual UserControl ContentView { get; protected set; }
+
+        public virtual int Order { get; protected set; }
+
+        public virtual void SetSettings(ISettings settings)
+        {
+            _settings = settings;
+        }
+    }
+
+    public class BrowsePlugin : BaseTest<SomeTest>
+    {
+        public override string Title => "Browse";
+
+        public override string Description => "Scan and browse your solutions.";
+
+        public override string CollectionKey { get; } = "BrowseSettings";
 
         public BrowsePlugin(BrowseViewModel browseViewModel)
         {
+            Order = 1;
+
             ContentView = new BrowseView
             {
                 DataContext = browseViewModel
