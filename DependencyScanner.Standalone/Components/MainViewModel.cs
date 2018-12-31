@@ -1,5 +1,6 @@
 ﻿using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Standalone.Services;
+using DependencyScanner.Standalone.Setting;
 using DependencyScanner.ViewModel;
 using GalaSoft.MvvmLight;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace DependencyScanner.Standalone.Components
 {
     public class MainViewModel : ViewModelBase
     {
+        private readonly ISettingsManager _settingsManager;
+
         #region window settings
 
         private double _windowLeft = Properties.Settings.Default.Window_Left;
@@ -128,8 +131,17 @@ namespace DependencyScanner.Standalone.Components
         public MainViewModel(IEnumerable<IPlugin> plugins,
                              ObservableProgress progress,
                              EventSink eventSink,
+                             ISettingsManager settingsManager,
                              string logPath)
         {
+            _settingsManager = settingsManager;
+
+            var settings = _settingsManager.Load<MainViewSettings>("MainViewSettings");
+
+            settings.Window_Left = 150;
+
+            _settingsManager.Save(settings);
+
             Plugins = plugins.OrderBy(a => a.Order);
 
             Progress = progress;

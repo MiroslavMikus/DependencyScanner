@@ -6,7 +6,9 @@ using DependencyScanner.Core.NugetReference;
 using DependencyScanner.Core.Nuspec;
 using DependencyScanner.Standalone.Components;
 using DependencyScanner.Standalone.Services;
+using DependencyScanner.Standalone.Setting;
 using GalaSoft.MvvmLight.Messaging;
+using LiteDB;
 using Serilog;
 using System.IO;
 using System.Reflection;
@@ -79,6 +81,15 @@ namespace DependencyScanner.Standalone
             builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(MainViewModel)))
                 .Where(t => t.GetInterface(typeof(IPlugin).Name) != null)
                 .As<IPlugin>()
+                .InstancePerLifetimeScope();
+
+            // LiteDb
+            builder.RegisterInstance<LiteDatabase>(new LiteDatabase(GetProgramdataPath("Storage.db")))
+                .AsSelf();
+
+            // Settings
+            builder.RegisterType<SettingsManager>()
+                .As<ISettingsManager>()
                 .InstancePerLifetimeScope();
 
             // View

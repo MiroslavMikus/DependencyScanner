@@ -167,6 +167,11 @@
     <Compile Include="Services\CommandManager.cs" />
     <Compile Include="Services\EventSink.cs" />
     <Compile Include="Services\ObservableProgress.cs" />
+    <Compile Include="Setting\ISettings.cs" />
+    <Compile Include="Setting\ISettingsManager.cs" />
+    <Compile Include="Setting\MainViewSettings.cs" />
+    <Compile Include="Setting\SettingsBase.cs" />
+    <Compile Include="Setting\SettingsManager.cs" />
     <Compile Include="Templates\ProjectTemplate.xaml.cs">
       <DependentUpon>ProjectTemplate.xaml</DependentUpon>
     </Compile>
@@ -301,7 +306,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="res\pic\" />
-    <Folder Include="Settings\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.3.3.5\build\Fody.targets" Condition="Exists('..\packages\Fody.3.3.5\build\Fody.targets')" />
