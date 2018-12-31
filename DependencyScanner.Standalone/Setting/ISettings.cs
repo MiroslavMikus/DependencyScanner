@@ -3,6 +3,5 @@
     public interface ISettings
     {
         string Id { get; }
-        string CollectionKey { get; }
     }
 }

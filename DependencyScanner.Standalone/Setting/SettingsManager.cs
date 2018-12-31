@@ -4,6 +4,8 @@ namespace DependencyScanner.Standalone.Setting
 {
     public class SettingsManager : ISettingsManager
     {
+        public const string DefaultKey = "default";
+
         private readonly LiteDatabase _database;
 
         public SettingsManager(LiteDatabase database)
@@ -15,14 +17,14 @@ namespace DependencyScanner.Standalone.Setting
         {
             var collection = _database.GetCollection<T>(collectionKey);
 
-            var result = collection.FindById("default");
+            var result = collection.FindById(DefaultKey);
 
             return result == null ? new T() : result;
         }
 
-        public void Save<T>(T settings) where T : ISettings
+        public void Save<T>(T settings, string collectionKey) where T : ISettings
         {
-            var collection = _database.GetCollection<T>(settings.CollectionKey);
+            var collection = _database.GetCollection<T>(collectionKey);
 
             collection.Upsert(settings);
         }

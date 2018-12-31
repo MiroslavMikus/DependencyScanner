@@ -169,8 +169,8 @@
     <Compile Include="Services\ObservableProgress.cs" />
     <Compile Include="Setting\ISettings.cs" />
     <Compile Include="Setting\ISettingsManager.cs" />
-    <Compile Include="Setting\MainViewSettings.cs" />
-    <Compile Include="Setting\SettingsBase.cs" />
+    <Compile Include="Components\MainViewSettings.cs" />
+    <Compile Include="Setting\ObservableSettingsBase.cs" />
     <Compile Include="Setting\SettingsManager.cs" />
     <Compile Include="Templates\ProjectTemplate.xaml.cs">
       <DependentUpon>ProjectTemplate.xaml</DependentUpon>

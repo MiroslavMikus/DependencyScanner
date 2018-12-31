@@ -13,12 +13,13 @@ namespace DependencyScanner.Standalone.Components
     public class MainViewModel : ViewModelBase, IDisposable
     {
         private readonly ISettingsManager _settingsManager;
+        private const string SettingsCollectionName = "MainViewSettings";
 
-        private MainViewSettings _settings;
+        private ISettings _settings;
 
-        public MainViewSettings Settings
+        public ISettings Settings
         {
-            get { return _settings ?? (_settings = _settingsManager.Load<MainViewSettings>("MainViewSettings")); ; }
+            get { return _settings ?? (_settings = _settingsManager.Load<MainViewSettings>(SettingsCollectionName)); ; }
             set { Set(ref _settings, value); }
         }
 
@@ -80,7 +81,7 @@ namespace DependencyScanner.Standalone.Components
 
         public void Dispose()
         {
-            _settingsManager.Save(_settings);
+            _settingsManager.Save(_settings, SettingsCollectionName);
         }
     }
 }

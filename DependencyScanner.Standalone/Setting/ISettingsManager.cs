@@ -4,6 +4,6 @@
     {
         T Load<T>(string collectionKey) where T : ISettings, new();
 
-        void Save<T>(T settings) where T : ISettings;
+        void Save<T>(T settings, string collectionKey) where T : ISettings;
     }
 }

@@ -1,11 +1,10 @@
-﻿using System.Windows;
+﻿using DependencyScanner.Standalone.Setting;
+using System.Windows;
 
-namespace DependencyScanner.Standalone.Setting
+namespace DependencyScanner.Standalone.Components
 {
-    public class MainViewSettings : SettingsBase
+    public class MainViewSettings : ObservableSettingsBase
     {
-        public override string CollectionKey => "MainViewSettings";
-
         private double _windowLeft = 0;
 
         public double Window_Left
