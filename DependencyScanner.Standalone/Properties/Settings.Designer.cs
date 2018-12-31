@@ -25,30 +25,6 @@ namespace DependencyScanner.Standalone.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("500")]
-        public double Window_Height {
-            get {
-                return ((double)(this["Window_Height"]));
-            }
-            set {
-                this["Window_Height"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
-        public double Windows_Width {
-            get {
-                return ((double)(this["Windows_Width"]));
-            }
-            set {
-                this["Windows_Width"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Cyan")]
         public string Accent_Name {
             get {
@@ -68,42 +44,6 @@ namespace DependencyScanner.Standalone.Properties {
             }
             set {
                 this["Theme_Name"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Maximized")]
-        public global::System.Windows.WindowState Window_State {
-            get {
-                return ((global::System.Windows.WindowState)(this["Window_State"]));
-            }
-            set {
-                this["Window_State"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double Window_Top {
-            get {
-                return ((double)(this["Window_Top"]));
-            }
-            set {
-                this["Window_Top"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double Window_Left {
-            get {
-                return ((double)(this["Window_Left"]));
-            }
-            set {
-                this["Window_Left"] = value;
             }
         }
         

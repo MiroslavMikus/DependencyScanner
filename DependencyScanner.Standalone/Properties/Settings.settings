@@ -2,26 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="DependencyScanner.Standalone.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Window_Height" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">500</Value>
-    </Setting>
-    <Setting Name="Windows_Width" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1000</Value>
-    </Setting>
     <Setting Name="Accent_Name" Type="System.String" Scope="User">
       <Value Profile="(Default)">Cyan</Value>
     </Setting>
     <Setting Name="Theme_Name" Type="System.String" Scope="User">
       <Value Profile="(Default)">BaseLight</Value>
-    </Setting>
-    <Setting Name="Window_State" Type="System.Windows.WindowState" Scope="User">
-      <Value Profile="(Default)">Maximized</Value>
-    </Setting>
-    <Setting Name="Window_Top" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="Window_Left" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="WorkingDirectory" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

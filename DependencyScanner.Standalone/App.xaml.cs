@@ -24,6 +24,8 @@ namespace DependencyScanner.Standalone
     {
         private const string AppName = "DependencyScanner";
 
+        private ILifetimeScope GlobalScope;
+
         public static readonly string ProductVersion = GetProductVersion();
         internal static string GetProgramdataPath() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), AppName);
 
@@ -52,9 +54,9 @@ namespace DependencyScanner.Standalone
         {
             SetColors();
 
-            ILifetimeScope scope = BuildScope();
+            GlobalScope = BuildScope();
 
-            var window = scope.Resolve<MainWindow>();
+            var window = GlobalScope.Resolve<MainWindow>();
 
             window.Show();
 
@@ -90,6 +92,8 @@ namespace DependencyScanner.Standalone
         protected override void OnExit(ExitEventArgs e)
         {
             Log.Logger.Information("Closing app");
+
+            GlobalScope.Dispose();
 
             base.OnExit(e);
         }

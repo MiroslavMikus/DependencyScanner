@@ -6,7 +6,7 @@ namespace DependencyScanner.Standalone.Setting
     {
         public override string CollectionKey => "MainViewSettings";
 
-        private double _windowLeft;
+        private double _windowLeft = 0;
 
         public double Window_Left
         {
@@ -17,20 +17,18 @@ namespace DependencyScanner.Standalone.Setting
             }
         }
 
-        private double _windowTop;
+        private double _windowTop = 0;
 
         public double Window_Top
         {
             get => _windowTop;
             set
             {
-                if (Set(ref _windowTop, value))
-                {
-                }
+                Set(ref _windowTop, value);
             }
         }
 
-        private WindowState _windowState;
+        private WindowState _windowState = WindowState.Maximized;
 
         public WindowState Window_State
         {
@@ -41,7 +39,7 @@ namespace DependencyScanner.Standalone.Setting
             }
         }
 
-        private double _windowsWidth;
+        private double _windowsWidth = 1000;
 
         public double WindowWidth
         {
@@ -52,7 +50,7 @@ namespace DependencyScanner.Standalone.Setting
             }
         }
 
-        private double _windowsHeight;
+        private double _windowsHeight = 500;
 
         public double WindowHeight
         {
