@@ -1,6 +1,7 @@
 ﻿using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Standalone.Services;
 using DependencyScanner.Standalone.Setting;
+using DependencyScanner.Standalone.ViewModel;
 using DependencyScanner.ViewModel;
 using GalaSoft.MvvmLight;
 using System;
@@ -10,18 +11,9 @@ using System.Windows;
 
 namespace DependencyScanner.Standalone.Components
 {
-    public class MainViewModel : ViewModelBase, IDisposable
+    public class MainViewModel : BasePlugin<MainViewSettings>, IDisposable
     {
-        private readonly ISettingsManager _settingsManager;
         private const string SettingsCollectionName = "MainViewSettings";
-
-        private ISettings _settings;
-
-        public ISettings Settings
-        {
-            get { return _settings ?? (_settings = _settingsManager.Load<MainViewSettings>(SettingsCollectionName)); ; }
-            set { Set(ref _settings, value); }
-        }
 
         public AppSettings MainSettings { get; } = AppSettings.Instance;
         public ObservableProgress Progress { get; }
@@ -64,9 +56,8 @@ namespace DependencyScanner.Standalone.Components
                              EventSink eventSink,
                              ISettingsManager settingsManager,
                              string logPath)
+            : base(settingsManager, SettingsCollectionName)
         {
-            _settingsManager = settingsManager;
-
             Plugins = plugins.OrderBy(a => a.Order);
 
             Progress = progress;
@@ -77,11 +68,6 @@ namespace DependencyScanner.Standalone.Components
             {
                 Notification = e;
             };
-        }
-
-        public void Dispose()
-        {
-            _settingsManager.Save(_settings, SettingsCollectionName);
         }
     }
 }

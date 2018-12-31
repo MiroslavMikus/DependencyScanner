@@ -186,6 +186,7 @@
     </Compile>
     <Compile Include="ViewModel\AccentColorMenuData.cs" />
     <Compile Include="ViewModel\AppThemeMenuData.cs" />
+    <Compile Include="ViewModel\BasePlugin.cs" />
     <Page Include="Components\Browse\BrowseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
