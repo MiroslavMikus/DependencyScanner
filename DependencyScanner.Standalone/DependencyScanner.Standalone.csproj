@@ -124,6 +124,9 @@
     <Compile Include="Components\AppSettings.cs" />
     <Compile Include="Components\Browse\BrowsePlugin.cs" />
     <Compile Include="Components\Browse\BrowseSettings.cs" />
+    <Compile Include="Components\Browse\BrowseSettingsView.xaml.cs">
+      <DependentUpon>BrowseSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\Browse\BrowseView.xaml.cs">
       <DependentUpon>BrowseView.xaml</DependentUpon>
     </Compile>
@@ -188,6 +191,10 @@
     <Compile Include="ViewModel\AccentColorMenuData.cs" />
     <Compile Include="ViewModel\AppThemeMenuData.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
+    <Page Include="Components\Browse\BrowseSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\Browse\BrowseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

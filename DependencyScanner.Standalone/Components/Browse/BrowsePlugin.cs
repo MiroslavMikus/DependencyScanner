@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace DependencyScanner.Standalone.ViewModel
 {
@@ -16,6 +17,13 @@ namespace DependencyScanner.Standalone.ViewModel
 
         public override string CollectionKey { get; } = "BrowseSettings";
 
+        private Lazy<UserControl> _settingsView;
+
+        public UserControl SettingsView
+        {
+            get => _settingsView.Value;
+        }
+
         public BrowsePlugin(BrowseViewModel browseViewModel)
         {
             Order = 1;
@@ -24,6 +32,11 @@ namespace DependencyScanner.Standalone.ViewModel
             {
                 DataContext = browseViewModel
             };
+
+            _settingsView = new Lazy<UserControl>(() => new BrowseSettingsView
+            {
+                DataContext = Settings
+            });
         }
     }
 }
