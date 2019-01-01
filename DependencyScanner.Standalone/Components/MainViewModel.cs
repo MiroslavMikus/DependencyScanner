@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace DependencyScanner.Standalone.Components
 {
-    public class MainViewModel : BasePlugin<MainViewSettings>, IDisposable
+    public class MainViewModel : SettingsViewModel<MainViewSettings>, IDisposable
     {
         private const string SettingsCollectionName = "MainViewSettings";
 

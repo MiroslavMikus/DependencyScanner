@@ -5,7 +5,7 @@ using System;
 
 namespace DependencyScanner.Standalone.ViewModel
 {
-    public class BasePlugin<T> : ViewModelBase, IDisposable where T : ISettings, new()
+    public class SettingsViewModel<T> : ViewModelBase, IDisposable where T : ISettings, new()
     {
         private T _settings;
         private readonly ISettingsManager _settingsManager;
@@ -17,7 +17,7 @@ namespace DependencyScanner.Standalone.ViewModel
             set { Set(ref _settings, value); }
         }
 
-        public BasePlugin(ISettingsManager settingsManager, string settingsCollectionName)
+        public SettingsViewModel(ISettingsManager settingsManager, string settingsCollectionName)
         {
             _settingsManager = settingsManager;
             _settingsCollectionName = settingsCollectionName;
