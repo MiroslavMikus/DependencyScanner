@@ -75,11 +75,11 @@ namespace DependencyScanner.Core.Model
             });
         }
 
-        internal async Task Init()
+        internal async Task Init(bool executeGitFetch)
         {
             await Task.Run(() =>
             {
-                if (FileScanner.ExecuteGitFetchWithScan)
+                if (executeGitFetch)
                 {
                     var result = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Fetch);
                 }

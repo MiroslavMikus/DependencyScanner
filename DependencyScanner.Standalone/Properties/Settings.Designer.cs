@@ -49,30 +49,6 @@ namespace DependencyScanner.Standalone.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string WorkingDirectory {
-            get {
-                return ((string)(this["WorkingDirectory"]));
-            }
-            set {
-                this["WorkingDirectory"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ExecuteScanOnInit {
-            get {
-                return ((bool)(this["ExecuteScanOnInit"]));
-            }
-            set {
-                this["ExecuteScanOnInit"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool ShowCmdButton {
             get {
@@ -152,41 +128,6 @@ namespace DependencyScanner.Standalone.Properties {
             }
             set {
                 this["PathToNuspec"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ExecuteGitFetchWithScan {
-            get {
-                return ((bool)(this["ExecuteGitFetchWithScan"]));
-            }
-            set {
-                this["ExecuteGitFetchWithScan"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Collections.Specialized.StringCollection WorkingDirectories {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["WorkingDirectories"]));
-            }
-            set {
-                this["WorkingDirectories"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ScanAfterDirectoryChange {
-            get {
-                return ((bool)(this["ScanAfterDirectoryChange"]));
-            }
-            set {
-                this["ScanAfterDirectoryChange"] = value;
             }
         }
         

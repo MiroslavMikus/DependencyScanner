@@ -37,7 +37,7 @@ namespace DependencyScanner.Core.Model
                     Token = default(CancellationToken)
                 };
 
-                var result = await _fileScanner.ScanSolution(Info.DirectoryName, progress);
+                var result = await _fileScanner.ScanSolution(Info.DirectoryName, progress, true); // todo refactor here!
 
                 Projects = result.Projects;
 

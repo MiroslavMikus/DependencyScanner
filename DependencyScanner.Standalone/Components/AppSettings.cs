@@ -5,11 +5,6 @@ namespace DependencyScanner.ViewModel
 {
     public class AppSettings : ViewModelBase
     {
-        static AppSettings()
-        {
-            FileScanner.ExecuteGitFetchWithScan = Standalone.Properties.Settings.Default.ExecuteGitFetchWithScan;
-        }
-
         private static AppSettings _instance;
         public static AppSettings Instance { get => _instance ?? (_instance = new AppSettings()); }
 
@@ -128,37 +123,6 @@ namespace DependencyScanner.ViewModel
                 if (Set(ref _pathToNuspec, value))
                 {
                     Standalone.Properties.Settings.Default.PathToNuspec = value;
-                    Standalone.Properties.Settings.Default.Save();
-                }
-            }
-        }
-
-        private bool _executeGitFetchWitScan = Standalone.Properties.Settings.Default.ExecuteGitFetchWithScan;
-
-        public bool ExecuteGitFetchWitScan
-        {
-            get { return _executeGitFetchWitScan; }
-            set
-            {
-                if (Set(ref _executeGitFetchWitScan, value))
-                {
-                    FileScanner.ExecuteGitFetchWithScan = value;
-                    Standalone.Properties.Settings.Default.ExecuteGitFetchWithScan = value;
-                    Standalone.Properties.Settings.Default.Save();
-                }
-            }
-        }
-
-        private bool _scanAfterDirectoryChange = Standalone.Properties.Settings.Default.ScanAfterDirectoryChange;
-
-        public bool ScanAfterDirectoryChange
-        {
-            get { return _scanAfterDirectoryChange; }
-            set
-            {
-                if (Set(ref _scanAfterDirectoryChange, value))
-                {
-                    Standalone.Properties.Settings.Default.ScanAfterDirectoryChange = value;
                     Standalone.Properties.Settings.Default.Save();
                 }
             }

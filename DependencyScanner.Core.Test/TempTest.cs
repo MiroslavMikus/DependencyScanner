@@ -16,13 +16,13 @@ namespace DependencyScanner.Core.Test
         [TestMethod]
         public void ScanSolution()
         {
-            var result = Scanner.ScanSolution(@"F:\Projects\_GitHub\Exercise.DynamicProxy", Progress);
+            var result = Scanner.ScanSolution(@"F:\Projects\_GitHub\Exercise.DynamicProxy", Progress, false);
         }
 
         [TestMethod]
         public async Task CheckConsolidateSolution()
         {
-            var solution = await Scanner.ScanSolution(@"F:\Projects\_GitHub\Exercise.DynamicProxy", Progress);
+            var solution = await Scanner.ScanSolution(@"F:\Projects\_GitHub\Exercise.DynamicProxy", Progress, false);
 
             var comparer = new ProjectComparer();
 

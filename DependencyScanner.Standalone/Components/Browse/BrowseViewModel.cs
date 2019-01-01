@@ -1,6 +1,7 @@
 ﻿using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
 using DependencyScanner.Standalone.Components;
+using DependencyScanner.Standalone.Components.Browse;
 using DependencyScanner.Standalone.Events;
 using DependencyScanner.Standalone.Services;
 using GalaSoft.MvvmLight.Command;
@@ -22,6 +23,8 @@ namespace DependencyScanner.ViewModel
         private readonly IScanner _scanner;
         private readonly IMessenger _messenger;
         private readonly Serilog.ILogger _logger;
+        private readonly BrowseSettings _settings;
+
         public ObservableProgress _globalProgress { get; }
 
         private CancellationTokenSource _cancellationTokenSource;
@@ -52,11 +55,11 @@ namespace DependencyScanner.ViewModel
             {
                 if (Set(ref _workingDirectory, value))
                 {
-                    Standalone.Properties.Settings.Default.WorkingDirectory = value;
+                    _settings.WorkingDirectory = value;
 
                     Standalone.Properties.Settings.Default.Save();
 
-                    if (AppSettings.Instance.ScanAfterDirectoryChange &&
+                    if (_settings.ScanAfterDirectoryChange &&
                         !string.IsNullOrEmpty(value))
                     {
                         ScanCommand.Execute(null);
@@ -65,12 +68,17 @@ namespace DependencyScanner.ViewModel
             }
         }
 
-        public BrowseViewModel(IScanner scanner, IMessenger messenger, Serilog.ILogger logger, ObservableProgress progress)
+        public BrowseViewModel(IScanner scanner,
+                               IMessenger messenger,
+                               Serilog.ILogger logger,
+                               ObservableProgress progress,
+                               BrowseSettings settings)
         {
             _scanner = scanner;
             _messenger = messenger;
             _logger = logger;
             _globalProgress = progress;
+            _settings = settings;
 
             PickWorkingDirectoryCommand = new RelayCommand(() =>
             {
@@ -142,9 +150,9 @@ namespace DependencyScanner.ViewModel
                 WorkingDirectories.Remove(a);
             });
 
-            if (Standalone.Properties.Settings.Default.WorkingDirectories != null)
+            if (_settings.WorkingDirectories != null)
             {
-                WorkingDirectories = new ObservableCollection<string>(Standalone.Properties.Settings.Default.WorkingDirectories.OfType<string>());
+                WorkingDirectories = new ObservableCollection<string>(_settings.WorkingDirectories.OfType<string>());
             }
             else
             {
@@ -153,21 +161,12 @@ namespace DependencyScanner.ViewModel
 
             WorkingDirectories.CollectionChanged += (s, e) =>
             {
-                var collection = new StringCollection();
-
-                foreach (var item in WorkingDirectories)
-                {
-                    collection.Add(item);
-                }
-
-                Standalone.Properties.Settings.Default.WorkingDirectories = collection;
-
-                Standalone.Properties.Settings.Default.Save();
+                _settings.WorkingDirectories = WorkingDirectories.ToList();
             };
 
-            if (!string.IsNullOrEmpty(Standalone.Properties.Settings.Default.WorkingDirectory))
+            if (!string.IsNullOrEmpty(_settings.WorkingDirectory))
             {
-                WorkingDirectory = Standalone.Properties.Settings.Default.WorkingDirectory;
+                WorkingDirectory = _settings.WorkingDirectory;
             }
         }
 
@@ -182,7 +181,7 @@ namespace DependencyScanner.ViewModel
 
                 _globalProgress.RegisterProgress(progress);
 
-                var scanResult = await _scanner.ScanSolutions(WorkingDirectory, _globalProgress);
+                var scanResult = await _scanner.ScanSolutions(WorkingDirectory, _globalProgress, _settings.ExecuteGitFetchWithScan);
 
                 PrimaryCollectoion = new ObservableCollection<SolutionResult>(scanResult);
 

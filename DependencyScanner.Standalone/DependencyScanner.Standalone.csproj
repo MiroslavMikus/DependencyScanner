@@ -123,11 +123,12 @@
     <Compile Include="ChocoUpdater.cs" />
     <Compile Include="Components\AppSettings.cs" />
     <Compile Include="Components\Browse\BrowsePlugin.cs" />
+    <Compile Include="Components\Browse\BrowseSettings.cs" />
     <Compile Include="Components\Browse\BrowseView.xaml.cs">
       <DependentUpon>BrowseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\Browse\BrowseViewModel.cs" />
-    <Compile Include="Components\Browse\SomeTest.cs" />
+    <Compile Include="ViewModel\PluginBase.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectPlugin.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectsViewModel.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectView.xaml.cs">

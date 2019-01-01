@@ -13,8 +13,6 @@ namespace DependencyScanner.Core
 {
     public class FileScanner : IScanner
     {
-        public static bool ExecuteGitFetchWithScan { get; set; } = false;
-
         private readonly GitEngine _gitEngine;
 
         private const string PackagePattern = "packages.config";
@@ -38,7 +36,7 @@ namespace DependencyScanner.Core
 
         private static string[] GetGitFolder(string dir) => Directory.GetDirectories(dir, GitPattern, SearchOption.TopDirectoryOnly);
 
-        public async Task<SolutionResult> ScanSolution(string rootDirectory, ICancelableProgress<ProgressMessage> progress)
+        public async Task<SolutionResult> ScanSolution(string rootDirectory, ICancelableProgress<ProgressMessage> progress, bool executeGitFetch)
         {
             var solutions = GetSolutions(rootDirectory);
 
@@ -51,10 +49,10 @@ namespace DependencyScanner.Core
                 throw ex;
             }
 
-            return await ExecuteSolutionScan(solutions.First(), progress);
+            return await ExecuteSolutionScan(solutions.First(), progress, executeGitFetch);
         }
 
-        private async Task<SolutionResult> ExecuteSolutionScan(string solutionPath, ICancelableProgress<ProgressMessage> progress)
+        private async Task<SolutionResult> ExecuteSolutionScan(string solutionPath, ICancelableProgress<ProgressMessage> progress, bool executeGitFetch)
         {
             var result = new SolutionResult(new FileInfo(solutionPath), this);
 
@@ -101,13 +99,13 @@ namespace DependencyScanner.Core
             {
                 result.GitInformation = new GitInfo(gitPath, _gitEngine);
 
-                await result.GitInformation.Init();
+                await result.GitInformation.Init(executeGitFetch);
             }
 
             return result;
         }
 
-        public async Task<IEnumerable<SolutionResult>> ScanSolutions(string rootDirectory, ICancelableProgress<ProgressMessage> progress)
+        public async Task<IEnumerable<SolutionResult>> ScanSolutions(string rootDirectory, ICancelableProgress<ProgressMessage> progress, bool executeGitFetch)
         {
             progress.Report(new ProgressMessage { Value = 0D, Message = "Searching for solutions" });
 
@@ -130,7 +128,7 @@ namespace DependencyScanner.Core
                     throw new OperationCanceledException("Operation was canceled by user");
                 }
 
-                SolutionsTask.Add(ExecuteSolutionScan(solution, progress));
+                SolutionsTask.Add(ExecuteSolutionScan(solution, progress, executeGitFetch));
             }
 
             progress.Report(new ProgressMessage { Value = 0, Message = "Finishing scan" });

@@ -21,6 +21,6 @@ namespace DependencyScanner.Core.Interfaces
 
         void SetSettings(ISettings settings);
 
-        //Page Settings { get; }
+        //UserControl SettingsView { get; }
     }
 }
