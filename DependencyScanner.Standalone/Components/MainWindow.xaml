@@ -65,33 +65,35 @@
             </Controls:Flyout>
 
             <Controls:Flyout x:Name="settingsFlyout"
-                             Width="500"
+                             Width="600"
                              Header="Settings"
                              Position="Right"
                              IsModal="True"
                              AnimateOpacity="True">
-                <StackPanel>
-                    <StackPanel.Resources>
-                        <Style TargetType="{x:Type Controls:ToggleSwitch}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}">
-                            <Setter Property="Margin" Value="0 10 0 0" />
-                        </Style>
-                        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-                            <Setter Property="FontSize" Value="18" />
-                            <Setter Property="Margin" Value="5 20 0 0" />
-                        </Style>
-                    </StackPanel.Resources>
-                    <ItemsControl ItemsSource="{Binding SettingsList}" Margin="20">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type local:SettingsViewHelper}">
-                                <StackPanel Orientation="Vertical">
-                                    <Label Content="{Binding PluginName}" />
-                                    <ContentPresenter Content="{Binding View}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <components:SettingsView DataContext="{Binding}" />
-                </StackPanel>
+                <ScrollViewer>
+                    <StackPanel>
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type Controls:ToggleSwitch}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}">
+                                <Setter Property="Margin" Value="0 10 0 0" />
+                            </Style>
+                            <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                                <Setter Property="FontSize" Value="18" />
+                                <Setter Property="Margin" Value="5 20 0 0" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <components:SettingsView DataContext="{Binding}" />
+                        <ItemsControl ItemsSource="{Binding SettingsList}" Margin="20 0 20 20">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type local:SettingsViewHelper}">
+                                    <StackPanel Orientation="Vertical">
+                                        <Label Content="{Binding PluginName}" />
+                                        <ContentPresenter Content="{Binding View}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>

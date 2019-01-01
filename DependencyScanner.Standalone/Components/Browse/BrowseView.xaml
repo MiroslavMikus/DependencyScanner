@@ -10,6 +10,7 @@
              xmlns:templates="clr-namespace:DependencyScanner.Standalone.Templates"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
+             x:Name="BrowseTab"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <converter:NullToVisibilityConverter x:Key="HideIfNull" Positive="Collapsed" Negative="Visible" />
@@ -29,8 +30,8 @@
                 <ControlTemplate x:Key="ExtendedTemplate">
                     <StackPanel Orientation="Horizontal">
                         <Button ToolTip="Remove" Command="{Binding ElementName=BrowseTab, Path=DataContext.RemoveWorkingDirectoryCommand}"
-                                            CommandParameter="{Binding}"
-                                            Margin="0 0 10 0">
+                                CommandParameter="{Binding}"
+                                Margin="0 0 10 0">
                             <iconPacks:PackIconFontAwesome Kind="TrashAltRegular" />
                         </Button>
                         <TextBlock Text="{Binding }" VerticalAlignment="Center" />
