@@ -8,8 +8,8 @@
              xmlns:root="clr-namespace:DependencyScanner.Standalone"
              xmlns:command="clr-namespace:DependencyScanner.Standalone.Services"
              mc:Ignorable="d"
-    Background="White"
              d:DesignHeight="1000" d:DesignWidth="800">
+    <!--Background="White"-->
     <ScrollViewer>
         <DockPanel LastChildFill="True" DataContext="{Binding MainSettings}">
             <DockPanel.Resources>
@@ -55,15 +55,7 @@
                                   ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=AccentColors, Mode=OneWay}" />
             </Menu>
             <StackPanel Margin="20">
-                <StackPanel.Resources>
-                    <Style TargetType="{x:Type Controls:ToggleSwitch}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}">
-                        <Setter Property="Margin" Value="0 10 0 0" />
-                    </Style>
-                    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
-                        <Setter Property="FontSize" Value="18" />
-                        <Setter Property="Margin" Value="5 20 0 0" />
-                    </Style>
-                </StackPanel.Resources>
+
                 <Label Content="Feedback: " Margin="5 0 0 0" />
                 <TextBlock Text="Feel free to add any feedback :)" />
                 <Button Content="Feedback on github"

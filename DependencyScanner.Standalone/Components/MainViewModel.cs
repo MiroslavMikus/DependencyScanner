@@ -22,6 +22,14 @@ namespace DependencyScanner.Standalone.Components
 
         private string _notification;
 
+        private IEnumerable<SettingsViewHelper> _settingsList;
+
+        public IEnumerable<SettingsViewHelper> SettingsList
+        {
+            get { return _settingsList; }
+            set { Set(ref _settingsList, value); }
+        }
+
         private IEnumerable<IPlugin> _plugins;
 
         public IEnumerable<IPlugin> Plugins
@@ -60,6 +68,8 @@ namespace DependencyScanner.Standalone.Components
         {
             Plugins = plugins.OrderBy(a => a.Order);
 
+            SettingsList = ReadSettings(Plugins);
+
             Progress = progress;
 
             LogPath = logPath;
@@ -68,6 +78,11 @@ namespace DependencyScanner.Standalone.Components
             {
                 Notification = e;
             };
+        }
+
+        private IEnumerable<SettingsViewHelper> ReadSettings(IEnumerable<IPlugin> plugins)
+        {
+            return plugins.OfType<IPlugin<ISettings>>().Select(a => new SettingsViewHelper(a.Title, a.SettingsView));
         }
     }
 }

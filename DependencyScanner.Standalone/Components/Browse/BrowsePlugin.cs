@@ -18,25 +18,28 @@ namespace DependencyScanner.Standalone.ViewModel
         public override string CollectionKey { get; } = "BrowseSettings";
 
         private Lazy<UserControl> _settingsView;
+        private readonly Func<BrowseSettings, BrowseViewModel> _browseViewModelCtor;
 
-        public UserControl SettingsView
+        public override UserControl SettingsView
         {
             get => _settingsView.Value;
         }
 
-        public BrowsePlugin(BrowseViewModel browseViewModel)
+        public override UserControl ContentView => new BrowseView
+        {
+            DataContext = _browseViewModelCtor(Settings)
+        };
+
+        public BrowsePlugin(Func<BrowseSettings, BrowseViewModel> browseViewModelCtor)
         {
             Order = 1;
-
-            ContentView = new BrowseView
-            {
-                DataContext = browseViewModel
-            };
 
             _settingsView = new Lazy<UserControl>(() => new BrowseSettingsView
             {
                 DataContext = Settings
             });
+
+            _browseViewModelCtor = browseViewModelCtor;
         }
     }
 }

@@ -5,13 +5,9 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:converter="clr-namespace:DependencyScanner.Standalone.Converters"
         xmlns:components="clr-namespace:DependencyScanner.Standalone.Components"
-        xmlns:properties="clr-namespace:DependencyScanner.Standalone.Properties"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DependencyScanner.Standalone"
-        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:templates="clr-namespace:DependencyScanner.Standalone.Templates"
+        xmlns:local="clr-namespace:DependencyScanner.Standalone.Components"
         xmlns:command="clr-namespace:DependencyScanner.Standalone.Services"
-        xmlns:model="clr-namespace:DependencyScanner.Core.Model;assembly=DependencyScanner.Core"
         mc:Ignorable="d"
         xmlns:plugin="clr-namespace:DependencyScanner.Core.Interfaces;assembly=DependencyScanner.Core"
         Title="Dependency scanner"
@@ -22,8 +18,8 @@
         Left="{Binding Settings.Window_Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
         MinWidth="500"
         x:Name="TheMainWindow"
+    d:DataContext="{d:DesignInstance local:MainViewModel , IsDesignTimeCreatable=False}"
         RightWindowCommandsOverlayBehavior="Never">
-    <!--d:DataContext="{d:DesignInstance viewModel:MainViewModel , IsDesignTimeCreatable=True}"-->
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button Content="Settings" Click="Settings_Click" />
@@ -74,7 +70,28 @@
                              Position="Right"
                              IsModal="True"
                              AnimateOpacity="True">
-                <components:SettingsView DataContext="{Binding}" />
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Controls:ToggleSwitch}" BasedOn="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}">
+                            <Setter Property="Margin" Value="0 10 0 0" />
+                        </Style>
+                        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                            <Setter Property="FontSize" Value="18" />
+                            <Setter Property="Margin" Value="5 20 0 0" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <ItemsControl ItemsSource="{Binding SettingsList}" Margin="20">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type local:SettingsViewHelper}">
+                                <StackPanel Orientation="Vertical">
+                                    <Label Content="{Binding PluginName}" />
+                                    <ContentPresenter Content="{Binding View}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <components:SettingsView DataContext="{Binding}" />
+                </StackPanel>
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>

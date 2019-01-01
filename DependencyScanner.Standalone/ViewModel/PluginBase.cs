@@ -16,6 +16,7 @@ namespace DependencyScanner.Standalone.Components.Browse
         public abstract string Description { get; }
 
         public virtual UserControl ContentView { get; protected set; }
+        public virtual UserControl SettingsView { get; protected set; }
 
         public virtual int Order { get; protected set; }
 
