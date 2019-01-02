@@ -49,42 +49,6 @@ namespace DependencyScanner.Standalone.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ShowCmdButton {
-            get {
-                return ((bool)(this["ShowCmdButton"]));
-            }
-            set {
-                this["ShowCmdButton"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ShowFolderButton {
-            get {
-                return ((bool)(this["ShowFolderButton"]));
-            }
-            set {
-                this["ShowFolderButton"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ShowOpenButton {
-            get {
-                return ((bool)(this["ShowOpenButton"]));
-            }
-            set {
-                this["ShowOpenButton"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string PreferedConsoleTool {
             get {
@@ -109,18 +73,6 @@ namespace DependencyScanner.Standalone.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ShowOpenUrlButton {
-            get {
-                return ((bool)(this["ShowOpenUrlButton"]));
-            }
-            set {
-                this["ShowOpenUrlButton"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string PathToNuspec {
             get {
@@ -140,18 +92,6 @@ namespace DependencyScanner.Standalone.Properties {
             }
             set {
                 this["PreferedTextEditor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ShowOpenFileButton {
-            get {
-                return ((bool)(this["ShowOpenFileButton"]));
-            }
-            set {
-                this["ShowOpenFileButton"] = value;
             }
         }
         

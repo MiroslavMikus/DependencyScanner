@@ -8,53 +8,6 @@ namespace DependencyScanner.ViewModel
         private static AppSettings _instance;
         public static AppSettings Instance { get => _instance ?? (_instance = new AppSettings()); }
 
-        private bool _showCmdButton = Standalone.Properties.Settings.Default.ShowCmdButton;
-
-        public bool ShowCmdButton
-        {
-            get { return _showCmdButton; }
-            set
-            {
-                if (Set(ref _showCmdButton, value))
-                {
-                    Standalone.Properties.Settings.Default.ShowCmdButton = value;
-                    Standalone.Properties.Settings.Default.Save();
-                }
-            }
-        }
-
-        private bool _showOpenFileButton = Standalone.Properties.Settings.Default.ShowOpenFileButton;
-
-        public bool ShowOpenFileButton
-        {
-            get { return _showOpenFileButton; }
-            set
-            {
-                if (Set(ref _showOpenFileButton, value))
-                {
-                    Standalone.Properties.Settings.Default.ShowOpenFileButton = value;
-                    Standalone.Properties.Settings.Default.Save();
-                }
-            }
-        }
-
-        private bool _showFolderButton = Standalone.Properties.Settings.Default.ShowFolderButton;
-
-        public bool ShowFolderButton
-        {
-            get { return _showFolderButton; }
-            set
-            {
-                if (Set(ref _showFolderButton, value))
-                {
-                    Standalone.Properties.Settings.Default.ShowFolderButton = value;
-                    Standalone.Properties.Settings.Default.Save();
-                }
-            }
-        }
-
-        private bool _showOpenButton = Standalone.Properties.Settings.Default.ShowOpenButton;
-
         public bool ShowOpenButton
         {
             get { return _showOpenButton; }
@@ -93,21 +46,6 @@ namespace DependencyScanner.ViewModel
                 if (Set(ref _preferencedWebBrowser, value))
                 {
                     Standalone.Properties.Settings.Default.PreferencedWebBrowser = value;
-                    Standalone.Properties.Settings.Default.Save();
-                }
-            }
-        }
-
-        private bool _showOpenUrlButton = Standalone.Properties.Settings.Default.ShowOpenUrlButton;
-
-        public bool ShowOpenUrlButton
-        {
-            get { return _showOpenUrlButton; }
-            set
-            {
-                if (Set(ref _showOpenUrlButton, value))
-                {
-                    Standalone.Properties.Settings.Default.ShowOpenUrlButton = value;
                     Standalone.Properties.Settings.Default.Save();
                 }
             }
