@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace DependencyScanner.Standalone.Components
 {
-    public class MainViewModel : SettingsViewModel<MainViewSettings>, IDisposable
+    public class MainViewModel : SettingsViewModel<MainSettings>, IDisposable
     {
         private const string SettingsCollectionName = "MainViewSettings";
 
@@ -68,7 +68,13 @@ namespace DependencyScanner.Standalone.Components
         {
             Plugins = plugins.OrderBy(a => a.Order);
 
-            SettingsList = ReadSettings(Plugins);
+            SettingsList = new List<SettingsViewHelper>()
+            {
+                new SettingsViewHelper("Preferences", new MainSettingsView
+                {
+                    DataContext = Settings
+                })
+            }.Concat(ReadSettings(Plugins));
 
             Progress = progress;
 

@@ -8,19 +8,6 @@ namespace DependencyScanner.ViewModel
         private static AppSettings _instance;
         public static AppSettings Instance { get => _instance ?? (_instance = new AppSettings()); }
 
-        public bool ShowOpenButton
-        {
-            get { return _showOpenButton; }
-            set
-            {
-                if (Set(ref _showOpenButton, value))
-                {
-                    Standalone.Properties.Settings.Default.ShowOpenButton = value;
-                    Standalone.Properties.Settings.Default.Save();
-                }
-            }
-        }
-
         private string _preferedConsoleTool = Standalone.Properties.Settings.Default.PreferedConsoleTool;
 
         public string PreferedConsoleTool

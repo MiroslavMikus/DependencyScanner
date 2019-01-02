@@ -131,6 +131,9 @@
       <DependentUpon>BrowseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\Browse\BrowseViewModel.cs" />
+    <Compile Include="Components\MainSettingsView.xaml.cs">
+      <DependentUpon>MainSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\SettingsViewHelper.cs" />
     <Compile Include="ViewModel\PluginBase.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectPlugin.cs" />
@@ -205,6 +208,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Components\ConsolidateSolution\ConsolidateSolutionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\MainSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

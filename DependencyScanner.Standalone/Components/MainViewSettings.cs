@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace DependencyScanner.Standalone.Components
 {
-    public class MainViewSettings : ObservableSettingsBase
+    public class MainSettings : ObservableSettingsBase
     {
         private double _windowLeft = 0;
 
