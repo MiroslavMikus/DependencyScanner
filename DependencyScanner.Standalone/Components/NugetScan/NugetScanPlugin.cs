@@ -1,4 +1,5 @@
 ﻿using DependencyScanner.Core.Interfaces;
+using DependencyScanner.Standalone.Components.Browse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,21 +9,26 @@ using System.Windows.Controls;
 
 namespace DependencyScanner.Standalone.Components.NugetScan
 {
-    public class NugetScanPlugin : IPlugin
+    public class NugetScanPlugin : PluginBase<NugetScanSettings>
     {
-        public string Title => "Nuget scan";
+        public override string CollectionKey => "NugetScanSettings";
 
-        public string Description => "Scan an vizualize nuget packages dependencies";
+        public override string Title => "Nuget scan";
 
-        public UserControl ContentView { get; }
+        public override string Description => "Scan an vizualize nuget packages dependencies";
 
-        public int Order => 5;
-
-        public NugetScanPlugin(NugetScanViewModel viewModel)
+        public NugetScanPlugin(Func<NugetScanSettings, NugetScanViewModel> viewModelCtor)
         {
+            Order = 5;
+
             ContentView = new NugetScanView
             {
-                DataContext = viewModel
+                DataContext = viewModelCtor(Settings)
+            };
+
+            SettingsView = new NugetScanSettingsView
+            {
+                DataContext = Settings
             };
         }
     }

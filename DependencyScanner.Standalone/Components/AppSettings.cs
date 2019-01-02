@@ -67,20 +67,5 @@ namespace DependencyScanner.ViewModel
                 }
             }
         }
-
-        private bool _autoOpenNugetScan = Standalone.Properties.Settings.Default.AutoOpenNugetScan;
-
-        public bool AutoOpenNugetScan
-        {
-            get { return _autoOpenNugetScan; }
-            set
-            {
-                if (Set(ref _autoOpenNugetScan, value))
-                {
-                    Standalone.Properties.Settings.Default.AutoOpenNugetScan = value;
-                    Standalone.Properties.Settings.Default.Save();
-                }
-            }
-        }
     }
 }

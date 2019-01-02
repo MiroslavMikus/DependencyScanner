@@ -134,6 +134,10 @@
     <Compile Include="Components\MainSettingsView.xaml.cs">
       <DependentUpon>MainSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\NugetScan\NugetScanSettings.cs" />
+    <Compile Include="Components\NugetScan\NugetScanSettingsView.xaml.cs">
+      <DependentUpon>NugetScanSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\SettingsViewHelper.cs" />
     <Compile Include="ViewModel\PluginBase.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectPlugin.cs" />
@@ -212,6 +216,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Components\MainSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\NugetScan\NugetScanSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,5 +1,7 @@
 ﻿using DependencyScanner.Core.Model;
 using DependencyScanner.Core.NugetReference;
+using DependencyScanner.Standalone.Components.NugetScan;
+using DependencyScanner.Standalone.Services;
 using DependencyScanner.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -24,7 +26,7 @@ namespace DependencyScanner.Standalone.Components
         private ObservableCollection<StorageKey> _reports;
         public ObservableCollection<StorageKey> Reports { get => _reports; set => Set(ref _reports, value); }
 
-        public NugetScanViewModel(NugetScanFacade nugetScan, IMessenger messenger)
+        public NugetScanViewModel(NugetScanFacade nugetScan, NugetScanSettings settings, IMessenger messenger)
         {
             _nugetScan = nugetScan;
             _messenger = messenger;
@@ -37,11 +39,10 @@ namespace DependencyScanner.Standalone.Components
                 {
                     UpdateReports();
 
-                    // todo fix settings here
-                    //if (Properties.Settings.Default.AutoOpenNugetScan)
-                    //{
-                    //    CommandManager.OpenLinkCommand.Execute(result.Path);
-                    //}
+                    if (settings.AutoOpenNugetScan)
+                    {
+                        CommandManager.OpenLinkCommand.Execute(result.Path);
+                    }
                 }
             });
 
