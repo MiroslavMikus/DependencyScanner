@@ -25,6 +25,7 @@ namespace DependencyScanner.Standalone
 
         protected override void Load(ContainerBuilder builder)
         {
+            // todo remove this two lines >>
             LiteDatabase database = new LiteDatabase(GetProgramdataPath("Storage.db"));
 
             ISettingsManager settingsManager = new SettingsManager(database);

@@ -17,13 +17,7 @@ namespace DependencyScanner.Standalone.ViewModel
 
         public override string CollectionKey { get; } = "BrowseSettings";
 
-        private Lazy<UserControl> _settingsView;
         private readonly Func<BrowseSettings, BrowseViewModel> _browseViewModelCtor;
-
-        public override UserControl SettingsView
-        {
-            get => _settingsView.Value;
-        }
 
         public override UserControl ContentView => new BrowseView
         {
@@ -34,12 +28,15 @@ namespace DependencyScanner.Standalone.ViewModel
         {
             Order = 1;
 
-            _settingsView = new Lazy<UserControl>(() => new BrowseSettingsView
+            _browseViewModelCtor = browseViewModelCtor;
+        }
+
+        protected override void OnSetSettings()
+        {
+            SettingsView = new BrowseSettingsView
             {
                 DataContext = Settings
-            });
-
-            _browseViewModelCtor = browseViewModelCtor;
+            };
         }
     }
 }

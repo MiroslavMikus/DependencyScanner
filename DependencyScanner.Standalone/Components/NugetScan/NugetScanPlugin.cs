@@ -11,6 +11,8 @@ namespace DependencyScanner.Standalone.Components.NugetScan
 {
     public class NugetScanPlugin : PluginBase<NugetScanSettings>
     {
+        private readonly Func<NugetScanSettings, NugetScanViewModel> _viewModelCtor;
+
         public override string CollectionKey => "NugetScanSettings";
 
         public override string Title => "Nuget scan";
@@ -21,14 +23,19 @@ namespace DependencyScanner.Standalone.Components.NugetScan
         {
             Order = 5;
 
-            ContentView = new NugetScanView
-            {
-                DataContext = viewModelCtor(Settings)
-            };
+            _viewModelCtor = viewModelCtor;
+        }
 
+        protected override void OnSetSettings()
+        {
             SettingsView = new NugetScanSettingsView
             {
                 DataContext = Settings
+            };
+
+            ContentView = new NugetScanView
+            {
+                DataContext = _viewModelCtor(Settings)
             };
         }
     }

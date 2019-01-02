@@ -20,9 +20,15 @@ namespace DependencyScanner.Standalone.Components.Browse
 
         public virtual int Order { get; protected set; }
 
-        public virtual void SetSettings(ISettings settings)
+        public void SetSettings(ISettings settings)
         {
             _settings = settings;
+
+            OnSetSettings();
+        }
+
+        protected virtual void OnSetSettings()
+        {
         }
     }
 }
