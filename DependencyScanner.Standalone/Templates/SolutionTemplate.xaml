@@ -94,7 +94,7 @@
             <!--Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.RunCommand}"-->
             <Button Command="{x:Static command:CommandManager.RunCommand}"
                     CommandParameter="{Binding Info.FullName}"
-                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.MainSettings.ShowOpenButton, Converter={StaticResource TrueToVisible}}">
+                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.Settings.ShowOpenButton, Converter={StaticResource TrueToVisible}}">
                 <Button.ToolTip>
                     <StackPanel>
                         <Label Content="Open solution" FontWeight="Bold" />
@@ -105,7 +105,7 @@
             </Button>
             <Button Command="{x:Static command:CommandManager.RunCommand}"
                     CommandParameter="{Binding Info.DirectoryName}"
-                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.MainSettings.ShowFolderButton, Converter={StaticResource TrueToVisible}}">
+                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.Settings.ShowFolderButton, Converter={StaticResource TrueToVisible}}">
                 <Button.ToolTip>
                     <StackPanel>
                         <Label Content="Open Folder" FontWeight="Bold" />
@@ -116,7 +116,7 @@
             </Button>
             <Button Command="{x:Static command:CommandManager.OpenCmdCommand}"
                     CommandParameter="{Binding Info.DirectoryName}"
-                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.MainSettings.ShowCmdButton, Converter={StaticResource TrueToVisible}}">
+                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.Settings.ShowCmdButton, Converter={StaticResource TrueToVisible}}">
                 <Button.ToolTip>
                     <StackPanel>
                         <Label Content="Open CMD" FontWeight="Bold" />
@@ -127,7 +127,7 @@
             </Button>
             <Button Command="{x:Static command:CommandManager.OpenTextFileCommand}"
                     CommandParameter="{Binding Info.FullName}"
-                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.MainSettings.ShowOpenFileButton, Converter={StaticResource TrueToVisible}}">
+                    Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.Settings.ShowOpenFileButton, Converter={StaticResource TrueToVisible}}">
                 <Button.ToolTip>
                     <StackPanel>
                         <Label Content="Open solution as text file" FontWeight="Bold" />
@@ -140,7 +140,7 @@
                     CommandParameter="{Binding GitInformation.RemoteUrl}">
                 <Button.Visibility>
                     <MultiBinding Converter="{StaticResource BoolAnd}">
-                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Window}}" Path="DataContext.MainSettings.ShowOpenUrlButton" />
+                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type Window}}" Path="DataContext.Settings.ShowOpenUrlButton" />
                         <Binding Converter="{StaticResource NullToFalse}" Path="GitInformation" />
                     </MultiBinding>
                 </Button.Visibility>
