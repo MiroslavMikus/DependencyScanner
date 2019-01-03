@@ -139,7 +139,6 @@
       <DependentUpon>NugetScanSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\SettingsViewHelper.cs" />
-    <Compile Include="Setting\SettingsLifetimetimeHandler.cs" />
     <Compile Include="ViewModel\PluginBase.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectPlugin.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectsViewModel.cs" />
@@ -199,7 +198,6 @@
     </Compile>
     <Compile Include="ViewModel\AccentColorMenuData.cs" />
     <Compile Include="ViewModel\AppThemeMenuData.cs" />
-    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Page Include="Components\Browse\BrowseSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
