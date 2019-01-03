@@ -11,7 +11,7 @@ namespace DependencyScanner.Standalone.Components
     {
         private ObservableCollection<TPrimary> _primaryCollection;
 
-        public ObservableCollection<TPrimary> PrimaryCollectoion
+        public ObservableCollection<TPrimary> PrimaryCollection
         {
             get
             {

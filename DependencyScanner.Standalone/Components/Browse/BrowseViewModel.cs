@@ -183,11 +183,11 @@ namespace DependencyScanner.ViewModel
 
                 var scanResult = await _scanner.ScanSolutions(WorkingDirectory, _globalProgress, _settings.ExecuteGitFetchWithScan);
 
-                PrimaryCollectoion = new ObservableCollection<SolutionResult>(scanResult);
+                PrimaryCollection = new ObservableCollection<SolutionResult>(scanResult);
 
                 DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
-                    _messenger.Send<IEnumerable<SolutionResult>>(PrimaryCollectoion);
+                    _messenger.Send<IEnumerable<SolutionResult>>(PrimaryCollection);
                 });
             });
         }

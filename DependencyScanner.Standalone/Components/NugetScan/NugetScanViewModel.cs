@@ -54,20 +54,22 @@ namespace DependencyScanner.Standalone.Components
                 }
             });
 
-            _messenger.Register<IEnumerable<SolutionResult>>(this, a =>
+            _messenger.Register<IEnumerable<SolutionResult>>(this, UpdatePrimaryCollection);
+        }
+
+        private void UpdatePrimaryCollection(IEnumerable<SolutionResult> input)
+        {
+            PrimaryCollection = new ObservableCollection<SolutionResult>(input);
+
+            PrimarySelectionUpdated += (s, e) =>
             {
-                PrimaryCollectoion = new ObservableCollection<SolutionResult>(a);
+                Reports?.Clear();
 
-                PrimarySelectionUpdated += (s, e) =>
+                SecondaryFilterResult.CurrentChanged += (ss, ee) =>
                 {
-                    Reports?.Clear();
-
-                    SecondaryFilterResult.CurrentChanged += (ss, ee) =>
-                    {
-                        UpdateReports();
-                    };
+                    UpdateReports();
                 };
-            });
+            };
         }
 
         private void UpdateReports()
