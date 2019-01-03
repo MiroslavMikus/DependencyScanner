@@ -22,9 +22,9 @@ namespace DependencyScanner.Standalone.Components
 
         private string _notification;
 
-        private IEnumerable<SettingsViewHelper> _settingsList;
+        private IEnumerable<SettingsViewModel> _settingsList;
 
-        public IEnumerable<SettingsViewHelper> SettingsList
+        public IEnumerable<SettingsViewModel> SettingsList
         {
             get { return _settingsList; }
             set { Set(ref _settingsList, value); }
@@ -69,9 +69,9 @@ namespace DependencyScanner.Standalone.Components
 
             Settings = settings;
 
-            SettingsList = new List<SettingsViewHelper>()
+            SettingsList = new List<SettingsViewModel>()
             {
-                new SettingsViewHelper("View settings", new MainSettingsView
+                new SettingsViewModel("View settings", new MainSettingsView
                 {
                     DataContext = settings
                 })
@@ -87,9 +87,9 @@ namespace DependencyScanner.Standalone.Components
             };
         }
 
-        private IEnumerable<SettingsViewHelper> ReadSettings(IEnumerable<IPlugin> plugins)
+        private IEnumerable<SettingsViewModel> ReadSettings(IEnumerable<IPlugin> plugins)
         {
-            return plugins.OfType<IPlugin<ISettings>>().Select(a => new SettingsViewHelper(a.Title, a.SettingsView));
+            return plugins.OfType<IPlugin<ISettings>>().Select(a => new SettingsViewModel(a.Title, a.SettingsView));
         }
     }
 }

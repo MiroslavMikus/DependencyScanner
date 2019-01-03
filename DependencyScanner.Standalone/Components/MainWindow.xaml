@@ -85,7 +85,7 @@
                         <components:SettingsView DataContext="{Binding}" />
                         <ItemsControl ItemsSource="{Binding SettingsList}" Margin="20 0 20 20">
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate DataType="{x:Type local:SettingsViewHelper}">
+                                <DataTemplate DataType="{x:Type local:SettingsViewModel}">
                                     <StackPanel Orientation="Vertical">
                                         <Label Content="{Binding PluginName}" />
                                         <ContentPresenter Content="{Binding View}" />

@@ -13,7 +13,7 @@ namespace DependencyScanner.Standalone.Components.NugetScan
     {
         public override string Title => "Nuget scan";
 
-        public override string Description => "Scan an vizualize nuget packages dependencies";
+        public override string Description => "Scan and vizualize nuget packages dependencies";
 
         public NugetScanPlugin(NugetScanViewModel viewModel, NugetScanSettings settings)
             : base(settings)

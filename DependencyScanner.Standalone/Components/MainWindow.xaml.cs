@@ -16,7 +16,7 @@ using System.Windows.Media;
 
 namespace DependencyScanner.Standalone
 {
-    public partial class MainWindow : MetroWindow, INotifyPropertyChanged
+    public partial class MainWindow : MetroWindow
     {
         public List<AppThemeMenuData> AppThemes { get; set; }
         public List<AccentColorMenuData> AccentColors { get; set; }
@@ -65,13 +65,6 @@ namespace DependencyScanner.Standalone
                 }
             }, default(CancellationToken), TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
 #endif
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName]string a_propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(a_propertyName));
         }
 
         private void Settings_Click(object sender, RoutedEventArgs e)

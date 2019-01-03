@@ -48,7 +48,8 @@ namespace DependencyScanner.Standalone
 
                 return logger;
             }).As<ILogger>().SingleInstance();
-            builder.RegisterType<Messenger>().AsImplementedInterfaces().InstancePerLifetimeScope();
+
+            builder.RegisterType<Messenger>().AsImplementedInterfaces().SingleInstance();
 
             // Core Services
             builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(IService)))
