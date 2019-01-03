@@ -25,11 +25,6 @@ namespace DependencyScanner.Standalone
 
         protected override void Load(ContainerBuilder builder)
         {
-            // todo remove this two lines >>
-            LiteDatabase database = new LiteDatabase(GetProgramdataPath("Storage.db"));
-
-            ISettingsManager settingsManager = new SettingsManager(database);
-
             // Services
             var eventSink = new EventSink(null); // -> catch all logger events and provide errors and fatals to the UI
 
@@ -94,27 +89,22 @@ namespace DependencyScanner.Standalone
             builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(MainViewModel)))
                 .Where(t => t.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IPlugin<>)))
                 .As<IPlugin>()
+                .As<IPlugin<ISettings>>()
                 .InstancePerLifetimeScope()
                 .OnActivating(a =>
                 {
-                    ReadSettings(a, settingsManager);
-                })
-                .OnRelease(a =>
-                {
-                    SaveSettings(a, settingsManager);
+                    // load settings
+                    SettingsLifetimetimeHandler.ReadSettings(a, a.Context.Resolve<ISettingsManager>());
                 });
 
             // LiteDb
-            builder.RegisterInstance(database);
-            //builder.RegisterInstance<LiteDatabase>(new LiteDatabase(GetProgramdataPath("Storage.db")))
-            //    .AsSelf();
+            builder.RegisterInstance<LiteDatabase>(new LiteDatabase(GetProgramdataPath("Storage.db")))
+                .AsSelf();
 
             // Settings
-            builder.RegisterInstance(settingsManager)
-                .As<ISettingsManager>();
-            //builder.RegisterType<SettingsManager>()
-            //    .As<ISettingsManager>()
-            //    .InstancePerLifetimeScope();
+            builder.RegisterType<SettingsManager>()
+                .As<ISettingsManager>()
+                .InstancePerLifetimeScope();
 
             // View
             builder.Register(a => new MainWindow()

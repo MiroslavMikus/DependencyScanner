@@ -1,15 +1,19 @@
 ﻿using Autofac;
 using DependencyScanner.Core;
 using DependencyScanner.Core.GitClient;
+using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.NugetReference;
 using DependencyScanner.Core.Nuspec;
 using DependencyScanner.Standalone.Properties;
+using DependencyScanner.Standalone.Setting;
 using DependencyScanner.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
 using MahApps.Metro;
 using Serilog;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -24,7 +28,7 @@ namespace DependencyScanner.Standalone
     {
         private const string AppName = "DependencyScanner";
 
-        private ILifetimeScope GlobalScope;
+        internal ILifetimeScope GlobalScope { get; private set; }
 
         public static readonly string ProductVersion = GetProductVersion();
         internal static string GetProgramdataPath() => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), AppName);
@@ -94,6 +98,14 @@ namespace DependencyScanner.Standalone
         protected override void OnExit(ExitEventArgs e)
         {
             Log.Logger.Information("Closing app");
+
+            // Save settings
+            var manager = GlobalScope.Resolve<ISettingsManager>();
+
+            foreach (var plugin in GlobalScope.Resolve<IEnumerable<IPlugin<ISettings>>>())
+            {
+                SettingsLifetimetimeHandler.SaveSettings(plugin, manager);
+            }
 
             GlobalScope.Dispose();
 
