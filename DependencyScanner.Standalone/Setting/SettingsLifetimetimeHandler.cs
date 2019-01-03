@@ -1,42 +1,38 @@
-﻿using DependencyScanner.Core.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//using DependencyScanner.Core.Interfaces;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 
-namespace DependencyScanner.Standalone.Setting
-{
-    internal static class SettingsLifetimetimeHandler
-    {
-        internal static void SaveSettings(object a, ISettingsManager settingsManager)
-        {
-            var iPluginType = a.GetType().GetInterfaces().FirstOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IPlugin<>));
+//namespace DependencyScanner.Standalone.Setting
+//{
+//    internal static class SettingsLifetimetimeHandler
+//    {
+//        internal static void SaveSettings(ISettings a, ISettingsManager settingsManager)
+//        {
+//            var iPluginType = a.GetType().GetInterfaces().FirstOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IPlugin<>));
 
-            if (iPluginType != null)
-            {
-                var settingsType = iPluginType.GetGenericArguments()[0];
+//            if (iPluginType != null)
+//            {
+//                settingsManager.Save(settings, settings.CollectionKey, settings);
+//            }
+//        }
 
-                var plugin = a as IPlugin<ISettings>;
+//        internal static void ReadSettings(ISettings a, ISettingsManager settingsManager)
+//        {
+//            var iPluginType = a.Instance.GetType().GetInterfaces().FirstOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IPlugin<>));
 
-                settingsManager.Save(plugin.Settings, plugin.CollectionKey, settingsType);
-            }
-        }
+//            if (iPluginType != null)
+//            {
+//                var settingsType = iPluginType.GetGenericArguments()[0];
 
-        internal static void ReadSettings(Autofac.Core.IActivatingEventArgs<object> a, ISettingsManager settingsManager)
-        {
-            var iPluginType = a.Instance.GetType().GetInterfaces().FirstOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IPlugin<>));
+//                var plugin = a.Instance as IPlugin<ISettings>;
 
-            if (iPluginType != null)
-            {
-                var settingsType = iPluginType.GetGenericArguments()[0];
+//                var settings = (ISettings)(settingsManager.Load(plugin.CollectionKey, settingsType));
 
-                var plugin = a.Instance as IPlugin<ISettings>;
-
-                var settings = (ISettings)(settingsManager.Load(plugin.CollectionKey, settingsType));
-
-                plugin.SetSettings(settings);
-            }
-        }
-    }
-}
+//                plugin.SetSettings(settings);
+//            }
+//        }
+//    }
+//}

@@ -15,24 +15,16 @@ namespace DependencyScanner.Standalone.ViewModel
 
         public override string Description => "Scan and browse your solutions.";
 
-        public override string CollectionKey { get; } = "BrowseSettings";
-
-        private readonly Func<BrowseSettings, BrowseViewModel> _browseViewModelCtor;
-
-        public override UserControl ContentView => new BrowseView
-        {
-            DataContext = _browseViewModelCtor(Settings)
-        };
-
-        public BrowsePlugin(Func<BrowseSettings, BrowseViewModel> browseViewModelCtor)
+        public BrowsePlugin(BrowseViewModel browseViewModel, BrowseSettings settings)
+            : base(settings)
         {
             Order = 1;
 
-            _browseViewModelCtor = browseViewModelCtor;
-        }
+            ContentView = new BrowseView
+            {
+                DataContext = browseViewModel
+            };
 
-        protected override void OnSetSettings()
-        {
             SettingsView = new BrowseSettingsView
             {
                 DataContext = Settings

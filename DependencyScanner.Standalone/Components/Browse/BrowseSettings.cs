@@ -6,6 +6,8 @@ namespace DependencyScanner.Standalone.Components.Browse
 {
     public class BrowseSettings : ObservableSettingsBase
     {
+        public override string CollectionKey { get; } = "BrowseSettings";
+
         private bool _scanAfterDirectoryChange = true;
 
         public bool ScanAfterDirectoryChange

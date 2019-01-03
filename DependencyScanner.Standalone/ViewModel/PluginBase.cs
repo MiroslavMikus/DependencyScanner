@@ -5,11 +5,7 @@ namespace DependencyScanner.Standalone.Components.Browse
 {
     public abstract class PluginBase<T> : IPlugin<T> where T : ISettings
     {
-        private ISettings _settings;
-
-        public abstract string CollectionKey { get; }
-
-        public T Settings => (T)_settings;
+        public T Settings { get; }
 
         public abstract string Title { get; }
 
@@ -20,15 +16,9 @@ namespace DependencyScanner.Standalone.Components.Browse
 
         public virtual int Order { get; protected set; }
 
-        public void SetSettings(ISettings settings)
+        public PluginBase(T settings)
         {
-            _settings = settings;
-
-            OnSetSettings();
-        }
-
-        protected virtual void OnSetSettings()
-        {
+            Settings = settings;
         }
     }
 }

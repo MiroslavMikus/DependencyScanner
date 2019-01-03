@@ -8,5 +8,7 @@ namespace DependencyScanner.Standalone.Setting
     {
         [BsonId]
         public string Id { get; } = SettingsManager.DefaultKey;
+
+        public abstract string CollectionKey { get; }
     }
 }

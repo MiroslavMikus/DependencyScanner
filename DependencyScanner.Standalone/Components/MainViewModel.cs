@@ -11,12 +11,12 @@ using System.Windows;
 
 namespace DependencyScanner.Standalone.Components
 {
-    public class MainViewModel : SettingsViewModel<MainSettings>, IDisposable
+    public class MainViewModel : ViewModelBase
     {
-        private const string SettingsCollectionName = "MainViewSettings";
-
         public AppSettings MainSettings { get; } = AppSettings.Instance;
         public ObservableProgress Progress { get; }
+
+        public MainSettings Settings { get; set; }
 
         public string LogPath { get; }
 
@@ -62,17 +62,18 @@ namespace DependencyScanner.Standalone.Components
         public MainViewModel(IEnumerable<IPlugin> plugins,
                              ObservableProgress progress,
                              EventSink eventSink,
-                             ISettingsManager settingsManager,
+                             MainSettings settings,
                              string logPath)
-            : base(settingsManager, SettingsCollectionName)
         {
             Plugins = plugins.OrderBy(a => a.Order);
+
+            Settings = settings;
 
             SettingsList = new List<SettingsViewHelper>()
             {
                 new SettingsViewHelper("View settings", new MainSettingsView
                 {
-                    DataContext = Settings
+                    DataContext = settings
                 })
             }.Concat(ReadSettings(Plugins));
 

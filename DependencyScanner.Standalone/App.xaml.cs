@@ -102,9 +102,9 @@ namespace DependencyScanner.Standalone
             // Save settings
             var manager = GlobalScope.Resolve<ISettingsManager>();
 
-            foreach (var plugin in GlobalScope.Resolve<IEnumerable<IPlugin<ISettings>>>())
+            foreach (var settings in GlobalScope.Resolve<IEnumerable<ISettings>>())
             {
-                SettingsLifetimetimeHandler.SaveSettings(plugin, manager);
+                manager.Save(settings);
             }
 
             GlobalScope.Dispose();

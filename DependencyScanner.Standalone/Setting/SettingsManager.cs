@@ -47,11 +47,11 @@ namespace DependencyScanner.Standalone.Setting
             collection.Upsert(settings);
         }
 
-        public void Save(object settings, string collectionKey, Type settingsType)
+        public void Save(ISettings settings)
         {
-            var collection = _database.GetCollection(collectionKey);
+            var collection = _database.GetCollection(settings.CollectionKey);
 
-            var document = BsonMapper.Global.ToDocument(settingsType, settings);
+            var document = BsonMapper.Global.ToDocument(settings.GetType(), settings);
 
             collection.Upsert(document);
         }

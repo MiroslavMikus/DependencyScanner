@@ -1,37 +1,38 @@
-﻿using DependencyScanner.Core.Interfaces;
-using DependencyScanner.Standalone.Setting;
-using GalaSoft.MvvmLight;
-using System;
+﻿//using DependencyScanner.Core.Interfaces;
+//using DependencyScanner.Standalone.Setting;
+//using GalaSoft.MvvmLight;
+//using System;
 
-namespace DependencyScanner.Standalone.ViewModel
-{
-    public class SettingsViewModel<T> : ViewModelBase, IDisposable where T : ISettings, new()
-    {
-        private T _settings;
-        private readonly ISettingsManager _settingsManager;
-        private readonly string _settingsCollectionName;
+//namespace DependencyScanner.Standalone.ViewModel
+//{
+//    public class SettingsViewModel<T> : ViewModelBase, IDisposable where T : ISettings, new()
+//    {
+//        private readonly ISettingsManager _settingsManager;
+//        private readonly string _settingsCollectionName;
 
-        public T Settings
-        {
-            get { return _settings != null ? _settings : (_settings = _settingsManager.Load<T>(_settingsCollectionName)); ; }
-            set { Set(ref _settings, value); }
-        }
+//        private T _settings;
 
-        public SettingsViewModel(ISettingsManager settingsManager, string settingsCollectionName)
-        {
-            _settingsManager = settingsManager;
-            _settingsCollectionName = settingsCollectionName;
-        }
+//        public T Settings
+//        {
+//            get { return _settings != null ? _settings : (_settings = _settingsManager.Load<T>(_settingsCollectionName)); ; }
+//            set { Set(ref _settings, value); }
+//        }
 
-        public void Dispose()
-        {
-            _settingsManager.Save(Settings, _settingsCollectionName);
+//        public SettingsViewModel(ISettingsManager settingsManager)
+//        {
+//            _settingsManager = settingsManager;
+//            _settingsCollectionName = settingsCollectionName;
+//        }
 
-            OnDispose();
-        }
+//        public void Dispose()
+//        {
+//            _settingsManager.Save(Settings, _settingsCollectionName);
 
-        protected virtual void OnDispose()
-        {
-        }
-    }
-}
+//            OnDispose();
+//        }
+
+//        protected virtual void OnDispose()
+//        {
+//        }
+//    }
+//}

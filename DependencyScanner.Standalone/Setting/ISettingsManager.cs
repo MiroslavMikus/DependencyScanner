@@ -11,6 +11,6 @@ namespace DependencyScanner.Standalone.Setting
 
         void Save<T>(T settings, string collectionKey) where T : ISettings;
 
-        void Save(object settings, string collectionKey, Type settingsType);
+        void Save(ISettings settings);
     }
 }

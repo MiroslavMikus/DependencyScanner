@@ -5,6 +5,12 @@ namespace DependencyScanner.Standalone.Components
 {
     public class MainSettings : ObservableSettingsBase
     {
+        public MainSettings()
+        {
+        }
+
+        public override string CollectionKey { get; } = "MainViewSettings";
+
         private double _windowLeft = 0;
 
         public double Window_Left

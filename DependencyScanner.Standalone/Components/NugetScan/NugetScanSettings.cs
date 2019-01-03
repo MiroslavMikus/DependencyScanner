@@ -4,6 +4,8 @@ namespace DependencyScanner.Standalone.Components.NugetScan
 {
     public class NugetScanSettings : ObservableSettingsBase
     {
+        public override string CollectionKey => "NugetScanSettings";
+
         private bool _autoOpenNugetScan = true;
 
         public bool AutoOpenNugetScan
