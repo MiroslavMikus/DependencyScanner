@@ -16,6 +16,7 @@
         WindowState="{Binding Settings.Window_State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
         Top="{Binding Settings.Window_Top, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
         Left="{Binding Settings.Window_Left, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
+        xmlns:root="clr-namespace:DependencyScanner.Standalone"
         MinWidth="500"
         x:Name="TheMainWindow"
     d:DataContext="{d:DesignInstance local:MainViewModel , IsDesignTimeCreatable=False}"
@@ -92,6 +93,10 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0 20 20">
+                            <Label Content="Version:" />
+                            <Label Content="{x:Static root:App.ProductVersion}" />
+                        </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
             </Controls:Flyout>

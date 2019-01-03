@@ -70,7 +70,7 @@ namespace DependencyScanner.Standalone.Components
 
             SettingsList = new List<SettingsViewHelper>()
             {
-                new SettingsViewHelper("Preferences", new MainSettingsView
+                new SettingsViewHelper("View settings", new MainSettingsView
                 {
                     DataContext = Settings
                 })

@@ -67,61 +67,55 @@
                         Margin="0 10 0 0"
                         CommandParameter="https://github.com/MiroslavMikus/DependencyScanner/blob/master/DependencyScanner.Standalone/res/Changeset.md" />
 
-            <!--<Label Content="Show / Hide action buttons in solution detail" />
-
-                <Label Content="Preferences:" />
-                <TextBlock Text="Prefered console tool:" />
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Margin="0 10 20 0" Width="300"
+            <Label Content="Preferences:" />
+            <TextBlock Text="Prefered console tool:" />
+            <StackPanel Orientation="Horizontal">
+                <TextBox Margin="0 10 20 0" Width="300"
                                      Controls:TextBoxHelper.ClearTextButton="True"
                                      Text="{Binding PreferedConsoleTool, Mode=TwoWay, Delay=350}"
                                      ToolTip="Clear to use CMD.">
-                    </TextBox>
-                    <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0"
+                </TextBox>
+                <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0"
                             Command="{x:Static command:CommandManager.OpenCmdCommand}"
                             CommandParameter="C:\" />
-                </StackPanel>
-                <TextBlock Text="Prefered web browser:" Margin="0 10 0 0" />
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Margin="0 10 20 0" Width="300"
+            </StackPanel>
+            <TextBlock Text="Prefered web browser:" Margin="0 10 0 0" />
+            <StackPanel Orientation="Horizontal">
+                <TextBox Margin="0 10 20 0" Width="300"
                                      Controls:TextBoxHelper.ClearTextButton="True"
                                      Text="{Binding PreferencedWebBrowser, Mode=TwoWay, Delay=350}"
                                      ToolTip="Clear to use your default browser." />
-                    <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0"
+                <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0"
                             Command="{x:Static command:CommandManager.OpenLinkCommand}"
                             CommandParameter="https://github.com/MiroslavMikus/" />
-                </StackPanel>
-                <TextBlock Text="Prefered text editor:" Margin="0 10 0 0" />
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Margin="0 10 20 0" Width="300"
+            </StackPanel>
+            <TextBlock Text="Prefered text editor:" Margin="0 10 0 0" />
+            <StackPanel Orientation="Horizontal">
+                <TextBox Margin="0 10 20 0" Width="300"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Text="{Binding PreferedTextEditor, Mode=TwoWay, Delay=350}"
                              ToolTip="Clear to use notepad." />
-                    <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0"
+                <Button Content="Test" Width="70" Height="20" Margin="0 10 0 0"
                             Command="{x:Static command:CommandManager.OpenTextFileCommand}" />
-                </StackPanel>
+            </StackPanel>
 
-                <Label Content="Clear nuspec" />
-                <TextBlock Text="Path to nuget.exe" Margin="0 10 0 0" />
-                <StackPanel Orientation="Horizontal">
-                    <TextBox Margin="0 10 20 0" Width="300"
+            <Label Content="Clear nuspec" />
+            <TextBlock Text="Path to nuget.exe" Margin="0 10 0 0" />
+            <StackPanel Orientation="Horizontal">
+                <TextBox Margin="0 10 20 0" Width="300"
                                      Controls:TextBoxHelper.ClearTextButton="True"
                                      Text="{Binding PathToNuspec, Mode=TwoWay, Delay=350}" />
-                    <Button Content="Clear" Width="70" Height="20" Margin="0 10 0 0"
+                <Button Content="Clear" Width="70" Height="20" Margin="0 10 0 0"
                             Command="{x:Static command:CommandManager.ClearNuspecCommand}">
-                        <Button.ToolTip>
-                            <StackPanel>
-                                <Label Content="Clear nuget" FontWeight="Bold" Margin="5" />
-                                <TextBlock Text="Clear global nuget cache with 'nuget.exe locals all -clear' command" Margin="5" />
-                                <TextBlock Text="You can use shortcut Ctrl+Q" Margin="5" />
-                            </StackPanel>
-                        </Button.ToolTip>
-                    </Button>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Label Content="Version:" />
-                    <Label Content="{x:Static root:App.ProductVersion}" />
-                </StackPanel>-->
+                    <Button.ToolTip>
+                        <StackPanel>
+                            <Label Content="Clear nuget" FontWeight="Bold" Margin="5" />
+                            <TextBlock Text="Clear global nuget cache with 'nuget.exe locals all -clear' command" Margin="5" />
+                            <TextBlock Text="You can use shortcut Ctrl+Q" Margin="5" />
+                        </StackPanel>
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
         </StackPanel>
     </DockPanel>
 </UserControl>
