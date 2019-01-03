@@ -41,6 +41,8 @@ namespace DependencyScanner.Standalone
             if (args.Contains("cleansettings"))
             {
                 Settings.Default.Reset();
+
+                File.Delete(AppModule.GetProgramdataPath("Storage.db"));
             }
 
             Settings.Default.Upgrade();

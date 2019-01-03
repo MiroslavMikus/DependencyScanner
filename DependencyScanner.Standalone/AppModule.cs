@@ -157,6 +157,6 @@ namespace DependencyScanner.Standalone
             }
         }
 
-        private static string GetProgramdataPath(string fileName) => Path.Combine(App.GetProgramdataPath(), fileName);
+        internal static string GetProgramdataPath(string fileName) => Path.Combine(App.GetProgramdataPath(), fileName);
     }
 }
