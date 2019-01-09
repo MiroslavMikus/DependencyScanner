@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DependencyScanner.Api.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,28 @@ using System.Threading.Tasks;
 
 namespace DependencyScanner.Api.Model
 {
-    public class WorkingDirectory
+    public class WorkingDirectory : IScannable
     {
-        public ICollection<Solution> Solutions { get; set; }
+        public ICollection<Repository> Solutions { get; set; }
+
+        public void Sync(IScanner scanner)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class Repository : IScannable
+    {
+        public ICollection<Project> Projects { get; set; }
+
+        public void Sync(IScanner scanner)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class Solution
     {
-        public ICollection<Project> Projects { get; set; }
     }
 
     public class Project

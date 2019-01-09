@@ -47,6 +47,7 @@
     <Compile Include="Interfaces\IScanner.cs" />
     <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Interfaces\ISettings.cs" />
+    <Compile Include="Interfaces\IScannable.cs" />
     <Compile Include="Model\WorkingDirectory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
