@@ -1,6 +1,8 @@
-﻿using DependencyScanner.Core.GitClient;
+﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Core.GitClient;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace DependencyScanner.Core.Model
 {
-    public class GitInfo : ObservableObject
+    public class GitInfo : ObservableObject, IGitInfo
     {
         public FileInfo Root { get; }
-        public GitConfig Config { get; set; }
+        public IGitConfig Config { get; set; }
 
         private string _remoteUrl;
         public string RemoteUrl { get => _remoteUrl; private set => Set(ref _remoteUrl, value); }
@@ -52,6 +54,7 @@ namespace DependencyScanner.Core.Model
             }
         }
 
+        [Obsolete("remove later!")]
         public RelayCommand PullCommand { get; }
 
         public bool IsClean { get => Status?.Contains("working tree clean") == true; }
@@ -64,18 +67,9 @@ namespace DependencyScanner.Core.Model
             Root = new FileInfo(root);
 
             Config = new GitConfig(Root.FullName);
-
-            PullCommand = new RelayCommand(() =>
-            {
-                Task.Run(() =>
-                {
-                    Pull();
-                    Status = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
-                });
-            });
         }
 
-        internal async Task Init(bool executeGitFetch)
+        public async Task Init(bool executeGitFetch)
         {
             await Task.Run(() =>
             {
@@ -106,9 +100,10 @@ namespace DependencyScanner.Core.Model
             return $"Branch '{branch}' doesnt exist in scan results!";
         }
 
-        public string Pull()
+        public void Pull()
         {
-            return _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Pull);
+            _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Pull);
+            Status = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
         }
     }
 }

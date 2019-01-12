@@ -134,5 +134,11 @@
   <ItemGroup>
     <Content Include="NugetReference\d3.v3.min.js" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DependencyScanner.Api\DependencyScanner.Api.csproj">
+      <Project>{B3BDE71E-510A-413F-8A59-881200C45127}</Project>
+      <Name>DependencyScanner.Api</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

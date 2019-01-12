@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using DependencyScanner.Api.Interfaces;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace DependencyScanner.Core.GitClient
 {
-    public class GitConfig
+    public class GitConfig : IGitConfig
     {
         public string Content { get; private set; }
         public string RootPath { get; }
