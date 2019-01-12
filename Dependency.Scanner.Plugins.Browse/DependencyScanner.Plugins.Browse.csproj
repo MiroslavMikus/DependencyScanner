@@ -7,8 +7,8 @@
     <ProjectGuid>{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dependency.Scanner.Plugins.Browse</RootNamespace>
-    <AssemblyName>Dependency.Scanner.Plugins.Browse</AssemblyName>
+    <RootNamespace>DependencyScanner.Plugins.Browse</RootNamespace>
+    <AssemblyName>DependencyScanner.Plugins.Browse</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,17 +31,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkingDirPlugin.cs" />
+    <Compile Include="WorkingDirView.xaml.cs">
+      <DependentUpon>WorkingDirView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DependencyScanner.Api\DependencyScanner.Api.csproj">
@@ -52,10 +60,20 @@
       <Project>{4b6357ea-79db-4dcd-93a6-3335dd12c904}</Project>
       <Name>DependencyScanner.Core.Gui</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DependencyScanner.Core\DependencyScanner.Core.csproj">
-      <Project>{6e72af77-f76b-406b-93c2-8f0ffc3ef5e5}</Project>
-      <Name>DependencyScanner.Core</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="WorkingDirView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Costura.Fody">
+      <Version>3.3.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
