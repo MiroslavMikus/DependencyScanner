@@ -58,6 +58,9 @@
     <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Integration.Mef, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mef.4.0.0\lib\net45\Autofac.Integration.Mef.dll</HintPath>
+    </Reference>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
     </Reference>
@@ -95,6 +98,7 @@
       <HintPath>..\packages\Serilog.Sinks.File.4.0.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -139,6 +143,7 @@
       <DependentUpon>NugetScanSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\SettingsViewModel.cs" />
+    <Compile Include="CompositionModule.cs" />
     <Compile Include="ViewModel\PluginBase.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectPlugin.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectsViewModel.cs" />
@@ -298,6 +303,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DependencyScanner.Api\DependencyScanner.Api.csproj">
+      <Project>{b3bde71e-510a-413f-8a59-881200c45127}</Project>
+      <Name>DependencyScanner.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DependencyScanner.Core\DependencyScanner.Core.csproj">
       <Project>{6e72af77-f76b-406b-93c2-8f0ffc3ef5e5}</Project>
       <Name>DependencyScanner.Core</Name>

@@ -30,9 +30,9 @@ namespace DependencyScanner.Standalone.Components
             set { Set(ref _settingsList, value); }
         }
 
-        private IEnumerable<IPlugin> _plugins;
+        private IEnumerable<Api.Interfaces.IPlugin> _plugins;
 
-        public IEnumerable<IPlugin> Plugins
+        public IEnumerable<Api.Interfaces.IPlugin> Plugins
         {
             get { return _plugins; }
             set
@@ -60,12 +60,13 @@ namespace DependencyScanner.Standalone.Components
         }
 
         public MainViewModel(IEnumerable<IPlugin> plugins,
+                             IEnumerable<Api.Interfaces.IPlugin> alsoPlugins,
                              ObservableProgress progress,
                              EventSink eventSink,
                              MainSettings settings,
                              string logPath)
         {
-            Plugins = plugins.OrderBy(a => a.Order);
+            Plugins = alsoPlugins;
 
             Settings = settings;
 
@@ -75,7 +76,8 @@ namespace DependencyScanner.Standalone.Components
                 {
                     DataContext = settings
                 })
-            }.Concat(ReadSettings(Plugins));
+            };
+            //.Concat(ReadSettings(Plugins));
 
             Progress = progress;
 

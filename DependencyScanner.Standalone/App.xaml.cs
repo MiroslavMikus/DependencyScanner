@@ -83,6 +83,8 @@ namespace DependencyScanner.Standalone
         {
             var builder = new ContainerBuilder();
 
+            builder.RegisterModule(new CompositionModule());
+
             builder.RegisterModule(new AppModule());
 
             return builder.Build();
