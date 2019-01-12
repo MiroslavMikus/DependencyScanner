@@ -131,7 +131,7 @@ namespace DependencyScanner.Standalone
 
         internal static Type[] GetTypesFromAssembly<T>(Assembly assembly) where T : class
         {
-            return assembly.GetTypes().Where(a => a.GetInterface(typeof(T).Name) != null).ToArray();
+            return assembly.GetTypes().Where(t.GetInterfaces().Contains(typeof(T))).ToArray();
         }
     }
 }
