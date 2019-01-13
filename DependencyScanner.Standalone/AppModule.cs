@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Core;
 using DependencyScanner.Core.GitClient;
 using DependencyScanner.Core.Interfaces;
@@ -51,39 +52,11 @@ namespace DependencyScanner.Standalone
 
             builder.RegisterType<Messenger>().AsImplementedInterfaces().SingleInstance();
 
-            builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(IService)))
-                .Where(t => t.GetInterface(typeof(IService).Name) != null)
-                .Except<ReportStorage>()
-                .Except<NugetScanFacade>()
-                .AsSelf()
-                .AsImplementedInterfaces()
-                .InstancePerLifetimeScope();
-
-            // Load and register all settings
-            foreach (var t in GetTypesFromAssembly<ISettings>(Assembly.GetAssembly(typeof(MainViewModel))).Where(a => !a.IsAbstract))
-            {
-                builder.Register(a =>
-                {
-                    var manager = a.Resolve<ISettingsManager>();
-
-                    var settings = Activator.CreateInstance(t) as ISettings;
-
-                    return manager.Load(settings.CollectionKey, t);
-                })
-                .SingleInstance()
-                .As(new Type[] { t, typeof(ISettings) });
-            }
-
-            // ViewModel Services
-            builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(MainViewModel)))
-                 .Where(t => t.GetInterface(typeof(IService).Name) != null)
-                 .AsSelf()
-                 .AsImplementedInterfaces()
-                 .InstancePerLifetimeScope();
-
             builder.RegisterType<ReportStorage>()
                 .WithParameter(new TypedParameter(typeof(string), GetProgramdataPath("Reports")))
                 .InstancePerLifetimeScope();
+
+            #region TODO move to specific plugin dll
 
             builder.RegisterType<NugetScanFacade>()
                 .WithParameter(new TypedParameter(typeof(string), App.ProductVersion))
@@ -94,17 +67,7 @@ namespace DependencyScanner.Standalone
                 .Where(t => t.Name.EndsWith("ViewModel"))
                 .InstancePerLifetimeScope();
 
-            // register all plugins
-            builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(MainViewModel)))
-                .Where(t => t.GetInterface(typeof(IPlugin).Name) != null)
-                .Where(t => !t.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IPlugin<>))) // exclude generic plugins
-                .As<IPlugin>()
-                .InstancePerLifetimeScope();
-
-            builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(MainViewModel)))
-                .Where(t => t.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IPlugin<>)))
-                .As<IPlugin>()
-                .InstancePerLifetimeScope();
+            #endregion
 
             // LiteDb
             builder.RegisterInstance<LiteDatabase>(new LiteDatabase(GetProgramdataPath("Storage.db")))
@@ -130,7 +93,7 @@ namespace DependencyScanner.Standalone
 
         internal static Type[] GetTypesFromAssembly<T>(Assembly assembly) where T : class
         {
-            return assembly.GetTypes().Where(t.GetInterfaces().Contains(typeof(T))).ToArray();
+            return assembly.GetTypes().Where(t => t.GetInterfaces().Contains(typeof(T))).ToArray();
         }
     }
 }
