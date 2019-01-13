@@ -1,4 +1,5 @@
-﻿using DependencyScanner.Core.GitClient;
+﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Core.GitClient;
 using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

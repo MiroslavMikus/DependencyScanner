@@ -9,7 +9,7 @@
         xmlns:local="clr-namespace:DependencyScanner.Standalone.Components"
         xmlns:command="clr-namespace:DependencyScanner.Standalone.Services"
         mc:Ignorable="d"
-        xmlns:plugin="clr-namespace:DependencyScanner.Core.Interfaces;assembly=DependencyScanner.Core"
+        xmlns:plugin="clr-namespace:DependencyScanner.Api.Interfaces;assembly=DependencyScanner.Api"
         Title="Dependency scanner"
         Height="{Binding Settings.WindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"
         Width="{Binding Settings.WindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"

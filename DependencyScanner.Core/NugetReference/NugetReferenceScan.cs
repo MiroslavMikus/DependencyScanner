@@ -1,4 +1,5 @@
-﻿using DependencyScanner.Core.FileScan;
+﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Core.FileScan;
 using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
 using DependencyScanner.Core.Tools;

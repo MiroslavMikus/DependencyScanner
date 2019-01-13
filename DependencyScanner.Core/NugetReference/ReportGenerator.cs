@@ -1,4 +1,5 @@
-﻿using DependencyScanner.Core.Interfaces;
+﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Core.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

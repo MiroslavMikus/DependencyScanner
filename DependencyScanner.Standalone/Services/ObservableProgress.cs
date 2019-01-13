@@ -1,4 +1,5 @@
-﻿using DependencyScanner.Core.Interfaces;
+﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
 using GalaSoft.MvvmLight;
 using System;

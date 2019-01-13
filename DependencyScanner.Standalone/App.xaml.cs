@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Core;
 using DependencyScanner.Core.GitClient;
 using DependencyScanner.Core.Interfaces;

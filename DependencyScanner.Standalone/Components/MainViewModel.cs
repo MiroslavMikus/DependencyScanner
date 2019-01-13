@@ -1,4 +1,5 @@
-﻿using DependencyScanner.Core.Interfaces;
+﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Standalone.Services;
 using DependencyScanner.Standalone.Setting;
 using DependencyScanner.Standalone.ViewModel;
@@ -60,13 +61,12 @@ namespace DependencyScanner.Standalone.Components
         }
 
         public MainViewModel(IEnumerable<IPlugin> plugins,
-                             IEnumerable<Api.Interfaces.IPlugin> alsoPlugins,
                              ObservableProgress progress,
                              EventSink eventSink,
                              MainSettings settings,
                              string logPath)
         {
-            Plugins = alsoPlugins;
+            Plugins = plugins.OrderBy(a => a.Order);
 
             Settings = settings;
 
@@ -76,8 +76,8 @@ namespace DependencyScanner.Standalone.Components
                 {
                     DataContext = settings
                 })
-            };
-            //.Concat(ReadSettings(Plugins));
+            }
+            .Concat(ReadSettings(Plugins));
 
             Progress = progress;
 

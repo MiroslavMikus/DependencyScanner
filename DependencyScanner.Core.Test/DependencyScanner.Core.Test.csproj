@@ -103,6 +103,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DependencyScanner.Api\DependencyScanner.Api.csproj">
+      <Project>{B3BDE71E-510A-413F-8A59-881200C45127}</Project>
+      <Name>DependencyScanner.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DependencyScanner.Core\DependencyScanner.Core.csproj">
       <Project>{6e72af77-f76b-406b-93c2-8f0ffc3ef5e5}</Project>
       <Name>DependencyScanner.Core</Name>

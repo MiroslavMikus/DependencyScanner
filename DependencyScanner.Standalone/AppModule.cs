@@ -51,7 +51,6 @@ namespace DependencyScanner.Standalone
 
             builder.RegisterType<Messenger>().AsImplementedInterfaces().SingleInstance();
 
-            // Core Services
             builder.RegisterAssemblyTypes(Assembly.GetAssembly(typeof(IService)))
                 .Where(t => t.GetInterface(typeof(IService).Name) != null)
                 .Except<ReportStorage>()
