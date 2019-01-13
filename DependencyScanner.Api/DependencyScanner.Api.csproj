@@ -47,6 +47,7 @@
     <Compile Include="Interfaces\IGitConfig.cs" />
     <Compile Include="Interfaces\IGitInfo.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
+    <Compile Include="Interfaces\ISettingsManager.cs" />
     <Compile Include="Interfaces\ISolutionScanner.cs" />
     <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Interfaces\ISettings.cs" />

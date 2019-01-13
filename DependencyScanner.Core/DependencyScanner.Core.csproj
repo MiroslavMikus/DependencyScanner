@@ -78,7 +78,6 @@
     <Compile Include="GitClient\GitConfig.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Interfaces\IService.cs" />
-    <Compile Include="Interfaces\ISettings.cs" />
     <Compile Include="NugetReference\NugetDefinition.cs" />
     <Compile Include="NugetReference\NugetReferenceResult.cs" />
     <Compile Include="NugetReference\NugetReferenceScan.cs" />

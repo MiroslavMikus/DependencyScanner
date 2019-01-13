@@ -1,7 +1,6 @@
-﻿using DependencyScanner.Core.Interfaces;
-using System;
+﻿using System;
 
-namespace DependencyScanner.Standalone.Setting
+namespace DependencyScanner.Api.Interfaces
 {
     public interface ISettingsManager
     {

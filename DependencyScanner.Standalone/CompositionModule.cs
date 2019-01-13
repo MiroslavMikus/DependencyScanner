@@ -22,6 +22,7 @@ namespace DependencyScanner.Standalone
             var assemblies = Directory.GetFiles(_pluginDir, "*.dll", SearchOption.AllDirectories)
                 .Select(a => Path.GetFullPath(a))
                 .Select(a => Assembly.LoadFile(a))
+                .Concat(AppDomain.CurrentDomain.GetAssemblies())
                 .ToArray();
 
             var assembliesBuilder = builder.RegisterAssemblyTypes(assemblies);
@@ -44,7 +45,7 @@ namespace DependencyScanner.Standalone
             {
                 builder.Register(a =>
                 {
-                    var manager = a.Resolve<ISettingsManager>();
+                    var manager = a.Resolve<Api.Interfaces.ISettingsManager>();
 
                     var settings = Activator.CreateInstance(t) as ISettings;
 
