@@ -1,10 +1,12 @@
 ﻿using Autofac;
 using Autofac.Integration.Mef;
 using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Core.Nuspec;
 using DependencyScanner.Standalone.Setting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -19,29 +21,35 @@ namespace DependencyScanner.Standalone
 
         protected override void Load(ContainerBuilder builder)
         {
-            var assemblies = Directory.GetFiles(_pluginDir, "*.dll", SearchOption.AllDirectories)
+            var pluginAssemblies = Directory.GetFiles(_pluginDir, "*.dll", SearchOption.AllDirectories)
                 .Select(a => Path.GetFullPath(a))
                 .Select(a => Assembly.LoadFile(a))
-                .Concat(AppDomain.CurrentDomain.GetAssemblies())
                 .ToArray();
 
-            var assembliesBuilder = builder.RegisterAssemblyTypes(assemblies);
+            var allAssemblies = pluginAssemblies
+                .Concat(new[]
+                {
+                    Assembly.GetAssembly(typeof(MainWindow)),
+                    Assembly.GetAssembly(typeof(NuspecComparer))
+                })
+                .ToArray();
 
             // register all plugins
-            assembliesBuilder
+
+            builder.RegisterAssemblyTypes(allAssemblies)
                 .Where(t => t.GetInterfaces().Contains(typeof(IPlugin)))
                 .As<IPlugin>()
                 .InstancePerLifetimeScope();
 
             // register all services
-            assembliesBuilder
-                 .Where(t => t.GetInterfaces().Contains(typeof(IService)))
-                 .AsSelf()
-                 .AsImplementedInterfaces()
-                 .InstancePerLifetimeScope();
+            builder.RegisterAssemblyTypes(allAssemblies)
+                .Where(t => t.GetInterfaces().Contains(typeof(IService)))
+                .AsSelf()
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
 
             // load settings from all assemblies
-            foreach (var t in assemblies.SelectMany(a => AppModule.GetTypesFromAssembly<ISettings>(a)).Where(a => !a.IsAbstract))
+            foreach (var t in allAssemblies.SelectMany(a => AppModule.GetTypesFromAssembly<ISettings>(a)).Where(a => !a.IsAbstract))
             {
                 builder.Register(a =>
                 {
@@ -56,7 +64,7 @@ namespace DependencyScanner.Standalone
             }
 
             // register all additional modules
-            builder.RegisterAssemblyModules(assemblies);
+            builder.RegisterAssemblyModules(pluginAssemblies);
 
             base.Load(builder);
         }

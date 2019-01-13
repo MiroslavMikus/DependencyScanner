@@ -5,6 +5,7 @@ using DependencyScanner.Core.GitClient;
 using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.NugetReference;
 using DependencyScanner.Core.Nuspec;
+using DependencyScanner.Core.Tools;
 using DependencyScanner.Standalone.Properties;
 using DependencyScanner.Standalone.Setting;
 using DependencyScanner.ViewModel;
@@ -61,13 +62,16 @@ namespace DependencyScanner.Standalone
         {
             SetColors();
 
-            GlobalScope = BuildScope();
+            var startResult = WatchExtensions.Measure(() =>
+            {
+                GlobalScope = BuildScope();
 
-            var window = GlobalScope.Resolve<MainWindow>();
+                var window = GlobalScope.Resolve<MainWindow>();
 
-            window.Show();
+                window.Show();
+            });
 
-            Log.Information("Starting app");
+            Log.Information($"App started. Composition tooks: {startResult.TotalMilliseconds} ms.");
         }
 
         private void Current_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)

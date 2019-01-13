@@ -110,6 +110,7 @@
     <Compile Include="Tools\DirectoryTools.cs" />
     <Compile Include="Tools\StringExtensions.cs" />
     <Compile Include="Tools\VersionComparer.cs" />
+    <Compile Include="Tools\WatchExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
