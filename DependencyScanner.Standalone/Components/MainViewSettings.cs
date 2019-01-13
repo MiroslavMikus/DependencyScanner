@@ -1,15 +1,13 @@
-﻿using DependencyScanner.Standalone.Setting;
+﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Standalone.Setting;
+using GalaSoft.MvvmLight;
 using System.Windows;
 
 namespace DependencyScanner.Standalone.Components
 {
-    public class MainSettings : ObservableSettingsBase
+    public class MainSettings : ObservableObject, ISettings
     {
-        public MainSettings()
-        {
-        }
-
-        public override string Id { get; } = "MainViewSettings";
+        public string Id { get; } = "MainViewSettings";
 
         private double _windowLeft = 0;
 

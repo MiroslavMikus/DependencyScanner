@@ -1,12 +1,14 @@
-﻿using DependencyScanner.Core.Interfaces;
+﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Standalone.Setting;
+using GalaSoft.MvvmLight;
 using System.Collections.Generic;
 
 namespace DependencyScanner.Standalone.Components.Browse
 {
-    public class BrowseSettings : ObservableSettingsBase
+    public class BrowseSettings : ObservableObject, ISettings
     {
-        public override string Id { get; } = "BrowseSettings";
+        public string Id { get; } = "BrowseSettings";
 
         private bool _scanAfterDirectoryChange = true;
 

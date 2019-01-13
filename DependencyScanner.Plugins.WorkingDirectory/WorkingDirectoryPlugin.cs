@@ -1,4 +1,5 @@
 ﻿using DependencyScanner.Api.Interfaces;
+using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,8 @@ namespace Dependency.Scanner.Plugins.Browse
         }
     }
 
-    public class WorkingDirectorySettings : ISettings
+    public class WorkingDirectorySettings : ObservableObject, ISettings
     {
-        public string Id => throw new NotImplementedException();
-
-        public string Id => throw new NotImplementedException();
+        public string Id => "WorkingDirectorySettings";
     }
 }

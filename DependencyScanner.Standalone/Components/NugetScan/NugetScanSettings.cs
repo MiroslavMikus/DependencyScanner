@@ -1,10 +1,12 @@
-﻿using DependencyScanner.Standalone.Setting;
+﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Standalone.Setting;
+using GalaSoft.MvvmLight;
 
 namespace DependencyScanner.Standalone.Components.NugetScan
 {
-    public class NugetScanSettings : ObservableSettingsBase
+    public class NugetScanSettings : ObservableObject, ISettings
     {
-        public override string Id => "NugetScanSettings";
+        public string Id => "NugetScanSettings";
 
         private bool _autoOpenNugetScan = true;
 
