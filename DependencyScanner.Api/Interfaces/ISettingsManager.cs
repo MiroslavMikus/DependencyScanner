@@ -4,11 +4,11 @@ namespace DependencyScanner.Api.Interfaces
 {
     public interface ISettingsManager
     {
-        object Load(string collectionKey, Type settingsType);
+        object Load(string fileName, Type settingsType);
 
-        T Load<T>(string collectionKey) where T : ISettings, new();
+        T Load<T>(string fileName) where T : ISettings, new();
 
-        void Save<T>(T settings, string collectionKey) where T : ISettings;
+        void Save<T>(T settings, string fileName) where T : ISettings;
 
         void Save(ISettings settings);
     }

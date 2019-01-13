@@ -17,12 +17,16 @@ namespace Dependency.Scanner.Plugins.Browse
         public UserControl ContentView => new WorkingDirectoryView();
 
         public int Order => 0;
+
+        public WorkingDirectoryPlugin()
+        {
+        }
     }
 
     public class WorkingDirectorySettings : ISettings
     {
         public string Id => throw new NotImplementedException();
 
-        public string CollectionKey => throw new NotImplementedException();
+        public string Id => throw new NotImplementedException();
     }
 }

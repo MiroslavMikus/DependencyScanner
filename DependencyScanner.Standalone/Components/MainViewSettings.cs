@@ -9,7 +9,7 @@ namespace DependencyScanner.Standalone.Components
         {
         }
 
-        public override string CollectionKey { get; } = "MainViewSettings";
+        public override string Id { get; } = "MainViewSettings";
 
         private double _windowLeft = 0;
 

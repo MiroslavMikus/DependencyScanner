@@ -3,6 +3,7 @@ using Autofac.Integration.Mef;
 using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Core.Nuspec;
 using DependencyScanner.Standalone.Setting;
+using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition.Hosting;
@@ -60,7 +61,7 @@ namespace DependencyScanner.Standalone
 
                     var settings = Activator.CreateInstance(t) as ISettings;
 
-                    return manager.Load(settings.CollectionKey, t);
+                    return manager.Load(settings.Id, t);
                 })
                 .SingleInstance()
                 .As(new Type[] { t, typeof(ISettings) });
