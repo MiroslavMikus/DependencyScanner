@@ -11,11 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyScanner.Standalon
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{7365E60A-C38A-49B8-9AA1-1D417C3E4049}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyScanner.Plugins.Browse", "Dependency.Scanner.Plugins.Browse\DependencyScanner.Plugins.Browse.csproj", "{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyScanner.Api", "DependencyScanner.Api\DependencyScanner.Api.csproj", "{B3BDE71E-510A-413F-8A59-881200C45127}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyScanner.Core.Gui", "DependencyScanner.Core.Gui\DependencyScanner.Core.Gui.csproj", "{4B6357EA-79DB-4DCD-93A6-3335DD12C904}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyScanner.Plugins.WorkingDirectory", "DependencyScanner.Plugins.WorkingDirectory\DependencyScanner.Plugins.WorkingDirectory.csproj", "{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,14 +49,6 @@ Global
 		{1F2234C6-6EC6-4E8F-A72C-CA766012DB13}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1F2234C6-6EC6-4E8F-A72C-CA766012DB13}.Release|x86.ActiveCfg = Release|Any CPU
 		{1F2234C6-6EC6-4E8F-A72C-CA766012DB13}.Release|x86.Build.0 = Release|Any CPU
-		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Debug|x86.Build.0 = Debug|Any CPU
-		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Release|x86.ActiveCfg = Release|Any CPU
-		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Release|x86.Build.0 = Release|Any CPU
 		{B3BDE71E-510A-413F-8A59-881200C45127}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B3BDE71E-510A-413F-8A59-881200C45127}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3BDE71E-510A-413F-8A59-881200C45127}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -73,6 +65,14 @@ Global
 		{4B6357EA-79DB-4DCD-93A6-3335DD12C904}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4B6357EA-79DB-4DCD-93A6-3335DD12C904}.Release|x86.ActiveCfg = Release|Any CPU
 		{4B6357EA-79DB-4DCD-93A6-3335DD12C904}.Release|x86.Build.0 = Release|Any CPU
+		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Debug|x86.Build.0 = Debug|Any CPU
+		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Release|x86.ActiveCfg = Release|Any CPU
+		{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

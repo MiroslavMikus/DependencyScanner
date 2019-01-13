@@ -18,9 +18,9 @@ namespace Dependency.Scanner.Plugins.Browse
     /// <summary>
     /// Interaction logic for WorkingDirView.xaml
     /// </summary>
-    public partial class WorkingDirView : UserControl
+    public partial class WorkingDirectoryView : UserControl
     {
-        public WorkingDirView()
+        public WorkingDirectoryView()
         {
             InitializeComponent();
         }

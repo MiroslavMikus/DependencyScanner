@@ -8,14 +8,21 @@ using System.Windows.Controls;
 
 namespace Dependency.Scanner.Plugins.Browse
 {
-    public class WorkingDirPlugin : IPlugin
+    public class WorkingDirectoryPlugin : IPlugin
     {
         public string Title => "Working directories";
 
         public string Description => "Organize and browse your working directories";
 
-        public UserControl ContentView => new WorkingDirView();
+        public UserControl ContentView => new WorkingDirectoryView();
 
         public int Order => 0;
+    }
+
+    public class WorkingDirectorySettings : ISettings
+    {
+        public string Id => throw new NotImplementedException();
+
+        public string CollectionKey => throw new NotImplementedException();
     }
 }

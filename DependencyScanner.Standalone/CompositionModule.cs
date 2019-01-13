@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace DependencyScanner.Standalone
 {
+    /// <summary>
+    /// Search and register all <see cref="IPlugin"/>, <see cref="ISettings"/>, <see cref="IService"/>
+    /// </summary>
     public class CompositionModule : Autofac.Module
     {
         private const string _pluginDir = "plugins";
@@ -37,13 +40,13 @@ namespace DependencyScanner.Standalone
             // register all plugins
 
             builder.RegisterAssemblyTypes(allAssemblies)
-                .Where(t => t.GetInterfaces().Contains(typeof(IPlugin)))
+                .Where(t => t.GetInterfaces().Contains(typeof(IPlugin)) && !t.IsAbstract)
                 .As<IPlugin>()
                 .InstancePerLifetimeScope();
 
             // register all services
             builder.RegisterAssemblyTypes(allAssemblies)
-                .Where(t => t.GetInterfaces().Contains(typeof(IService)))
+                .Where(t => t.GetInterfaces().Contains(typeof(IService)) && !t.IsAbstract)
                 .AsSelf()
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
@@ -53,7 +56,7 @@ namespace DependencyScanner.Standalone
             {
                 builder.Register(a =>
                 {
-                    var manager = a.Resolve<Api.Interfaces.ISettingsManager>();
+                    var manager = a.Resolve<ISettingsManager>();
 
                     var settings = Activator.CreateInstance(t) as ISettings;
 
