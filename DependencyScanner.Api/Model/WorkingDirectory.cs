@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace DependencyScanner.Api.Model
 {
-    public class WorkingDirectory : ObservableObject, ISyncable
+    public class WorkingDirectory : ObservableObject, ISyncable, IWorkingDirectory
     {
         private string _path;
         private readonly ILogger _logger;
@@ -23,7 +23,7 @@ namespace DependencyScanner.Api.Model
 
         public string Path { get => _path; set => Set(ref _path, value); }
 
-        public ICollection<Repository> Repositories { get; set; } = new ObservableCollection<Repository>();
+        public ICollection<IRepository> Repositories { get; set; } = new ObservableCollection<IRepository>();
         public ICommand PullCommand { get; }
         public ICommand CancelCommand { get; }
 
@@ -61,7 +61,7 @@ namespace DependencyScanner.Api.Model
         }
     }
 
-    public class Repository : ISyncable
+    public class Repository : IRepository
     {
         private CancellationTokenSource _cancellationTokenSource;
 
