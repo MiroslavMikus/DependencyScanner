@@ -7,8 +7,8 @@
     <ProjectGuid>{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DependencyScanner.Plugins.Browse</RootNamespace>
-    <AssemblyName>DependencyScanner.Plugins.Browse</AssemblyName>
+    <RootNamespace>DependencyScanner.Plugins.Wd</RootNamespace>
+    <AssemblyName>DependencyScanner.Plugins.Wd</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -48,6 +48,7 @@
     <Compile Include="Model\Repository.cs" />
     <Compile Include="Model\WorkingDirectory.cs" />
     <Compile Include="Model\WorkingDirectorySettings.cs" />
+    <Compile Include="Services\WorkingDirectorySettingsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkingDirectoryPlugin.cs" />
     <Compile Include="WorkingDirectoryView.xaml.cs">

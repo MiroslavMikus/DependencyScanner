@@ -1,7 +1,7 @@
 ﻿using DependencyScanner.Api.Interfaces;
 using System.Collections.Generic;
 
-namespace DependencyScanner.Plugins.Browse.Model
+namespace DependencyScanner.Plugins.Wd.Model
 {
     public class WorkingDirectorySettings : ISettings
     {

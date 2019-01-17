@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Dependency.Scanner.Plugins.Browse
+namespace Dependency.Scanner.Plugins.Wd
 {
     public class WorkingDirectoryPlugin : IPlugin
     {
@@ -18,14 +18,5 @@ namespace Dependency.Scanner.Plugins.Browse
         public UserControl ContentView => new WorkingDirectoryView();
 
         public int Order => 0;
-
-        public WorkingDirectoryPlugin()
-        {
-        }
-    }
-
-    public class WorkingDirectorySettings : ObservableObject, ISettings
-    {
-        public string Id => "WorkingDirectorySettings";
     }
 }

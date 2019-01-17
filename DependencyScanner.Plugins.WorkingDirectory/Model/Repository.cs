@@ -5,7 +5,7 @@ using GalaSoft.MvvmLight.Command;
 using System.Threading;
 using System.Windows.Input;
 
-namespace DependencyScanner.Plugins.Browse.Model
+namespace DependencyScanner.Plugins.Wd.Model
 {
     public class Repository : ObservableObject, IRepository
     {

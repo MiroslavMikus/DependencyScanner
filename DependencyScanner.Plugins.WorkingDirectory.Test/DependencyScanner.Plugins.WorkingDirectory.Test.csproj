@@ -62,6 +62,16 @@
   <ItemGroup>
     <Folder Include="Model\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DependencyScanner.Api\DependencyScanner.Api.csproj">
+      <Project>{b3bde71e-510a-413f-8a59-881200c45127}</Project>
+      <Name>DependencyScanner.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DependencyScanner.Plugins.WorkingDirectory\DependencyScanner.Plugins.WorkingDirectory.csproj">
+      <Project>{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}</Project>
+      <Name>DependencyScanner.Plugins.WorkingDirectory</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

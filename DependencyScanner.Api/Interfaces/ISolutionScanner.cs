@@ -6,7 +6,7 @@ namespace DependencyScanner.Api.Interfaces
 {
     public interface ISolutionScanner : IService
     {
-        Task<WorkingDirectory> ScanWorkingDirectory(string rootDirectory, ICancelableProgress<ProgressMessage> progress, bool executeGitFetch);
+        Task<IWorkingDirectory> ScanWorkingDirectory(string rootDirectory, ICancelableProgress<ProgressMessage> progress, bool executeGitFetch);
 
         Task<Solution> ScanSolution(string rootDirectory, ICancelableProgress<ProgressMessage> progress, bool executeGitFetch);
     }
