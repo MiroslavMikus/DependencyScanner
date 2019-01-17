@@ -48,7 +48,7 @@ namespace DependencyScanner.Api.Model
 
                 DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
-                    Repositories = new ObservableCollection<Repository>(repos.Select(a => new Repository(a)));
+                    Repositories = new ObservableCollection<IRepository>(repos.Select(a => new Repository(a)));
 
                     //_messenger.Send<WorkingDirectory>(this);
                 });
