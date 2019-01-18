@@ -144,6 +144,8 @@
     </Compile>
     <Compile Include="Components\SettingsViewModel.cs" />
     <Compile Include="CompositionModule.cs" />
+    <Compile Include="Events\AddWorkindDirectory.cs" />
+    <Compile Include="Events\RemoveWorkinbDirectory.cs" />
     <Compile Include="Services\FolderPicker.cs" />
     <Compile Include="ViewModel\PluginBase.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectPlugin.cs" />

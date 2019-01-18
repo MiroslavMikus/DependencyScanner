@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DependencyScanner.Api.Services;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DependencyScanner.Api.Interfaces

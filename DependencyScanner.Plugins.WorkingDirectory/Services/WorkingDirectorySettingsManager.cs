@@ -10,27 +10,28 @@ namespace DependencyScanner.Plugins.Wd.Services
 {
     public class WorkingDirectorySettingsManager : IService
     {
-        private readonly WorkingDirectorySettings _settings;
+        public WorkingDirectorySettings Settings { get; }
+
         private readonly Func<string, IGitInfo> _gitCtor;
         private readonly Func<IWorkingDirectory> _wdCtor;
 
         public WorkingDirectorySettingsManager(WorkingDirectorySettings settings, Func<string, IGitInfo> gitCtor, Func<IWorkingDirectory> wdCtor)
         {
-            _settings = settings;
+            Settings = settings;
             _gitCtor = gitCtor;
             _wdCtor = wdCtor;
         }
 
         public IEnumerable<IWorkingDirectory> RestoreWorkingDirectories()
         {
-            foreach (var wdSettings in _settings.WorkingDirectoryStructure)
+            foreach (var wdSettings in Settings.WorkingDirectoryStructure)
             {
                 // reassembly repos
                 var repos = wdSettings.Value.Select(a =>
                 {
                     var git = _gitCtor(a);
 
-                    git.Init(_settings.ExecuteGitFetchWhileScanning);
+                    git.Init(Settings.ExecuteGitFetchWhileScanning);
 
                     return new Repository(git);
                 });
@@ -50,7 +51,7 @@ namespace DependencyScanner.Plugins.Wd.Services
         {
             string[] GetRepos(IWorkingDirectory wd) => wd.Repositories.Select(a => a.GitInfo.Root.FullName).ToArray();
 
-            _settings.WorkingDirectoryStructure = workingDirectories.ToDictionary(a => a.Path, b => GetRepos(b));
+            Settings.WorkingDirectoryStructure = workingDirectories.ToDictionary(a => a.Path, b => GetRepos(b));
         }
     }
 }

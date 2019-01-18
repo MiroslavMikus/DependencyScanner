@@ -65,6 +65,10 @@
       <Project>{4b6357ea-79db-4dcd-93a6-3335dd12c904}</Project>
       <Name>DependencyScanner.Core.Gui</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DependencyScanner.Standalone\DependencyScanner.Standalone.csproj">
+      <Project>{1F2234C6-6EC6-4E8F-A72C-CA766012DB13}</Project>
+      <Name>DependencyScanner.Standalone</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="WorkingDirectoryView.xaml">
