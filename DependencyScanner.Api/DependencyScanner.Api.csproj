@@ -50,7 +50,6 @@
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Interfaces\IRepositoryScanner.cs" />
     <Compile Include="Interfaces\ISettingsManager.cs" />
-    <Compile Include="Interfaces\ISolutionScanner.cs" />
     <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Interfaces\ISettings.cs" />
     <Compile Include="Interfaces\ISyncable.cs" />

@@ -12,12 +12,16 @@ namespace DependencyScanner.Core.Test
     [TestClass]
     abstract public class TestBase
     {
+        protected ILogger _logger;
+
         [TestInitialize]
         public void Init()
         {
             var logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
                 .WriteTo.Console()
                 .CreateLogger();
+            _logger = logger;
 
             Log.Logger = logger;
         }
