@@ -1,5 +1,6 @@
 ﻿using DependencyScanner.Api.Interfaces;
-using GalaSoft.MvvmLight;
+using DependencyScanner.Plugins.Wd.Model;
+using DependencyScanner.Plugins.Wd.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,9 @@ namespace Dependency.Scanner.Plugins.Wd
 {
     public class WorkingDirectoryPlugin : IPlugin
     {
+        private readonly WorkingDirectorySettings _settings;
+        private readonly WorkingDirectorySettingsManager _settingsManager;
+
         public string Title => "Working directories";
 
         public string Description => "Organize and browse your working directories";

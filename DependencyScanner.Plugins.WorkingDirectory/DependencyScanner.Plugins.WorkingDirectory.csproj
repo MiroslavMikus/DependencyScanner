@@ -54,6 +54,7 @@
     <Compile Include="WorkingDirectoryView.xaml.cs">
       <DependentUpon>WorkingDirectoryView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WorkingDirectoryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DependencyScanner.Api\DependencyScanner.Api.csproj">
@@ -72,6 +73,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Autofac">
+      <Version>4.8.1</Version>
+    </PackageReference>
     <PackageReference Include="Costura.Fody">
       <Version>3.3.0</Version>
     </PackageReference>

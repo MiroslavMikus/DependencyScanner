@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace DependencyScanner.Plugins.Wd.Services
 {
-    public class WorkingDirectorySettingsManager
+    public class WorkingDirectorySettingsManager : IService
     {
         private readonly WorkingDirectorySettings _settings;
         private readonly Func<string, IGitInfo> _gitCtor;

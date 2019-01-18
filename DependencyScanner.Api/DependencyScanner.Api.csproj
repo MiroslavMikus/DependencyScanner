@@ -44,9 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\ICancelableProgress.cs" />
+    <Compile Include="Interfaces\IFolderPicker.cs" />
     <Compile Include="Interfaces\IGitConfig.cs" />
     <Compile Include="Interfaces\IGitInfo.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
+    <Compile Include="Interfaces\IRepositoryScanner.cs" />
     <Compile Include="Interfaces\ISettingsManager.cs" />
     <Compile Include="Interfaces\ISolutionScanner.cs" />
     <Compile Include="Interfaces\IService.cs" />
@@ -57,6 +59,7 @@
     <Compile Include="Model\WorkingDirectory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DefaultProgress.cs" />
+    <Compile Include="Services\ProgressMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MvvmLightLibs">
