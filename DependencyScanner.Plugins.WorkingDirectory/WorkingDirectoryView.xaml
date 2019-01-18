@@ -5,8 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Dependency.Scanner.Plugins.Wd"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance local:WorkingDirectoryViewModel, IsDesignTimeCreatable=False}">
     <Grid>
-        <Label Content="Hallo from working directory :)" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="421*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Button Command="{Binding PickWorkingDirectoryCommand}" Content="Select new working directory" />
+        <ItemsControl ItemsSource="{Binding Directories}" Grid.Row="1" />
     </Grid>
 </UserControl>

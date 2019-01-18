@@ -92,7 +92,6 @@
     <Compile Include="Interfaces\IScanner.cs" />
     <Compile Include="Model\ConsolidateProject.cs" />
     <Compile Include="Model\ConsolidateReferences.cs" />
-    <Compile Include="Model\DefaultProgress.cs" />
     <Compile Include="GitClient\GitInfo.cs" />
     <Compile Include="Model\ProjectReference.cs" />
     <Compile Include="Model\ProjectResult.cs" />

@@ -14,6 +14,7 @@ namespace Dependency.Scanner.Plugins.Wd
     {
         private readonly WorkingDirectorySettings _settings;
         private readonly WorkingDirectorySettingsManager _settingsManager;
+        private readonly WorkingDirectoryViewModel _viewModel;
 
         public string Title => "Working directories";
 
@@ -22,5 +23,11 @@ namespace Dependency.Scanner.Plugins.Wd
         public UserControl ContentView => new WorkingDirectoryView();
 
         public int Order => 0;
+
+        public WorkingDirectoryPlugin(WorkingDirectoryViewModel viewModel)
+        {
+            _viewModel = viewModel;
+            ContentView.DataContext = _viewModel;
+        }
     }
 }

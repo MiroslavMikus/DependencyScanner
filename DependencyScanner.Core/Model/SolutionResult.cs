@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using DependencyScanner.Api.Services;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Collections.Generic;
 using System.Diagnostics;

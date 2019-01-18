@@ -1,4 +1,5 @@
 ﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Api.Services;
 using DependencyScanner.Core.GitClient;
 using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;

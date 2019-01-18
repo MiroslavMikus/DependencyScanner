@@ -1,4 +1,5 @@
 ﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Api.Services;
 using DependencyScanner.Core.Model;
 using System.Collections.Generic;
 using System.Threading.Tasks;

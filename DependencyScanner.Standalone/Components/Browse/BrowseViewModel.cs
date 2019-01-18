@@ -1,4 +1,5 @@
-﻿using DependencyScanner.Core.Interfaces;
+﻿using DependencyScanner.Api.Services;
+using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
 using DependencyScanner.Standalone.Components;
 using DependencyScanner.Standalone.Components.Browse;
