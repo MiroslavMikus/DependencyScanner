@@ -50,6 +50,7 @@
     <Compile Include="Model\WorkingDirectorySettings.cs" />
     <Compile Include="Services\WorkingDirectorySettingsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkingDirectoryModule.cs" />
     <Compile Include="WorkingDirectoryPlugin.cs" />
     <Compile Include="WorkingDirectoryView.xaml.cs">
       <DependentUpon>WorkingDirectoryView.xaml</DependentUpon>
