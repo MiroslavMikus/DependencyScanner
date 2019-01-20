@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
 using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,7 +18,7 @@ using System.Windows.Input;
 
 namespace DependencyScanner.Plugins.Wd.Model
 {
-    public class WorkingDirectory : ObservableObject, IWorkingDirectory
+    public class WorkingDirectory : ObservableObject, IWorkingDirectory, IEquatable<WorkingDirectory>
     {
         private string _path;
         private readonly ILogger _logger;
@@ -62,6 +63,26 @@ namespace DependencyScanner.Plugins.Wd.Model
             {
                 _cancellationTokenSource?.Cancel();
             });
+        }
+
+        public bool Equals(WorkingDirectory other)
+        {
+            return this.Path == other.Path;
+        }
+
+        public override bool Equals(object other)
+        {
+            if (other is WorkingDirectory wd)
+            {
+                return this.Equals(wd);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return 467214278 + EqualityComparer<string>.Default.GetHashCode(Path);
         }
     }
 }
