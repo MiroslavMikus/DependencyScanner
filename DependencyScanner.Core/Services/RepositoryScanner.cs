@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DependencyScanner.Core.Services
 {
-    public class RepositoryScanner : IRepositoryScanner
+    public class RepositoryScanner : IRepositoryScanner, IService
     {
         private const string GitPattern = ".git";
         private readonly Func<string, IGitInfo> _gitCtor;
