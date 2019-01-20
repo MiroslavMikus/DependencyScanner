@@ -92,6 +92,8 @@ namespace DependencyScanner.Standalone
 
             builder.RegisterModule(new AppModule());
 
+            builder.RegisterModule(new CoreModule());
+
             return builder.Build();
         }
 

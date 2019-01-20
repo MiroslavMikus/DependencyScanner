@@ -39,7 +39,6 @@ namespace DependencyScanner.Standalone
                 .ToArray();
 
             // register all plugins
-
             builder.RegisterAssemblyTypes(allAssemblies)
                 .Where(t => t.GetInterfaces().Contains(typeof(IPlugin)) && !t.IsAbstract)
                 .As<IPlugin>()
