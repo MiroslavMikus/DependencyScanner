@@ -12,22 +12,26 @@ namespace Dependency.Scanner.Plugins.Wd
 {
     public class WorkingDirectoryPlugin : IPlugin
     {
-        private readonly WorkingDirectorySettings _settings;
-        private readonly WorkingDirectorySettingsManager _settingsManager;
+        //private readonly WorkingDirectorySettings _settings;
+        //private readonly WorkingDirectorySettingsManager _settingsManager;
         private readonly WorkingDirectoryViewModel _viewModel;
 
         public string Title => "Working directories";
 
         public string Description => "Organize and browse your working directories";
 
-        public UserControl ContentView => new WorkingDirectoryView();
+        public UserControl ContentView { get; private set; }
 
         public int Order => 0;
 
         public WorkingDirectoryPlugin(WorkingDirectoryViewModel viewModel)
         {
             _viewModel = viewModel;
-            ContentView.DataContext = _viewModel;
+
+            ContentView = new WorkingDirectoryView()
+            {
+                DataContext = _viewModel
+            };
         }
     }
 }

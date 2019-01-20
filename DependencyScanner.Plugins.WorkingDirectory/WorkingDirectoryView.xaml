@@ -17,6 +17,12 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Button Command="{Binding PickWorkingDirectoryCommand}" Content="Select new working directory" />
-        <ItemsControl ItemsSource="{Binding Directories}" Grid.Row="1" />
+        <ItemsControl ItemsSource="{Binding Directories}" Grid.Row="1" Background="LightBlue">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Path}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

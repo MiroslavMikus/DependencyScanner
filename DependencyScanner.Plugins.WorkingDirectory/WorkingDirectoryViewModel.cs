@@ -4,6 +4,7 @@ using DependencyScanner.Api.Services;
 using DependencyScanner.Plugins.Wd.Model;
 using DependencyScanner.Plugins.Wd.Services;
 using DependencyScanner.Standalone.Events;
+using DependencyScanner.Standalone.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -11,6 +12,7 @@ using Serilog;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 
 namespace Dependency.Scanner.Plugins.Wd
 {
@@ -20,6 +22,8 @@ namespace Dependency.Scanner.Plugins.Wd
         public RelayCommand CancelCommand { get; private set; }
         public RelayCommand<string> RemoveWorkingDirectoryCommand { get; private set; }
 
+        public ObservableProgress _globalProgress { get; }
+        private CancellationTokenSource _cancellationTokenSource;
         private readonly WorkingDirectorySettingsManager _settingsManager;
         private readonly IMessenger _messenger;
         private readonly ILogger _logger;
@@ -34,12 +38,14 @@ namespace Dependency.Scanner.Plugins.Wd
             ILogger logger,
             IRepositoryScanner scanner,
             IFolderPicker folderPicker,
-            Func<IWorkingDirectory> wdCtor
+            Func<IWorkingDirectory> wdCtor,
+            ObservableProgress progress
             )
         {
             _settingsManager = settingsManager;
             _messenger = messenger;
             _logger = logger;
+            _globalProgress = progress;
             _scanner = scanner;
             _folderPicker = folderPicker;
             _wdCtor = wdCtor;
@@ -60,21 +66,35 @@ namespace Dependency.Scanner.Plugins.Wd
             {
                 var folder = _folderPicker.PickFolder();
 
-                var progress = new DefaultProgress();
+                if (!string.IsNullOrEmpty(folder))
+                {
+                    _cancellationTokenSource = new CancellationTokenSource();
 
-                var newRepos = await _scanner.ScanForGitRepositories(folder, progress);
+                    var progress = new DefaultProgress()
+                    {
+                        Token = _cancellationTokenSource.Token
+                    };
 
-                var newWorkinDir = _wdCtor();
+                    _globalProgress.RegisterProgress(progress);
 
-                newWorkinDir.Path = folder;
+                    _globalProgress.ProgressMessage = "Init scan";
 
-                newWorkinDir.Repositories = new ObservableCollection<IRepository>(newRepos.Select(a => new Repository(a)));
+                    _globalProgress.Progress = 0D;
 
-                Directories.Add(newWorkinDir);
+                    var newRepos = await _scanner.ScanForGitRepositories(folder, _globalProgress);
 
-                _settingsManager.SyncSettings(Directories);
+                    var newWorkinDir = _wdCtor();
 
-                _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(newWorkinDir));
+                    newWorkinDir.Path = folder;
+
+                    newWorkinDir.Repositories = new ObservableCollection<IRepository>(newRepos.Select(a => new Repository(a)));
+
+                    Directories.Add(newWorkinDir);
+
+                    _settingsManager.SyncSettings(Directories);
+
+                    _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(newWorkinDir));
+                }
             });
 
             RemoveWorkingDirectoryCommand = new RelayCommand<string>(a =>
