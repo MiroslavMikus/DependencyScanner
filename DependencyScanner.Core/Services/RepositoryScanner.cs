@@ -36,12 +36,18 @@ namespace DependencyScanner.Core.Services
 
             var infos = gitFolders.Select(a => _gitCtor(a)).ToArray();
 
+            List<Task> InitTasks = new List<Task>();
+
             for (int i = 0; i < gitFolders.Length; i++)
             {
                 progress.Report(new ProgressMessage { Value = Progress(i + 1), Message = $"Scanning {i + 1}/{gitFolders.Count()}" });
 
-                await infos[i].Init(true);
+                InitTasks.Add(infos[i].Init(true));
             }
+
+            progress.Report(new ProgressMessage { Value = 0, Message = "Finishing scan" });
+
+            await Task.WhenAll(InitTasks);
 
             return infos;
         }

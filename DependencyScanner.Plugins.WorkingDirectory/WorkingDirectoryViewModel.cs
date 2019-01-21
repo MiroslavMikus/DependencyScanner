@@ -87,19 +87,13 @@ namespace Dependency.Scanner.Plugins.Wd
 
                     try
                     {
-                        var newRepos = await _scanner.ScanForGitRepositories(folder, _globalProgress);
+                        var wd = await Scan(_globalProgress, folder);
 
-                        var newWorkinDir = _wdCtor();
-
-                        newWorkinDir.Repositories = new ObservableCollection<IRepository>(newRepos.Select(a => new Repository(a)));
-
-                        newWorkinDir.Path = folder;
-
-                        Directories.Add(newWorkinDir);
+                        Directories.Add(wd);
 
                         _settingsManager.SyncSettings(Directories);
 
-                        _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(newWorkinDir));
+                        _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(wd));
                     }
                     catch (OperationCanceledException)
                     {
@@ -123,6 +117,24 @@ namespace Dependency.Scanner.Plugins.Wd
 
                     _messenger.Send<RemoveWorkinbDirectory>(new RemoveWorkinbDirectory(wd));
                 }
+            });
+        }
+
+        private Task<IWorkingDirectory> Scan(ICancelableProgress<ProgressMessage> progress, string folder)
+        {
+            return Task.Run(async () =>
+            {
+                var repos = await _scanner.ScanForGitRepositories(folder, progress);
+
+                var newWorkinDir = _wdCtor();
+
+                newWorkinDir.Repositories = new ObservableCollection<IRepository>(repos.Select(a => new Repository(a)));
+
+                newWorkinDir.Path = folder;
+
+                Directories.Add(newWorkinDir);
+
+                return newWorkinDir;
             });
         }
     }
