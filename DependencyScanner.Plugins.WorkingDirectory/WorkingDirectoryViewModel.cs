@@ -13,6 +13,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Dependency.Scanner.Plugins.Wd
 {
@@ -78,11 +79,11 @@ namespace Dependency.Scanner.Plugins.Wd
 
                     _globalProgress.RegisterProgress(progress);
 
+                    _globalProgress.IsOpen = true;
+
                     _globalProgress.ProgressMessage = "Init scan";
 
                     _globalProgress.Progress = 0D;
-
-                    _globalProgress.IsOpen = true;
 
                     try
                     {
@@ -90,9 +91,9 @@ namespace Dependency.Scanner.Plugins.Wd
 
                         var newWorkinDir = _wdCtor();
 
-                        newWorkinDir.Path = folder;
-
                         newWorkinDir.Repositories = new ObservableCollection<IRepository>(newRepos.Select(a => new Repository(a)));
+
+                        newWorkinDir.Path = folder;
 
                         Directories.Add(newWorkinDir);
 
