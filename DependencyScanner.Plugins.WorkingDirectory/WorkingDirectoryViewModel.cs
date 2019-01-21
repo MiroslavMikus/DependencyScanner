@@ -66,7 +66,8 @@ namespace Dependency.Scanner.Plugins.Wd
             {
                 var folder = _folderPicker.PickFolder();
 
-                if (!string.IsNullOrEmpty(folder))
+                // folder is not null or empty && directories list doesnt contain same path!
+                if (!string.IsNullOrEmpty(folder) && !Directories.Any(a => a.Path == folder))
                 {
                     _cancellationTokenSource = new CancellationTokenSource();
 
@@ -81,19 +82,31 @@ namespace Dependency.Scanner.Plugins.Wd
 
                     _globalProgress.Progress = 0D;
 
-                    var newRepos = await _scanner.ScanForGitRepositories(folder, _globalProgress);
+                    _globalProgress.IsOpen = true;
 
-                    var newWorkinDir = _wdCtor();
+                    try
+                    {
+                        var newRepos = await _scanner.ScanForGitRepositories(folder, _globalProgress);
 
-                    newWorkinDir.Path = folder;
+                        var newWorkinDir = _wdCtor();
 
-                    newWorkinDir.Repositories = new ObservableCollection<IRepository>(newRepos.Select(a => new Repository(a)));
+                        newWorkinDir.Path = folder;
 
-                    Directories.Add(newWorkinDir);
+                        newWorkinDir.Repositories = new ObservableCollection<IRepository>(newRepos.Select(a => new Repository(a)));
 
-                    _settingsManager.SyncSettings(Directories);
+                        Directories.Add(newWorkinDir);
 
-                    _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(newWorkinDir));
+                        _settingsManager.SyncSettings(Directories);
+
+                        _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(newWorkinDir));
+                    }
+                    catch (OperationCanceledException)
+                    {
+                    }
+                    finally
+                    {
+                        _globalProgress.IsOpen = false;
+                    }
                 }
             });
 
