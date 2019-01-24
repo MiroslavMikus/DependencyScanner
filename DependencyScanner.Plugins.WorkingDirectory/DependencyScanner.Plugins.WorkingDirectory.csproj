@@ -89,4 +89,10 @@
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <MyFiles Include="$(OutputPath)\**\*.dll" />
+    </ItemGroup>
+    <Microsoft.Build.Tasks.Copy SourceFiles="@(MyFiles)" DestinationFiles="@(MyFiles->'..\DependencyScanner.Standalone\bin\$(Configuration)\plugins\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
 </Project>
