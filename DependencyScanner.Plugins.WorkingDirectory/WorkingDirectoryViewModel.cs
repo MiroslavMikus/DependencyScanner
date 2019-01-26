@@ -8,6 +8,7 @@ using DependencyScanner.Standalone.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using GalaSoft.MvvmLight.Threading;
 using Serilog;
 using System;
 using System.Collections.ObjectModel;
@@ -89,7 +90,10 @@ namespace Dependency.Scanner.Plugins.Wd
                     {
                         var wd = await Scan(_globalProgress, folder);
 
-                        Directories.Add(wd);
+                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                        {
+                            Directories.Add(wd);
+                        });
 
                         _settingsManager.SyncSettings(Directories);
 
@@ -131,8 +135,6 @@ namespace Dependency.Scanner.Plugins.Wd
                 newWorkinDir.Repositories = new ObservableCollection<IRepository>(repos.Select(a => new Repository(a)));
 
                 newWorkinDir.Path = folder;
-
-                Directories.Add(newWorkinDir);
 
                 return newWorkinDir;
             });
