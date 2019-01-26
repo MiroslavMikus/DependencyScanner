@@ -9,20 +9,28 @@
              d:DataContext="{d:DesignInstance local:WorkingDirectoryViewModel, IsDesignTimeCreatable=False}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition Height="421*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Button Command="{Binding PickWorkingDirectoryCommand}" Content="Select new working directory" />
-        <ItemsControl ItemsSource="{Binding Directories}" Grid.Row="1" Background="LightBlue">
+        <Button Command="{Binding PickWorkingDirectoryCommand}" Content="Select new working directory" Margin="5" />
+        
+        <ListBox ItemsSource="{Binding Directories}" Grid.Row="1" x:Name="WdList" >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Label Content="{Binding Path}"/>
+                    <Label Content="{Binding Path}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </ListBox>
+        <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ElementName=WdList, Path=SelectedItem.Repositories}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding GitInfo.Root.FullName}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>
