@@ -2,11 +2,11 @@
 
 namespace DependencyScanner.Standalone.Events
 {
-    public class RemoveWorkinbDirectory
+    public class RemoveWorkingDirectory
     {
         public IWorkingDirectory Directory { get; }
 
-        public RemoveWorkinbDirectory(IWorkingDirectory directory)
+        public RemoveWorkingDirectory(IWorkingDirectory directory)
         {
             Directory = directory;
         }

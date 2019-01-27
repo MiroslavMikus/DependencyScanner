@@ -119,7 +119,7 @@ namespace Dependency.Scanner.Plugins.Wd
 
                     _settingsManager.SyncSettings(Directories);
 
-                    _messenger.Send<RemoveWorkinbDirectory>(new RemoveWorkinbDirectory(wd));
+                    _messenger.Send<RemoveWorkingDirectory>(new RemoveWorkingDirectory(wd));
                 }
             });
         }
