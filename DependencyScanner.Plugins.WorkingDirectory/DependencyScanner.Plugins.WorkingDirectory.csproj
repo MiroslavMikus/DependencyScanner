@@ -45,6 +45,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Desing\DesignGitConfig.cs" />
+    <Compile Include="Desing\DesignGitInfo.cs" />
+    <Compile Include="Desing\DesignWrokingDirectory.cs" />
     <Compile Include="Model\Repository.cs" />
     <Compile Include="Model\WorkingDirectory.cs" />
     <Compile Include="Model\WorkingDirectorySettings.cs" />

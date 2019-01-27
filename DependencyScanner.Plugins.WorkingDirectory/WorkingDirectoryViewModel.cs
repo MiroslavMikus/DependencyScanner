@@ -1,6 +1,7 @@
 ﻿using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Api.Model;
 using DependencyScanner.Api.Services;
+using DependencyScanner.Plugins.Wd.Desing;
 using DependencyScanner.Plugins.Wd.Model;
 using DependencyScanner.Plugins.Wd.Services;
 using DependencyScanner.Standalone.Events;
@@ -18,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace Dependency.Scanner.Plugins.Wd
 {
-    public class WorkingDirectoryViewModel : ObservableObject
+    public class WorkingDirectoryViewModel : ViewModelBase
     {
         public RelayCommand PickWorkingDirectoryCommand { get; private set; }
         public RelayCommand CancelCommand { get; private set; }
@@ -34,6 +35,27 @@ namespace Dependency.Scanner.Plugins.Wd
         private readonly Func<IWorkingDirectory> _wdCtor;
 
         public ObservableCollection<IWorkingDirectory> Directories { get; set; }
+
+        public WorkingDirectoryViewModel()
+        {
+            if (!IsInDesignMode)
+            {
+                throw new ArgumentException("Empty constructor should be used only at design time");
+            }
+
+            var testwd = new DesignWrokingDirectory()
+            {
+                Path = @"C:\DemoPaht"
+            };
+
+            testwd.Repositories.Add(new Repository(new DesignGitInfo()));
+            testwd.Repositories.Add(new Repository(new DesignGitInfo()));
+
+            Directories = new ObservableCollection<IWorkingDirectory>
+            {
+                testwd
+            };
+        }
 
         public WorkingDirectoryViewModel(WorkingDirectorySettingsManager settingsManager,
             IMessenger messenger,
