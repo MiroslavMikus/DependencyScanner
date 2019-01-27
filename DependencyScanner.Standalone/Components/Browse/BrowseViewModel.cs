@@ -1,9 +1,9 @@
-﻿using DependencyScanner.Api.Services;
+﻿using DependencyScanner.Api.Events;
+using DependencyScanner.Api.Services;
 using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
 using DependencyScanner.Standalone.Components;
 using DependencyScanner.Standalone.Components.Browse;
-using DependencyScanner.Standalone.Events;
 using DependencyScanner.Standalone.Services;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;

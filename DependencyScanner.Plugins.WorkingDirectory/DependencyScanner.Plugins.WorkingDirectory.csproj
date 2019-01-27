@@ -70,10 +70,6 @@
       <Project>{4b6357ea-79db-4dcd-93a6-3335dd12c904}</Project>
       <Name>DependencyScanner.Core.Gui</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DependencyScanner.Standalone\DependencyScanner.Standalone.csproj">
-      <Project>{1F2234C6-6EC6-4E8F-A72C-CA766012DB13}</Project>
-      <Name>DependencyScanner.Standalone</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="WorkingDirectoryView.xaml">
@@ -87,6 +83,9 @@
     </PackageReference>
     <PackageReference Include="Costura.Fody">
       <Version>3.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="MahApps.Metro">
+      <Version>1.6.5</Version>
     </PackageReference>
     <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome">
       <Version>2.3.0</Version>

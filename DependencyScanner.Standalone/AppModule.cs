@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Api.Services;
 using DependencyScanner.Core;
 using DependencyScanner.Core.GitClient;
 using DependencyScanner.Core.Interfaces;
@@ -77,6 +78,11 @@ namespace DependencyScanner.Standalone
             builder.RegisterType<SettingsManager>()
                 .As<ISettingsManager>()
                 .InstancePerLifetimeScope();
+
+            // Progress bar
+            builder.RegisterType<ObservableProgress>()
+                .As<ICancelableProgress<ProgressMessage>>()
+                .SingleInstance();
 
             // View
             builder.Register(a => new MainWindow()

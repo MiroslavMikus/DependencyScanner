@@ -144,8 +144,6 @@
     </Compile>
     <Compile Include="Components\SettingsViewModel.cs" />
     <Compile Include="CompositionModule.cs" />
-    <Compile Include="Events\AddWorkindDirectory.cs" />
-    <Compile Include="Events\RemoveWorkingDirectory.cs" />
     <Compile Include="Services\FolderPicker.cs" />
     <Compile Include="ViewModel\PluginBase.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectPlugin.cs" />
@@ -184,7 +182,6 @@
     <Compile Include="Converters\BoolToVisibilityMultiValueConverter.cs" />
     <Compile Include="Converters\NullToBoolConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
-    <Compile Include="Events\ClearResultEvent.cs" />
     <Compile Include="Services\CommandManager.cs" />
     <Compile Include="Services\EventSink.cs" />
     <Compile Include="Services\ObservableProgress.cs" />

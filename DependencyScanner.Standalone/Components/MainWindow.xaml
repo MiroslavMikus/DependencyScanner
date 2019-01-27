@@ -19,8 +19,9 @@
         xmlns:root="clr-namespace:DependencyScanner.Standalone"
         MinWidth="500"
         x:Name="TheMainWindow"
-    d:DataContext="{d:DesignInstance local:MainViewModel , IsDesignTimeCreatable=False}"
-        RightWindowCommandsOverlayBehavior="Never">
+        d:DataContext="{d:DesignInstance local:MainViewModel , IsDesignTimeCreatable=False}"
+        RightWindowCommandsOverlayBehavior="Never"
+        d:DesignHeight="450" d:DesignWidth="800">
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button Content="Settings" Click="Settings_Click" />
@@ -113,9 +114,13 @@
         <Grid.Resources>
             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
         </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="241*" />
+        </Grid.ColumnDefinitions>
         <TabControl Controls:TabControlHelper.Underlined="SelectedTabItem" x:Name="MainTabControl"
                     ItemsSource="{Binding Plugins}"
-                    SelectedIndex="0">
+                    SelectedIndex="0" Grid.ColumnSpan="2">
             <TabControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type plugin:IPlugin}">
                     <TextBlock Text="{Binding Title}" />

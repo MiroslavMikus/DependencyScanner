@@ -1,6 +1,6 @@
 ﻿using DependencyScanner.Api.Model;
 
-namespace DependencyScanner.Standalone.Events
+namespace DependencyScanner.Api.Events
 {
     public class RemoveWorkingDirectory
     {

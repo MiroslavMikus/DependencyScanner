@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\AddWorkindDirectory.cs" />
+    <Compile Include="Events\ClearResultEvent.cs" />
+    <Compile Include="Events\RemoveWorkingDirectory.cs" />
     <Compile Include="Interfaces\ICancelableProgress.cs" />
     <Compile Include="Interfaces\IFolderPicker.cs" />
     <Compile Include="Interfaces\IGitConfig.cs" />

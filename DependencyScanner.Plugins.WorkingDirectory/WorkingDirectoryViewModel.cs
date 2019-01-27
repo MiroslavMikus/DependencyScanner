@@ -1,11 +1,10 @@
-﻿using DependencyScanner.Api.Interfaces;
+﻿using DependencyScanner.Api.Events;
+using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Api.Model;
 using DependencyScanner.Api.Services;
 using DependencyScanner.Plugins.Wd.Desing;
 using DependencyScanner.Plugins.Wd.Model;
 using DependencyScanner.Plugins.Wd.Services;
-using DependencyScanner.Standalone.Events;
-using DependencyScanner.Standalone.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -25,7 +24,7 @@ namespace Dependency.Scanner.Plugins.Wd
         public RelayCommand CancelCommand { get; private set; }
         public RelayCommand<string> RemoveWorkingDirectoryCommand { get; private set; }
 
-        public ObservableProgress _globalProgress { get; }
+        public ICancelableProgress<ProgressMessage> _globalProgress { get; }
         private CancellationTokenSource _cancellationTokenSource;
         private readonly WorkingDirectorySettingsManager _settingsManager;
         private readonly IMessenger _messenger;
@@ -70,7 +69,7 @@ namespace Dependency.Scanner.Plugins.Wd
             IRepositoryScanner scanner,
             IFolderPicker folderPicker,
             Func<IWorkingDirectory> wdCtor,
-            ObservableProgress progress
+            ICancelableProgress<ProgressMessage> progress
             )
         {
             _settingsManager = settingsManager;
