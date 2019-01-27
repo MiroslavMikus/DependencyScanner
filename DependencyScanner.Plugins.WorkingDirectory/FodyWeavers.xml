@@ -3,6 +3,7 @@
   <Costura IncludeDebugSymbols="false">
     <ExcludeAssemblies>
       Autofac
+      MahApps.Metro.IconPacks.FontAwesome
     </ExcludeAssemblies>
   </Costura>
 </Weavers>

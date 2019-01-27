@@ -27,7 +27,7 @@ namespace DependencyScanner.Plugins.Wd.Services
             foreach (var wdSettings in Settings.WorkingDirectoryStructure)
             {
                 // reassembly repos
-                var repos = wdSettings.Value.Select(a =>
+                var repos = wdSettings.Repositories.Select(a =>
                 {
                     var git = _gitCtor(a);
 
@@ -39,7 +39,9 @@ namespace DependencyScanner.Plugins.Wd.Services
                 // create working directory
                 var wd = _wdCtor();
 
-                wd.Path = wdSettings.Key;
+                wd.Path = wdSettings.Path;
+
+                wd.Name = wdSettings.Name;
 
                 wd.Repositories = new ObservableCollection<IRepository>(repos);
 
@@ -51,7 +53,12 @@ namespace DependencyScanner.Plugins.Wd.Services
         {
             string[] GetRepos(IWorkingDirectory wd) => wd.Repositories.Select(a => a.GitInfo.Root.FullName).ToArray();
 
-            Settings.WorkingDirectoryStructure = workingDirectories.ToDictionary(a => a.Path, b => GetRepos(b));
+            Settings.WorkingDirectoryStructure = workingDirectories.Select(a => new StorableWorkingDirectory
+            {
+                Path = a.Path,
+                Name = a.Name,
+                Repositories = GetRepos(a)
+            }).ToList();
         }
     }
 }

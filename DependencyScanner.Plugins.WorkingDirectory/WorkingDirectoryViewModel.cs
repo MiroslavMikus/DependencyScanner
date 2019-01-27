@@ -45,15 +45,22 @@ namespace Dependency.Scanner.Plugins.Wd
 
             var testwd = new DesignWrokingDirectory()
             {
+                Name = "FirstRepo",
                 Path = @"C:\DemoPaht"
             };
 
             testwd.Repositories.Add(new Repository(new DesignGitInfo()));
             testwd.Repositories.Add(new Repository(new DesignGitInfo()));
 
+            var longPathWd = new DesignWrokingDirectory()
+            {
+                Name = "LongPathWd",
+                Path = @"C:\DemoPaht\extra\long\paht\here\be\hapy\working\directory"
+            };
+
             Directories = new ObservableCollection<IWorkingDirectory>
             {
-                testwd
+                testwd, longPathWd
             };
         }
 

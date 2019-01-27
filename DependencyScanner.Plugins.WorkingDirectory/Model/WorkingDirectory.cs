@@ -32,6 +32,9 @@ namespace DependencyScanner.Plugins.Wd.Model
         public ICommand PullCommand { get; }
         public ICommand CancelCommand { get; }
 
+        private string _name;
+        public string Name { get => _name; set => Set(ref _name, value); }
+
         public WorkingDirectory(ILogger logger, IRepositoryScanner scanner, IMessenger messenger)
         {
             _logger = logger;

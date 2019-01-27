@@ -14,5 +14,7 @@ namespace DependencyScanner.Plugins.Wd.Desing
         public ICommand PullCommand => new RelayCommand(() => { Console.WriteLine("Calling PullCommand"); });
 
         public ICommand CancelCommand => new RelayCommand(() => { Console.WriteLine("Calling CancelCommand"); });
+
+        public string Name { get; set; }
     }
 }

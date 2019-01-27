@@ -4,28 +4,37 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Dependency.Scanner.Plugins.Wd"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance local:WorkingDirectoryViewModel, IsDesignTimeCreatable=True}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="250" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+
         <Button Command="{Binding PickWorkingDirectoryCommand}" Content="Select new working directory" Margin="5" />
 
-        <ListBox ItemsSource="{Binding Directories}" Grid.Row="1" x:Name="WdList" SelectedIndex="0">
+        <ListBox ItemsSource="{Binding Directories}" Grid.Row="2" x:Name="WdList" SelectedIndex="0">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Label Content="{Binding Path}" />
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconFontAwesome Kind="FolderSolid"  VerticalAlignment="Center" />
+                        <StackPanel Margin="7">
+                            <Label Content="{Binding Name}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" />
+                            <TextBlock Margin="4 2 2 2" Text="{Binding Path}" FontWeight="Regular" FontSize="11" TextWrapping="Wrap" Width="200" />
+                        </StackPanel>
+                    </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>
-        <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ElementName=WdList, Path=SelectedItem.Repositories}">
+        <ListBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding ElementName=WdList, Path=SelectedItem.Repositories}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Label Content="{Binding GitInfo.Root.FullName}" />
