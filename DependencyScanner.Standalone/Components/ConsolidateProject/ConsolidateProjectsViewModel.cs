@@ -1,7 +1,7 @@
-﻿using DependencyScanner.Core;
+﻿using DependencyScanner.Api.Events;
+using DependencyScanner.Core;
 using DependencyScanner.Core.Model;
 using DependencyScanner.Standalone.Components.Consolidate_Project;
-using DependencyScanner.Standalone.Events;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;

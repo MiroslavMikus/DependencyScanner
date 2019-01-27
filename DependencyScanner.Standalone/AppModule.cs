@@ -79,11 +79,6 @@ namespace DependencyScanner.Standalone
                 .As<ISettingsManager>()
                 .InstancePerLifetimeScope();
 
-            // Progress bar
-            builder.RegisterType<ObservableProgress>()
-                .As<ICancelableProgress<ProgressMessage>>()
-                .SingleInstance();
-
             // View
             builder.Register(a => new MainWindow()
             {

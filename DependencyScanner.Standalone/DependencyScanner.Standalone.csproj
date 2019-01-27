@@ -145,6 +145,7 @@
     <Compile Include="Components\SettingsViewModel.cs" />
     <Compile Include="CompositionModule.cs" />
     <Compile Include="Services\FolderPicker.cs" />
+    <Compile Include="Services\WindowAccess.cs" />
     <Compile Include="ViewModel\PluginBase.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectPlugin.cs" />
     <Compile Include="Components\ConsolidateProject\ConsolidateProjectsViewModel.cs" />
@@ -304,6 +305,10 @@
     <ProjectReference Include="..\DependencyScanner.Api\DependencyScanner.Api.csproj">
       <Project>{b3bde71e-510a-413f-8a59-881200c45127}</Project>
       <Name>DependencyScanner.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DependencyScanner.Core.Gui\DependencyScanner.Core.Gui.csproj">
+      <Project>{4B6357EA-79DB-4DCD-93A6-3335DD12C904}</Project>
+      <Name>DependencyScanner.Core.Gui</Name>
     </ProjectReference>
     <ProjectReference Include="..\DependencyScanner.Core\DependencyScanner.Core.csproj">
       <Project>{6e72af77-f76b-406b-93c2-8f0ffc3ef5e5}</Project>

@@ -15,7 +15,7 @@ namespace DependencyScanner.Standalone.Services
     /// <summary>
     /// Observable Progress decorator
     /// </summary>
-    public class ObservableProgress : ObservableObject, ICancelableProgress<ProgressMessage>
+    public class ObservableProgress : ObservableObject, ICancelableProgress<ProgressMessage>, IService
     {
         private ICancelableProgress<ProgressMessage> _progress;
 

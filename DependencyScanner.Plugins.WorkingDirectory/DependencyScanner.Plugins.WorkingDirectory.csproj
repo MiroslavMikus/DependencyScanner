@@ -92,12 +92,14 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="FodyWeavers.xml" />
+    <Resource Include="FodyWeavers.xml">
+      <SubType>Designer</SubType>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <ItemGroup>
-      <MyFiles Include="$(OutputPath)\**\*.dll" />
+      <MyFiles Include="$(OutputPath)\**\DependencyScanner.Plugins.Wd.dll" />
     </ItemGroup>
     <Microsoft.Build.Tasks.Copy SourceFiles="@(MyFiles)" DestinationFiles="@(MyFiles->'..\DependencyScanner.Standalone\bin\$(Configuration)\plugins\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>

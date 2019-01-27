@@ -2,6 +2,7 @@
 using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Api.Model;
 using DependencyScanner.Api.Services;
+using DependencyScanner.Core.Gui.Interfaces;
 using DependencyScanner.Plugins.Wd.Desing;
 using DependencyScanner.Plugins.Wd.Model;
 using DependencyScanner.Plugins.Wd.Services;
@@ -9,6 +10,8 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Serilog;
 using System;
 using System.Collections.ObjectModel;
@@ -32,6 +35,7 @@ namespace Dependency.Scanner.Plugins.Wd
         private readonly IRepositoryScanner _scanner;
         private readonly IFolderPicker _folderPicker;
         private readonly Func<IWorkingDirectory> _wdCtor;
+        private readonly IWindowAccess _windowAccess;
 
         public ObservableCollection<IWorkingDirectory> Directories { get; set; }
 
@@ -69,17 +73,18 @@ namespace Dependency.Scanner.Plugins.Wd
             IRepositoryScanner scanner,
             IFolderPicker folderPicker,
             Func<IWorkingDirectory> wdCtor,
-            ICancelableProgress<ProgressMessage> progress
+            IWindowAccess windowAccess
+            //ICancelableProgress<ProgressMessage> progress
             )
         {
             _settingsManager = settingsManager;
             _messenger = messenger;
             _logger = logger;
-            _globalProgress = progress;
+            //_globalProgress = progress;
             _scanner = scanner;
             _folderPicker = folderPicker;
             _wdCtor = wdCtor;
-
+            _windowAccess = windowAccess;
             Directories = new ObservableCollection<IWorkingDirectory>(_settingsManager.RestoreWorkingDirectories());
 
             InitCommands();
@@ -88,6 +93,20 @@ namespace Dependency.Scanner.Plugins.Wd
             {
                 _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(dir));
             }
+
+            var win = _windowAccess.MainWindow;
+
+            var test = win is MetroWindow;
+
+            var mySettings = new MetroDialogSettings()
+            {
+                DefaultButtonFocus = MessageDialogResult.Affirmative,
+                AffirmativeButtonText = "Update",
+                NegativeButtonText = "Do not update",
+                FirstAuxiliaryButtonText = "Cancel"
+            };
+
+            (win as MetroWindow).ShowMessageAsync("Test Header", "testing message", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
         }
 
         private void InitCommands()
@@ -106,13 +125,13 @@ namespace Dependency.Scanner.Plugins.Wd
                         Token = _cancellationTokenSource.Token
                     };
 
-                    _globalProgress.RegisterProgress(progress);
+                    //_globalProgress.RegisterProgress(progress);
 
-                    _globalProgress.IsOpen = true;
+                    //_globalProgress.IsOpen = true;
 
-                    _globalProgress.ProgressMessage = "Init scan";
+                    //_globalProgress.ProgressMessage = "Init scan";
 
-                    _globalProgress.Progress = 0D;
+                    //_globalProgress.Progress = 0D;
 
                     try
                     {
@@ -132,7 +151,7 @@ namespace Dependency.Scanner.Plugins.Wd
                     }
                     finally
                     {
-                        _globalProgress.IsOpen = false;
+                        //_globalProgress.IsOpen = false;
                     }
                 }
             });
