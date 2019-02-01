@@ -11,6 +11,7 @@ using DependencyScanner.Standalone.Services;
 using DependencyScanner.Standalone.Setting;
 using GalaSoft.MvvmLight.Messaging;
 using LiteDB;
+using MahApps.Metro.Controls.Dialogs;
 using Serilog;
 using System;
 using System.IO;
@@ -52,6 +53,8 @@ namespace DependencyScanner.Standalone
             }).As<ILogger>().SingleInstance();
 
             builder.RegisterType<Messenger>().AsImplementedInterfaces().SingleInstance();
+
+            builder.RegisterInstance(DialogCoordinator.Instance);
 
             builder.RegisterType<ReportStorage>()
                 .WithParameter(new TypedParameter(typeof(string), GetProgramdataPath("Reports")))

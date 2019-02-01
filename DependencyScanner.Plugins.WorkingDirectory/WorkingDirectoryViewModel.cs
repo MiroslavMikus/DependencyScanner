@@ -100,7 +100,12 @@ namespace Dependency.Scanner.Plugins.Wd
                 var controller = await _dialogCoordinator.ShowProgressAsync(this, "Progress from VM", "Progressing all the things, wait 3 seconds");
                 controller.SetIndeterminate();
 
-                await Task.Delay(3000);
+                for (double i = 0; i < 10; i++)
+                {
+                    await Task.Delay(300);
+                    controller.SetMessage("Hardworking: " + i);
+                    controller.SetProgress(i / 10d);
+                }
 
                 await controller.CloseAsync();
 
