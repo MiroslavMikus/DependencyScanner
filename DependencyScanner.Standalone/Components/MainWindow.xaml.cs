@@ -36,7 +36,7 @@ namespace DependencyScanner.Standalone
             InitializeComponent();
 
 #if !DEBUG
-            //todo move this to the view model!! and use IWindowAccess interface
+            //todo move this to the view model!! and use DialogCoordinator interface
             Task.Factory.StartNew(async () =>
             {
                 var updater = new ChocoUpdater();

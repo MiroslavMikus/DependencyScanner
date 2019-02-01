@@ -2,7 +2,6 @@
 using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Api.Model;
 using DependencyScanner.Api.Services;
-using DependencyScanner.Core.Gui.Interfaces;
 using DependencyScanner.Plugins.Wd.Desing;
 using DependencyScanner.Plugins.Wd.Model;
 using DependencyScanner.Plugins.Wd.Services;
@@ -35,7 +34,7 @@ namespace Dependency.Scanner.Plugins.Wd
         private readonly IRepositoryScanner _scanner;
         private readonly IFolderPicker _folderPicker;
         private readonly Func<IWorkingDirectory> _wdCtor;
-        private readonly IWindowAccess _windowAccess;
+        private readonly IDialogCoordinator _dialogCoordinator;
 
         public ObservableCollection<IWorkingDirectory> Directories { get; set; }
 
@@ -73,18 +72,17 @@ namespace Dependency.Scanner.Plugins.Wd
             IRepositoryScanner scanner,
             IFolderPicker folderPicker,
             Func<IWorkingDirectory> wdCtor,
-            IWindowAccess windowAccess
-            //ICancelableProgress<ProgressMessage> progress
+            IDialogCoordinator dialogCoordinator
             )
         {
             _settingsManager = settingsManager;
             _messenger = messenger;
             _logger = logger;
-            //_globalProgress = progress;
             _scanner = scanner;
             _folderPicker = folderPicker;
             _wdCtor = wdCtor;
-            _windowAccess = windowAccess;
+            _dialogCoordinator = dialogCoordinator;
+
             Directories = new ObservableCollection<IWorkingDirectory>(_settingsManager.RestoreWorkingDirectories());
 
             InitCommands();
@@ -93,67 +91,60 @@ namespace Dependency.Scanner.Plugins.Wd
             {
                 _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(dir));
             }
-
-            var win = _windowAccess.MainWindow;
-
-            var test = win is MetroWindow;
-
-            var mySettings = new MetroDialogSettings()
-            {
-                DefaultButtonFocus = MessageDialogResult.Affirmative,
-                AffirmativeButtonText = "Update",
-                NegativeButtonText = "Do not update",
-                FirstAuxiliaryButtonText = "Cancel"
-            };
-
-            (win as MetroWindow).ShowMessageAsync("Test Header", "testing message", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
         }
 
         private void InitCommands()
         {
             PickWorkingDirectoryCommand = new RelayCommand(async () =>
             {
-                var folder = _folderPicker.PickFolder();
+                var controller = await _dialogCoordinator.ShowProgressAsync(this, "Progress from VM", "Progressing all the things, wait 3 seconds");
+                controller.SetIndeterminate();
 
-                // folder is not null or empty && directories list doesnt contain same path!
-                if (!string.IsNullOrEmpty(folder) && !Directories.Any(a => a.Path == folder))
-                {
-                    _cancellationTokenSource = new CancellationTokenSource();
+                await Task.Delay(3000);
 
-                    var progress = new DefaultProgress()
-                    {
-                        Token = _cancellationTokenSource.Token
-                    };
+                await controller.CloseAsync();
 
-                    //_globalProgress.RegisterProgress(progress);
+                //var folder = _folderPicker.PickFolder();
 
-                    //_globalProgress.IsOpen = true;
+                //// folder is not null or empty && directories list doesnt contain same path!
+                //if (!string.IsNullOrEmpty(folder) && !Directories.Any(a => a.Path == folder))
+                //{
+                //    _cancellationTokenSource = new CancellationTokenSource();
 
-                    //_globalProgress.ProgressMessage = "Init scan";
+                //    var progress = new DefaultProgress()
+                //    {
+                //        Token = _cancellationTokenSource.Token
+                //    };
 
-                    //_globalProgress.Progress = 0D;
+                //    //_globalProgress.RegisterProgress(progress);
 
-                    try
-                    {
-                        var wd = await Scan(_globalProgress, folder);
+                //    //_globalProgress.IsOpen = true;
 
-                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                        {
-                            Directories.Add(wd);
-                        });
+                //    //_globalProgress.ProgressMessage = "Init scan";
 
-                        _settingsManager.SyncSettings(Directories);
+                //    //_globalProgress.Progress = 0D;
 
-                        _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(wd));
-                    }
-                    catch (OperationCanceledException)
-                    {
-                    }
-                    finally
-                    {
-                        //_globalProgress.IsOpen = false;
-                    }
-                }
+                //    try
+                //    {
+                //        var wd = await Scan(_globalProgress, folder);
+
+                //        DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                //        {
+                //            Directories.Add(wd);
+                //        });
+
+                //        _settingsManager.SyncSettings(Directories);
+
+                //        _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(wd));
+                //    }
+                //    catch (OperationCanceledException)
+                //    {
+                //    }
+                //    finally
+                //    {
+                //        //_globalProgress.IsOpen = false;
+                //    }
+                //}
             });
 
             RemoveWorkingDirectoryCommand = new RelayCommand<string>(a =>

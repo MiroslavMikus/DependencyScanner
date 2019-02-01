@@ -50,10 +50,10 @@ namespace DependencyScanner.Plugins.WorkingDirectory.Test
             givenManager.SyncSettings(givenDirectories);
 
             settings.WorkingDirectoryStructure.Should().HaveCount(3);
-            settings.WorkingDirectoryStructure.SelectMany(a => a.Value).Should().HaveCount(7);
+            settings.WorkingDirectoryStructure.SelectMany(a => a.Repositories).Should().HaveCount(7);
 
-            settings.WorkingDirectoryStructure.Should().ContainKey(@"C:\new\wd");
-            settings.WorkingDirectoryStructure.SelectMany(a => a.Value)
+            settings.WorkingDirectoryStructure.Should().Contain(a => a.Path == @"C:\new\wd");
+            settings.WorkingDirectoryStructure.SelectMany(a => a.Repositories)
                 .Should().Contain(new[] { @"C:\new\wd\rpo1", @"C:\new\wd\rpo2", @"C:\new\wd\rpo3" });
         }
 
@@ -80,10 +80,10 @@ namespace DependencyScanner.Plugins.WorkingDirectory.Test
 
         private WorkingDirectorySettings GivenSettings() => new WorkingDirectorySettings()
         {
-            WorkingDirectoryStructure = new Dictionary<string, string[]>
+            WorkingDirectoryStructure = new List<StorableWorkingDirectory>
                 {
-                    { @"C:\S", new [] { @"C:\S\repo1", @"C:\S\repo2" } },
-                    { @"C:\code", new [] { @"C:\S\GitHub", @"C:\S\GitLab" } }
+                    new StorableWorkingDirectory {Name =  @"C:\S",  Repositories = new [] { @"C:\S\repo1", @"C:\S\repo2" } },
+                    new StorableWorkingDirectory {Name = @"C:\code",Repositories = new [] { @"C:\S\GitHub", @"C:\S\GitLab" } }
                 }
         };
     }
