@@ -9,7 +9,6 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
-using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Serilog;
 using System;
@@ -97,59 +96,56 @@ namespace Dependency.Scanner.Plugins.Wd
         {
             PickWorkingDirectoryCommand = new RelayCommand(async () =>
             {
-                var controller = await _dialogCoordinator.ShowProgressAsync(this, "Progress from VM", "Progressing all the things, wait 3 seconds");
-                controller.SetIndeterminate();
+                var folder = _folderPicker.PickFolder();
 
-                for (double i = 0; i < 10; i++)
+                // folder is not null or empty && directories list doesnt contain same path!
+                if (!string.IsNullOrEmpty(folder) && !Directories.Any(a => a.Path == folder))
                 {
-                    await Task.Delay(300);
-                    controller.SetMessage("Hardworking: " + i);
-                    controller.SetProgress(i / 10d);
+                    _cancellationTokenSource = new CancellationTokenSource();
+
+                    var controller = await _dialogCoordinator.ShowProgressAsync(this, $"Scanning working directory {folder}", "Initialization.");
+
+                    controller.SetIndeterminate();
+
+                    var progress = new DefaultProgress()
+                    {
+                        Token = _cancellationTokenSource.Token
+                    };
+
+                    progress.ReportAction = a =>
+                    {
+                        if (a.Value == 0)
+                        {
+                            controller.SetIndeterminate();
+                        }
+                        else
+                        {
+                            controller.SetProgress(a.Value / 100);
+                        }
+                        controller.SetMessage(a.Message);
+                    };
+
+                    try
+                    {
+                        var wd = await Scan(progress, folder);
+
+                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                        {
+                            Directories.Add(wd);
+                        });
+
+                        _settingsManager.SyncSettings(Directories);
+
+                        _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(wd));
+                    }
+                    catch (OperationCanceledException)
+                    {
+                    }
+                    finally
+                    {
+                        await controller.CloseAsync();
+                    }
                 }
-
-                await controller.CloseAsync();
-
-                //var folder = _folderPicker.PickFolder();
-
-                //// folder is not null or empty && directories list doesnt contain same path!
-                //if (!string.IsNullOrEmpty(folder) && !Directories.Any(a => a.Path == folder))
-                //{
-                //    _cancellationTokenSource = new CancellationTokenSource();
-
-                //    var progress = new DefaultProgress()
-                //    {
-                //        Token = _cancellationTokenSource.Token
-                //    };
-
-                //    //_globalProgress.RegisterProgress(progress);
-
-                //    //_globalProgress.IsOpen = true;
-
-                //    //_globalProgress.ProgressMessage = "Init scan";
-
-                //    //_globalProgress.Progress = 0D;
-
-                //    try
-                //    {
-                //        var wd = await Scan(_globalProgress, folder);
-
-                //        DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                //        {
-                //            Directories.Add(wd);
-                //        });
-
-                //        _settingsManager.SyncSettings(Directories);
-
-                //        _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(wd));
-                //    }
-                //    catch (OperationCanceledException)
-                //    {
-                //    }
-                //    finally
-                //    {
-                //        //_globalProgress.IsOpen = false;
-                //    }
-                //}
             });
 
             RemoveWorkingDirectoryCommand = new RelayCommand<string>(a =>
@@ -167,7 +163,7 @@ namespace Dependency.Scanner.Plugins.Wd
             });
         }
 
-        private Task<IWorkingDirectory> Scan(ICancelableProgress<ProgressMessage> progress, string folder)
+        private Task<IWorkingDirectory> Scan(IProgress<ProgressMessage> progress, string folder)
         {
             return Task.Run(async () =>
             {

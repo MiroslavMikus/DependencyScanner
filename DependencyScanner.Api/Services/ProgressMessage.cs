@@ -1,4 +1,6 @@
-﻿namespace DependencyScanner.Api.Services
+﻿using System.Threading;
+
+namespace DependencyScanner.Api.Services
 {
     public class ProgressMessage
     {
