@@ -39,7 +39,7 @@
         <ListBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding ElementName=WdList, Path=SelectedItem.Repositories}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Label Content="{Binding GitInfo.Root.FullName}" />
+                    <Label Content="{Binding GitInfo.Root.DirectoryName}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>
