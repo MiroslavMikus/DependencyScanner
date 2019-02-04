@@ -13,6 +13,7 @@ using MahApps.Metro.Controls.Dialogs;
 using Serilog;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,12 +22,16 @@ namespace Dependency.Scanner.Plugins.Wd
 {
     public class WorkingDirectoryViewModel : ViewModelBase
     {
+        // commands
         public RelayCommand PickWorkingDirectoryCommand { get; private set; }
-        public RelayCommand CancelCommand { get; private set; }
-        public RelayCommand<string> RemoveWorkingDirectoryCommand { get; private set; }
 
-        public ICancelableProgress<ProgressMessage> _globalProgress { get; }
+        public RelayCommand CancelCommand { get; private set; }
+        public RelayCommand<IWorkingDirectory> RemoveWorkingDirectoryCommand { get; private set; }
+        public RelayCommand<IWorkingDirectory> RenameWorkingDirectoryCommand { get; private set; }
+
+        // private fields
         private CancellationTokenSource _cancellationTokenSource;
+
         private readonly WorkingDirectorySettingsManager _settingsManager;
         private readonly IMessenger _messenger;
         private readonly ILogger _logger;
@@ -35,6 +40,7 @@ namespace Dependency.Scanner.Plugins.Wd
         private readonly Func<IWorkingDirectory> _wdCtor;
         private readonly IDialogCoordinator _dialogCoordinator;
 
+        // mvvm props
         public ObservableCollection<IWorkingDirectory> Directories { get; set; }
 
         public WorkingDirectoryViewModel()
@@ -98,8 +104,21 @@ namespace Dependency.Scanner.Plugins.Wd
             {
                 var folder = _folderPicker.PickFolder();
 
+                if (string.IsNullOrEmpty(folder))
+                {
+                    await _dialogCoordinator.ShowMessageAsync(this, "Folder can't be empty", "Please enter valid folder path!");
+                    return;
+                }
+
+                var name = await PickWdName((Directory.CreateDirectory(folder)).Name);
+
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    return;
+                }
+
                 // folder is not null or empty && directories list doesnt contain same path!
-                if (!string.IsNullOrEmpty(folder) && !Directories.Any(a => a.Path == folder))
+                if (!Directories.Any(a => a.Path == folder))
                 {
                     _cancellationTokenSource = new CancellationTokenSource();
 
@@ -129,6 +148,8 @@ namespace Dependency.Scanner.Plugins.Wd
                     {
                         var wd = await Scan(progress, folder);
 
+                        wd.Name = name;
+
                         DispatcherHelper.CheckBeginInvokeOnUI(() =>
                         {
                             Directories.Add(wd);
@@ -148,19 +169,48 @@ namespace Dependency.Scanner.Plugins.Wd
                 }
             });
 
-            RemoveWorkingDirectoryCommand = new RelayCommand<string>(a =>
+            RemoveWorkingDirectoryCommand = new RelayCommand<IWorkingDirectory>(a =>
             {
-                var wd = Directories.FirstOrDefault(b => b.Path == a);
+                Directories.Remove(a);
 
-                if (wd != null)
+                _settingsManager.SyncSettings(Directories);
+
+                _messenger.Send<RemoveWorkingDirectory>(new RemoveWorkingDirectory(a));
+            });
+
+            RenameWorkingDirectoryCommand = new RelayCommand<IWorkingDirectory>(async a =>
+            {
+                var name = await PickWdName(a.Name);
+
+                if (string.IsNullOrWhiteSpace(name))
                 {
-                    Directories.Remove(wd);
-
-                    _settingsManager.SyncSettings(Directories);
-
-                    _messenger.Send<RemoveWorkingDirectory>(new RemoveWorkingDirectory(wd));
+                    return;
+                }
+                else
+                {
+                    a.Name = name;
                 }
             });
+        }
+
+        private async Task<string> PickWdName(string defaultName)
+        {
+            var mySettings = new MetroDialogSettings()
+            {
+                DefaultText = defaultName
+            };
+
+            var name = await _dialogCoordinator.ShowInputAsync(this, "Working directory name", "Enter working directory name:", mySettings);
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                await _dialogCoordinator.ShowMessageAsync(this, "Name can't be empty", "Consider to enter a valid name :)");
+                return string.Empty;
+            }
+            else
+            {
+                return name;
+            }
         }
 
         private Task<IWorkingDirectory> Scan(IProgress<ProgressMessage> progress, string folder)

@@ -7,9 +7,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Dependency.Scanner.Plugins.Wd"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:converters="clr-namespace:DependencyScanner.Core.Gui.Converters;assembly=DependencyScanner.Core.Gui"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance local:WorkingDirectoryViewModel, IsDesignTimeCreatable=True}">
+    <UserControl.Resources>
+        <converters:NullToBoolConverter x:Key="NullToBoolConverter" Negative="True" Positive="False" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -17,21 +22,31 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-
-        <Button Command="{Binding PickWorkingDirectoryCommand}" Content="Select new working directory" Margin="5" />
+        <StackPanel Orientation="Horizontal">
+            <Button Command="{Binding PickWorkingDirectoryCommand}" Content="Select new working directory" Margin="5" />
+            <Button Margin="5" Content="Rename" Command="{Binding RenameWorkingDirectoryCommand}"
+                    CommandParameter="{Binding ElementName=WdList, Path=SelectedItem}"
+                    IsEnabled="{Binding ElementName=WdList, Path=SelectedItem, Converter={StaticResource NullToBoolConverter}}" />
+            <Button Margin="5" Content="Remove" Command="{Binding RemoveWorkingDirectoryCommand}"
+                    CommandParameter="{Binding ElementName=WdList, Path=SelectedItem}"
+                    IsEnabled="{Binding ElementName=WdList, Path=SelectedItem, Converter={StaticResource NullToBoolConverter}}" />
+        </StackPanel>
 
         <ListBox ItemsSource="{Binding Directories}" Grid.Row="2" x:Name="WdList" SelectedIndex="0">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconFontAwesome Kind="FolderSolid"  VerticalAlignment="Center" />
+                    <StackPanel Orientation="Horizontal" Margin="10 5 15 5">
+                        <iconPacks:PackIconFontAwesome Kind="FolderSolid" VerticalAlignment="Center" />
                         <StackPanel Margin="7">
                             <Label Content="{Binding Name}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" />
                             <TextBlock Margin="4 2 2 2" Text="{Binding Path}" FontWeight="Regular" FontSize="11" TextWrapping="Wrap" Width="200" />
                         </StackPanel>
+                        <Button Height="30" Style="{DynamicResource CircleButtonStyle}">
+                            <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
+                        </Button>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
