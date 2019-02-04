@@ -14,6 +14,7 @@
              d:DataContext="{d:DesignInstance local:WorkingDirectoryViewModel, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <converters:NullToBoolConverter x:Key="NullToBoolConverter" Negative="True" Positive="False" />
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -38,15 +39,18 @@
         <ListBox ItemsSource="{Binding Directories}" Grid.Row="2" x:Name="WdList" SelectedIndex="0">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Margin="10 5 15 5">
-                        <iconPacks:PackIconFontAwesome Kind="FolderSolid" VerticalAlignment="Center" />
-                        <StackPanel Margin="7">
-                            <Label Content="{Binding Name}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" />
-                            <TextBlock Margin="4 2 2 2" Text="{Binding Path}" FontWeight="Regular" FontSize="11" TextWrapping="Wrap" Width="200" />
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Margin="10 5 15 5">
+                            <iconPacks:PackIconFontAwesome Kind="FolderSolid" VerticalAlignment="Center" />
+                            <StackPanel Margin="7">
+                                <Label Content="{Binding Name}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" />
+                                <TextBlock Margin="4 2 2 2" Text="{Binding Path}" FontWeight="Regular" FontSize="11" TextWrapping="Wrap" Width="200" />
+                            </StackPanel>
+                            <Button Height="30" Style="{DynamicResource CircleButtonStyle}" Command="{Binding PullCommand}">
+                                <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
+                            </Button>
                         </StackPanel>
-                        <Button Height="30" Style="{DynamicResource CircleButtonStyle}">
-                            <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
-                        </Button>
+                        <ProgressBar IsIndeterminate="{Binding IsMarquee}" Value="{Binding ProgressValue}" Visibility="{Binding IsOpen, Converter={StaticResource BoolToVisibility}}" />
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

@@ -1,6 +1,8 @@
-﻿using DependencyScanner.Api.Interfaces;
+﻿using DependencyScanner.Api.Events;
+using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Api.Model;
 using DependencyScanner.Api.Services;
+using DependencyScanner.Core.Gui.ViewModel;
 using DependencyScanner.Plugins.Wd.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -18,7 +20,7 @@ using System.Windows.Input;
 
 namespace DependencyScanner.Plugins.Wd.Model
 {
-    public class WorkingDirectory : ObservableObject, IWorkingDirectory, IEquatable<WorkingDirectory>
+    public class WorkingDirectory : ObservableProgressBase, IWorkingDirectory, IEquatable<WorkingDirectory>
     {
         private string _path;
         private readonly ILogger _logger;
@@ -45,21 +47,26 @@ namespace DependencyScanner.Plugins.Wd.Model
             {
                 _cancellationTokenSource = new CancellationTokenSource();
 
-                var progress = new DefaultProgress
+                try
                 {
-                    Token = _cancellationTokenSource.Token
-                };
+                    StartProgress();
 
-                // todo implement progress
+                    var repos = await _scanner.ScanForGitRepositories(_path, this);
 
-                var repos = await _scanner.ScanForGitRepositories(_path, progress);
+                    DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                    {
+                        Repositories = new ObservableCollection<IRepository>(repos.Select(a => new Repository(a)));
 
-                DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                        _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(this));
+                    });
+                }
+                catch (OperationCanceledException)
                 {
-                    Repositories = new ObservableCollection<IRepository>(repos.Select(a => new Repository(a)));
-
-                    //_messenger.Send<WorkingDirectory>(this);
-                });
+                }
+                finally
+                {
+                    StopProgress();
+                }
             });
 
             CancelCommand = new RelayCommand(() =>
