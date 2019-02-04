@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Converters\AbstractBoolConverter.cs" />
     <Compile Include="Converters\AbstractNullConverter.cs" />
+    <Compile Include="Converters\AbstractTypeToBoolConvereter.cs" />
     <Compile Include="Converters\BoolToBoolConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityMultiValueConverter.cs" />
