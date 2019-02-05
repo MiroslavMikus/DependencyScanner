@@ -2,7 +2,7 @@
 using DependencyScanner.Api.Model;
 using DependencyScanner.Plugins.Wd.Model;
 
-namespace Dependency.Scanner.Plugins.Wd
+namespace DependencyScanner.Plugins.Wd
 {
     public class WorkingDirectoryModule : Module
     {

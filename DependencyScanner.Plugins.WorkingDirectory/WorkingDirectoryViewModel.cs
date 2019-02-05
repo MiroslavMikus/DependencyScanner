@@ -18,7 +18,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Dependency.Scanner.Plugins.Wd
+namespace DependencyScanner.Plugins.Wd
 {
     public class WorkingDirectoryViewModel : ViewModelBase
     {

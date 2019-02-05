@@ -1,4 +1,5 @@
 ﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Plugins.Wd;
 using DependencyScanner.Plugins.Wd.Model;
 using DependencyScanner.Plugins.Wd.Services;
 using System;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace Dependency.Scanner.Plugins.Wd
+namespace DependencyScanner.Plugins.Wd
 {
     public class WorkingDirectoryPlugin : IPlugin
     {

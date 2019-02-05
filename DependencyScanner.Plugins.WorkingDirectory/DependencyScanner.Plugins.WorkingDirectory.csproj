@@ -51,6 +51,9 @@
     <Compile Include="Model\Repository.cs" />
     <Compile Include="Model\WorkingDirectory.cs" />
     <Compile Include="Model\WorkingDirectorySettings.cs" />
+    <Compile Include="RepositoryView.xaml.cs">
+      <DependentUpon>RepositoryView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\StorableWorkingDirectory.cs" />
     <Compile Include="Services\WorkingDirectorySettingsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,6 +75,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="RepositoryView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WorkingDirectoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

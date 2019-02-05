@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Dependency.Scanner.Plugins.Wd
+namespace DependencyScanner.Plugins.Wd
 {
     /// <summary>
     /// Interaction logic for WorkingDirView.xaml
