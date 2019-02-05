@@ -1,16 +1,17 @@
-﻿<UserControl x:Class="Dependency.Scanner.Plugins.Wd.WorkingDirectoryView"
+﻿<UserControl x:Class="DependencyScanner.Plugins.Wd.WorkingDirectoryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              Dialog:DialogParticipation.Register="{Binding}"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Dependency.Scanner.Plugins.Wd"
+             xmlns:local="clr-namespace:DependencyScanner.Plugins.Wd"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:converters="clr-namespace:DependencyScanner.Core.Gui.Converters;assembly=DependencyScanner.Core.Gui"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
+             xmlns:model="clr-namespace:DependencyScanner.Plugins.Wd.Model"
              d:DataContext="{d:DesignInstance local:WorkingDirectoryViewModel, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <converters:NullToBoolConverter x:Key="NullToBoolConverter" Negative="True" Positive="False" />
@@ -23,6 +24,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -55,12 +57,15 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>
-        <ListBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding ElementName=WdList, Path=SelectedItem.Repositories}">
+        <ListBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding ElementName=WdList, Path=SelectedItem.Repositories}" x:Name="RepoList">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Label Content="{Binding GitInfo.Root.DirectoryName}" />
+                    <StackPanel Margin="8">
+                        <TextBlock Width="350" Text="{Binding GitInfo.Root.DirectoryName}" TextWrapping="Wrap" />
+                    </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>
+        <local:RepositoryView Grid.Column="3" Grid.Row="2" DataContext="{Binding ElementName=RepoList, Path=SelectedItem}" />
     </Grid>
 </UserControl>
