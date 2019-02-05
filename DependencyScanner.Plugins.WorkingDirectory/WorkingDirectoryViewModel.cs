@@ -157,6 +157,8 @@ namespace DependencyScanner.Plugins.Wd
 
                         _settingsManager.SyncSettings(Directories);
 
+                        controller.SetMessage("Publishing results...");
+
                         _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(wd));
                     }
                     catch (OperationCanceledException)
