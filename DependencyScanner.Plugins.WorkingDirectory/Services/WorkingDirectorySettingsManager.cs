@@ -1,9 +1,11 @@
 ﻿using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Api.Model;
 using DependencyScanner.Plugins.Wd.Model;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 
 namespace DependencyScanner.Plugins.Wd.Services
@@ -14,12 +16,14 @@ namespace DependencyScanner.Plugins.Wd.Services
 
         private readonly Func<string, IGitInfo> _gitCtor;
         private readonly Func<IWorkingDirectory> _wdCtor;
+        private readonly ILogger _logger;
 
-        public WorkingDirectorySettingsManager(WorkingDirectorySettings settings, Func<string, IGitInfo> gitCtor, Func<IWorkingDirectory> wdCtor)
+        public WorkingDirectorySettingsManager(WorkingDirectorySettings settings, Func<string, IGitInfo> gitCtor, Func<IWorkingDirectory> wdCtor, ILogger logger)
         {
             Settings = settings;
             _gitCtor = gitCtor;
             _wdCtor = wdCtor;
+            _logger = logger;
         }
 
         public IEnumerable<IWorkingDirectory> RestoreWorkingDirectories()
@@ -29,12 +33,17 @@ namespace DependencyScanner.Plugins.Wd.Services
                 // reassembly repos
                 var repos = wdSettings.Repositories.Select(a =>
                 {
+                    if (!Directory.Exists(a))
+                    {
+                        _logger.Error("Git directory doens't exist {directory}", a);
+                        return null;
+                    }
                     var git = _gitCtor(a);
 
                     git.Init(Settings.ExecuteGitFetchWhileScanning);
 
                     return new Repository(git);
-                });
+                }).Where(a => a != null);
 
                 // create working directory
                 var wd = _wdCtor();

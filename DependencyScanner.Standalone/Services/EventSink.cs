@@ -23,7 +23,7 @@ namespace DependencyScanner.Standalone.Services
             {
                 var message = logEvent.RenderMessage(FormatProvider);
 
-                NotifyEvent(this, message);
+                NotifyEvent?.Invoke(this, message);
             }
         }
     }
