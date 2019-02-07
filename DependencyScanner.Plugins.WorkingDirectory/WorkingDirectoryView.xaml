@@ -96,7 +96,8 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>
-        <ListBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding ElementName=WdList, Path=SelectedItem.Repositories}" x:Name="RepoList" Grid.RowSpan="2">
+        <ListBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding ElementName=WdList, Path=SelectedItem.Repositories}"
+                 x:Name="RepoList" Grid.RowSpan="2">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="8">

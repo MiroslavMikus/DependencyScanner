@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DependencyScanner.Core.Services
@@ -24,7 +25,7 @@ namespace DependencyScanner.Core.Services
 
         private static string[] GetGitFolder(string dir) => Directory.GetDirectories(dir, GitPattern, SearchOption.AllDirectories);
 
-        public async Task<IEnumerable<IGitInfo>> ScanForGitRepositories(string rootDirectory, IProgress<ProgressMessage> progress)
+        public async Task<IEnumerable<IGitInfo>> ScanForGitRepositories(string rootDirectory, IProgress<ProgressMessage> progress, bool executeGitFetch, CancellationToken token)
         {
             progress.Report(new ProgressMessage { Value = 0D, Message = "Searching for '.git' folders." });
 
@@ -42,12 +43,19 @@ namespace DependencyScanner.Core.Services
             {
                 progress.Report(new ProgressMessage { Value = Progress(i + 1), Message = $"Scanning {i + 1}/{gitFolders.Count()}" });
 
-                InitTasks.Add(infos[i].Init(true));
+                InitTasks.Add(infos[i].Init(executeGitFetch));
             }
 
             progress.Report(new ProgressMessage { Value = 0, Message = "Finishing scan" });
 
-            await Task.WhenAll(InitTasks);
+            var tcs = new TaskCompletionSource<bool>();
+
+            token.Register(() =>
+            {
+                tcs.TrySetCanceled();
+            });
+
+            await Task.WhenAny(Task.WhenAll(InitTasks), tcs.Task);
 
             return infos;
         }

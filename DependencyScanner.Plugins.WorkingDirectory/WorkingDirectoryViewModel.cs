@@ -158,7 +158,7 @@ namespace DependencyScanner.Plugins.Wd
 
                     try
                     {
-                        var wd = await Scan(progress, folder);
+                        var wd = await Scan(progress, folder, CancellationToken.None);
 
                         wd.Name = name;
 
@@ -308,11 +308,11 @@ namespace DependencyScanner.Plugins.Wd
             }
         }
 
-        private Task<IWorkingDirectory> Scan(IProgress<ProgressMessage> progress, string folder)
+        private Task<IWorkingDirectory> Scan(IProgress<ProgressMessage> progress, string folder, CancellationToken token)
         {
             return Task.Run(async () =>
             {
-                var repos = await _scanner.ScanForGitRepositories(folder, progress);
+                var repos = await _scanner.ScanForGitRepositories(folder, progress, false, token);
 
                 var newWorkinDir = _wdCtor();
 

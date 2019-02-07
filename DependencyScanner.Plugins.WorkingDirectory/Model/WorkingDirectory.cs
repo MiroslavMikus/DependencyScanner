@@ -30,11 +30,13 @@ namespace DependencyScanner.Plugins.Wd.Model
 
         public string Path { get => _path; set => Set(ref _path, value); }
 
-        public ICollection<IRepository> Repositories { get; set; } = new ObservableCollection<IRepository>();
+        private ICollection<IRepository> _repositories = new ObservableCollection<IRepository>();
+        public ICollection<IRepository> Repositories { get => _repositories; set => Set(ref _repositories, value); }
         public ICommand PullCommand { get; }
         public ICommand CancelCommand { get; }
 
         private string _name;
+
         public string Name { get => _name; set => Set(ref _name, value); }
 
         public WorkingDirectory(ILogger logger, IRepositoryScanner scanner, IMessenger messenger)
@@ -62,17 +64,14 @@ namespace DependencyScanner.Plugins.Wd.Model
             {
                 StartProgress();
 
-                var repos = await _scanner.ScanForGitRepositories(_path, this);
+                var repos = await _scanner.ScanForGitRepositories(_path, this, false, token);
 
-                if (repos.Any())
+                DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
-                    DispatcherHelper.CheckBeginInvokeOnUI(() =>
-                    {
-                        Repositories = new ObservableCollection<IRepository>(repos.Select(a => new Repository(a)));
+                    Repositories = new ObservableCollection<IRepository>(repos.Select(a => new Repository(a)));
 
-                        _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(this));
-                    });
-                }
+                    _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(this));
+                });
             }
             catch (OperationCanceledException)
             {
