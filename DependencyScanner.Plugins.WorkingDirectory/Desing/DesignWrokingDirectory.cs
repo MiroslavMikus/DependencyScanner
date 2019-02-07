@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using DependencyScanner.Api.Model;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DependencyScanner.Plugins.Wd.Desing
 {
@@ -16,5 +18,10 @@ namespace DependencyScanner.Plugins.Wd.Desing
         public ICommand CancelCommand => new RelayCommand(() => { Console.WriteLine("Calling CancelCommand"); });
 
         public string Name { get; set; }
+
+        public Task Sync(CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

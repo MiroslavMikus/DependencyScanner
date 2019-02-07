@@ -36,6 +36,7 @@ namespace DependencyScanner.Core.Tools
             try
             {
                 proc.Start();
+                proc.BeginOutputReadLine();
             }
             catch (Exception ex)
             {
@@ -43,8 +44,6 @@ namespace DependencyScanner.Core.Tools
 
                 return await Task.FromResult(string.Empty);
             }
-
-            proc.BeginOutputReadLine();
 
             return await _tcs.Task;
         }

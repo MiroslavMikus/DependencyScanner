@@ -18,7 +18,10 @@ namespace DependencyScanner.Plugins.Wd.Services
         private readonly Func<IWorkingDirectory> _wdCtor;
         private readonly ILogger _logger;
 
-        public WorkingDirectorySettingsManager(WorkingDirectorySettings settings, Func<string, IGitInfo> gitCtor, Func<IWorkingDirectory> wdCtor, ILogger logger)
+        public WorkingDirectorySettingsManager(WorkingDirectorySettings settings,
+            Func<string, IGitInfo> gitCtor,
+            Func<IWorkingDirectory> wdCtor,
+            ILogger logger)
         {
             Settings = settings;
             _gitCtor = gitCtor;

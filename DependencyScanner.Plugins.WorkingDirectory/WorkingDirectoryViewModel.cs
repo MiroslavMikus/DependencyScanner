@@ -31,12 +31,12 @@ namespace DependencyScanner.Plugins.Wd
         public RelayCommand PickWorkingDirectoryCommand { get; private set; }
 
         public RelayCommand CancelCommand { get; private set; }
+        public RelayCommand SyncAllCommand { get; private set; }
         public RelayCommand<IWorkingDirectory> CloneCommand { get; private set; }
         public RelayCommand<IWorkingDirectory> RemoveWorkingDirectoryCommand { get; private set; }
         public RelayCommand<IWorkingDirectory> RenameWorkingDirectoryCommand { get; private set; }
 
         // private fields
-        private CancellationTokenSource _cancellationTokenSource;
 
         private readonly WorkingDirectorySettingsManager _settingsManager;
         private readonly IMessenger _messenger;
@@ -48,6 +48,9 @@ namespace DependencyScanner.Plugins.Wd
 
         // mvvm props
         public ObservableCollection<IWorkingDirectory> Directories { get; set; }
+
+        private CancellationTokenSource _cancellationTokenSource;
+        public CancellationTokenSource CancellationTokenSource { get => _cancellationTokenSource; set => Set(ref _cancellationTokenSource, value); }
 
         public WorkingDirectoryViewModel()
         {
@@ -129,7 +132,7 @@ namespace DependencyScanner.Plugins.Wd
                 // folder is not null or empty && directories list doesnt contain same path!
                 if (!Directories.Any(a => a.Path == folder))
                 {
-                    _cancellationTokenSource = new CancellationTokenSource();
+                    CancellationTokenSource = new CancellationTokenSource();
 
                     var controller = await _dialogCoordinator.ShowProgressAsync(this, $"Scanning working directory {folder}", "Initialization.");
 
@@ -137,7 +140,7 @@ namespace DependencyScanner.Plugins.Wd
 
                     var progress = new DefaultProgress()
                     {
-                        Token = _cancellationTokenSource.Token
+                        Token = CancellationTokenSource.Token
                     };
 
                     progress.ReportAction = a =>
@@ -228,7 +231,7 @@ namespace DependencyScanner.Plugins.Wd
                 var startInfo = new ProcessStartInfo
                 {
                     WorkingDirectory = wd.Path,
-                    WindowStyle = ProcessWindowStyle.Normal,
+                    WindowStyle = ProcessWindowStyle.Hidden,
                     Arguments = $"clone {url}",
                     FileName = "git.exe",
                     UseShellExecute = false
@@ -240,9 +243,40 @@ namespace DependencyScanner.Plugins.Wd
 
                 await progress.CloseAsync();
 
-                wd.PullCommand.Execute(null);
+                await wd.Sync(CancellationToken.None);
 
                 _settingsManager.SyncSettings(Directories);
+            });
+
+            SyncAllCommand = new RelayCommand(async () =>
+            {
+                CancellationTokenSource = new CancellationTokenSource();
+
+                foreach (var directory in Directories)
+                {
+                    if (!CancellationTokenSource.Token.IsCancellationRequested)
+                    {
+                        try
+                        {
+                            await directory.Sync(CancellationTokenSource.Token);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                CancellationTokenSource = null;
+            });
+
+            CancelCommand = new RelayCommand(() =>
+            {
+                CancellationTokenSource?.Cancel();
             });
         }
 
