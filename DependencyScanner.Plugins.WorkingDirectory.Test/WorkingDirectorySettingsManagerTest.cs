@@ -9,6 +9,7 @@ using DependencyScanner.Plugins.Wd.Services;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Serilog;
 
 namespace DependencyScanner.Plugins.WorkingDirectory.Test
 {
@@ -75,7 +76,12 @@ namespace DependencyScanner.Plugins.WorkingDirectory.Test
 
         private WorkingDirectorySettingsManager SetupManager(WorkingDirectorySettings settings)
         {
-            return new WorkingDirectorySettingsManager(settings, GitCtor, WdCtor);
+            var logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .CreateLogger();
+
+            return new WorkingDirectorySettingsManager(settings, GitCtor, WdCtor, logger);
         }
 
         private WorkingDirectorySettings GivenSettings() => new WorkingDirectorySettings()

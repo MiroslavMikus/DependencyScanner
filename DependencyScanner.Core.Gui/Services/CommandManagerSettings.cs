@@ -19,16 +19,16 @@ namespace DependencyScanner.Core.Gui.Services
 
         public string WebBrowser
         {
-            get { return _consoleTool; }
-            set { Set(ref _consoleTool, value); }
+            get { return _webBrowser; }
+            set { Set(ref _webBrowser, value); }
         }
 
         private string _textEditor = "notepad";
 
         public string TextEditor
         {
-            get { return _consoleTool; }
-            set { Set(ref _consoleTool, value); }
+            get { return _textEditor; }
+            set { Set(ref _textEditor, value); }
         }
     }
 }
