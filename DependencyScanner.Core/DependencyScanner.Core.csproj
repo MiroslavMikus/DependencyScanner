@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CoreModuel.cs" />
+    <Compile Include="CoreModule.cs" />
     <Compile Include="FileScan\FileScanner.cs" />
     <Compile Include="FileScan\FrameworkNameExtensions.cs" />
     <Compile Include="FileScan\SupportedFrameworks.cs" />

@@ -40,7 +40,7 @@ namespace DependencyScanner.Core.Gui.Services
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex, "Run ommand: Error while executing process {process}", a);
+                    Log.Error(ex, "Run command: Error while executing process {process}", a);
                 }
             }));
         }
