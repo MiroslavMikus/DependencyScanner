@@ -73,6 +73,10 @@
       <Project>{4b6357ea-79db-4dcd-93a6-3335dd12c904}</Project>
       <Name>DependencyScanner.Core.Gui</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DependencyScanner.Core\DependencyScanner.Core.csproj">
+      <Project>{6E72AF77-F76B-406B-93C2-8F0FFC3EF5E5}</Project>
+      <Name>DependencyScanner.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="RepositoryView.xaml">

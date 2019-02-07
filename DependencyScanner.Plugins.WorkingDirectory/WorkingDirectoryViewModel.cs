@@ -2,6 +2,8 @@
 using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Api.Model;
 using DependencyScanner.Api.Services;
+using DependencyScanner.Core.Gui.Services;
+using DependencyScanner.Core.Tools;
 using DependencyScanner.Plugins.Wd.Desing;
 using DependencyScanner.Plugins.Wd.Model;
 using DependencyScanner.Plugins.Wd.Services;
@@ -13,6 +15,7 @@ using MahApps.Metro.Controls.Dialogs;
 using Serilog;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -23,9 +26,12 @@ namespace DependencyScanner.Plugins.Wd
     public class WorkingDirectoryViewModel : ViewModelBase
     {
         // commands
+        public CommandManager Commands { get; set; }
+
         public RelayCommand PickWorkingDirectoryCommand { get; private set; }
 
         public RelayCommand CancelCommand { get; private set; }
+        public RelayCommand<IWorkingDirectory> CloneCommand { get; private set; }
         public RelayCommand<IWorkingDirectory> RemoveWorkingDirectoryCommand { get; private set; }
         public RelayCommand<IWorkingDirectory> RenameWorkingDirectoryCommand { get; private set; }
 
@@ -77,7 +83,8 @@ namespace DependencyScanner.Plugins.Wd
             IRepositoryScanner scanner,
             IFolderPicker folderPicker,
             Func<IWorkingDirectory> wdCtor,
-            IDialogCoordinator dialogCoordinator
+            IDialogCoordinator dialogCoordinator,
+            CommandManager commandManager
             )
         {
             _settingsManager = settingsManager;
@@ -87,6 +94,8 @@ namespace DependencyScanner.Plugins.Wd
             _folderPicker = folderPicker;
             _wdCtor = wdCtor;
             _dialogCoordinator = dialogCoordinator;
+
+            Commands = commandManager;
 
             Directories = new ObservableCollection<IWorkingDirectory>(_settingsManager.RestoreWorkingDirectories());
 
@@ -193,6 +202,54 @@ namespace DependencyScanner.Plugins.Wd
                     a.Name = name;
                 }
             });
+
+            CloneCommand = new RelayCommand<IWorkingDirectory>(async wd =>
+            {
+                var gitUrl = await _dialogCoordinator.ShowInputAsync(this, $"Clone new repository to {wd.Name}", "Enter git remote url:");
+
+                if (string.IsNullOrEmpty(gitUrl)) return;
+
+                var url = TryCast(gitUrl);
+
+                if (url == null)
+                {
+                    await _dialogCoordinator.ShowMessageAsync(this, "Wrong format", $"The specified url:'{gitUrl}' has wrong format");
+                    return;
+                }
+
+                var progress = await _dialogCoordinator.ShowProgressAsync(this, $"Cloning to {wd.Name}", $"Executing clone from {url} to {wd.Path}");
+
+                progress.SetIndeterminate();
+
+                var command = $"git.exe clone {url}";
+
+                _logger.Information("Clonning {command}", command);
+
+                var startInfo = new ProcessStartInfo
+                {
+                    WorkingDirectory = wd.Path,
+                    WindowStyle = ProcessWindowStyle.Normal,
+                    Arguments = $"clone {url}",
+                    FileName = "git.exe",
+                    UseShellExecute = false
+                };
+
+                var process = new AsyncProcess(startInfo);
+
+                var result = await process.StartAsync();
+
+                await progress.CloseAsync();
+
+                await _dialogCoordinator.ShowMessageAsync(this, "Clone result", result);
+            });
+        }
+
+        private Uri TryCast(string url)
+        {
+            var result = Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult) &&
+                (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+
+            return result ? uriResult : null;
         }
 
         private async Task<string> PickWdName(string defaultName)
