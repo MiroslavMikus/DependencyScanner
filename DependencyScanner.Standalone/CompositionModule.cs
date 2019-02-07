@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Integration.Mef;
 using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Core.Gui.Services;
 using DependencyScanner.Core.Nuspec;
 using DependencyScanner.Standalone.Setting;
 using LiteDB;
@@ -34,7 +35,8 @@ namespace DependencyScanner.Standalone
                 .Concat(new[]
                 {
                     Assembly.GetAssembly(typeof(MainWindow)),
-                    Assembly.GetAssembly(typeof(NuspecComparer))
+                    Assembly.GetAssembly(typeof(NuspecComparer)),
+                    Assembly.GetAssembly(typeof(CommandManager))
                 })
                 .ToArray();
 
