@@ -38,12 +38,24 @@
                     CommandParameter="{Binding ElementName=WdList, Path=SelectedItem}"
                     IsEnabled="{Binding ElementName=WdList, Path=SelectedItem, Converter={StaticResource NullToBoolConverter}}" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Background="Red">
-            <Button Height="35" Width="35" Margin="10 10 5 10" Style="{DynamicResource CircleButtonStyle}" Command="{Binding PullCommand}">
-                <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Background="Red" IsEnabled="{Binding ElementName=WdList, Path=SelectedItem, Converter={StaticResource NullToBoolConverter}}">
+            <Button Height="35" Width="35" Margin="10 10 5 10"
+                    Style="{DynamicResource CircleButtonStyle}"
+                    Command="{Binding Commands.RunCommand}"
+                    CommandParameter="{Binding ElementName=WdList, Path=SelectedItem.Path}">
+                <Button.ToolTip>
+                    <Label Content="Open directory" FontWeight="Bold" />
+                </Button.ToolTip>
+                <iconPacks:PackIconFontAwesome Kind="FolderOpenSolid"  VerticalAlignment="Center" />
             </Button>
-            <Button Height="35" Width="35" Margin="5 10 5 10" Style="{DynamicResource CircleButtonStyle}" Command="{Binding PullCommand}">
-                <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
+            <Button Height="35" Width="35" Margin="5 10 5 10"
+                    Style="{DynamicResource CircleButtonStyle}"
+                    Command="{Binding CloneCommand}"
+                    CommandParameter="{Binding ElementName=WdList, Path=SelectedItem}">
+                <iconPacks:PackIconFontAwesome Kind="ArrowDownSolid"  VerticalAlignment="Center" />
+                <Button.ToolTip>
+                    <Label Content="Clone repository" FontWeight="Bold" />
+                </Button.ToolTip>
             </Button>
             <Button Height="35" Width="35" Margin="5 10 5 10" Style="{DynamicResource CircleButtonStyle}" Command="{Binding PullCommand}">
                 <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
