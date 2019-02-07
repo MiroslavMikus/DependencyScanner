@@ -1,10 +1,10 @@
-﻿using System.Windows.Input;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace DependencyScanner.Api.Model
 {
     public interface ISyncable
     {
-        ICommand PullCommand { get; }
-        ICommand CancelCommand { get; }
+        Task Sync(CancellationToken token);
     }
 }

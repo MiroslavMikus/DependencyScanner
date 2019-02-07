@@ -3,6 +3,7 @@ using DependencyScanner.Api.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace DependencyScanner.Plugins.Wd.Model
@@ -19,15 +20,20 @@ namespace DependencyScanner.Plugins.Wd.Model
         {
             GitInfo = gitInfo;
 
-            PullCommand = new RelayCommand(() =>
+            PullCommand = new RelayCommand(async () =>
             {
-                GitInfo.Pull();
+                await Sync(CancellationToken.None);
             });
 
             CancelCommand = new RelayCommand(() =>
             {
                 _cancellationTokenSource?.Cancel();
             });
+        }
+
+        public Task Sync(CancellationToken token)
+        {
+            return Task.Run(() => GitInfo.Pull());
         }
     }
 }

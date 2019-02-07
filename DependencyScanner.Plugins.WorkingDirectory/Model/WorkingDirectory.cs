@@ -45,14 +45,27 @@ namespace DependencyScanner.Plugins.Wd.Model
 
             PullCommand = new RelayCommand(async () =>
             {
-                _cancellationTokenSource = new CancellationTokenSource();
+                await Sync(CancellationToken.None);
+            });
 
-                try
+            CancelCommand = new RelayCommand(() =>
+            {
+                _cancellationTokenSource?.Cancel();
+            });
+        }
+
+        public async Task Sync(CancellationToken token)
+        {
+            _cancellationTokenSource = new CancellationTokenSource();
+
+            try
+            {
+                StartProgress();
+
+                var repos = await _scanner.ScanForGitRepositories(_path, this);
+
+                if (repos.Any())
                 {
-                    StartProgress();
-
-                    var repos = await _scanner.ScanForGitRepositories(_path, this);
-
                     DispatcherHelper.CheckBeginInvokeOnUI(() =>
                     {
                         Repositories = new ObservableCollection<IRepository>(repos.Select(a => new Repository(a)));
@@ -60,19 +73,14 @@ namespace DependencyScanner.Plugins.Wd.Model
                         _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(this));
                     });
                 }
-                catch (OperationCanceledException)
-                {
-                }
-                finally
-                {
-                    StopProgress();
-                }
-            });
-
-            CancelCommand = new RelayCommand(() =>
+            }
+            catch (OperationCanceledException)
             {
-                _cancellationTokenSource?.Cancel();
-            });
+            }
+            finally
+            {
+                StopProgress();
+            }
         }
 
         public bool Equals(WorkingDirectory other)
