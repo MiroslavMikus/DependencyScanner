@@ -38,7 +38,7 @@
                     CommandParameter="{Binding ElementName=WdList, Path=SelectedItem}"
                     IsEnabled="{Binding ElementName=WdList, Path=SelectedItem, Converter={StaticResource NullToBoolConverter}}" />
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Background="Red" IsEnabled="{Binding ElementName=WdList, Path=SelectedItem, Converter={StaticResource NullToBoolConverter}}">
+        <StackPanel Orientation="Horizontal" Grid.Row="3"  IsEnabled="{Binding ElementName=WdList, Path=SelectedItem, Converter={StaticResource NullToBoolConverter}}">
             <Button Height="35" Width="35" Margin="10 10 5 10"
                     Style="{DynamicResource CircleButtonStyle}"
                     Command="{Binding Commands.RunCommand}"

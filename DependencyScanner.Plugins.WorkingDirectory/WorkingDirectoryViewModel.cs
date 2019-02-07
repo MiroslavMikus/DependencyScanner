@@ -236,11 +236,13 @@ namespace DependencyScanner.Plugins.Wd
 
                 var process = new AsyncProcess(startInfo);
 
-                var result = await process.StartAsync();
+                await process.StartAsync();
 
                 await progress.CloseAsync();
 
-                await _dialogCoordinator.ShowMessageAsync(this, "Clone result", result);
+                wd.PullCommand.Execute(null);
+
+                _settingsManager.SyncSettings(Directories);
             });
         }
 
