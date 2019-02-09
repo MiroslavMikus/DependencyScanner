@@ -93,7 +93,18 @@ namespace DependencyScanner.Standalone
             });
         }
 
-        internal static string GetProgramdataPath(string fileName) => Path.Combine(App.GetProgramdataPath(), fileName);
+        internal static string GetProgramdataPath(string fileName)
+        {
+            var path = Path.Combine(App.GetProgramdataPath(), fileName);
+
+            var dir = Path.GetDirectoryName(path);
+
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            return path;
+        }
 
         internal static Type[] GetTypesFromAssembly<T>(Assembly assembly) where T : class
         {
