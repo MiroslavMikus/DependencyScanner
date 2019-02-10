@@ -158,7 +158,7 @@ namespace DependencyScanner.Plugins.Wd
 
                     try
                     {
-                        var wd = await Scan(progress, folder, CancellationToken.None);
+                        var wd = await Scan(progress, folder, CancellationToken.None, _settingsManager.Settings.ExecuteGitFetchWhileScanning);
 
                         wd.Name = name;
 
@@ -308,11 +308,11 @@ namespace DependencyScanner.Plugins.Wd
             }
         }
 
-        private Task<IWorkingDirectory> Scan(IProgress<ProgressMessage> progress, string folder, CancellationToken token)
+        private Task<IWorkingDirectory> Scan(IProgress<ProgressMessage> progress, string folder, CancellationToken token, bool gitFetch)
         {
             return Task.Run(async () =>
             {
-                var repos = await _scanner.ScanForGitRepositories(folder, progress, false, token);
+                var repos = await _scanner.ScanForGitRepositories(folder, progress, gitFetch, token);
 
                 var newWorkinDir = _wdCtor();
 

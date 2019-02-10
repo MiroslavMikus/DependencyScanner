@@ -26,6 +26,7 @@ namespace DependencyScanner.Plugins.Wd.Model
         private readonly ILogger _logger;
         private readonly IRepositoryScanner _scanner;
         private readonly IMessenger _messenger;
+        private readonly WorkingDirectorySettings _settings;
         private CancellationTokenSource _cancellationTokenSource;
 
         public string Path { get => _path; set => Set(ref _path, value); }
@@ -39,11 +40,12 @@ namespace DependencyScanner.Plugins.Wd.Model
 
         public string Name { get => _name; set => Set(ref _name, value); }
 
-        public WorkingDirectory(ILogger logger, IRepositoryScanner scanner, IMessenger messenger)
+        public WorkingDirectory(ILogger logger, IRepositoryScanner scanner, IMessenger messenger, WorkingDirectorySettings settings)
         {
             _logger = logger;
             _scanner = scanner;
             _messenger = messenger;
+            _settings = settings;
 
             PullCommand = new RelayCommand(async () =>
             {
@@ -64,7 +66,7 @@ namespace DependencyScanner.Plugins.Wd.Model
             {
                 StartProgress();
 
-                var repos = await _scanner.ScanForGitRepositories(_path, this, false, token);
+                var repos = await _scanner.ScanForGitRepositories(_path, this, _settings.ExecuteGitFetchWhileScanning, token);
 
                 DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {

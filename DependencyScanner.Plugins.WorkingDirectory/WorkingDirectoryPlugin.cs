@@ -1,4 +1,5 @@
 ﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Core.Gui.ViewModel;
 using DependencyScanner.Plugins.Wd;
 using DependencyScanner.Plugins.Wd.Model;
 using DependencyScanner.Plugins.Wd.Services;
@@ -11,27 +12,31 @@ using System.Windows.Controls;
 
 namespace DependencyScanner.Plugins.Wd
 {
-    public class WorkingDirectoryPlugin : IPlugin
+    public class WorkingDirectoryPlugin : PluginBase<WorkingDirectorySettings>
     {
-        //private readonly WorkingDirectorySettings _settings;
-        //private readonly WorkingDirectorySettingsManager _settingsManager;
         private readonly WorkingDirectoryViewModel _viewModel;
 
-        public string Title => "Working directories";
+        public override string Title => "Working directories";
 
-        public string Description => "Organize and browse your working directories";
+        public override string Description => "Organize and browse your working directories";
 
-        public UserControl ContentView { get; private set; }
+        public override UserControl ContentView { get; protected set; }
 
-        public int Order => 0;
+        public override int Order => 0;
 
-        public WorkingDirectoryPlugin(WorkingDirectoryViewModel viewModel)
+        public WorkingDirectoryPlugin(WorkingDirectoryViewModel viewModel, WorkingDirectorySettings settings)
+            : base(settings)
         {
             _viewModel = viewModel;
 
             ContentView = new WorkingDirectoryView()
             {
                 DataContext = _viewModel
+            };
+
+            SettingsView = new WorkingDirectorySettingsView
+            {
+                DataContext = settings
             };
         }
     }

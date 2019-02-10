@@ -1,8 +1,7 @@
 ﻿using DependencyScanner.Api.Interfaces;
-using DependencyScanner.Core.Interfaces;
 using System.Windows.Controls;
 
-namespace DependencyScanner.Standalone.Components.Browse
+namespace DependencyScanner.Core.Gui.ViewModel
 {
     public abstract class PluginBase<T> : IPlugin<T> where T : ISettings
     {

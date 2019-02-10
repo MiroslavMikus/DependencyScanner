@@ -1,4 +1,5 @@
-﻿using DependencyScanner.Standalone.Components.Browse;
+﻿using DependencyScanner.Core.Gui.ViewModel;
+using DependencyScanner.Standalone.Components.Browse;
 using DependencyScanner.ViewModel;
 using System;
 using System.Collections.Generic;

@@ -55,6 +55,7 @@
     <Compile Include="Services\CommandManager.cs" />
     <Compile Include="Services\CommandManagerSettings.cs" />
     <Compile Include="ViewModel\ObservableProgressBase.cs" />
+    <Compile Include="ViewModel\PluginBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DependencyScanner.Api\DependencyScanner.Api.csproj">

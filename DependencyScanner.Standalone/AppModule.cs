@@ -71,7 +71,7 @@ namespace DependencyScanner.Standalone
                 .Where(t => t.Name.EndsWith("ViewModel"))
                 .InstancePerLifetimeScope();
 
-            #endregion
+            #endregion TODO move to specific plugin dll
 
             // LiteDb
             builder.RegisterInstance<LiteDatabase>(new LiteDatabase(GetProgramdataPath("Storage.db")))
@@ -97,12 +97,8 @@ namespace DependencyScanner.Standalone
         {
             var path = Path.Combine(App.GetProgramdataPath(), fileName);
 
-            var dir = Path.GetDirectoryName(path);
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
 
-            if (!Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
             return path;
         }
 

@@ -22,11 +22,11 @@ namespace DependencyScanner.Standalone
     /// </summary>
     public class CompositionModule : Autofac.Module
     {
-        private const string _pluginDir = "plugins";
+        private const string PLUGIN_DIR = "plugins";
 
         protected override void Load(ContainerBuilder builder)
         {
-            var pluginAssemblies = Directory.GetFiles(_pluginDir, "*.dll", SearchOption.AllDirectories)
+            var pluginAssemblies = Directory.GetFiles(PLUGIN_DIR, "*.dll", SearchOption.AllDirectories)
                 .Select(a => Path.GetFullPath(a))
                 .Select(a => Assembly.LoadFile(a))
                 .ToArray();
