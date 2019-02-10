@@ -38,7 +38,17 @@ namespace DependencyScanner.Core.FileScan
                 try
                 {
                     return references.Elements(msbuild + "PackageReference")
-                        .Select(a => new ProjectReference(a.Attribute("Include").Value, a.Value, frameworkId));
+                        .Select(a =>
+                        {
+                            try
+                            { // todo remove this
+                                return new ProjectReference(a.Attribute("Include").Value, a.Value, frameworkId);
+                            }
+                            catch (Exception ex)
+                            {
+                                throw;
+                            }
+                        });
                 }
                 catch (Exception ex)
                 {

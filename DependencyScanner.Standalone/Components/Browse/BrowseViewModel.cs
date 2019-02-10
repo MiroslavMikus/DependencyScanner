@@ -21,7 +21,7 @@ namespace DependencyScanner.ViewModel
 {
     public class BrowseViewModel : FilterViewModelBase<SolutionResult, ProjectResult>
     {
-        private readonly IScanner _scanner;
+        private readonly ISolutionScanner _scanner;
         private readonly IMessenger _messenger;
         private readonly Serilog.ILogger _logger;
         private readonly BrowseSettings _settings;
@@ -69,7 +69,7 @@ namespace DependencyScanner.ViewModel
             }
         }
 
-        public BrowseViewModel(IScanner scanner,
+        public BrowseViewModel(ISolutionScanner scanner,
                                IMessenger messenger,
                                Serilog.ILogger logger,
                                ObservableProgress progress,
@@ -81,75 +81,85 @@ namespace DependencyScanner.ViewModel
             _globalProgress = progress;
             _settings = settings;
 
-            PickWorkingDirectoryCommand = new RelayCommand(() =>
+            PrimaryCollection = new ObservableCollection<SolutionResult>();
+
+            _messenger.Register<AddWorkindDirectory>(this, async a =>
             {
-                DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                foreach (var project in a.Directory.Repositories)
                 {
-                    using (var dialog = new FolderBrowserDialog())
-                    {
-                        DialogResult result = dialog.ShowDialog();
-
-                        if (result == DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
-                        {
-                            WorkingDirectory = dialog.SelectedPath;
-
-                            //ScanResult?.Clear();
-
-                            _messenger.Send<ClearResultEvent>(new ClearResultEvent());
-
-                            if (!WorkingDirectories.Contains(WorkingDirectory))
-                            {
-                                WorkingDirectories.Add(WorkingDirectory);
-                            }
-                        }
-                    }
-                });
-            });
-
-            ScanCommand = new RelayCommand(async () =>
-            {
-                try
-                {
-                    _globalProgress.ProgressMessage = "Init scan";
-
-                    _globalProgress.Progress = 0D;
-
-                    IsScanning = _globalProgress.IsOpen = true;
-
-                    _cancellationTokenSource = new CancellationTokenSource();
-
-                    await Scan(_cancellationTokenSource.Token);
-                }
-                catch (OperationCanceledException)
-                {
-                }
-                finally
-                {
-                    IsScanning = _globalProgress.IsOpen = false;
-
-                    _cancellationTokenSource = null;
+                    await Scan(project.GitInfo.Root.DirectoryName);
                 }
             });
 
-            CancelCommand = new RelayCommand(() =>
-            {
-                _cancellationTokenSource?.Cancel();
-            });
+            //PickWorkingDirectoryCommand = new RelayCommand(() =>
+            //{
+            //    DispatcherHelper.CheckBeginInvokeOnUI(() =>
+            //    {
+            //        using (var dialog = new FolderBrowserDialog())
+            //        {
+            //            DialogResult result = dialog.ShowDialog();
 
-            RemoveWorkingDirectoryCommand = new RelayCommand<string>(a =>
-            {
-                if (string.IsNullOrEmpty(a))
-                {
-                    return;
-                }
+            //            if (result == DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
+            //            {
+            //                WorkingDirectory = dialog.SelectedPath;
 
-                if (a == WorkingDirectory)
-                {
-                    WorkingDirectory = null;
-                }
+            //                //ScanResult?.Clear();
 
-                WorkingDirectories.Remove(a);
-            });
+            //                _messenger.Send<ClearResultEvent>(new ClearResultEvent());
+
+            //                if (!WorkingDirectories.Contains(WorkingDirectory))
+            //                {
+            //                    WorkingDirectories.Add(WorkingDirectory);
+            //                }
+            //            }
+            //        }
+            //    });
+            //});
+
+            //ScanCommand = new RelayCommand(async () =>
+            //{
+            //    try
+            //    {
+            //        _globalProgress.ProgressMessage = "Init scan";
+
+            //        _globalProgress.Progress = 0D;
+
+            //        IsScanning = _globalProgress.IsOpen = true;
+
+            //        _cancellationTokenSource = new CancellationTokenSource();
+
+            //        await Scan(_cancellationTokenSource.Token);
+            //    }
+            //    catch (OperationCanceledException)
+            //    {
+            //    }
+            //    finally
+            //    {
+            //        IsScanning = _globalProgress.IsOpen = false;
+
+            //        _cancellationTokenSource = null;
+            //    }
+            //});
+
+            //CancelCommand = new RelayCommand(() =>
+            //{
+            //    _cancellationTokenSource?.Cancel();
+            //});
+
+            //RemoveWorkingDirectoryCommand = new RelayCommand<string>(a =>
+            //{
+            //    if (string.IsNullOrEmpty(a))
+            //    {
+            //        return;
+            //    }
+
+            //    if (a == WorkingDirectory)
+            //    {
+            //        WorkingDirectory = null;
+            //    }
+
+            //    WorkingDirectories.Remove(a);
+            //});
 
             if (_settings.WorkingDirectories != null)
             {
@@ -171,23 +181,18 @@ namespace DependencyScanner.ViewModel
             }
         }
 
-        private Task Scan(CancellationToken Token)
+        private Task Scan(string directory)
         {
             return Task.Run(async () =>
             {
-                var progress = new DefaultProgress()
-                {
-                    Token = Token
-                };
+                var scanResult = await _scanner.ScanSolution(directory);
 
-                _globalProgress.RegisterProgress(progress);
-
-                var scanResult = await _scanner.ScanSolutions(WorkingDirectory, _globalProgress, _settings.ExecuteGitFetchWithScan);
-
-                PrimaryCollection = new ObservableCollection<SolutionResult>(scanResult);
+                if (scanResult == null) return;
 
                 DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
+                    PrimaryCollection.Add(scanResult);
+
                     _messenger.Send<IEnumerable<SolutionResult>>(PrimaryCollection);
                 });
             });

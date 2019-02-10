@@ -60,11 +60,12 @@ namespace DependencyScanner.Standalone.Components
             set { Set(ref _openNotificationBar, value); }
         }
 
-        public MainViewModel(IEnumerable<IPlugin> plugins,
-                             ObservableProgress progress,
-                             EventSink eventSink,
-                             MainSettings settings,
-                             string logPath)
+        public MainViewModel(BrowseViewModel model,
+            IEnumerable<IPlugin> plugins,
+            ObservableProgress progress,
+            EventSink eventSink,
+            MainSettings settings,
+            string logPath)
         {
             Plugins = plugins.OrderBy(a => a.Order);
 

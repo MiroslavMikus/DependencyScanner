@@ -12,4 +12,9 @@ namespace DependencyScanner.Core.Interfaces
 
         Task<SolutionResult> ScanSolution(string rootDirectory, ICancelableProgress<ProgressMessage> progress, bool executeGitFetch);
     }
+
+    public interface ISolutionScanner : IService
+    {
+        Task<SolutionResult> ScanSolution(string rootDirectory);
+    }
 }

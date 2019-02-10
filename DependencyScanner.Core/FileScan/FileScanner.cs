@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace DependencyScanner.Core
 {
-    public class FileScanner : IScanner
+    public class FileScanner : IScanner, ISolutionScanner
     {
         private readonly GitEngine _gitEngine;
 
@@ -138,6 +138,61 @@ namespace DependencyScanner.Core
             await Task.WhenAll(SolutionsTask);
 
             return SolutionsTask.Select(a => a.Result);
+        }
+
+        public async Task<SolutionResult> ScanSolution(string rootDirectory)
+        {
+            var solutions = GetSolutions(rootDirectory);
+
+            if (!solutions.Any())
+            {
+                return null;
+            }
+
+            var solutionPath = solutions.First();
+
+            var result = new SolutionResult(new FileInfo(solutionPath), this);
+
+            foreach (var projectPath in GetProjects(result.Info.DirectoryName))
+            {
+                var projectInfo = new FileInfo(projectPath);
+
+                var packagePaths = GetPackages(projectInfo.DirectoryName);
+
+                ProjectResult projectResult;
+
+                if (packagePaths.Count() != 0)
+                // Projects contains package.config file
+                {
+                    var packageInfo = new FileInfo(packagePaths.First());
+
+                    projectResult = new ProjectResult(projectInfo, packageInfo);
+                }
+                else
+                {
+                    projectResult = new ProjectResult(projectInfo);
+                }
+
+                var nuspecInfo = GetNuspec(projectInfo.DirectoryName).FirstOrDefault();
+
+                if (!string.IsNullOrEmpty(nuspecInfo))
+                {
+                    projectResult.NuspecInfo = new FileInfo(nuspecInfo);
+                }
+
+                result.Projects.Add(projectResult);
+            }
+
+            var gitPath = DirectoryTools.SearchDirectory(solutionPath, GetGitFolder);
+
+            if (!string.IsNullOrEmpty(gitPath))
+            {
+                result.GitInformation = new GitInfo(gitPath, _gitEngine);
+
+                await result.GitInformation.Init(false);
+            }
+
+            return result;
         }
     }
 }
