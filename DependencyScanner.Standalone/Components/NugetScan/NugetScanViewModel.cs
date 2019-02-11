@@ -1,16 +1,13 @@
-﻿using DependencyScanner.Core.Model;
+﻿using DependencyScanner.Core.Gui.ViewModel;
+using DependencyScanner.Core.Model;
 using DependencyScanner.Core.NugetReference;
 using DependencyScanner.Standalone.Components.NugetScan;
 using DependencyScanner.Standalone.Services;
-using DependencyScanner.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DependencyScanner.Standalone.Components
 {

@@ -1,21 +1,15 @@
 ﻿using DependencyScanner.Api.Events;
-using DependencyScanner.Api.Services;
+using DependencyScanner.Core.Gui.ViewModel;
 using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
-using DependencyScanner.Standalone.Components;
 using DependencyScanner.Standalone.Components.Browse;
-using DependencyScanner.Standalone.Services;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace DependencyScanner.ViewModel
 {

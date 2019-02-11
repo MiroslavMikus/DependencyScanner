@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
 
-namespace DependencyScanner.Standalone.Components
+namespace DependencyScanner.Core.Gui.ViewModel
 {
     public abstract class FilterViewModelBase<TPrimary, TSecondary> : ViewModelBase
     {

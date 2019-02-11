@@ -126,7 +126,6 @@
     <Compile Include="Components\Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\ViewModelBase\FilterViewModelBase.cs" />
     <Compile Include="Components\ViewModelBase\SolutionBaseViewModel.cs" />
     <Compile Include="Converters\AbstractBoolConverter.cs" />
     <Compile Include="Converters\AbstractNullConverter.cs" />
