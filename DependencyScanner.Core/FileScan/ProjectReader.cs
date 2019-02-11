@@ -41,14 +41,14 @@ namespace DependencyScanner.Core.FileScan
                         .Select(a =>
                         {
                             try
-                            { // todo remove this
+                            {
                                 return new ProjectReference(a.Attribute("Include").Value, a.Value, frameworkId);
                             }
                             catch (Exception ex)
                             {
-                                throw;
+                                return null;
                             }
-                        });
+                        }).Where(a => a != null);
                 }
                 catch (Exception ex)
                 {
@@ -70,35 +70,37 @@ namespace DependencyScanner.Core.FileScan
 
         internal static FrameworkName GetFrameworkName(XDocument project)
         {
+            FrameworkName result = null;
+
             if (TryReadFromPropertyGroup(project, "TargetFramework", out string framework))
             // framework will be core or standard
             {
-                return CheckFramework(framework, SupportedFrameworks.Core) ?? CheckFramework(framework, SupportedFrameworks.Standard);
+                result = CheckFramework(framework, SupportedFrameworks.Core) ?? CheckFramework(framework, SupportedFrameworks.Standard);
             }
 
-            if (TryReadFromPropertyGroup(project, "TargetPlatformMinVersion", msbuild, out string uwpFramework))
+            if (result == null && TryReadFromPropertyGroup(project, "TargetPlatformMinVersion", msbuild, out string uwpFramework))
             // framework will be UWP
             {
                 var version = GetVersion(uwpFramework);
 
                 if (version != string.Empty)
                 {
-                    return new FrameworkName(SupportedFrameworks.UWP, new Version(version));
+                    result = new FrameworkName(SupportedFrameworks.UWP, new Version(version));
                 }
             }
 
-            if (TryReadFromPropertyGroup(project, "TargetFrameworkVersion", msbuild, out string fullFramework))
+            if (result == null && TryReadFromPropertyGroup(project, "TargetFrameworkVersion", msbuild, out string fullFramework))
             // framework will be full dot net
             {
                 var version = GetVersion(fullFramework);
 
                 if (version != string.Empty)
                 {
-                    return new FrameworkName(SupportedFrameworks.DotNet, new Version(version));
+                    result = new FrameworkName(SupportedFrameworks.DotNet, new Version(version));
                 }
             }
 
-            return new FrameworkName(SupportedFrameworks.Unknown, new Version("0.0"));
+            return result ?? new FrameworkName(SupportedFrameworks.Unknown, new Version("0.0"));
         }
 
         private static FrameworkName CheckFramework(string framework, string frameworkName)
