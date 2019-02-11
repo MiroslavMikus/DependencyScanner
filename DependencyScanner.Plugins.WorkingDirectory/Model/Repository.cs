@@ -1,5 +1,6 @@
 ﻿using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Api.Model;
+using DependencyScanner.Core.Gui.ViewModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System.Threading;
@@ -8,7 +9,7 @@ using System.Windows.Input;
 
 namespace DependencyScanner.Plugins.Wd.Model
 {
-    public class Repository : ObservableObject, IRepository
+    public class Repository : ObservableProgressBase, IRepository
     {
         private CancellationTokenSource _cancellationTokenSource;
 
@@ -31,9 +32,18 @@ namespace DependencyScanner.Plugins.Wd.Model
             });
         }
 
-        public Task Sync(CancellationToken token)
+        public async Task Sync(CancellationToken token)
         {
-            return Task.Run(() => GitInfo.Pull());
+            StartProgress();
+
+            IsMarquee = true;
+
+            await Task.Run(() =>
+            {
+                GitInfo.Pull();
+            });
+
+            StopProgress();
         }
     }
 }

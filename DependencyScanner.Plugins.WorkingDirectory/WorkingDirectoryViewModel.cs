@@ -32,6 +32,7 @@ namespace DependencyScanner.Plugins.Wd
 
         public RelayCommand CancelCommand { get; private set; }
         public RelayCommand SyncAllCommand { get; private set; }
+        public RelayCommand PullAllCommand { get; private set; }
         public RelayCommand<IWorkingDirectory> CloneCommand { get; private set; }
         public RelayCommand<IWorkingDirectory> RemoveWorkingDirectoryCommand { get; private set; }
         public RelayCommand<IWorkingDirectory> RenameWorkingDirectoryCommand { get; private set; }
@@ -272,6 +273,20 @@ namespace DependencyScanner.Plugins.Wd
             CancelCommand = new RelayCommand(() =>
             {
                 CancellationTokenSource?.Cancel();
+            });
+
+            PullAllCommand = new RelayCommand(async () =>
+            {
+                CancellationTokenSource = new CancellationTokenSource();
+
+                foreach (var dir in Directories.Cast<WorkingDirectory>())
+                {
+                    await dir.PullAllRepos(CancellationTokenSource.Token);
+
+                    if (CancellationTokenSource.Token.IsCancellationRequested) break;
+                }
+
+                CancellationTokenSource = null;
             });
         }
 

@@ -46,5 +46,7 @@ namespace DependencyScanner.Core.Gui.ViewModel
             ProgressValue = value.Value;
             ProgressMessage = value.Message;
         }
+
+        protected double CalculateProgress(int current, int all) => Math.Round(current / (all / 100D), 2);
     }
 }

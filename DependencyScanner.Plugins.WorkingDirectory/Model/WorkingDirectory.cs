@@ -103,5 +103,23 @@ namespace DependencyScanner.Plugins.Wd.Model
         {
             return 467214278 + EqualityComparer<string>.Default.GetHashCode(Path);
         }
+
+        internal async Task PullAllRepos(CancellationToken token)
+        {
+            StartProgress();
+
+            var repos = Repositories.ToArray();
+
+            for (int i = 0; i < repos.Count(); i++)
+            {
+                ProgressValue = CalculateProgress(i, Repositories.Count);
+
+                await repos[i].Sync(token);
+
+                if (token.IsCancellationRequested) break;
+            }
+
+            StopProgress();
+        }
     }
 }

@@ -60,6 +60,14 @@
             </Button>
             <Button Height="35" Width="35" Margin="5 10 5 10"
                     Style="{DynamicResource CircleButtonStyle}"
+                    Command="{Binding PullAllCommand}">
+                <iconPacks:PackIconFontAwesome Kind="CodeBranchSolid"  VerticalAlignment="Center" />
+                <Button.ToolTip>
+                    <Label Content="Pull selected repository" FontWeight="Bold" />
+                </Button.ToolTip>
+            </Button>
+            <Button Height="35" Width="35" Margin="5 10 5 10"
+                    Style="{DynamicResource CircleButtonStyle}"
                     Command="{Binding SyncAllCommand}"
                     IsEnabled="{Binding CancellationTokenSource, Converter={StaticResource NullToTrue}}">
                 <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
@@ -80,7 +88,10 @@
         <ListBox ItemsSource="{Binding Directories}" Grid.Row="2" x:Name="WdList" SelectedIndex="0" Grid.RowSpan="1">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Vertical">
+                    <Grid>
+                        <ProgressBar IsIndeterminate="{Binding IsMarquee}" Value="{Binding ProgressValue}"
+                                     Visibility="{Binding IsOpen, Converter={StaticResource BoolToVisibility}}"
+                                     Background="White" BorderThickness="0" />
                         <StackPanel Orientation="Horizontal" Margin="10 5 15 5">
                             <iconPacks:PackIconFontAwesome Kind="FolderSolid" VerticalAlignment="Center" />
                             <StackPanel Margin="7">
@@ -91,8 +102,7 @@
                                 <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
                             </Button>
                         </StackPanel>
-                        <ProgressBar IsIndeterminate="{Binding IsMarquee}" Value="{Binding ProgressValue}" Visibility="{Binding IsOpen, Converter={StaticResource BoolToVisibility}}" />
-                    </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>
@@ -100,9 +110,38 @@
                  x:Name="RepoList">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="8">
-                        <TextBlock Width="350" Text="{Binding GitInfo.Root.DirectoryName}" TextWrapping="Wrap" />
-                    </StackPanel>
+                    <Grid Margin="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <ProgressBar IsIndeterminate="{Binding IsMarquee}" Value="{Binding ProgressValue}"
+                                     Visibility="{Binding IsOpen, Converter={StaticResource BoolToVisibility}}"
+                                     Background="White" BorderThickness="0" Grid.ColumnSpan="2" />
+                        <Label Margin="0 0 5 0">
+                            <Label.Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding GitInfo.IsBehind}" Value="True">
+                                            <Setter Property="Foreground" Value="Lime" />
+                                        </DataTrigger>
+
+                                        <DataTrigger Binding="{Binding GitInfo.IsClean}" Value="False">
+                                            <Setter Property="Foreground" Value="Red" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Label.Style>
+                            <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" />
+                            <Label.ToolTip>
+                                <StackPanel>
+                                    <Label Content="Git status" FontWeight="Bold" />
+                                    <Label Content="{Binding GitInfo.Status}" />
+                                </StackPanel>
+                            </Label.ToolTip>
+                        </Label>
+                        <TextBlock Width="350" Text="{Binding GitInfo.Root.DirectoryName}" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="2" Margin="0,5" />
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>
@@ -121,9 +160,9 @@
                     Style="{DynamicResource CircleButtonStyle}"
                     Command="{Binding ElementName=RepoList, Path=SelectedItem.PullCommand}"
                     IsEnabled="{Binding ElementName=RepoList, Path=SelectedItem, Converter={StaticResource NullToFalse}}">
-                <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
+                <iconPacks:PackIconFontAwesome Kind="CodeBranchSolid"  VerticalAlignment="Center" />
                 <Button.ToolTip>
-                    <Label Content="Sync all working directories" FontWeight="Bold" />
+                    <Label Content="Pull selected repository" FontWeight="Bold" />
                 </Button.ToolTip>
             </Button>
         </StackPanel>
