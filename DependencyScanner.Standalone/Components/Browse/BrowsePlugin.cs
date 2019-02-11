@@ -1,34 +1,24 @@
-﻿using DependencyScanner.Core.Gui.ViewModel;
+﻿using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Standalone.Components.Browse;
 using DependencyScanner.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace DependencyScanner.Standalone.ViewModel
 {
-    public class BrowsePlugin : PluginBase<BrowseSettings>
+    public class BrowsePlugin : IPlugin
     {
-        public override string Title => "Browse";
+        public string Title => "Browse";
 
-        public override string Description => "Scan and browse your solutions.";
+        public string Description => "Scan and browse your solutions.";
+        public int Order => 1;
 
-        public BrowsePlugin(BrowseViewModel browseViewModel, BrowseSettings settings)
-            : base(settings)
+        public UserControl ContentView { get; }
+
+        public BrowsePlugin(BrowseViewModel browseViewModel)
         {
-            Order = 1;
-
             ContentView = new BrowseView
             {
                 DataContext = browseViewModel
-            };
-
-            SettingsView = new BrowseSettingsView
-            {
-                DataContext = Settings
             };
         }
     }

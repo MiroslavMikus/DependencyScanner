@@ -26,59 +26,19 @@ namespace DependencyScanner.ViewModel
         private readonly Serilog.ILogger _logger;
         private readonly BrowseSettings _settings;
 
-        public ObservableProgress _globalProgress { get; }
-
-        private CancellationTokenSource _cancellationTokenSource;
-
-        private bool _isScanning;
-        public bool IsScanning { get => _isScanning; set => Set(ref _isScanning, value); }
-
-        private double _progress;
-        public double Progress { get => _progress; set => Set(ref _progress, value); }
-
-        private string _progressMessage = "";
-        public string ProgressMessage { get => _progressMessage; set => Set(ref _progressMessage, value); }
-
         public RelayCommand PickWorkingDirectoryCommand { get; private set; }
         public RelayCommand ScanCommand { get; private set; }
         public RelayCommand CancelCommand { get; private set; }
         public RelayCommand<string> RemoveWorkingDirectoryCommand { get; private set; }
 
-        private ObservableCollection<string> _workingDirectories;
-        public ObservableCollection<string> WorkingDirectories { get => _workingDirectories; set => Set(ref _workingDirectories, value); }
-
-        private string _workingDirectory = null;
-
-        public string WorkingDirectory
-        {
-            get => _workingDirectory;
-            set
-            {
-                if (Set(ref _workingDirectory, value))
-                {
-                    _settings.WorkingDirectory = value;
-
-                    Standalone.Properties.Settings.Default.Save();
-
-                    if (_settings.ScanAfterDirectoryChange &&
-                        !string.IsNullOrEmpty(value))
-                    {
-                        ScanCommand.Execute(null);
-                    }
-                }
-            }
-        }
-
         public BrowseViewModel(ISolutionScanner scanner,
                                IMessenger messenger,
                                Serilog.ILogger logger,
-                               ObservableProgress progress,
                                BrowseSettings settings)
         {
             _scanner = scanner;
             _messenger = messenger;
             _logger = logger;
-            _globalProgress = progress;
             _settings = settings;
 
             PrimaryCollection = new ObservableCollection<SolutionResult>();
@@ -90,95 +50,6 @@ namespace DependencyScanner.ViewModel
                     await Scan(project.GitInfo.Root.DirectoryName);
                 }
             });
-
-            //PickWorkingDirectoryCommand = new RelayCommand(() =>
-            //{
-            //    DispatcherHelper.CheckBeginInvokeOnUI(() =>
-            //    {
-            //        using (var dialog = new FolderBrowserDialog())
-            //        {
-            //            DialogResult result = dialog.ShowDialog();
-
-            //            if (result == DialogResult.OK && !string.IsNullOrEmpty(dialog.SelectedPath))
-            //            {
-            //                WorkingDirectory = dialog.SelectedPath;
-
-            //                //ScanResult?.Clear();
-
-            //                _messenger.Send<ClearResultEvent>(new ClearResultEvent());
-
-            //                if (!WorkingDirectories.Contains(WorkingDirectory))
-            //                {
-            //                    WorkingDirectories.Add(WorkingDirectory);
-            //                }
-            //            }
-            //        }
-            //    });
-            //});
-
-            //ScanCommand = new RelayCommand(async () =>
-            //{
-            //    try
-            //    {
-            //        _globalProgress.ProgressMessage = "Init scan";
-
-            //        _globalProgress.Progress = 0D;
-
-            //        IsScanning = _globalProgress.IsOpen = true;
-
-            //        _cancellationTokenSource = new CancellationTokenSource();
-
-            //        await Scan(_cancellationTokenSource.Token);
-            //    }
-            //    catch (OperationCanceledException)
-            //    {
-            //    }
-            //    finally
-            //    {
-            //        IsScanning = _globalProgress.IsOpen = false;
-
-            //        _cancellationTokenSource = null;
-            //    }
-            //});
-
-            //CancelCommand = new RelayCommand(() =>
-            //{
-            //    _cancellationTokenSource?.Cancel();
-            //});
-
-            //RemoveWorkingDirectoryCommand = new RelayCommand<string>(a =>
-            //{
-            //    if (string.IsNullOrEmpty(a))
-            //    {
-            //        return;
-            //    }
-
-            //    if (a == WorkingDirectory)
-            //    {
-            //        WorkingDirectory = null;
-            //    }
-
-            //    WorkingDirectories.Remove(a);
-            //});
-
-            if (_settings.WorkingDirectories != null)
-            {
-                WorkingDirectories = new ObservableCollection<string>(_settings.WorkingDirectories.OfType<string>());
-            }
-            else
-            {
-                WorkingDirectories = new ObservableCollection<string>();
-            }
-
-            WorkingDirectories.CollectionChanged += (s, e) =>
-            {
-                _settings.WorkingDirectories = WorkingDirectories.ToList();
-            };
-
-            if (!string.IsNullOrEmpty(_settings.WorkingDirectory))
-            {
-                WorkingDirectory = _settings.WorkingDirectory;
-            }
         }
 
         private Task Scan(string directory)
@@ -191,6 +62,10 @@ namespace DependencyScanner.ViewModel
 
                 DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
+                    if (PrimaryCollection.Contains(scanResult))
+                    {
+                        PrimaryCollection.Remove(scanResult);
+                    }
                     PrimaryCollection.Add(scanResult);
 
                     _messenger.Send<IEnumerable<SolutionResult>>(PrimaryCollection);

@@ -47,14 +47,14 @@ namespace DependencyScanner.Core.Model
             get => _status;
             private set
             {
-                Set(ref _status, value);
-
-                RaisePropertyChanged(nameof(IsClean));
-                RaisePropertyChanged(nameof(IsBehind));
+                if (Set(ref _status, value))
+                {
+                    RaisePropertyChanged(nameof(IsClean));
+                    RaisePropertyChanged(nameof(IsBehind));
+                }
             }
         }
 
-        [Obsolete("remove later!")]
         public RelayCommand PullCommand { get; }
 
         public bool IsClean { get => Status?.Contains("working tree clean") == true; }
@@ -67,6 +67,15 @@ namespace DependencyScanner.Core.Model
             Root = new FileInfo(root);
 
             Config = new GitConfig(Root.FullName);
+
+            PullCommand = new RelayCommand(() =>
+            {
+                Task.Run(() =>
+                {
+                    Pull();
+                    Status = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
+                });
+            });
         }
 
         public async Task Init(bool executeGitFetch)

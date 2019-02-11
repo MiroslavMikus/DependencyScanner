@@ -22,56 +22,6 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <StackPanel.Resources>
-                <ControlTemplate x:Key="SimpleTemplate">
-                    <TextBlock Text="{Binding }" />
-                </ControlTemplate>
-                <ControlTemplate x:Key="ExtendedTemplate">
-                    <StackPanel Orientation="Horizontal">
-                        <Button ToolTip="Remove" Command="{Binding ElementName=BrowseTab, Path=DataContext.RemoveWorkingDirectoryCommand}"
-                                CommandParameter="{Binding}"
-                                Margin="0 0 10 0">
-                            <iconPacks:PackIconFontAwesome Kind="TrashAltRegular" />
-                        </Button>
-                        <TextBlock Text="{Binding }" VerticalAlignment="Center" />
-                    </StackPanel>
-                </ControlTemplate>
-                <DataTemplate x:Key="WorkingDirectoryTemplate">
-                    <Control x:Name="theControl" Focusable="False" Template="{StaticResource ExtendedTemplate}" />
-                    <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ComboBoxItem}}, Path=IsSelected}" Value="{x:Null}">
-                            <Setter TargetName="theControl" Property="Template" Value="{StaticResource SimpleTemplate}" />
-                        </DataTrigger>
-                    </DataTemplate.Triggers>
-                </DataTemplate>
-            </StackPanel.Resources>
-            <Button Margin="5,5,0,5" Content="Scan" HorizontalAlignment="Left"
-                            Command="{Binding ScanCommand}"
-                            Visibility="{Binding WorkingDirectory, Converter={StaticResource HideIfNull}}" Grid.Row="1"
-                            IsEnabled="{Binding IsScanning, Converter={StaticResource InvertBool}}" />
-            <Button Margin="5,6,0,4" ToolTip="Cancel" HorizontalAlignment="Left"
-                            Command="{Binding CancelCommand}"
-                            Visibility="{Binding IsScanning, Converter={StaticResource FalseToCollapsed}}" Grid.Row="1">
-                <iconPacks:PackIconFontAwesome Kind="BanSolid" />
-            </Button>
-            <Button HorizontalAlignment="Left" Margin="5" Command="{Binding PickWorkingDirectoryCommand}"
-                                IsEnabled="{Binding IsScanning, Converter={StaticResource InvertBool}}">
-                <iconPacks:PackIconFontAwesome Kind="PlusSolid" />
-                <Button.ToolTip>
-                    <StackPanel Orientation="Vertical">
-                        <Label FontWeight="Bold" Content="Add to working directories" />
-                        <TextBlock Text="Scan will be executed only for the selected directory!" />
-                    </StackPanel>
-                </Button.ToolTip>
-            </Button>
-            <ComboBox MinWidth="200" Height="24" Margin="5,5,0,5"
-                                  ItemsSource="{Binding WorkingDirectories}"
-                                  SelectedItem="{Binding WorkingDirectory}"
-                                  ItemTemplate="{StaticResource WorkingDirectoryTemplate}"
-                                  IsEnabled="{Binding IsScanning, Converter={StaticResource InvertBool}}">
-            </ComboBox>
-        </StackPanel>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"

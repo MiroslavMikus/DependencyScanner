@@ -1,6 +1,7 @@
 ﻿using DependencyScanner.Api.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -10,7 +11,7 @@ using System.Threading;
 namespace DependencyScanner.Core.Model
 {
     [DebuggerDisplay("{Info.Name}")]
-    public class SolutionResult : ObservableObject
+    public class SolutionResult : ObservableObject, IEquatable<SolutionResult>
     {
         private readonly FileScanner _fileScanner;
 
@@ -54,6 +55,22 @@ namespace DependencyScanner.Core.Model
         public override string ToString()
         {
             return Info.Name;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as SolutionResult);
+        }
+
+        public bool Equals(SolutionResult other)
+        {
+            return other != null &&
+                   EqualityComparer<string>.Default.Equals(Info.FullName, other.Info.FullName);
+        }
+
+        public override int GetHashCode()
+        {
+            return 1340155117 + EqualityComparer<string>.Default.GetHashCode(Info.FullName);
         }
     }
 }

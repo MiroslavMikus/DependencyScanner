@@ -1,4 +1,5 @@
-﻿using NuGet;
+﻿using DependencyScanner.Core.FileScan;
+using NuGet;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -30,7 +31,8 @@ namespace DependencyScanner.Core.Model
 
             FrameworkId = GetFrameworkName(docu);
 
-            References = ReadPackageReferences(docu, FrameworkId).ToList();
+            if (FrameworkId.Identifier != SupportedFrameworks.Unknown)
+                References = ReadPackageReferences(docu, FrameworkId).ToList();
         }
 
         public ProjectResult(FileInfo projectInfo, FileInfo packageInfo)
