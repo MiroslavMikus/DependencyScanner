@@ -20,5 +20,9 @@ namespace DependencyScanner.Core.Gui.ViewModel
         {
             Settings = settings;
         }
+
+        public virtual void OnStarted()
+        {
+        }
     }
 }

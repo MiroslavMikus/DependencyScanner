@@ -26,5 +26,7 @@ namespace DependencyScanner.Standalone.Components.Nuspec_Updater
                 DataContext = viewModel
             };
         }
+        public void OnStarted() { }
+
     }
 }

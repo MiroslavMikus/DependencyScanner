@@ -21,5 +21,9 @@ namespace DependencyScanner.Standalone.ViewModel
                 DataContext = browseViewModel
             };
         }
+
+        public void OnStarted()
+        {
+        }
     }
 }

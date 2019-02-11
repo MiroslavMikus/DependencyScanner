@@ -60,8 +60,7 @@ namespace DependencyScanner.Standalone.Components
             set { Set(ref _openNotificationBar, value); }
         }
 
-        public MainViewModel(BrowseViewModel model,
-            IEnumerable<IPlugin> plugins,
+        public MainViewModel(IEnumerable<IPlugin> plugins,
             ObservableProgress progress,
             EventSink eventSink,
             MainSettings settings,
@@ -88,6 +87,11 @@ namespace DependencyScanner.Standalone.Components
             {
                 Notification = e;
             };
+
+            foreach (var plugin in Plugins)
+            {
+                plugin.OnStarted();
+            }
         }
 
         private IEnumerable<SettingsViewModel> ReadSettings(IEnumerable<IPlugin> plugins)

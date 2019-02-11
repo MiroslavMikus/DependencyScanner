@@ -26,5 +26,9 @@ namespace DependencyScanner.Standalone.Components.Consolidate_Solution
                 DataContext = viewModel
             };
         }
+
+        public void OnStarted()
+        {
+        }
     }
 }

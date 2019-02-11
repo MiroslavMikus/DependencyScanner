@@ -10,6 +10,8 @@ namespace DependencyScanner.Api.Interfaces
         UserControl ContentView { get; }
         int Order { get; }
 
+        void OnStarted();
+
         //Page Help { get; }
     }
 

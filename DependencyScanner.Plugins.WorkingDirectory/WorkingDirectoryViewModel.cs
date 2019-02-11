@@ -103,11 +103,6 @@ namespace DependencyScanner.Plugins.Wd
             Directories = new ObservableCollection<IWorkingDirectory>(_settingsManager.RestoreWorkingDirectories());
 
             InitCommands();
-
-            foreach (var dir in Directories)
-            {
-                _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(dir));
-            }
         }
 
         private void InitCommands()

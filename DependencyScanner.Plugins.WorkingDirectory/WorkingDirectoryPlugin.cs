@@ -1,8 +1,10 @@
-﻿using DependencyScanner.Api.Interfaces;
+﻿using DependencyScanner.Api.Events;
+using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Core.Gui.ViewModel;
 using DependencyScanner.Plugins.Wd;
 using DependencyScanner.Plugins.Wd.Model;
 using DependencyScanner.Plugins.Wd.Services;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace DependencyScanner.Plugins.Wd
     public class WorkingDirectoryPlugin : PluginBase<WorkingDirectorySettings>
     {
         private readonly WorkingDirectoryViewModel _viewModel;
+        private readonly IMessenger _messenger;
 
         public override string Title => "Working directories";
 
@@ -24,10 +27,11 @@ namespace DependencyScanner.Plugins.Wd
 
         public override int Order => 0;
 
-        public WorkingDirectoryPlugin(WorkingDirectoryViewModel viewModel, WorkingDirectorySettings settings)
+        public WorkingDirectoryPlugin(WorkingDirectoryViewModel viewModel, WorkingDirectorySettings settings, IMessenger messenger)
             : base(settings)
         {
             _viewModel = viewModel;
+            _messenger = messenger;
 
             ContentView = new WorkingDirectoryView()
             {
@@ -38,6 +42,15 @@ namespace DependencyScanner.Plugins.Wd
             {
                 DataContext = settings
             };
+        }
+
+        public override void OnStarted()
+        {
+            // publish init directoreies
+            foreach (var dir in _viewModel.Directories)
+            {
+                _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(dir));
+            }
         }
     }
 }
