@@ -45,11 +45,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\AbstractBoolConverter.cs" />
+    <Compile Include="Converters\AbstractEqualConverter.cs" />
     <Compile Include="Converters\AbstractNullConverter.cs" />
     <Compile Include="Converters\AbstractTypeToBoolConvereter.cs" />
+    <Compile Include="Converters\BoolAndMultiValueConverter.cs" />
     <Compile Include="Converters\BoolToBoolConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityMultiValueConverter.cs" />
+    <Compile Include="Converters\EqualToBoolConverter.cs" />
     <Compile Include="Converters\NullToBoolConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -16,6 +16,8 @@
     <UserControl.Resources>
         <converters:NullToBoolConverter x:Key="NullToFalse" Negative="True" Positive="False" />
         <converters:NullToBoolConverter x:Key="NullToTrue" Negative="False" Positive="True" />
+        <converters:NullToVisibilityConverter x:Key="NullToHide" Positive="Hidden" Negative="Visible" />
+        <converters:NullToVisibilityConverter x:Key="NullToVisible" Positive="Visible" Negative="Hidden" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibility" />
     </UserControl.Resources>
     <Grid>
@@ -166,6 +168,20 @@
                 </Button.ToolTip>
             </Button>
         </StackPanel>
-        <local:RepositoryView Grid.Column="2" Grid.Row="2" DataContext="{Binding ElementName=RepoList, Path=SelectedItem}" Grid.RowSpan="2" />
+        <local:RepositoryView Grid.Column="2"
+                              Grid.Row="2"
+                              Grid.RowSpan="2"
+                              DataContext="{Binding ElementName=RepoList, Path=SelectedItem}"
+                              Visibility="{Binding ElementName=RepoList, Path=SelectedItem, Converter={StaticResource NullToHide}}" />
+        <Label Grid.Column="2"
+               Grid.Row="2"
+               Grid.RowSpan="2"
+               FontSize="35"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Foreground="Gray"
+               Visibility="{Binding ElementName=RepoList, Path=SelectedItem, Converter={StaticResource NullToVisible}}" >
+            Select any repository to see all the details :)
+        </Label>
     </Grid>
 </UserControl>
