@@ -4,9 +4,74 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:DependencyScanner.Plugins.Wd"
+             xmlns:converters="clr-namespace:DependencyScanner.Core.Gui.Converters;assembly=DependencyScanner.Core.Gui"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800" Background="LimeGreen">
-    <Grid>
-        <Label Content="{Binding GitInfo.Root.FullName}" />
-    </Grid>
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:BoolAndMultiValueConverter x:Key="BoolAndMultiConverter" />
+        <converters:NullToBoolConverter x:Key="NullToFalse" Negative="True" Positive="False" />
+        <converters:EqualToBoolConverter x:Key="FalseWhenEqual" Positive="False" Negative="True" />
+    </UserControl.Resources>
+    <ScrollViewer>
+
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="Label" x:Key="H1">
+                    <Setter Property="FontWeight" Value="SemiBold" />
+                    <Setter Property="FontSize" Value="20" />
+                    <Setter Property="Margin" Value="30 15 15 15" />
+                </Style>
+                <Style TargetType="Label" x:Key="Content">
+                    <Setter Property="FontSize" Value="15" />
+                    <Setter Property="Margin" Value="15 5 5 10" />
+                </Style>
+                <Style TargetType="TextBlock" x:Key="TextContent">
+                    <Setter Property="FontSize" Value="15" />
+                    <Setter Property="Margin" Value="20 5 5 10" />
+                </Style>
+                <Style x:Key="BorderStyle" TargetType="Border">
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="Padding" Value="10" />
+                    <Setter Property="Margin" Value="5,10,5,0" />
+                    <Setter Property="BitmapEffect">
+                        <Setter.Value>
+                            <DropShadowBitmapEffect Opacity="0.2" ShadowDepth="7" />
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" Style="{StaticResource BorderStyle}">
+                <StackPanel>
+                    <Label Content="Status:" Style="{StaticResource H1}" />
+                    <Label Content="{Binding GitInfo.Status}" Style="{StaticResource Content}" />
+                </StackPanel>
+            </Border>
+            <Border Grid.Row="1" Style="{StaticResource BorderStyle}">
+                <StackPanel>
+                    <Label Content="Branches:" Style="{StaticResource H1}" />
+                    <TextBlock Text="{Binding GitInfo.CurrentBranch, StringFormat='Current branch: {0}'}" Style="{StaticResource TextContent}" />
+                    <Label Content="Available branches:" Style="{StaticResource Content}" />
+                    <ListView Name="BranchList" Margin="15 5 5 10"
+                              ItemsSource="{Binding GitInfo.BranchList}"
+                              BorderThickness="0" />
+                    <Button Width="auto" HorizontalAlignment="Left" Margin="15">
+                        <TextBlock FontSize="13" Text="{Binding ElementName=BranchList, Path=SelectedItem, StringFormat='Switch to: {0}'}" />
+                        <Button.IsEnabled>
+                            <MultiBinding Converter="{StaticResource BoolAndMultiConverter}">
+                                <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}" Path="DataContext.GitInfo.IsClean" />
+                                <Binding Converter="{StaticResource NullToFalse}" ElementName="BranchList" Path="SelectedItem" />
+                                <!--<Binding Converter="{StaticResource FalseWhenEqual}" ConverterParameter="{Binding}" ElementName="BranchList" Path="SelectedItem" />-->
+                            </MultiBinding>
+                        </Button.IsEnabled>
+                    </Button>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </ScrollViewer>
 </UserControl>
