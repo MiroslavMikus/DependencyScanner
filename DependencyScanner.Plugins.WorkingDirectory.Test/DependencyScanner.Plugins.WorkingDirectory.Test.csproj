@@ -70,6 +70,10 @@
       <Project>{b3bde71e-510a-413f-8a59-881200c45127}</Project>
       <Name>DependencyScanner.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DependencyScanner.Core.Gui\DependencyScanner.Core.Gui.csproj">
+      <Project>{4B6357EA-79DB-4DCD-93A6-3335DD12C904}</Project>
+      <Name>DependencyScanner.Core.Gui</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DependencyScanner.Plugins.WorkingDirectory\DependencyScanner.Plugins.WorkingDirectory.csproj">
       <Project>{0CF28F26-C030-4A68-A9F6-FE218D49E5DE}</Project>
       <Name>DependencyScanner.Plugins.WorkingDirectory</Name>

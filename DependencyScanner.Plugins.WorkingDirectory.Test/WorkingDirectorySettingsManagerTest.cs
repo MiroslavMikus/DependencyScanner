@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Api.Model;
 using DependencyScanner.Plugins.Wd.Model;
@@ -14,6 +15,7 @@ using Serilog;
 namespace DependencyScanner.Plugins.WorkingDirectory.Test
 {
     [TestClass]
+    [Ignore]
     public class WorkingDirectorySettingsManagerTest
     {
         [TestMethod]

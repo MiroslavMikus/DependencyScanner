@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace DependencyScanner.Core.Test.Services
 {
     [TestClass]
+    [Ignore]
     public class RepositoryScannerTest : TestBase
     {
         [TestMethod]
