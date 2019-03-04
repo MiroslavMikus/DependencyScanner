@@ -60,8 +60,9 @@
                     <ListView Name="BranchList" Margin="15 5 5 10"
                               ItemsSource="{Binding GitInfo.BranchList}"
                               BorderThickness="0" />
-                    <Button Width="auto" HorizontalAlignment="Left" Margin="15">
-                        <TextBlock FontSize="13" Text="{Binding ElementName=BranchList, Path=SelectedItem, StringFormat='Switch to: {0}'}" />
+                    <Button Width="auto" HorizontalAlignment="Left" Margin="15" Command="{Binding SetBranchCommand}"
+                            CommandParameter="{Binding ElementName=BranchList, Path=SelectedItem}">
+                        <TextBlock FontSize="13" Text="{Binding ElementName=BranchList, Path=SelectedItem, StringFormat='Switch to: {0}', FallbackValue='fallback'}" />
                         <Button.IsEnabled>
                             <MultiBinding Converter="{StaticResource BoolAndMultiConverter}">
                                 <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}" Path="DataContext.GitInfo.IsClean" />

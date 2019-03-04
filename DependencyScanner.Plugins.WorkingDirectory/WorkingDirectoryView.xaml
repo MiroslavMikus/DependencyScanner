@@ -57,7 +57,10 @@
                     CommandParameter="{Binding ElementName=WdList, Path=SelectedItem}">
                 <iconPacks:PackIconFontAwesome Kind="ArrowDownSolid"  VerticalAlignment="Center" />
                 <Button.ToolTip>
-                    <Label Content="Clone repository" FontWeight="Bold" />
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Clone repository" FontWeight="Bold" />
+                        <Label Content="Clone new repository to the selected working directory." />
+                    </StackPanel>
                 </Button.ToolTip>
             </Button>
             <Button Height="35" Width="35" Margin="5 10 5 10"
@@ -65,7 +68,10 @@
                     Command="{Binding PullAllCommand}">
                 <iconPacks:PackIconFontAwesome Kind="CodeBranchSolid"  VerticalAlignment="Center" />
                 <Button.ToolTip>
-                    <Label Content="Pull selected repository" FontWeight="Bold" />
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Pull working directories" FontWeight="Bold" />
+                        <Label Content="Executes git pull for each repository." />
+                    </StackPanel>
                 </Button.ToolTip>
             </Button>
             <Button Height="35" Width="35" Margin="5 10 5 10"
@@ -74,7 +80,10 @@
                     IsEnabled="{Binding CancellationTokenSource, Converter={StaticResource NullToTrue}}">
                 <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
                 <Button.ToolTip>
-                    <Label Content="Sync all working directories" FontWeight="Bold" />
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Sync all working directories" FontWeight="Bold" />
+                        <Label Content="Search and add/remove git repositories." />
+                    </StackPanel>
                 </Button.ToolTip>
             </Button>
             <Button Height="35" Width="35" Margin="5 10 5 10"
@@ -167,6 +176,16 @@
                     <Label Content="Pull selected repository" FontWeight="Bold" />
                 </Button.ToolTip>
             </Button>
+            <Button Height="35" Width="35" Margin="5 10 5 10"
+                    Style="{DynamicResource CircleButtonStyle}"
+                    Command="{Binding Commands.OpenCmdCommand}"
+                    CommandParameter="{Binding ElementName=RepoList, Path=SelectedItem.GitInfo.Root.DirectoryName}"
+                    IsEnabled="{Binding ElementName=RepoList, Path=SelectedItem, Converter={StaticResource NullToFalse}}">
+                <iconPacks:PackIconFontAwesome Kind="TerminalSolid"  VerticalAlignment="Center" />
+                <Button.ToolTip>
+                    <Label Content="Pull selected repository" FontWeight="Bold" />
+                </Button.ToolTip>
+            </Button>
         </StackPanel>
         <local:RepositoryView Grid.Column="2"
                               Grid.Row="2"
@@ -180,7 +199,7 @@
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                Foreground="Gray"
-               Visibility="{Binding ElementName=RepoList, Path=SelectedItem, Converter={StaticResource NullToVisible}}" >
+               Visibility="{Binding ElementName=RepoList, Path=SelectedItem, Converter={StaticResource NullToVisible}}">
             Select any repository to see all the details :)
         </Label>
     </Grid>

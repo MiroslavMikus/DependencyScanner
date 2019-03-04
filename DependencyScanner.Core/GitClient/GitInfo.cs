@@ -28,6 +28,7 @@ namespace DependencyScanner.Core.Model
             get => _currentBranch;
             set
             {
+                if (string.IsNullOrEmpty(value)) return;
                 if (Set(ref _currentBranch, value))
                 {
                     Task.Run(() =>
