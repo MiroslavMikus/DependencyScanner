@@ -23,6 +23,25 @@ namespace DependencyScanner.Plugins.Wd
         public RepositoryView()
         {
             InitializeComponent();
+
+            RemoteBranchList.PreviewMouseWheel += PreviewMouseWheel;
+            BranchList.PreviewMouseWheel += PreviewMouseWheel;
+        }
+
+        private new static void PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                e.Handled = true;
+                var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
+                {
+                    RoutedEvent = UIElement.MouseWheelEvent,
+                    Source = sender
+                };
+
+                var parent = ((Control)sender).Parent as UIElement;
+                parent.RaiseEvent(eventArg);
+            }
         }
     }
 }

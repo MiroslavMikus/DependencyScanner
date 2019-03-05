@@ -112,7 +112,6 @@
     </Compile>
     <Compile Include="Components\ConsolidateSolution\SolutionSelectionViewModel.cs" />
     <Compile Include="Components\MainViewModel.cs" />
-    <Compile Include="Components\NugetScan\NugetScanPlugin.cs" />
     <Compile Include="Components\NugetScan\NugetScanView.xaml.cs">
       <DependentUpon>NugetScanView.xaml</DependentUpon>
     </Compile>

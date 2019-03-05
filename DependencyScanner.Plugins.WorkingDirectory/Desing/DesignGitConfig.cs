@@ -20,6 +20,16 @@ namespace DependencyScanner.Plugins.Wd.Desing
             throw new NotImplementedException();
         }
 
+        public IEnumerable<string> GetLocalBranches()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<string> GetRemoteBranches()
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetRemoteUrl()
         {
             throw new NotImplementedException();

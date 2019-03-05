@@ -26,6 +26,10 @@ namespace DependencyScanner.Plugins.Wd.Desing
 
         public string Status => "ok";
 
+        public string CommitCount => throw new NotImplementedException();
+
+        public IEnumerable<string> RemoteBranchList => throw new NotImplementedException();
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public string Checkout(string branch)

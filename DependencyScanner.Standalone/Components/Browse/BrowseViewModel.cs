@@ -1,4 +1,5 @@
 ﻿using DependencyScanner.Api.Events;
+using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Core.Gui.ViewModel;
 using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Core.Model;
@@ -9,6 +10,7 @@ using GalaSoft.MvvmLight.Threading;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DependencyScanner.ViewModel
@@ -41,18 +43,20 @@ namespace DependencyScanner.ViewModel
             {
                 foreach (var project in a.Directory.Repositories)
                 {
-                    await Scan(project.GitInfo.Root.DirectoryName);
+                    await Scan(project.GitInfo.Root.DirectoryName, project.GitInfo);
                 }
             });
         }
 
-        private Task Scan(string directory)
+        private Task Scan(string directory, IGitInfo gitInfo)
         {
             return Task.Run(async () =>
             {
                 var scanResult = await _scanner.ScanSolution(directory);
 
                 if (scanResult == null) return;
+
+                scanResult.GitInformation = gitInfo;
 
                 DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {

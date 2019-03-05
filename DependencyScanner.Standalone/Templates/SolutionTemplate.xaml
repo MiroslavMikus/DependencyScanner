@@ -73,8 +73,8 @@
                       SelectedItem="{Binding GitInformation.CurrentBranch, Mode=TwoWay}"
                       IsEnabled="{Binding GitInformation.IsClean}" />
         </StackPanel>
-        <DockPanel Grid.Row="3">
-            <DockPanel.Resources>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Stretch">
+            <StackPanel.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource MahApps.Metro.Styles.MetroCircleButtonStyle}">
                     <Setter Property="Width" Value="30" />
                     <Setter Property="Height" Value="30" />
@@ -90,8 +90,7 @@
                         </Trigger>
                     </Style.Triggers>
                 </Style>
-            </DockPanel.Resources>
-            <!--Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.RunCommand}"-->
+            </StackPanel.Resources>
             <Button Command="{x:Static command:CommandManager.RunCommand}"
                     CommandParameter="{Binding Info.FullName}"
                     Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.Settings.ShowOpenButton, Converter={StaticResource TrueToVisible}}">
@@ -152,7 +151,9 @@
                 </Button.ToolTip>
                 <iconPack:PackIconFontAwesome Kind="EdgeBrands" />
             </Button>
-            <Button Command="{Binding RefreshCommand}" HorizontalAlignment="Right">
+            <Button Command="{Binding RefreshCommand}" 
+                    Background="{DynamicResource AccentColorBrush}"
+                    Foreground="White">
                 <Button.ToolTip>
                     <StackPanel Orientation="Vertical">
                         <Label Content="Refresh" FontWeight="Bold" />
@@ -161,6 +162,6 @@
                 </Button.ToolTip>
                 <iconPack:PackIconFontAwesome Kind="SyncAltSolid" />
             </Button>
-        </DockPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

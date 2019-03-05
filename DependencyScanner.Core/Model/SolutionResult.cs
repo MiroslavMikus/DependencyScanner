@@ -1,4 +1,5 @@
-﻿using DependencyScanner.Api.Services;
+﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Api.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
@@ -21,8 +22,8 @@ namespace DependencyScanner.Core.Model
         private ICollection<ProjectResult> _projects = new List<ProjectResult>();
         public ICollection<ProjectResult> Projects { get => _projects; protected set => Set(ref _projects, value); }
 
-        private GitInfo _gitInformation;
-        public GitInfo GitInformation { get => _gitInformation; internal set => Set(ref _gitInformation, value); }
+        private IGitInfo _gitInformation;
+        public IGitInfo GitInformation { get => _gitInformation; set => Set(ref _gitInformation, value); }
 
         public RelayCommand RefreshCommand { get; }
 
@@ -43,7 +44,7 @@ namespace DependencyScanner.Core.Model
 
                 Projects = result.Projects;
 
-                GitInformation = result.GitInformation;
+                await GitInformation.Init(false);
             });
         }
 

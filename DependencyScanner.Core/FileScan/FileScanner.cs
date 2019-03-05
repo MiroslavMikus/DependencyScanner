@@ -95,15 +95,6 @@ namespace DependencyScanner.Core
                 result.Projects.Add(projectResult);
             }
 
-            var gitPath = DirectoryTools.SearchDirectory(solutionPath, GetGitFolder);
-
-            if (!string.IsNullOrEmpty(gitPath))
-            {
-                result.GitInformation = new GitInfo(gitPath, _gitEngine);
-
-                await result.GitInformation.Init(executeGitFetch);
-            }
-
             return result;
         }
 

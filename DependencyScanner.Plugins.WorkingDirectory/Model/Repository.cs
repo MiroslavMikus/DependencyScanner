@@ -3,6 +3,7 @@ using DependencyScanner.Api.Model;
 using DependencyScanner.Core.Gui.ViewModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -17,6 +18,7 @@ namespace DependencyScanner.Plugins.Wd.Model
         public ICommand PullCommand { get; }
         public ICommand CancelCommand { get; }
         public ICommand SetBranchCommand { get; }
+        public ICommand SetRemoteBranchCommand { get; }
 
         public Repository(IGitInfo gitInfo)
         {
