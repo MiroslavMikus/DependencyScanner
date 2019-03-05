@@ -1,7 +1,5 @@
 public static class Paths
 {
-    public static FilePath WorkingDirectoryProjectPath => "DependencyScanner.Plugins.WorkingDirectory/DependencyScanner.Plugins.WorkingDirectory.csproj";
-    public static FilePath StandaloneProjectPath => "DependencyScanner.Plugins.WorkingDirectory/DependencyScanner.Plugins.WorkingDirectory.csproj";
     public static FilePath SolutionPath => "DependencyScanner.sln";
     public static FilePath ChocoNuspecFile => "DependencyScanner.Standalone/DependencyScanner.Standalone.nuspec";
     public static FilePath ChocoHashFile => "DependencyScanner.Standalone/choco/DependencyScanner.Standalone.exe.hash.txt";
@@ -25,6 +23,7 @@ public void EnsureDoesNotExist(string path)
     if(FileExists(path)) 
         DeleteFile(path);
 }
+
 public void EnsureDoesNotExist(FilePath path)
 {
     if(FileExists(path)) 

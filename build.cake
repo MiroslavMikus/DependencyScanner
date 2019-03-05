@@ -14,7 +14,7 @@ var packageVersion = "0.1.0.4";
 // ARGUMENTS
 ///////////////////////////////////////////////////////////////////////////////
 var target = Argument("target", "Compile");
-var configuration = Argument("configuration", "Debug");
+var configuration = Argument("configuration", "Release");
 var packageOutputPath = Argument<DirectoryPath>("PackageOutputPath", "packages");
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -57,7 +57,6 @@ Task("Restore-NuGet-Packages")
 Task("Build")
     .IsDependentOn("Restore-NuGet-Packages")
     .Does(()=>{
-        MSBuild(Paths.WorkingDirectoryProjectPath.ToString(), settings => settings.SetConfiguration(configuration));
         MSBuild(Paths.SolutionPath.ToString(), settings => settings.SetConfiguration(configuration));
     });
 
@@ -95,7 +94,7 @@ Task("Remove-Packages")
 
 Task("Pack-Chocolatey")
     .IsDependentOn("Test")
-    .Does(()=>{
+    .Does(()=> {
         CheckComfiguration("Release", configuration);
 
         // calculate new hash

@@ -56,6 +56,7 @@
   <files>
     <file src="bin\Release\DependencyScanner.Standalone.exe" />
     <file src="bin\Release\DependencyScanner.Standalone.exe.gui" />
+    <file src="bin\Release\plugins\*" target="plugins" />
     <file src="choco\*" target="tools" />
   </files>
 </package>
