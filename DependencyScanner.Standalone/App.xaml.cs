@@ -13,6 +13,7 @@ using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
 using MahApps.Metro;
 using Serilog;
+using Serilog.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -76,12 +77,34 @@ namespace DependencyScanner.Standalone
 
         private void Current_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            Log.Fatal(e.Exception, "DispatcherUnhandledException");
+            if (Log.Logger == null)
+            {
+                using (EventLog eventLog = new EventLog("Dependency-Scanner"))
+                {
+                    eventLog.Source = "Dependency-Scanner";
+                    eventLog.WriteEntry("DispatcherException " + e.Exception.ToString(), EventLogEntryType.FailureAudit, 1, 1);
+                }
+            }
+            else
+            {
+                Log.Fatal(e.Exception, "DispatcherUnhandledException");
+            }
         }
 
         private void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Log.Fatal("CurrentDomain.UnhandledException -> {obj}", e.ExceptionObject);
+            if (Log.Logger == null)
+            {
+                using (EventLog eventLog = new EventLog("Dependency-Scanner"))
+                {
+                    eventLog.Source = "Dependency-Scanner";
+                    eventLog.WriteEntry("UnhandledException" + e.ExceptionObject.ToString(), EventLogEntryType.FailureAudit, 1, 1);
+                }
+            }
+            else
+            {
+                Log.Fatal("CurrentDomain.UnhandledException -> {obj}", e.ExceptionObject);
+            }
         }
 
         private static ILifetimeScope BuildScope()

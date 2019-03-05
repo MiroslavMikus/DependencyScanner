@@ -235,6 +235,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="choco\chocolateyBeforeModify.ps1" />
     <None Include="choco\chocolateyInstall.ps1" />
     <None Include="choco\chocolateyUninstall.ps1" />
     <None Include="DependencyScanner.Standalone.nuspec" />
