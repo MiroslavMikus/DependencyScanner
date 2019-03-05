@@ -15,11 +15,17 @@ namespace DependencyScanner.Core.Model
         public FileInfo Root { get; }
         public IGitConfig Config { get; set; }
 
+        private string _commitCount;
+        public string CommitCount { get => _commitCount; private set => Set(ref _commitCount, value); }
+
         private string _remoteUrl;
         public string RemoteUrl { get => _remoteUrl; private set => Set(ref _remoteUrl, value); }
 
         private IEnumerable<string> _branchList;
         public IEnumerable<string> BranchList { get => _branchList; private set => Set(ref _branchList, value); }
+
+        private IEnumerable<string> _remoteBranchList;
+        public IEnumerable<string> RemoteBranchList { get => _remoteBranchList; private set => Set(ref _remoteBranchList, value); }
 
         private string _currentBranch;
 
@@ -31,10 +37,10 @@ namespace DependencyScanner.Core.Model
                 if (string.IsNullOrEmpty(value)) return;
                 if (Set(ref _currentBranch, value))
                 {
-                    Task.Run(() =>
+                    Task.Run(async () =>
                     {
                         Checkout(value);
-                        Status = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
+                        await Init(false);
                     });
                 }
             }
@@ -83,12 +89,13 @@ namespace DependencyScanner.Core.Model
         {
             await Task.Run(() =>
             {
+                _gitEngine.GitProcess(Root.DirectoryName, GitCommand.UpdateRemoteReferences);
+
                 if (executeGitFetch)
                 {
                     var result = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Fetch);
                 }
-
-                BranchList = Config.GetBranchList();
+                UpdateBranchList();
 
                 _currentBranch = Config.GetCurrentBranch();
 
@@ -97,7 +104,16 @@ namespace DependencyScanner.Core.Model
                 Status = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
 
                 RemoteUrl = Config.GetRemoteUrl();
+
+                CommitCount = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.CommitCount).Split('\r')[0];
             });
+        }
+
+        private void UpdateBranchList()
+        {
+            BranchList = Config.GetLocalBranches();
+
+            RemoteBranchList = Config.GetRemoteBranches();
         }
 
         public string Checkout(string branch)
@@ -105,6 +121,10 @@ namespace DependencyScanner.Core.Model
             if (BranchList.Contains(branch))
             {
                 return _gitEngine.GitProcess(Root.DirectoryName, GitCommand.SwitchBranch, branch);
+            }
+            else if (RemoteBranchList.Contains(branch))
+            {
+                return _gitEngine.GitProcess(Root.DirectoryName, $"checkout -b {branch} remotes/origin/{branch}");
             }
 
             return $"Branch '{branch}' doesnt exist in scan results!";
@@ -114,6 +134,7 @@ namespace DependencyScanner.Core.Model
         {
             _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Pull);
             Status = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
+            UpdateBranchList();
         }
     }
 }

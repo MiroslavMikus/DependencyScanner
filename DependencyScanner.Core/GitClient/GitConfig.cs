@@ -44,15 +44,33 @@ namespace DependencyScanner.Core.GitClient
             return urlText.Substring(startAt).Trim(' ');
         }
 
-        public IEnumerable<string> GetBranchList() => GetBranchList(RootPath);
+        public IEnumerable<string> GetLocalBranches() => GetLocalBranches(RootPath);
 
-        internal static IEnumerable<string> GetBranchList(string rootPath)
+        public IEnumerable<string> GetRemoteBranches() => GetRemoteBranches(RootPath);
+
+        internal static IEnumerable<string> GetLocalBranches(string rootPath)
         {
             var refsPath = Path.Combine(rootPath, "refs", "heads");
 
             var refs = Directory.GetFiles(refsPath, "*", SearchOption.AllDirectories);
 
             return refs.Select(a => a.Remove(0, refsPath.Count() + 1).Replace('\\', '/'));
+        }
+
+        internal static IEnumerable<string> GetRemoteBranches(string rootPath)
+        {
+            var refsPath = Path.Combine(rootPath, "refs", "remotes");
+
+            if (!Directory.Exists(refsPath))
+            {
+                return Enumerable.Empty<string>();
+            }
+
+            var refs = Directory.GetFiles(refsPath, "*", SearchOption.AllDirectories);
+
+            return refs.Select(a => a.Remove(0, refsPath.Count() + 1).Replace('\\', '/'))
+                .Select(a => a.Replace("origin/", ""))
+                .Where(a => !a.Equals("HEAD"));
         }
 
         public string GetCurrentBranch()

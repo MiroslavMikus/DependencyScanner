@@ -7,7 +7,9 @@ namespace DependencyScanner.Api.Interfaces
         string Content { get; }
         string RootPath { get; }
 
-        IEnumerable<string> GetBranchList();
+        IEnumerable<string> GetLocalBranches();
+
+        IEnumerable<string> GetRemoteBranches();
 
         string GetCurrentBranch();
 
