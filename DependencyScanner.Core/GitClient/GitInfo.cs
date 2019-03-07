@@ -2,7 +2,7 @@
 using DependencyScanner.Core.GitClient;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using System;
+using Serilog;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +12,14 @@ namespace DependencyScanner.Core.Model
 {
     public class GitInfo : ObservableObject, IGitInfo
     {
+        #region Services
+
+        private readonly GitEngine _gitEngine;
+        private readonly IHasInternetConnection _hasInternetConnection;
+        private readonly ILogger _logger;
+
+        #endregion Services
+
         public FileInfo Root { get; }
         public IGitConfig Config { get; set; }
 
@@ -47,7 +55,6 @@ namespace DependencyScanner.Core.Model
         }
 
         private string _status;
-        private readonly GitEngine _gitEngine;
 
         public string Status
         {
@@ -67,9 +74,14 @@ namespace DependencyScanner.Core.Model
         public bool IsClean { get => Status?.Contains("working tree clean") == true; }
         public bool IsBehind { get => Status?.Contains("Your branch is behind") == true; }
 
-        public GitInfo(string root, GitEngine gitEngine)
+        public GitInfo(string root,
+            GitEngine gitEngine,
+            IHasInternetConnection hasInternetConnection,
+            ILogger logger)
         {
             _gitEngine = gitEngine;
+            _hasInternetConnection = hasInternetConnection;
+            _logger = logger;
 
             Root = new FileInfo(root);
 
@@ -93,8 +105,16 @@ namespace DependencyScanner.Core.Model
 
                 if (executeGitFetch)
                 {
-                    var result = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Fetch);
+                    if (_hasInternetConnection.CheckInternetConnection())
+                    {
+                        var result = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Fetch);
+                    }
+                    else
+                    {
+                        _logger.Information("Skipping git fetch, since there is no internet connection. Repository: {repository}", Root.DirectoryName);
+                    }
                 }
+
                 UpdateBranchList();
 
                 _currentBranch = Config.GetCurrentBranch();

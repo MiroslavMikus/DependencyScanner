@@ -15,17 +15,18 @@ namespace DependencyScanner.Core
 {
     public class FileScanner : IScanner, ISolutionScanner
     {
-        private readonly GitEngine _gitEngine;
-
+        private readonly IHasInternetConnection _hasInternetConnection;
+        private readonly Func<string, IGitInfo> _gitCtor;
         private const string PackagePattern = "packages.config";
         private const string SolutionPattern = "*.sln";
         private const string ProjectPattern = "*.csproj";
         private const string NuspecPattern = "*.nuspec";
         private const string GitPattern = ".git";
 
-        public FileScanner(GitEngine gitEngine)
+        public FileScanner(IHasInternetConnection hasInternetConnection, Func<string, IGitInfo> gitCtor)
         {
-            _gitEngine = gitEngine;
+            _hasInternetConnection = hasInternetConnection;
+            _gitCtor = gitCtor;
         }
 
         private static string[] GetPackages(string rootDirectory) => Directory.GetFiles(rootDirectory, PackagePattern, SearchOption.TopDirectoryOnly);
@@ -178,7 +179,7 @@ namespace DependencyScanner.Core
 
             if (!string.IsNullOrEmpty(gitPath))
             {
-                result.GitInformation = new GitInfo(gitPath, _gitEngine);
+                result.GitInformation = _gitCtor(gitPath);
 
                 await result.GitInformation.Init(false);
             }
