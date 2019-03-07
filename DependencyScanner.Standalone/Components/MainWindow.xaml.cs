@@ -34,38 +34,6 @@ namespace DependencyScanner.Standalone
                 .ToList();
 
             InitializeComponent();
-
-#if !DEBUG
-            //todo move this to the view model!! and use DialogCoordinator interface
-            Task.Factory.StartNew(async () =>
-            {
-                var updater = new ChocoUpdater();
-
-                if (await updater.IsNewVersionAvailable())
-                {
-                    var mySettings = new MetroDialogSettings()
-                    {
-                        DefaultButtonFocus = MessageDialogResult.Affirmative,
-                        AffirmativeButtonText = "Update",
-                        NegativeButtonText = "Do not update",
-                        FirstAuxiliaryButtonText = "Cancel"
-                    };
-
-                    var result = await this.ShowMessageAsync("Newer version was detected!", "Do you want to update dependency-scanner?",
-                        MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
-
-                    if (result == MessageDialogResult.Affirmative)
-                    {
-                        updater.Update();
-
-                        await DispatcherHelper.RunAsync(() =>
-                        {
-                            Application.Current.Shutdown();
-                        }).Task;
-                    }
-                }
-            }, default(CancellationToken), TaskCreationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
-#endif
         }
 
         private void Settings_Click(object sender, RoutedEventArgs e)

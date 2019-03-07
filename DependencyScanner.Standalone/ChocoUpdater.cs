@@ -1,18 +1,32 @@
-﻿using DependencyScanner.Core.Tools;
+﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Core.Tools;
 using Serilog;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace DependencyScanner.Standalone
 {
-    public class ChocoUpdater
+    public class ChocoUpdater : IService
     {
         public const string PackageId = "dependency-scanner";
+        private readonly IHasInternetConnection _hasInternetConnection;
+
+        public ChocoUpdater(IHasInternetConnection hasInternetConnection)
+        {
+            _hasInternetConnection = hasInternetConnection;
+        }
 
         public async Task<bool> IsNewVersionAvailable()
         {
+            if (!_hasInternetConnection.CheckInternetConnection())
+            {
+                Log.Information($"No internet connection!");
+                return false;
+            }
+
             var search = await SearchInChoco();
 
             var result = IsOutdated(search);
@@ -26,7 +40,7 @@ namespace DependencyScanner.Standalone
         {
             var lines = input.Split(new string[] { Environment.NewLine }, StringSplitOptions.None).Where(a => !string.IsNullOrEmpty(a));
 
-            return lines.Any(a => a.IndexOf(PackageId, StringComparison.OrdinalIgnoreCase) >= 0);
+            return lines.Any(a => a.StartsWith(PackageId));
         }
 
         private async Task<string> SearchInChoco()
