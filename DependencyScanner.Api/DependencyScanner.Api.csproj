@@ -50,6 +50,7 @@
     <Compile Include="Interfaces\IFolderPicker.cs" />
     <Compile Include="Interfaces\IGitConfig.cs" />
     <Compile Include="Interfaces\IGitInfo.cs" />
+    <Compile Include="Interfaces\IHasInternetConnection.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Interfaces\IRepositoryScanner.cs" />
     <Compile Include="Interfaces\ISettingsManager.cs" />
