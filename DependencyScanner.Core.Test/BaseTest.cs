@@ -30,6 +30,6 @@ namespace DependencyScanner.Core.Test
 
         public static GitEngine Git => new GitEngine();
 
-        public static FileScanner Scanner => new FileScanner(Git);
+        public static FileScanner Scanner => new FileScanner(null, null);
     }
 }

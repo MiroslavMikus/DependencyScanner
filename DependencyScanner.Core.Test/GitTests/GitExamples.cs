@@ -1,5 +1,6 @@
 ﻿using DependencyScanner.Core.GitClient;
 using DependencyScanner.Core.Model;
+using DependencyScanner.Core.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -7,7 +8,7 @@ namespace DependencyScanner.Core.Test.GitTests
 {
     [TestClass]
     [Ignore]
-    public class GitExamples
+    public class GitExamples : TestBase
     {
         [TestMethod]
         public void MyTestMethod()
@@ -20,7 +21,7 @@ namespace DependencyScanner.Core.Test.GitTests
         {
             var wd = @"F:\Projects\_GitHub\DependencyScanner\.git";
 
-            var info = new GitInfo(wd, TestBase.Git);
+            var info = new GitInfo(wd, TestBase.Git, new HasInternetConnection(), _logger);
 
             //info.Checkout("mastesr");
         }

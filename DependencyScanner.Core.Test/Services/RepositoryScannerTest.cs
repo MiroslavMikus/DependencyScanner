@@ -15,7 +15,7 @@ namespace DependencyScanner.Core.Test.Services
         [TestMethod]
         public async Task InteractiveTest()
         {
-            Func<string, IGitInfo> ctor = a => new GitInfo(a, Git);
+            Func<string, IGitInfo> ctor = a => new GitInfo(a, Git, new HasInternetConnection(), _logger);
 
             var scanner = new RepositoryScanner(ctor, _logger);
 
