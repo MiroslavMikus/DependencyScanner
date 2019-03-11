@@ -38,22 +38,23 @@
       - You can see the current (git) status of all your solutions.
       - You can quickly switch between all your local branches *so far the state allows*.
     </description>
-    <releaseNotes>**Features**:
+    <releaseNotes>
+      **Features**:
 
       - Dependency scanner has how a plugin architecture (public API is coming soon)
       - There is a new Settings concept build on top of LiteDB and Autofac
       - Dependency scanner has now a new plugin: 'Working directory'
-      ![WorkingDirectory](pic/2019-03-11_2.png)
+      ![WorkingDirectory](https://raw.githubusercontent.com/MiroslavMikus/DependencyScanner/master/DependencyScanner.Standalone/res/pic/2019-03-11_2.png)
       - The user can now work with multiple working directories at once
       - All working directories and their repositories will be stored
       - The user can clone a new repository to the selected working directory
       - The user can pull all repotitories in all working directories at once
-      ![WorkingDirectoryProgress](pic/2019-03-11_3.gif)
+      ![WorkingDirectoryProgress](https://raw.githubusercontent.com/MiroslavMikus/DependencyScanner/master/DependencyScanner.Standalone/res/pic/2019-03-11_3.gif)
       - Dependency scanner has now an CI Build ![Azure build](https://dev.azure.com/DependencyScanner/DependencyScanner/_apis/build/status/CI-Master)
       - **Added 'Donate' button :)**
-      ![DonateButton](pic/2019-03-11_4.png)
+      ![DonateButton](https://raw.githubusercontent.com/MiroslavMikus/DependencyScanner/master/DependencyScanner.Standalone/res/pic/2019-03-11_4.png)
       - The user can not switch to the remote branches as well
-      ![RemoteBranches](pic/2019-03-11_1.png)
+      ![RemoteBranches](https://raw.githubusercontent.com/MiroslavMikus/DependencyScanner/master/DependencyScanner.Standalone/res/pic/2019-03-11_1.png)
       - Dependency scanner can now recognize if there is no internet connection and therefore cut all remote calls
 
       **Improvements**:
