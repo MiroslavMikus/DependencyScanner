@@ -9,7 +9,7 @@
 
 #load "build/paths.cake"
 
-var packageVersion = "0.1.0.4";
+var packageVersion = "0.2.0.0";
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
 ///////////////////////////////////////////////////////////////////////////////
@@ -72,6 +72,7 @@ Task("Test")
                 TestAdapterPath = @"DependencyScanner.Core.Test\bin\Debug\"
             });
     });
+    
 Task("Version")
     .Does(()=> {
         Information($"Using version {packageVersion}");
