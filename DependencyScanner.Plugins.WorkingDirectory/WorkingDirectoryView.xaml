@@ -33,7 +33,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal">
-            <Button Command="{Binding PickWorkingDirectoryCommand}" Content="Select new working directory" Margin="5" />
+            <Button Command="{Binding PickWorkingDirectoryCommand}" Content="Add new working directory" Margin="5" />
             <Button Margin="5" Content="Rename" Command="{Binding RenameWorkingDirectoryCommand}"
                     CommandParameter="{Binding ElementName=WdList, Path=SelectedItem}"
                     IsEnabled="{Binding ElementName=WdList, Path=SelectedItem, Converter={StaticResource NullToFalse}}" />
@@ -65,7 +65,8 @@
             </Button>
             <Button Height="35" Width="35" Margin="5 10 5 10"
                     Style="{DynamicResource CircleButtonStyle}"
-                    Command="{Binding PullAllCommand}">
+                    Command="{Binding PullAllCommand}"
+                    IsEnabled="{Binding CancellationTokenSource, Converter={StaticResource NullToTrue}}">
                 <iconPacks:PackIconFontAwesome Kind="CodeBranchSolid"  VerticalAlignment="Center" />
                 <Button.ToolTip>
                     <StackPanel Orientation="Vertical">
