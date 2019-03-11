@@ -22,9 +22,8 @@ namespace DependencyScanner.Standalone
 {
     public class AppModule : Autofac.Module
     {
-        private readonly static string DebugPath = GetProgramdataPath("Debug.txt");
-        private readonly static string LogPath = GetProgramdataPath("Info.txt");
-        private readonly static string FatalPath = GetProgramdataPath("Fatal.txt");
+        public static string LogPath { get; } = GetProgramdataPath("Info.txt");
+        public static string FatalPath { get; } = GetProgramdataPath("Fatal.txt");
 
         protected override void Load(ContainerBuilder builder)
         {
@@ -38,7 +37,7 @@ namespace DependencyScanner.Standalone
                 var logger = new LoggerConfiguration()
 #if DEBUG
                             .MinimumLevel.Debug()
-                            .WriteTo.Logger(l => l.MinimumLevel.Debug().WriteTo.File(DebugPath))
+                            .WriteTo.Logger(l => l.MinimumLevel.Debug().WriteTo.File(LogPath))
 #else
                             .MinimumLevel.Information()
                             .WriteTo.Logger(l => l.MinimumLevel.Information().WriteTo.File(LogPath))
@@ -85,11 +84,7 @@ namespace DependencyScanner.Standalone
             // View
             builder.Register(a => new MainWindow()
             {
-#if DEBUG
-                DataContext = a.Resolve<MainViewModel>(new TypedParameter(typeof(string), DebugPath))
-#else
                 DataContext = a.Resolve<MainViewModel>(new TypedParameter(typeof(string), LogPath))
-#endif
             });
         }
 

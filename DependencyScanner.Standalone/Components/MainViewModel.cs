@@ -18,13 +18,12 @@ namespace DependencyScanner.Standalone.Components
 {
     public class MainViewModel : ViewModelBase
     {
+        public string LogPath { get; }
         private readonly IDialogCoordinator _dialogCoordinator;
         public AppSettings MainSettings { get; } = AppSettings.Instance;
         public ObservableProgress Progress { get; }
 
         public MainSettings Settings { get; set; }
-
-        public string LogPath { get; }
 
         private string _notification;
 
@@ -36,9 +35,9 @@ namespace DependencyScanner.Standalone.Components
             set { Set(ref _settingsList, value); }
         }
 
-        private IEnumerable<Api.Interfaces.IPlugin> _plugins;
+        private IEnumerable<IPlugin> _plugins;
 
-        public IEnumerable<Api.Interfaces.IPlugin> Plugins
+        public IEnumerable<IPlugin> Plugins
         {
             get { return _plugins; }
             set
@@ -93,6 +92,7 @@ namespace DependencyScanner.Standalone.Components
             Progress = progress;
 
             LogPath = logPath;
+
             eventSink.NotifyEvent += (s, e) =>
             {
                 Notification = e;
