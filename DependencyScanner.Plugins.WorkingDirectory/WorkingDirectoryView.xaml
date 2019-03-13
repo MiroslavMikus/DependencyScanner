@@ -147,7 +147,7 @@
                             <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" />
                             <Label.ToolTip>
                                 <StackPanel>
-                                    <Label Content="Git status" FontWeight="Bold" />
+                                    <Label Content="Git status" FontWeight="Bold" VerticalAlignment="Center" />
                                     <Label Content="{Binding GitInfo.Status}" />
                                 </StackPanel>
                             </Label.ToolTip>
