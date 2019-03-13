@@ -6,38 +6,40 @@
              xmlns:local="clr-namespace:DependencyScanner.Plugins.Wd"
              xmlns:converters="clr-namespace:DependencyScanner.Core.Gui.Converters;assembly=DependencyScanner.Core.Gui"
              mc:Ignorable="d"
+             xmlns:model="clr-namespace:DependencyScanner.Plugins.Wd.Model"
              d:DesignHeight="800" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:BoolAndMultiValueConverter x:Key="BoolAndMultiConverter" />
         <converters:NullToBoolConverter x:Key="NullToFalse" Negative="True" Positive="False" />
         <converters:EqualToBoolConverter x:Key="FalseWhenEqual" Positive="False" Negative="True" />
+        <Style TargetType="Label" x:Key="Content">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="15" />
+        </Style>
+        <Style TargetType="TextBlock" x:Key="TextContent">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Margin" Value="20 5 5 10" />
+        </Style>
+        <Style x:Key="BorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Margin" Value="5,10,5,0" />
+            <Setter Property="BitmapEffect">
+                <Setter.Value>
+                    <DropShadowBitmapEffect Opacity="0.2" ShadowDepth="7" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <DataTemplate DataType="{x:Type model:DashboardElement}">
+            <Border Grid.Row="0" Style="{StaticResource BorderStyle}">
+                <Expander Header="{Binding Title}" IsExpanded="True">
+                    <TextBlock Text="{Binding GitInfo.CommitCount, StringFormat='Commit count: {0}'}"
+                               Style="{StaticResource TextContent}" />
+                </Expander>
+            </Border>
+        </DataTemplate>
     </UserControl.Resources>
     <ScrollViewer>
         <StackPanel>
-            <StackPanel.Resources>
-                <Style TargetType="Label" x:Key="H1">
-                    <Setter Property="FontWeight" Value="SemiBold" />
-                    <Setter Property="FontSize" Value="20" />
-                    <Setter Property="Margin" Value="30 15 15 15" />
-                </Style>
-                <Style TargetType="Label" x:Key="Content">
-                    <Setter Property="FontSize" Value="15" />
-                    <Setter Property="Margin" Value="15" />
-                </Style>
-                <Style TargetType="TextBlock" x:Key="TextContent">
-                    <Setter Property="FontSize" Value="15" />
-                    <Setter Property="Margin" Value="20 5 5 10" />
-                </Style>
-                <Style x:Key="BorderStyle" TargetType="Border">
-                    <Setter Property="Background" Value="White" />
-                    <Setter Property="Margin" Value="5,10,5,0" />
-                    <Setter Property="BitmapEffect">
-                        <Setter.Value>
-                            <DropShadowBitmapEffect Opacity="0.2" ShadowDepth="7" />
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </StackPanel.Resources>
             <Border Grid.Row="0" Style="{StaticResource BorderStyle}">
                 <Expander Header="Status" IsExpanded="True">
                     <Label Content="{Binding GitInfo.Status}" Style="{StaticResource Content}" />
@@ -94,7 +96,7 @@
             </Border>
             <Border Grid.Row="0" Style="{StaticResource BorderStyle}">
                 <Expander Header="Stats:" IsExpanded="True">
-                    <TextBlock Text="{Binding GitInfo.CommitCount, StringFormat='Commit count: {0}'}" 
+                    <TextBlock Text="{Binding GitInfo.CommitCount, StringFormat='Commit count: {0}'}"
                                Style="{StaticResource TextContent}" />
                 </Expander>
             </Border>

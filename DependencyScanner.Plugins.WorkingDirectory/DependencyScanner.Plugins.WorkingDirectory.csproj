@@ -54,6 +54,7 @@
     <Compile Include="RepositoryView.xaml.cs">
       <DependentUpon>RepositoryView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\DashboardExec.cs" />
     <Compile Include="Services\StorableWorkingDirectory.cs" />
     <Compile Include="Services\WorkingDirectorySettingsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
