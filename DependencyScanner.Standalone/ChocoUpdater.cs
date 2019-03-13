@@ -1,5 +1,6 @@
 ﻿using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Core.Tools;
+using DependencyScanner.Core.Tools.DependencyScanner.Core.Tools;
 using Serilog;
 using System;
 using System.Diagnostics;
@@ -56,7 +57,7 @@ namespace DependencyScanner.Standalone
                 CreateNoWindow = true
             };
 
-            return await new AsyncProcess(info).StartAsync();
+            return (await new AsyncProcess(info).StartAsync()).Output;
         }
 
         public void Update()

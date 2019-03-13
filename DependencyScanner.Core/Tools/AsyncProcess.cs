@@ -6,56 +6,68 @@ using System.Threading.Tasks;
 
 namespace DependencyScanner.Core.Tools
 {
-    public class AsyncProcess
+    using Serilog;
+    using System;
+    using System.Diagnostics;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    namespace DependencyScanner.Core.Tools
     {
-        private readonly ProcessStartInfo _info;
-        private readonly TaskCompletionSource<string> _tcs = new TaskCompletionSource<string>();
-        private StringBuilder _output = new StringBuilder();
-
-        public AsyncProcess(ProcessStartInfo info)
+        public class AsyncProcess
         {
-            _info = info;
-        }
+            private readonly ProcessStartInfo _info;
+            private readonly TaskCompletionSource<ProcessResult> _tcs = new TaskCompletionSource<ProcessResult>();
+            private StringBuilder _output = new StringBuilder();
+            private StringBuilder _errors = new StringBuilder();
+            private ProcessResult _result;
 
-        public bool OutputHandler { get; private set; }
-
-        public async Task<string> StartAsync()
-        {
-            var proc = new Process
+            public AsyncProcess(ProcessStartInfo info)
             {
-                StartInfo = _info,
-                EnableRaisingEvents = true
-            };
-
-            proc.StartInfo.RedirectStandardOutput = true;
-
-            proc.Exited += Proc_Exited;
-
-            proc.OutputDataReceived += Proc_OutputDataReceived;
-
-            try
-            {
-                proc.Start();
-                proc.BeginOutputReadLine();
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Execute process {FileName} : {Arguments}", _info.FileName, _info.Arguments);
-
-                return await Task.FromResult(string.Empty);
+                _info = info;
             }
 
-            return await _tcs.Task;
-        }
+            public bool OutputHandler { get; private set; }
 
-        private void Proc_Exited(object sender, EventArgs e)
-        {
-            _tcs.SetResult(_output.ToString());
-        }
+            public async Task<ProcessResult> StartAsync()
+            {
+                var proc = new Process
+                {
+                    StartInfo = _info,
+                    EnableRaisingEvents = true
+                };
 
-        private void Proc_OutputDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            _output.AppendLine(e.Data);
+                proc.StartInfo.RedirectStandardOutput = true;
+
+                proc.Exited += (s, e) => _tcs.SetResult(new ProcessResult(proc.ExitCode, _output.ToString(), _errors.ToString()));
+
+                proc.OutputDataReceived += Proc_OutputDataReceived;
+                proc.ErrorDataReceived += Proc_ErrorDataReceived;
+
+                try
+                {
+                    proc.Start();
+                    proc.BeginOutputReadLine();
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, "Execute process {FileName} : {Arguments}", _info.FileName, _info.Arguments);
+
+                    return await Task.FromResult(new ProcessResult(ex));
+                }
+
+                return await _tcs.Task;
+            }
+
+            private void Proc_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+            {
+                _errors.AppendLine(e.Data);
+            }
+
+            private void Proc_OutputDataReceived(object sender, DataReceivedEventArgs e)
+            {
+                _output.AppendLine(e.Data);
+            }
         }
     }
 }
