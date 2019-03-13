@@ -19,6 +19,7 @@ namespace DependencyScanner.Plugins.Wd.Model
         public ICommand CancelCommand { get; }
         public ICommand SetBranchCommand { get; }
         public ICommand SetRemoteBranchCommand { get; }
+        public ICommand RefreshGitInfoCommand { get; }
 
         public Repository(IGitInfo gitInfo)
         {
@@ -37,6 +38,11 @@ namespace DependencyScanner.Plugins.Wd.Model
             SetBranchCommand = new RelayCommand<string>(a =>
             {
                 GitInfo.CurrentBranch = a;
+            });
+
+            RefreshGitInfoCommand = new RelayCommand(() =>
+            {
+                gitInfo.Init(false);
             });
         }
 
