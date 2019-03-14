@@ -9,5 +9,6 @@ namespace DependencyScanner.Api.Interfaces
     public interface IRepositoryScanner
     {
         Task<IEnumerable<IGitInfo>> ScanForGitRepositories(string rootDirectory, IProgress<ProgressMessage> progress, bool executeGitFetch, CancellationToken token);
+        IEnumerable<IGitInfo> ScanForGitRepositories(string rootDirectory);
     }
 }

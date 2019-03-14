@@ -29,19 +29,15 @@ namespace DependencyScanner.Core.Services
         {
             progress.Report(new ProgressMessage { Value = 0D, Message = "Searching for '.git' folders." });
 
-            var gitFolders = GetGitFolder(rootDirectory);
+            var infos = ScanForGitRepositories(rootDirectory).ToArray();
 
-            double Progress(int current) => Math.Round(current / (gitFolders.Count() / 100D), 2);
-
-            _logger.Debug("found {folders}", gitFolders);
-
-            var infos = gitFolders.Select(a => _gitCtor(a)).ToArray();
+            double Progress(int current) => Math.Round(current / (infos.Length / 100D), 2);
 
             List<Task> InitTasks = new List<Task>();
 
-            for (int i = 0; i < gitFolders.Length; i++)
+            for (int i = 0; i < infos.Count(); i++)
             {
-                progress.Report(new ProgressMessage { Value = Progress(i + 1), Message = $"Scanning {i + 1}/{gitFolders.Count()}" });
+                progress.Report(new ProgressMessage { Value = Progress(i + 1), Message = $"Scanning {i + 1}/{infos.Length}" });
 
                 InitTasks.Add(infos[i].Init(executeGitFetch));
             }
@@ -58,6 +54,13 @@ namespace DependencyScanner.Core.Services
             await Task.WhenAny(Task.WhenAll(InitTasks), tcs.Task);
 
             return infos;
+        }
+
+        public IEnumerable<IGitInfo> ScanForGitRepositories(string rootDirectory)
+        {
+            var gitFolders = GetGitFolder(rootDirectory);
+            _logger.Debug("found {folders}", gitFolders);
+            return gitFolders.Select(a => _gitCtor(a)).ToArray();
         }
     }
 }

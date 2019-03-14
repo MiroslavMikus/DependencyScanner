@@ -251,21 +251,16 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
                 foreach (var directory in Directories)
                 {
-                    if (!CancellationTokenSource.Token.IsCancellationRequested)
+                    try
                     {
-                        try
-                        {
-                            await directory.Sync(CancellationTokenSource.Token);
-                        }
-                        catch (OperationCanceledException)
-                        {
-                            break;
-                        }
+                        await directory.Sync(CancellationTokenSource.Token);
                     }
-                    else
+                    catch (OperationCanceledException)
                     {
                         break;
                     }
+                    if (CancellationTokenSource.Token.IsCancellationRequested) break;
+
                 }
 
                 CancellationTokenSource = null;
