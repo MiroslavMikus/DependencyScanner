@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using DependencyScanner.Api.Model;
-using DependencyScanner.Plugins.Wd.Model;
+using DependencyScanner.Plugins.Wd.Components.Working_Directory;
 
 namespace DependencyScanner.Plugins.Wd
 {

@@ -1,4 +1,4 @@
-﻿using DependencyScanner.Plugins.Wd.Model;
+﻿using DependencyScanner.Plugins.Wd.Components.Settings;
 using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;

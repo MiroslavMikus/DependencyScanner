@@ -5,7 +5,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Api.Model;
-using DependencyScanner.Plugins.Wd.Model;
+using DependencyScanner.Plugins.Wd.Components.Repository;
+using DependencyScanner.Plugins.Wd.Components.Settings;
 using DependencyScanner.Plugins.Wd.Services;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -41,9 +42,9 @@ namespace DependencyScanner.Plugins.WorkingDirectory.Test
 
             givenWd.Path = @"C:\new\wd";
 
-            givenWd.Repositories.Add(new Repository(GitCtor(@"C:\new\wd\rpo1")));
-            givenWd.Repositories.Add(new Repository(GitCtor(@"C:\new\wd\rpo2")));
-            givenWd.Repositories.Add(new Repository(GitCtor(@"C:\new\wd\rpo3")));
+            givenWd.Repositories.Add(new RepositoryViewModel(GitCtor(@"C:\new\wd\rpo1")));
+            givenWd.Repositories.Add(new RepositoryViewModel(GitCtor(@"C:\new\wd\rpo2")));
+            givenWd.Repositories.Add(new RepositoryViewModel(GitCtor(@"C:\new\wd\rpo3")));
 
             var givenDirectories = givenManager.RestoreWorkingDirectories().Concat(new List<IWorkingDirectory>
             {

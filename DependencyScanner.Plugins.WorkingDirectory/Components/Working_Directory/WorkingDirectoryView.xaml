@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="DependencyScanner.Plugins.Wd.WorkingDirectoryView"
+﻿<UserControl x:Class="DependencyScanner.Plugins.Wd.Components.Working_Directory.WorkingDirectoryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
              Dialog:DialogParticipation.Register="{Binding}"
@@ -9,9 +9,9 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:converters="clr-namespace:DependencyScanner.Core.Gui.Converters;assembly=DependencyScanner.Core.Gui"
+             xmlns:repo="clr-namespace:DependencyScanner.Plugins.Wd.Components.Repository"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
-             xmlns:model="clr-namespace:DependencyScanner.Plugins.Wd.Model"
              d:DataContext="{d:DesignInstance local:WorkingDirectoryViewModel, IsDesignTimeCreatable=True}">
     <UserControl.Resources>
         <converters:NullToBoolConverter x:Key="NullToFalse" Negative="True" Positive="False" />
@@ -206,7 +206,7 @@
                 </Button.ToolTip>
             </Button>
         </StackPanel>
-        <local:RepositoryView Grid.Column="2"
+        <repo:RepositoryView Grid.Column="2"
                               Grid.Row="2"
                               Grid.RowSpan="2"
                               DataContext="{Binding ElementName=RepoList, Path=SelectedItem}"

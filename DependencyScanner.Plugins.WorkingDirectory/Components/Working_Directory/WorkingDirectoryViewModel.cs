@@ -4,8 +4,9 @@ using DependencyScanner.Api.Model;
 using DependencyScanner.Api.Services;
 using DependencyScanner.Core.Gui.Services;
 using DependencyScanner.Core.Tools;
+using DependencyScanner.Core.Tools.DependencyScanner.Core.Tools;
+using DependencyScanner.Plugins.Wd.Components.Repository;
 using DependencyScanner.Plugins.Wd.Desing;
-using DependencyScanner.Plugins.Wd.Model;
 using DependencyScanner.Plugins.Wd.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -21,7 +22,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DependencyScanner.Plugins.Wd
+namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 {
     public class WorkingDirectoryViewModel : ViewModelBase
     {
@@ -66,8 +67,8 @@ namespace DependencyScanner.Plugins.Wd
                 Path = @"C:\DemoPaht"
             };
 
-            testwd.Repositories.Add(new Repository(new DesignGitInfo()));
-            testwd.Repositories.Add(new Repository(new DesignGitInfo()));
+            testwd.Repositories.Add(new RepositoryViewModel(new DesignGitInfo()));
+            testwd.Repositories.Add(new RepositoryViewModel(new DesignGitInfo()));
 
             var longPathWd = new DesignWrokingDirectory()
             {
@@ -326,7 +327,7 @@ namespace DependencyScanner.Plugins.Wd
 
                 var newWorkinDir = _wdCtor();
 
-                newWorkinDir.Repositories = new ObservableCollection<IRepository>(repos.Select(a => new Repository(a)));
+                newWorkinDir.Repositories = new ObservableCollection<IRepository>(repos.Select(a => new RepositoryViewModel(a)));
 
                 newWorkinDir.Path = folder;
 

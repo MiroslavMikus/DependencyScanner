@@ -3,7 +3,8 @@ using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Api.Model;
 using DependencyScanner.Api.Services;
 using DependencyScanner.Core.Gui.ViewModel;
-using DependencyScanner.Plugins.Wd.Model;
+using DependencyScanner.Plugins.Wd.Components.Repository;
+using DependencyScanner.Plugins.Wd.Components.Settings;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -18,7 +19,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace DependencyScanner.Plugins.Wd.Model
+namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 {
     public class WorkingDirectory : ObservableProgressBase, IWorkingDirectory, IEquatable<WorkingDirectory>
     {
@@ -70,7 +71,7 @@ namespace DependencyScanner.Plugins.Wd.Model
 
                 DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
-                    Repositories = new ObservableCollection<IRepository>(repos.Select(a => new Repository(a)));
+                    Repositories = new ObservableCollection<IRepository>(repos.Select(a => new RepositoryViewModel(a)));
 
                     _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(this));
                 });

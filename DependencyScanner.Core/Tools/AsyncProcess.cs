@@ -20,7 +20,6 @@ namespace DependencyScanner.Core.Tools
             private readonly TaskCompletionSource<ProcessResult> _tcs = new TaskCompletionSource<ProcessResult>();
             private StringBuilder _output = new StringBuilder();
             private StringBuilder _errors = new StringBuilder();
-            private ProcessResult _result;
 
             public AsyncProcess(ProcessStartInfo info)
             {

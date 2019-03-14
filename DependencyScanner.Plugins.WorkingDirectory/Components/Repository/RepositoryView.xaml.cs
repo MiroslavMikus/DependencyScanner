@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DependencyScanner.Plugins.Wd
+namespace DependencyScanner.Plugins.Wd.Components.Repository
 {
     /// <summary>
     /// Interaction logic for RepositoryView.xaml

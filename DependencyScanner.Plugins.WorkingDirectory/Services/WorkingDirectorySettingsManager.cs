@@ -1,6 +1,7 @@
 ﻿using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Api.Model;
-using DependencyScanner.Plugins.Wd.Model;
+using DependencyScanner.Plugins.Wd.Components.Repository;
+using DependencyScanner.Plugins.Wd.Components.Settings;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,7 @@ namespace DependencyScanner.Plugins.Wd.Services
 
                     git.Init(Settings.ExecuteGitFetchWhileScanning);
 
-                    return new Repository(git);
+                    return new RepositoryViewModel(git);
                 }).Where(a => a != null);
 
                 // create working directory

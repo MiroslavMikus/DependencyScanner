@@ -8,9 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace DependencyScanner.Plugins.Wd.Model
+namespace DependencyScanner.Plugins.Wd.Components.Repository
 {
-    public class Repository : ObservableProgressBase, IRepository
+    public class RepositoryViewModel : ObservableProgressBase, IRepository
     {
         private CancellationTokenSource _cancellationTokenSource;
 
@@ -21,7 +21,7 @@ namespace DependencyScanner.Plugins.Wd.Model
         public ICommand SetRemoteBranchCommand { get; }
         public ICommand RefreshGitInfoCommand { get; }
 
-        public Repository(IGitInfo gitInfo)
+        public RepositoryViewModel(IGitInfo gitInfo)
         {
             GitInfo = gitInfo;
 

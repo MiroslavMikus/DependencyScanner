@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DependencyScanner.Plugins.Wd
+namespace DependencyScanner.Plugins.Wd.Components.Settings
 {
     /// <summary>
-    /// Interaction logic for WorkingDirView.xaml
+    /// Interaction logic for WorkingDirectorySettingsView.xaml
     /// </summary>
-    public partial class WorkingDirectoryView : UserControl
+    public partial class WorkingDirectorySettingsView : UserControl
     {
-        public WorkingDirectoryView()
+        public WorkingDirectorySettingsView()
         {
             InitializeComponent();
         }

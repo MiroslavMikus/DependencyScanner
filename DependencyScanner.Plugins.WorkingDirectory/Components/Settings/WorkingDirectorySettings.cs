@@ -3,7 +3,7 @@ using DependencyScanner.Plugins.Wd.Services;
 using GalaSoft.MvvmLight;
 using System.Collections.Generic;
 
-namespace DependencyScanner.Plugins.Wd.Model
+namespace DependencyScanner.Plugins.Wd.Components.Settings
 {
     public class WorkingDirectorySettings : ObservableObject, ISettings
     {
@@ -29,7 +29,10 @@ namespace DependencyScanner.Plugins.Wd.Model
     public class ButtonData
     {
         public int Order { get; set; }
-        public string ToolTip { get; set; }
+
+        /// <summary>
+        /// Markdown
+        /// </summary>
         public string Description { get; set; }
         public string Icon { get; set; }
         public string Process { get; set; }

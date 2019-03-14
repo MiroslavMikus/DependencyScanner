@@ -2,7 +2,8 @@
 using DependencyScanner.Api.Interfaces;
 using DependencyScanner.Core.Gui.ViewModel;
 using DependencyScanner.Plugins.Wd;
-using DependencyScanner.Plugins.Wd.Model;
+using DependencyScanner.Plugins.Wd.Components.Settings;
+using DependencyScanner.Plugins.Wd.Components.Working_Directory;
 using DependencyScanner.Plugins.Wd.Services;
 using GalaSoft.MvvmLight.Messaging;
 using System;
