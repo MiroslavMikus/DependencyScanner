@@ -12,12 +12,12 @@ namespace DependencyScanner.Core.Gui.ViewModel
         private string _progressMessage;
         public string ProgressMessage { get => _progressMessage; private set => Set(ref _progressMessage, value); }
 
-        private bool _isOpen;
+        private bool _isRunning;
 
-        public bool IsOpen
+        public bool IsRunning
         {
-            get { return _isOpen; }
-            set { Set(ref _isOpen, value); }
+            get { return _isRunning; }
+            set { Set(ref _isRunning, value); }
         }
 
         private bool _isMarquee;
@@ -30,12 +30,12 @@ namespace DependencyScanner.Core.Gui.ViewModel
 
         public void StartProgress()
         {
-            IsOpen = true;
+            IsRunning = true;
         }
 
         public void StopProgress()
         {
-            IsOpen = false;
+            IsRunning = false;
 
             ProgressValue = 0D;
         }

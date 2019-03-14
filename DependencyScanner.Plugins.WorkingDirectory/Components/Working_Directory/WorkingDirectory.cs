@@ -85,6 +85,36 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
             }
         }
 
+
+        internal async Task PullAllRepos(CancellationToken token)
+        {
+            await ExecuteForEachRepository(a => a.Sync(token), token);
+        }
+
+        internal async Task ExecuteForEachRepository(Func<IRepository, Task> repositoryAction, CancellationToken token)
+        {
+            StartProgress();
+
+            try
+            {
+                var repos = Repositories.ToArray();
+
+                for (int i = 0; i < repos.Count(); i++)
+                {
+                    ProgressValue = CalculateProgress(i, Repositories.Count);
+
+                    await repositoryAction(repos[i]);
+
+                    if (token.IsCancellationRequested) break;
+                }
+            }
+            finally
+            {
+                StopProgress();
+            }
+        }
+
+        #region Equals
         public bool Equals(WorkingDirectory other)
         {
             return this.Path == other.Path;
@@ -103,24 +133,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
         public override int GetHashCode()
         {
             return 467214278 + EqualityComparer<string>.Default.GetHashCode(Path);
-        }
-
-        internal async Task PullAllRepos(CancellationToken token)
-        {
-            StartProgress();
-
-            var repos = Repositories.ToArray();
-
-            for (int i = 0; i < repos.Count(); i++)
-            {
-                ProgressValue = CalculateProgress(i, Repositories.Count);
-
-                await repos[i].Sync(token);
-
-                if (token.IsCancellationRequested) break;
-            }
-
-            StopProgress();
-        }
+        } 
+        #endregion
     }
 }
