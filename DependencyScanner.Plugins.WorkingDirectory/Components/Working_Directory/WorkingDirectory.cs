@@ -91,7 +91,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
                 await ExecuteForEachRepository(a => a.Sync(token), token);
         }
 
-        internal async Task ExecuteForEachRepository(Func<IRepository, Task> repositoryAction, CancellationToken token)
+        public async Task ExecuteForEachRepository(Func<IRepository, Task> repositoryAction, CancellationToken token)
         {
             StartProgress();
 

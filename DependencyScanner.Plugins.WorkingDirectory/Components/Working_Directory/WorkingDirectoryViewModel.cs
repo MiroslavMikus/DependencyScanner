@@ -155,7 +155,8 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
                     try
                     {
-                        var wd = await Scan(progress, folder, CancellationToken.None, _settingsManager.Settings.ExecuteGitFetchWhileScanning);
+                        //var wd = await Scan(progress, folder, CancellationToken.None, _settingsManager.Settings.ExecuteGitFetchWhileScanning);
+                        var wd = await Scan(folder);
 
                         wd.Name = name;
 
@@ -169,6 +170,8 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
                         controller.SetMessage("Publishing results...");
 
                         _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(wd));
+
+                        wd.ExecuteForEachRepository(a => a.GitInfo.Init(_settingsManager.Settings.ExecuteGitFetchWhileScanning), CancellationTokenSource.Token);
                     }
                     catch (OperationCanceledException)
                     {
@@ -314,11 +317,11 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
             }
         }
 
-        private Task<IWorkingDirectory> Scan(IProgress<ProgressMessage> progress, string folder, CancellationToken token, bool gitFetch)
+        private Task<IWorkingDirectory> Scan(string folder)
         {
-            return Task.Run(async () =>
+            return Task.Run(() =>
             {
-                var repos = await _scanner.ScanForGitRepositories(folder, progress, gitFetch, token);
+                var repos = _scanner.ScanForGitRepositories(folder);
 
                 var newWorkinDir = _wdCtor();
 

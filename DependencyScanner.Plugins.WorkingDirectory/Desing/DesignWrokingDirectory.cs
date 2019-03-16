@@ -19,6 +19,11 @@ namespace DependencyScanner.Plugins.Wd.Desing
 
         public string Name { get; set; }
 
+        public Task ExecuteForEachRepository(Func<IRepository, Task> repositoryAction, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task Sync(CancellationToken token)
         {
             throw new NotImplementedException();
