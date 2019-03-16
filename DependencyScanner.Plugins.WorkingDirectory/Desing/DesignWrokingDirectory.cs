@@ -24,6 +24,16 @@ namespace DependencyScanner.Plugins.Wd.Desing
             throw new NotImplementedException();
         }
 
+        public Task ExecuteForEachRepositoryParallel(Func<IRepository, Task> repositoryAction, SemaphoreSlim sem, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ExecuteForEachRepositoryParallel(Func<IRepository, Task> repositoryAction, CancellationToken token)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task Sync(CancellationToken token)
         {
             throw new NotImplementedException();

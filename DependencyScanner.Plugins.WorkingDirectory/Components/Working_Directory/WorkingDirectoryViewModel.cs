@@ -15,6 +15,7 @@ using GalaSoft.MvvmLight.Threading;
 using MahApps.Metro.Controls.Dialogs;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -104,7 +105,89 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
             Directories = new ObservableCollection<IWorkingDirectory>(_settingsManager.RestoreWorkingDirectories());
 
+            Task.Run(async () =>
+            {
+                //await Task.Delay(500);
+                await ExecuteForEachWorkingDirectorParallel((dir, tok) =>
+                {
+                    return dir.ExecuteForEachRepositoryParallel(async a =>
+                    {
+                        var repo = a as RepositoryViewModel;
+                        try
+                        {
+                            repo.StartProgress();
+                            repo.IsMarquee = true;
+                            await a.GitInfo.Init(_settingsManager.Settings.ExecuteGitFetchWhileScanning);
+                        }
+                        finally
+                        {
+                            repo.StopProgress();
+                        }
+                    }, new SemaphoreSlim(5, 5), tok);
+                });
+            });
+
+            //Task.Run(() => ExecuteForEachWorkingDirectorParallel((dir, tok) =>
+            // {
+            //     return dir.ExecuteForEachRepository(async a =>
+            //     {
+            //         await a.GitInfo.Init(_settingsManager.Settings.ExecuteGitFetchWhileScanning);
+            //     }, tok);
+            //}));
+
             InitCommands();
+        }
+
+        private async Task ExecuteForEachWorkingDirector(Func<IWorkingDirectory, CancellationToken, Task> action)
+        {
+            CancellationTokenSource = new CancellationTokenSource();
+
+            try
+            {
+                foreach (var directory in Directories)
+                {
+                    try
+                    {
+                        await action(directory, CancellationTokenSource.Token);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        break;
+                    }
+                    if (CancellationTokenSource.Token.IsCancellationRequested) break;
+                }
+            }
+            finally
+            {
+                CancellationTokenSource = null;
+            }
+        }
+
+        private async Task ExecuteForEachWorkingDirectorParallel(Func<IWorkingDirectory, CancellationToken, Task> action)
+        {
+            CancellationTokenSource = new CancellationTokenSource();
+
+            try
+            {
+                var taskList = new List<Task>();
+                foreach (var directory in Directories)
+                {
+                    try
+                    {
+                        taskList.Add(action(directory, CancellationTokenSource.Token));
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        break;
+                    }
+                    if (CancellationTokenSource.Token.IsCancellationRequested) break;
+                }
+                await Task.WhenAll(taskList);
+            }
+            finally
+            {
+                CancellationTokenSource = null;
+            }
         }
 
         private void InitCommands()
@@ -250,23 +333,10 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
             SyncAllCommand = new RelayCommand(async () =>
             {
-                CancellationTokenSource = new CancellationTokenSource();
-
-                foreach (var directory in Directories)
+                await ExecuteForEachWorkingDirector(async (directory, token) =>
                 {
-                    try
-                    {
-                        await directory.Sync(CancellationTokenSource.Token);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        break;
-                    }
-                    if (CancellationTokenSource.Token.IsCancellationRequested) break;
-
-                }
-
-                CancellationTokenSource = null;
+                    await directory.Sync(token);
+                });
             });
 
             CancelCommand = new RelayCommand(() =>
@@ -276,16 +346,10 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
             PullAllCommand = new RelayCommand(async () =>
             {
-                CancellationTokenSource = new CancellationTokenSource();
-
-                foreach (var dir in Directories.Cast<WorkingDirectory>())
+                await ExecuteForEachWorkingDirector(async (dir, tok) =>
                 {
-                    await dir.PullAllRepos(CancellationTokenSource.Token);
-
-                    if (CancellationTokenSource.Token.IsCancellationRequested) break;
-                }
-
-                CancellationTokenSource = null;
+                    await ((WorkingDirectory)dir).PullAllRepos(tok);
+                });
             });
         }
 

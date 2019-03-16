@@ -11,5 +11,6 @@ namespace DependencyScanner.Api.Model
         ICollection<IRepository> Repositories { get; set; }
         string Path { get; set; }
         Task ExecuteForEachRepository(Func<IRepository, Task> repositoryAction, CancellationToken token);
+        Task ExecuteForEachRepositoryParallel(Func<IRepository, Task> repositoryAction,SemaphoreSlim sem, CancellationToken token);
     }
 }

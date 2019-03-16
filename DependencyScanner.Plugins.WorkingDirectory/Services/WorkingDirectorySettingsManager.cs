@@ -45,8 +45,6 @@ namespace DependencyScanner.Plugins.Wd.Services
                     }
                     var git = _gitCtor(a);
 
-                    git.Init(Settings.ExecuteGitFetchWhileScanning);
-
                     return new RepositoryViewModel(git);
                 }).Where(a => a != null);
 
