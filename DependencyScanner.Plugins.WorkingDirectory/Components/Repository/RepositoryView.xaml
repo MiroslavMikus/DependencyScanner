@@ -113,6 +113,17 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <Button Height="35" Width="35" Margin="10 10 5 10"
                     Style="{DynamicResource CircleButtonStyle}"
+                    Command="{Binding RefreshGitInfoCommand}">
+                <Button.ToolTip>
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Update dashboard" FontWeight="Bold" />
+                        <Label Content="This button will update dashboard data for the current repository." />
+                    </StackPanel>
+                </Button.ToolTip>
+                <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
+            </Button>
+            <Button Height="35" Width="35" Margin="10 10 5 10"
+                    Style="{DynamicResource CircleButtonStyle}"
                     Command="{Binding Commands.RunCommand}"
                     CommandParameter="{Binding GitInfo.Root.DirectoryName}">
                 <Button.ToolTip>
