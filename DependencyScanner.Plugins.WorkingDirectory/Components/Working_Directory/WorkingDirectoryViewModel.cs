@@ -30,14 +30,13 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
         // commands
         public CommandManager Commands { get; set; }
 
-        public RelayCommand PickWorkingDirectoryCommand { get; private set; }
-
-        public RelayCommand CancelCommand { get; private set; }
-        public RelayCommand SyncAllCommand { get; private set; }
-        public RelayCommand PullAllCommand { get; private set; }
-        public RelayCommand<IWorkingDirectory> CloneCommand { get; private set; }
-        public RelayCommand<IWorkingDirectory> RemoveWorkingDirectoryCommand { get; private set; }
-        public RelayCommand<IWorkingDirectory> RenameWorkingDirectoryCommand { get; private set; }
+        public RelayCommand PickWorkingDirectoryCommand { get; set; }
+        public RelayCommand CancelCommand { get; set; }
+        public RelayCommand SyncAllCommand { get; set; }
+        public RelayCommand PullAllCommand { get; set; }
+        public RelayCommand<IWorkingDirectory> CloneCommand { get; set; }
+        public RelayCommand<IWorkingDirectory> RemoveWorkingDirectoryCommand { get; set; }
+        public RelayCommand<IWorkingDirectory> RenameWorkingDirectoryCommand { get; set; }
 
         // private fields
 
@@ -67,8 +66,12 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
                 Name = "FirstRepo",
                 Path = @"C:\DemoPaht"
             };
+            var repo = new RepositoryViewModel(null, new DesignGitInfo());
 
-            testwd.Repositories.Add(new RepositoryViewModel(null, new DesignGitInfo()));
+            repo.StartProgress();
+            repo.IsMarquee = true;
+
+            testwd.Repositories.Add(repo);
             testwd.Repositories.Add(new RepositoryViewModel(null, new DesignGitInfo()));
 
             var longPathWd = new DesignWrokingDirectory()

@@ -123,7 +123,7 @@
                             <iconPacks:PackIconFontAwesome Kind="FolderSolid" VerticalAlignment="Center" />
                             <StackPanel Margin="7">
                                 <Label Content="{Binding Name}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" />
-                                <TextBlock Margin="4 2 2 2" Text="{Binding Path}" FontWeight="Regular" FontSize="11" TextWrapping="Wrap" Width="200" />
+                                <TextBlock Margin="4 2 2 2" Text="{Binding Path}" FontWeight="Regular" FontSize="11" TextWrapping="Wrap" Width="180" />
                             </StackPanel>
                             <Button Height="30" Style="{DynamicResource CircleButtonStyle}" Command="{Binding PullCommand}">
                                 <Button.ToolTip>
@@ -133,6 +133,17 @@
                                     </StackPanel>
                                 </Button.ToolTip>
                                 <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
+                            </Button>
+                            <Button Height="30" Margin="5 10 5 10"
+                                    Style="{DynamicResource CircleButtonStyle}"
+                                    Command="{Binding PullCommand}">
+                                <iconPacks:PackIconFontAwesome Kind="CodeBranchSolid" />
+                                <Button.ToolTip>
+                                    <StackPanel Orientation="Vertical">
+                                        <Label Content="Pull containig repositories" FontWeight="Bold" />
+                                        <Label Content="Executes git pull for each repository." />
+                                    </StackPanel>
+                                </Button.ToolTip>
                             </Button>
                         </StackPanel>
                     </Grid>
@@ -149,10 +160,14 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
-                        <ProgressBar IsIndeterminate="{Binding IsMarquee}" Value="{Binding ProgressValue}"
+                        <!--<ProgressBar IsIndeterminate="{Binding IsMarquee}" Value="{Binding ProgressValue}"
                                      Visibility="{Binding IsRunning, Converter={StaticResource BoolToVisibility}}"
-                                     Background="White" BorderThickness="0" Grid.ColumnSpan="3" />
-                        <Label Margin="0 0 5 0">
+                                     Background="White" BorderThickness="0" Grid.ColumnSpan="3" />-->
+                        <Controls:ProgressRing IsActive="{Binding IsRunning}"  BorderThickness="0" Grid.Column="2"
+                                               IsLarge="False"
+                                               Width="30"
+                                               Height="30" />
+                        <Label Margin="0 0 5 0" VerticalAlignment="Center">
                             <Label.Style>
                                 <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
                                     <Style.Triggers>
@@ -169,23 +184,12 @@
                             <iconPacks:PackIconFontAwesome Kind="InfoCircleSolid" />
                             <Label.ToolTip>
                                 <StackPanel>
-                                    <Label Content="Git status" FontWeight="Bold" VerticalAlignment="Center" />
+                                    <Label Content="Git status" FontWeight="Bold" />
                                     <Label Content="{Binding GitInfo.Status}" />
                                 </StackPanel>
                             </Label.ToolTip>
                         </Label>
                         <TextBlock Width="320" Text="{Binding GitInfo.Root.DirectoryName}" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="1" Margin="0,5" />
-                        <!--<Button Grid.Column="2" Height="30" Style="{DynamicResource CircleButtonStyle}" Command="{Binding RefreshGitInfoCommand}"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
-                            <Button.ToolTip> // todo move to dashboard
-                                <StackPanel Orientation="Vertical">
-                                    <Label Content="Update dashboard" FontWeight="Bold" />
-                                    <Label Content="This button will update dashboard data for the current repository." />
-                                </StackPanel>
-                            </Button.ToolTip>
-                            <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
-                        </Button>-->
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

@@ -72,7 +72,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
             PullCommand = new RelayCommand(async () =>
             {
-                await Sync(CancellationToken.None);
+                await PullAllRepos(CancellationToken.None);
             });
 
             CancelCommand = new RelayCommand(() =>
