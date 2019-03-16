@@ -32,8 +32,24 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
         public string Path { get => _path; set => Set(ref _path, value); }
 
+        public int AtWorkCount { get => Repositories.Where(a => !a.GitInfo.IsClean).Count(); }
+        public int BehindCount { get => Repositories.Where(a => a.GitInfo.IsBehind).Count(); }
+
         private ICollection<IRepository> _repositories = new ObservableCollection<IRepository>();
-        public ICollection<IRepository> Repositories { get => _repositories; set => Set(ref _repositories, value); }
+
+        public ICollection<IRepository> Repositories
+        {
+            get => _repositories;
+            set
+            {
+                if (Set(ref _repositories, value))
+                {
+                    RaisePropertyChanged(nameof(BehindCount));
+                    RaisePropertyChanged(nameof(AtWorkCount));
+                }
+            }
+        }
+
         public ICommand PullCommand { get; }
         public ICommand CancelCommand { get; }
 

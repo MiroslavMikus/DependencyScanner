@@ -10,6 +10,8 @@ namespace DependencyScanner.Plugins.Wd.Desing
 {
     internal class DesignWrokingDirectory : IWorkingDirectory
     {
+        public CancellationTokenSource CancellationTokenSource { get => new CancellationTokenSource(); }
+
         public ICollection<IRepository> Repositories { get; set; } = new List<IRepository>();
         public string Path { get; set; }
 

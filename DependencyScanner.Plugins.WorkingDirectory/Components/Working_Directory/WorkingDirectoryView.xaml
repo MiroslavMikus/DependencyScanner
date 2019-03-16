@@ -19,7 +19,7 @@
         <converters:NullToVisibilityConverter x:Key="NullToHide" Positive="Hidden" Negative="Visible" />
         <converters:NullToVisibilityConverter x:Key="NullToVisible" Positive="Visible" Negative="Hidden" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibility" />
-        <converters:BoolAndMultiValueConverter x:Key="BollAndConverter"/>
+        <converters:BoolAndMultiValueConverter x:Key="BollAndConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -34,14 +34,14 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal">
-            <Button Command="{Binding PickWorkingDirectoryCommand}" Content="Add new working directory" Margin="5" 
-                    IsEnabled="{Binding CancellationTokenSource, Converter={StaticResource NullToTrue}}"/>
+            <Button Command="{Binding PickWorkingDirectoryCommand}" Content="Add new working directory" Margin="5"
+                    IsEnabled="{Binding CancellationTokenSource, Converter={StaticResource NullToTrue}}" />
             <Button Margin="5" Content="Rename" Command="{Binding RenameWorkingDirectoryCommand}"
                     CommandParameter="{Binding ElementName=WdList, Path=SelectedItem}">
                 <Button.IsEnabled>
                     <MultiBinding Converter="{StaticResource BollAndConverter}">
-                        <Binding ElementName="WdList" Path="SelectedItem" Converter="{StaticResource NullToFalse}"/>
-                        <!--<Binding Path="DataContext.CancellationTokenSource" Converter="{StaticResource NullToTrue}"/>-->
+                        <Binding ElementName="WdList" Path="SelectedItem" Converter="{StaticResource NullToFalse}" />
+                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}" Path="DataContext.CancellationTokenSource" Converter="{StaticResource NullToTrue}" />
                     </MultiBinding>
                 </Button.IsEnabled>
             </Button>
@@ -49,8 +49,8 @@
                     CommandParameter="{Binding ElementName=WdList, Path=SelectedItem}">
                 <Button.IsEnabled>
                     <MultiBinding Converter="{StaticResource BollAndConverter}">
-                        <Binding ElementName="WdList" Path="SelectedItem" Converter="{StaticResource NullToFalse}"/>
-                        <!--<Binding Path="DataContext.CancellationTokenSource" Converter="{StaticResource NullToTrue}"/>-->
+                        <Binding ElementName="WdList" Path="SelectedItem" Converter="{StaticResource NullToFalse}" />
+                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}" Path="DataContext.CancellationTokenSource" Converter="{StaticResource NullToTrue}" />
                     </MultiBinding>
                 </Button.IsEnabled>
             </Button>
@@ -68,7 +68,8 @@
             <Button Height="35" Width="35" Margin="5 10 5 10"
                     Style="{DynamicResource CircleButtonStyle}"
                     Command="{Binding CloneCommand}"
-                    CommandParameter="{Binding ElementName=WdList, Path=SelectedItem}">
+                    CommandParameter="{Binding ElementName=WdList, Path=SelectedItem}"
+                    IsEnabled="{Binding CancellationTokenSource, Converter={StaticResource NullToTrue}}">
                 <iconPacks:PackIconFontAwesome Kind="ArrowDownSolid"  VerticalAlignment="Center" />
                 <Button.ToolTip>
                     <StackPanel Orientation="Vertical">
