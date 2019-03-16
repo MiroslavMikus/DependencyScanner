@@ -25,6 +25,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Repository
             InitializeComponent();
 
             RemoteBranchList.PreviewMouseWheel += PreviewMouseWheel;
+
             BranchList.PreviewMouseWheel += PreviewMouseWheel;
         }
 

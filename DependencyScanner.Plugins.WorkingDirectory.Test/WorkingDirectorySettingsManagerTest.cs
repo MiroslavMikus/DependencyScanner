@@ -42,9 +42,9 @@ namespace DependencyScanner.Plugins.WorkingDirectory.Test
 
             givenWd.Path = @"C:\new\wd";
 
-            givenWd.Repositories.Add(new RepositoryViewModel(GitCtor(@"C:\new\wd\rpo1")));
-            givenWd.Repositories.Add(new RepositoryViewModel(GitCtor(@"C:\new\wd\rpo2")));
-            givenWd.Repositories.Add(new RepositoryViewModel(GitCtor(@"C:\new\wd\rpo3")));
+            givenWd.Repositories.Add(new RepositoryViewModel(null, GitCtor(@"C:\new\wd\rpo1")));
+            givenWd.Repositories.Add(new RepositoryViewModel(null, GitCtor(@"C:\new\wd\rpo2")));
+            givenWd.Repositories.Add(new RepositoryViewModel(null, GitCtor(@"C:\new\wd\rpo3")));
 
             var givenDirectories = givenManager.RestoreWorkingDirectories().Concat(new List<IWorkingDirectory>
             {
@@ -84,7 +84,7 @@ namespace DependencyScanner.Plugins.WorkingDirectory.Test
                 .WriteTo.Console()
                 .CreateLogger();
 
-            return new WorkingDirectorySettingsManager(settings, GitCtor, WdCtor, logger);
+            return new WorkingDirectorySettingsManager(settings, GitCtor, WdCtor, a => new RepositoryViewModel(null, a), logger);
         }
 
         private WorkingDirectorySettings GivenSettings() => new WorkingDirectorySettings()

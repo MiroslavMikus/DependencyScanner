@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using DependencyScanner.Api.Model;
+using DependencyScanner.Plugins.Wd.Components.Repository;
 using DependencyScanner.Plugins.Wd.Components.Working_Directory;
 
 namespace DependencyScanner.Plugins.Wd
@@ -10,6 +11,7 @@ namespace DependencyScanner.Plugins.Wd
         {
             builder.RegisterType<WorkingDirectoryViewModel>();
             builder.RegisterType<WorkingDirectory>().As<IWorkingDirectory>();
+            builder.RegisterType<RepositoryViewModel>().As<IRepository>();
         }
     }
 }

@@ -68,8 +68,8 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
                 Path = @"C:\DemoPaht"
             };
 
-            testwd.Repositories.Add(new RepositoryViewModel(new DesignGitInfo()));
-            testwd.Repositories.Add(new RepositoryViewModel(new DesignGitInfo()));
+            testwd.Repositories.Add(new RepositoryViewModel(null, new DesignGitInfo()));
+            testwd.Repositories.Add(new RepositoryViewModel(null, new DesignGitInfo()));
 
             var longPathWd = new DesignWrokingDirectory()
             {
@@ -117,58 +117,6 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
             });
 
             InitCommands();
-        }
-
-        private async Task ExecuteForEachWorkingDirectory(Func<IWorkingDirectory, CancellationToken, Task> action)
-        {
-            CancellationTokenSource = new CancellationTokenSource();
-
-            try
-            {
-                foreach (var directory in Directories)
-                {
-                    try
-                    {
-                        await action(directory, CancellationTokenSource.Token);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        break;
-                    }
-                    if (CancellationTokenSource.Token.IsCancellationRequested) break;
-                }
-            }
-            finally
-            {
-                CancellationTokenSource = null;
-            }
-        }
-
-        private async Task ExecuteForEachWorkingDirectorParallel(Func<IWorkingDirectory, CancellationToken, Task> action)
-        {
-            CancellationTokenSource = new CancellationTokenSource();
-
-            try
-            {
-                var taskList = new List<Task>();
-                foreach (var directory in Directories)
-                {
-                    try
-                    {
-                        taskList.Add(action(directory, CancellationTokenSource.Token));
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        break;
-                    }
-                    if (CancellationTokenSource.Token.IsCancellationRequested) break;
-                }
-                await Task.WhenAll(taskList);
-            }
-            finally
-            {
-                CancellationTokenSource = null;
-            }
         }
 
         private void InitCommands()
@@ -374,12 +322,64 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
                 var newWorkinDir = _wdCtor();
 
-                newWorkinDir.Repositories = new ObservableCollection<IRepository>(repos.Select(a => new RepositoryViewModel(a)));
+                newWorkinDir.Repositories = new ObservableCollection<IRepository>(repos.Select(a => new RepositoryViewModel(Commands, a)));
 
                 newWorkinDir.Path = folder;
 
                 return newWorkinDir;
             });
+        }
+
+        private async Task ExecuteForEachWorkingDirectory(Func<IWorkingDirectory, CancellationToken, Task> action)
+        {
+            CancellationTokenSource = new CancellationTokenSource();
+
+            try
+            {
+                foreach (var directory in Directories)
+                {
+                    try
+                    {
+                        await action(directory, CancellationTokenSource.Token);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        break;
+                    }
+                    if (CancellationTokenSource.Token.IsCancellationRequested) break;
+                }
+            }
+            finally
+            {
+                CancellationTokenSource = null;
+            }
+        }
+
+        private async Task ExecuteForEachWorkingDirectorParallel(Func<IWorkingDirectory, CancellationToken, Task> action)
+        {
+            CancellationTokenSource = new CancellationTokenSource();
+
+            try
+            {
+                var taskList = new List<Task>();
+                foreach (var directory in Directories)
+                {
+                    try
+                    {
+                        taskList.Add(action(directory, CancellationTokenSource.Token));
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        break;
+                    }
+                    if (CancellationTokenSource.Token.IsCancellationRequested) break;
+                }
+                await Task.WhenAll(taskList);
+            }
+            finally
+            {
+                CancellationTokenSource = null;
+            }
         }
     }
 }

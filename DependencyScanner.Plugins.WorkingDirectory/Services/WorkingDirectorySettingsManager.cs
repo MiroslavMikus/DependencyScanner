@@ -18,16 +18,19 @@ namespace DependencyScanner.Plugins.Wd.Services
 
         private readonly Func<string, IGitInfo> _gitCtor;
         private readonly Func<IWorkingDirectory> _wdCtor;
+        private readonly Func<IGitInfo, IRepository> _repositoryCtor;
         private readonly ILogger _logger;
 
         public WorkingDirectorySettingsManager(WorkingDirectorySettings settings,
             Func<string, IGitInfo> gitCtor,
             Func<IWorkingDirectory> wdCtor,
+            Func<IGitInfo, IRepository> repositoryCtor,
             ILogger logger)
         {
             Settings = settings;
             _gitCtor = gitCtor;
             _wdCtor = wdCtor;
+            _repositoryCtor = repositoryCtor;
             _logger = logger;
         }
 
@@ -45,7 +48,7 @@ namespace DependencyScanner.Plugins.Wd.Services
                     }
                     var git = _gitCtor(a);
 
-                    return new RepositoryViewModel(git);
+                    return _repositoryCtor(git);
                 }).Where(a => a != null);
 
                 // create working directory

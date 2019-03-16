@@ -28,6 +28,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
         private readonly IRepositoryScanner _scanner;
         private readonly IMessenger _messenger;
         private readonly WorkingDirectorySettings _settings;
+        private readonly Func<IGitInfo, IRepository> _repoCtor;
         private CancellationTokenSource _cancellationTokenSource;
 
         public string Path { get => _path; set => Set(ref _path, value); }
@@ -57,12 +58,17 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
         public string Name { get => _name; set => Set(ref _name, value); }
 
-        public WorkingDirectory(ILogger logger, IRepositoryScanner scanner, IMessenger messenger, WorkingDirectorySettings settings)
+        public WorkingDirectory(ILogger logger,
+                                IRepositoryScanner scanner,
+                                IMessenger messenger,
+                                WorkingDirectorySettings settings,
+                                Func<IGitInfo, IRepository> repoCtor)
         {
             _logger = logger;
             _scanner = scanner;
             _messenger = messenger;
             _settings = settings;
+            _repoCtor = repoCtor;
 
             PullCommand = new RelayCommand(async () =>
             {
@@ -87,7 +93,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
                 DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
-                    Repositories = new ObservableCollection<IRepository>(repos.Select(a => new RepositoryViewModel(a)));
+                    Repositories = new ObservableCollection<IRepository>(repos.Select(a => _repoCtor(a)));
 
                     _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(this));
                 });

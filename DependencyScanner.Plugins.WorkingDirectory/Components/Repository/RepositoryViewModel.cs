@@ -13,24 +13,19 @@ namespace DependencyScanner.Plugins.Wd.Components.Repository
     public class RepositoryViewModel : ObservableProgressBase, IRepository
     {
         private CancellationTokenSource _cancellationTokenSource;
-        public CommandManager Commands { get; }
+        public Core.Gui.Services.CommandManager Commands { get; set; }
 
         public IGitInfo GitInfo { get; set; }
-        public ICommand PullCommand { get; }
-        public ICommand CancelCommand { get; }
-        public ICommand SetBranchCommand { get; }
-        public ICommand SetRemoteBranchCommand { get; }
-        public ICommand RefreshGitInfoCommand { get; }
+        public ICommand PullCommand { get; set; }
+        public ICommand CancelCommand { get; set; }
+        public ICommand SetBranchCommand { get; set; }
+        public ICommand SetRemoteBranchCommand { get; set; }
+        public ICommand RefreshGitInfoCommand { get; set; }
 
-        public RepositoryViewModel(CommandManager commandManager, IGitInfo gitInfo)
-            : this(gitInfo)
-        {
-            Commands = commandManager;
-        }
-
-        public RepositoryViewModel(IGitInfo gitInfo)
+        public RepositoryViewModel(Core.Gui.Services.CommandManager commandManager, IGitInfo gitInfo)
         {
             GitInfo = gitInfo;
+            Commands = commandManager;
 
             PullCommand = new RelayCommand(async () =>
             {
@@ -55,7 +50,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Repository
 
             RefreshGitInfoCommand = new RelayCommand(() =>
             {
-                gitInfo.Init(false);
+                GitInfo.Init(false);
             });
         }
 

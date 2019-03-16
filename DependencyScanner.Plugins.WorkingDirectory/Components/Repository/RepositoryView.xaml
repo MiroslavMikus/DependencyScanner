@@ -6,8 +6,11 @@
              xmlns:settings="clr-namespace:DependencyScanner.Plugins.Wd.Components.Settings"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:DependencyScanner.Core.Gui.Converters;assembly=DependencyScanner.Core.Gui"
+             xmlns:local="clr-namespace:DependencyScanner.Plugins.Wd.Components.Repository"
              mc:Ignorable="d"
-             d:DesignHeight="800" d:DesignWidth="800">
+             d:DesignHeight="800" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance local:RepositoryViewModel, IsDesignTimeCreatable=False}">
+
     <UserControl.Resources>
         <converters:BoolAndMultiValueConverter x:Key="BoolAndMultiConverter" />
         <converters:NullToBoolConverter x:Key="NullToFalse" Negative="True" Positive="False" />
@@ -108,10 +111,28 @@
             </StackPanel>
         </ScrollViewer>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Height="35" Width="35" Margin="10 10 5 10"
+                    Style="{DynamicResource CircleButtonStyle}"
+                    Command="{Binding Commands.RunCommand}"
+                    CommandParameter="{Binding GitInfo.Root.DirectoryName}">
+                <Button.ToolTip>
+                    <Label Content="Open directory" FontWeight="Bold" />
+                </Button.ToolTip>
+                <iconPacks:PackIconFontAwesome Kind="FolderOpenSolid"  VerticalAlignment="Center" />
+            </Button>
             <Button Height="35" Width="35" Margin="5 10 5 10"
                     Style="{DynamicResource CircleButtonStyle}"
                     Command="{Binding PullCommand}">
                 <iconPacks:PackIconFontAwesome Kind="CodeBranchSolid"  VerticalAlignment="Center" />
+                <Button.ToolTip>
+                    <Label Content="Pull selected repository" FontWeight="Bold" />
+                </Button.ToolTip>
+            </Button>
+            <Button Height="35" Width="35" Margin="5 10 5 10"
+                    Style="{DynamicResource CircleButtonStyle}"
+                    Command="{Binding Commands.OpenCmdCommand}"
+                    CommandParameter="{Binding GitInfo.Root.DirectoryName}">
+                <iconPacks:PackIconFontAwesome Kind="TerminalSolid"  VerticalAlignment="Center" />
                 <Button.ToolTip>
                     <Label Content="Pull selected repository" FontWeight="Bold" />
                 </Button.ToolTip>

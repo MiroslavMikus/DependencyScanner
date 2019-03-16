@@ -190,37 +190,6 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" IsEnabled="{Binding ElementName=WdList, Path=SelectedItem, Converter={StaticResource NullToFalse}}">
-            <Button Height="35" Width="35" Margin="10 10 5 10"
-                    Style="{DynamicResource CircleButtonStyle}"
-                    Command="{Binding Commands.RunCommand}"
-                    CommandParameter="{Binding ElementName=RepoList, Path=SelectedItem.GitInfo.Root.DirectoryName}"
-                    IsEnabled="{Binding ElementName=RepoList, Path=SelectedItem, Converter={StaticResource NullToFalse}}">
-                <Button.ToolTip>
-                    <Label Content="Open directory" FontWeight="Bold" />
-                </Button.ToolTip>
-                <iconPacks:PackIconFontAwesome Kind="FolderOpenSolid"  VerticalAlignment="Center" />
-            </Button>
-            <Button Height="35" Width="35" Margin="5 10 5 10"
-                    Style="{DynamicResource CircleButtonStyle}"
-                    Command="{Binding ElementName=RepoList, Path=SelectedItem.PullCommand}"
-                    IsEnabled="{Binding ElementName=RepoList, Path=SelectedItem, Converter={StaticResource NullToFalse}}">
-                <iconPacks:PackIconFontAwesome Kind="CodeBranchSolid"  VerticalAlignment="Center" />
-                <Button.ToolTip>
-                    <Label Content="Pull selected repository" FontWeight="Bold" />
-                </Button.ToolTip>
-            </Button>
-            <Button Height="35" Width="35" Margin="5 10 5 10"
-                    Style="{DynamicResource CircleButtonStyle}"
-                    Command="{Binding Commands.OpenCmdCommand}"
-                    CommandParameter="{Binding ElementName=RepoList, Path=SelectedItem.GitInfo.Root.DirectoryName}"
-                    IsEnabled="{Binding ElementName=RepoList, Path=SelectedItem, Converter={StaticResource NullToFalse}}">
-                <iconPacks:PackIconFontAwesome Kind="TerminalSolid"  VerticalAlignment="Center" />
-                <Button.ToolTip>
-                    <Label Content="Pull selected repository" FontWeight="Bold" />
-                </Button.ToolTip>
-            </Button>
-        </StackPanel>
         <repo:RepositoryView Grid.Column="2"
                               Grid.Row="2"
                               Grid.RowSpan="2"
