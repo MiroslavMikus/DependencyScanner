@@ -1,8 +1,14 @@
 # Changeset
 
 <!---
-## Coming in the new release
 -->
+## Coming in the new release
+
+**Features**:
+
+- Dependency scanner can now work with multiple repositories at once
+![WorkingDirectory](pic/2019-03-16.gif)
+
 ## 11.3.2019 0.2.0.0
 
 **Features**:
