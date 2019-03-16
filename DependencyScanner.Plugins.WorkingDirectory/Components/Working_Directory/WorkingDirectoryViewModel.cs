@@ -107,7 +107,6 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
             Task.Run(async () =>
             {
-                //await Task.Delay(500);
                 await ExecuteForEachWorkingDirectorParallel((dir, tok) =>
                 {
                     return dir.ExecuteForEachRepositoryParallel(async a =>
@@ -127,18 +126,10 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
                 });
             });
 
-            //Task.Run(() => ExecuteForEachWorkingDirectorParallel((dir, tok) =>
-            // {
-            //     return dir.ExecuteForEachRepository(async a =>
-            //     {
-            //         await a.GitInfo.Init(_settingsManager.Settings.ExecuteGitFetchWhileScanning);
-            //     }, tok);
-            //}));
-
             InitCommands();
         }
 
-        private async Task ExecuteForEachWorkingDirector(Func<IWorkingDirectory, CancellationToken, Task> action)
+        private async Task ExecuteForEachWorkingDirectory(Func<IWorkingDirectory, CancellationToken, Task> action)
         {
             CancellationTokenSource = new CancellationTokenSource();
 
@@ -333,7 +324,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
             SyncAllCommand = new RelayCommand(async () =>
             {
-                await ExecuteForEachWorkingDirector(async (directory, token) =>
+                await ExecuteForEachWorkingDirectory(async (directory, token) =>
                 {
                     await directory.Sync(token);
                 });
@@ -346,7 +337,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
             PullAllCommand = new RelayCommand(async () =>
             {
-                await ExecuteForEachWorkingDirector(async (dir, tok) =>
+                await ExecuteForEachWorkingDirectory(async (dir, tok) =>
                 {
                     await ((WorkingDirectory)dir).PullAllRepos(tok);
                 });

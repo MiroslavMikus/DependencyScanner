@@ -88,7 +88,9 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
         internal async Task PullAllRepos(CancellationToken token)
         {
             if (!IsRunning)
-                await ExecuteForEachRepository(a => a.Sync(token), token);
+            {
+                await ExecuteForEachRepositoryParallel(a => a.Sync(token),new SemaphoreSlim(5,5), token);
+            }
         }
 
         public async Task ExecuteForEachRepository(Func<IRepository, Task> repositoryAction, CancellationToken token)
