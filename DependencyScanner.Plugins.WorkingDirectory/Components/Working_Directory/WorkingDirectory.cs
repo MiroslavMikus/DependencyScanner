@@ -89,7 +89,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
         {
             if (!IsRunning)
             {
-                await ExecuteForEachRepositoryParallel(a => a.Sync(token),new SemaphoreSlim(5,5), token);
+                await ExecuteForEachRepositoryParallel(a => a.Sync(token), new SemaphoreSlim(5, 5), token);
             }
         }
 
@@ -130,9 +130,9 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
                     ProgressValue = CalculateProgress(i, Repositories.Count);
 
-                    repositoryAction(repos[i]).ContinueWith(a=> 
+                    repositoryAction(repos[i]).ContinueWith(a =>
                     {
-                       sem.Release();
+                        sem.Release();
                     });
 
                     if (token.IsCancellationRequested) break;
@@ -145,6 +145,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
         }
 
         #region Equals
+
         public bool Equals(WorkingDirectory other)
         {
             return this.Path == other.Path;
@@ -164,6 +165,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
         {
             return 467214278 + EqualityComparer<string>.Default.GetHashCode(Path);
         }
+
         #endregion
     }
 }
