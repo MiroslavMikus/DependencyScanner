@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:settings="clr-namespace:DependencyScanner.Plugins.Wd.Components.Settings"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:DependencyScanner.Core.Gui.Converters;assembly=DependencyScanner.Core.Gui"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="800">
@@ -37,68 +38,84 @@
             </Border>
         </DataTemplate>
     </UserControl.Resources>
-    <ScrollViewer>
-        <StackPanel>
-            <Border Grid.Row="0" Style="{StaticResource BorderStyle}">
-                <Expander Header="Status" IsExpanded="True">
-                    <Label Content="{Binding GitInfo.Status}" Style="{StaticResource Content}" />
-                </Expander>
-            </Border>
-            <Border Grid.Row="1" Style="{StaticResource BorderStyle}">
-                <Expander Header="Branches:" IsExpanded="True">
-                    <StackPanel>
-                        <TextBlock Text="{Binding GitInfo.CurrentBranch, StringFormat='Current branch: {0}'}" Style="{StaticResource TextContent}" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="auto" />
-                            </Grid.RowDefinitions>
-                            <Label Content="Local branches:" Style="{StaticResource Content}" />
-                            <ListView Grid.Row="1" Name="BranchList" Margin="15 5 5 10"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <ScrollViewer>
+            <StackPanel>
+                <Border Grid.Row="0" Style="{StaticResource BorderStyle}">
+                    <Expander Header="Status" IsExpanded="True">
+                        <Label Content="{Binding GitInfo.Status}" Style="{StaticResource Content}" />
+                    </Expander>
+                </Border>
+                <Border Grid.Row="1" Style="{StaticResource BorderStyle}">
+                    <Expander Header="Branches:" IsExpanded="True">
+                        <StackPanel>
+                            <TextBlock Text="{Binding GitInfo.CurrentBranch, StringFormat='Current branch: {0}'}" Style="{StaticResource TextContent}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="auto" />
+                                </Grid.RowDefinitions>
+                                <Label Content="Local branches:" Style="{StaticResource Content}" />
+                                <ListView Grid.Row="1" Name="BranchList" Margin="15 5 5 10"
                                       ItemsSource="{Binding GitInfo.BranchList}"
                                       BorderThickness="0" />
-                            <Button Grid.Row="2" Width="auto" HorizontalAlignment="Left" Margin="15"
+                                <Button Grid.Row="2" Width="auto" HorizontalAlignment="Left" Margin="15"
                                     Command="{Binding SetBranchCommand}"
                                     CommandParameter="{Binding ElementName=BranchList, Path=SelectedItem}">
-                                <TextBlock FontSize="13" Text="{Binding ElementName=BranchList, Path=SelectedItem, StringFormat='Switch to: {0}', FallbackValue='fallback'}" />
-                                <Button.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BoolAndMultiConverter}">
-                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}" Path="DataContext.GitInfo.IsClean" />
-                                        <Binding Converter="{StaticResource NullToFalse}" ElementName="BranchList" Path="SelectedItem" />
-                                        <!--<Binding Converter="{StaticResource FalseWhenEqual}" ConverterParameter="{Binding}" ElementName="BranchList" Path="SelectedItem" />-->
-                                    </MultiBinding>
-                                </Button.IsEnabled>
-                            </Button>
-                            <Label Grid.Column="1" Content="Remote branches:" Style="{StaticResource Content}" />
-                            <ListView Grid.Column="1" Grid.Row="1" Name="RemoteBranchList" Margin="15 5 5 10"
+                                    <TextBlock FontSize="13" Text="{Binding ElementName=BranchList, Path=SelectedItem, StringFormat='Switch to: {0}', FallbackValue='fallback'}" />
+                                    <Button.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BoolAndMultiConverter}">
+                                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}" Path="DataContext.GitInfo.IsClean" />
+                                            <Binding Converter="{StaticResource NullToFalse}" ElementName="BranchList" Path="SelectedItem" />
+                                            <!--<Binding Converter="{StaticResource FalseWhenEqual}" ConverterParameter="{Binding}" ElementName="BranchList" Path="SelectedItem" />-->
+                                        </MultiBinding>
+                                    </Button.IsEnabled>
+                                </Button>
+                                <Label Grid.Column="1" Content="Remote branches:" Style="{StaticResource Content}" />
+                                <ListView Grid.Column="1" Grid.Row="1" Name="RemoteBranchList" Margin="15 5 5 10"
                                      ItemsSource="{Binding GitInfo.RemoteBranchList}"
                                      BorderThickness="0" />
-                            <Button Grid.Column="1" Grid.Row="2" Width="auto" HorizontalAlignment="Left" Margin="15"
+                                <Button Grid.Column="1" Grid.Row="2" Width="auto" HorizontalAlignment="Left" Margin="15"
                                     Command="{Binding SetBranchCommand}"
                                     CommandParameter="{Binding ElementName=RemoteBranchList, Path=SelectedItem}">
-                                <TextBlock FontSize="13" Text="{Binding ElementName=RemoteBranchList, Path=SelectedItem, StringFormat='Pull remote branch: {0}', FallbackValue='fallback'}" />
-                                <Button.IsEnabled>
-                                    <MultiBinding Converter="{StaticResource BoolAndMultiConverter}">
-                                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}" Path="DataContext.GitInfo.IsClean" />
-                                        <Binding Converter="{StaticResource NullToFalse}" ElementName="RemoteBranchList" Path="SelectedItem" />
-                                    </MultiBinding>
-                                </Button.IsEnabled>
-                            </Button>
-                        </Grid>
-                    </StackPanel>
-                </Expander>
-            </Border>
-            <Border Grid.Row="0" Style="{StaticResource BorderStyle}">
-                <Expander Header="Stats:" IsExpanded="True">
-                    <TextBlock Text="{Binding GitInfo.CommitCount, StringFormat='Commit count: {0}'}"
+                                    <TextBlock FontSize="13" Text="{Binding ElementName=RemoteBranchList, Path=SelectedItem, StringFormat='Pull remote branch: {0}', FallbackValue='fallback'}" />
+                                    <Button.IsEnabled>
+                                        <MultiBinding Converter="{StaticResource BoolAndMultiConverter}">
+                                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}" Path="DataContext.GitInfo.IsClean" />
+                                            <Binding Converter="{StaticResource NullToFalse}" ElementName="RemoteBranchList" Path="SelectedItem" />
+                                        </MultiBinding>
+                                    </Button.IsEnabled>
+                                </Button>
+                            </Grid>
+                        </StackPanel>
+                    </Expander>
+                </Border>
+                <Border Grid.Row="0" Style="{StaticResource BorderStyle}">
+                    <Expander Header="Stats:" IsExpanded="True">
+                        <TextBlock Text="{Binding GitInfo.CommitCount, StringFormat='Commit count: {0}'}"
                                Style="{StaticResource TextContent}" />
-                </Expander>
-            </Border>
+                    </Expander>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Height="35" Width="35" Margin="5 10 5 10"
+                    Style="{DynamicResource CircleButtonStyle}"
+                    Command="{Binding PullCommand}">
+                <iconPacks:PackIconFontAwesome Kind="CodeBranchSolid"  VerticalAlignment="Center" />
+                <Button.ToolTip>
+                    <Label Content="Pull selected repository" FontWeight="Bold" />
+                </Button.ToolTip>
+            </Button>
         </StackPanel>
-    </ScrollViewer>
+    </Grid>
 </UserControl>

@@ -144,12 +144,19 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
                 {
                     await sem.WaitAsync();
 
+                    var repo = repos[i] as ObservableProgressBase;
+                    repo.StartProgress();
+                    repo.IsMarquee = true;
+
                     ProgressValue = CalculateProgress(i, Repositories.Count);
 
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     repositoryAction(repos[i]).ContinueWith(a =>
                     {
                         sem.Release();
+                        repo.StopProgress();
                     });
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
                     if (token.IsCancellationRequested) break;
                 }

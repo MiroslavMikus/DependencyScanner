@@ -13,6 +13,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Repository
     public class RepositoryViewModel : ObservableProgressBase, IRepository
     {
         private CancellationTokenSource _cancellationTokenSource;
+        public CommandManager Commands { get; }
 
         public IGitInfo GitInfo { get; set; }
         public ICommand PullCommand { get; }
@@ -21,13 +22,25 @@ namespace DependencyScanner.Plugins.Wd.Components.Repository
         public ICommand SetRemoteBranchCommand { get; }
         public ICommand RefreshGitInfoCommand { get; }
 
+        public RepositoryViewModel(CommandManager commandManager, IGitInfo gitInfo)
+            : this(gitInfo)
+        {
+            Commands = commandManager;
+        }
+
         public RepositoryViewModel(IGitInfo gitInfo)
         {
             GitInfo = gitInfo;
 
             PullCommand = new RelayCommand(async () =>
             {
+                StartProgress();
+
+                IsMarquee = true;
+
                 await Sync(CancellationToken.None);
+
+                StopProgress();
             });
 
             CancelCommand = new RelayCommand(() =>

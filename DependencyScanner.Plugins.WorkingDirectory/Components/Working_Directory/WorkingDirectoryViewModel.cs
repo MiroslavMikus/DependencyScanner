@@ -111,17 +111,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
                 {
                     return dir.ExecuteForEachRepositoryParallel(async a =>
                     {
-                        var repo = a as RepositoryViewModel;
-                        try
-                        {
-                            repo.StartProgress();
-                            repo.IsMarquee = true;
-                            await a.GitInfo.Init(_settingsManager.Settings.ExecuteGitFetchWhileScanning);
-                        }
-                        finally
-                        {
-                            repo.StopProgress();
-                        }
+                        await a.GitInfo.Init(_settingsManager.Settings.ExecuteGitFetchWhileScanning);
                     }, new SemaphoreSlim(5, 5), tok);
                 });
             });
@@ -245,7 +235,11 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
                         _messenger.Send<AddWorkindDirectory>(new AddWorkindDirectory(wd));
 
-                        wd.ExecuteForEachRepository(a => a.GitInfo.Init(_settingsManager.Settings.ExecuteGitFetchWhileScanning), CancellationTokenSource.Token);
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                        wd.ExecuteForEachRepositoryParallel(a =>
+                            a.GitInfo.Init(_settingsManager.Settings.ExecuteGitFetchWhileScanning),
+                            new SemaphoreSlim(5, 5), CancellationTokenSource.Token).ContinueWith(a => CancellationTokenSource = null);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     }
                     catch (OperationCanceledException)
                     {
