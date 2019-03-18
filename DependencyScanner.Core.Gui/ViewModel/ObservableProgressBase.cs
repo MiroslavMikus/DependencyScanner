@@ -30,6 +30,7 @@ namespace DependencyScanner.Core.Gui.ViewModel
 
         public void StartProgress()
         {
+            ProgressValue = 0D;
             IsRunning = true;
         }
 

@@ -29,7 +29,9 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
         private readonly IMessenger _messenger;
         private readonly WorkingDirectorySettings _settings;
         private readonly Func<IGitInfo, IRepository> _repoCtor;
+
         private CancellationTokenSource _cancellationTokenSource;
+        public CancellationTokenSource CancellationTokenSource { get => _cancellationTokenSource; set => Set(ref _cancellationTokenSource, value); }
 
         public string Path { get => _path; set => Set(ref _path, value); }
 
@@ -119,6 +121,8 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
         {
             StartProgress();
 
+            CancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
+
             try
             {
                 var repos = Repositories.ToArray();
@@ -129,11 +133,12 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
                     await repositoryAction(repos[i]);
 
-                    if (token.IsCancellationRequested) break;
+                    if (CancellationTokenSource.Token.IsCancellationRequested) break;
                 }
             }
             finally
             {
+                CancellationTokenSource = null;
                 StopProgress();
             }
         }
@@ -141,6 +146,8 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
         public async Task ExecuteForEachRepositoryParallel(Func<IRepository, Task> repositoryAction, SemaphoreSlim sem, CancellationToken token)
         {
             StartProgress();
+            
+            CancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
 
             try
             {
@@ -154,21 +161,21 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
                     repo.StartProgress();
                     repo.IsMarquee = true;
 
-                    ProgressValue = CalculateProgress(i, Repositories.Count);
-
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     repositoryAction(repos[i]).ContinueWith(a =>
                     {
+                        ProgressValue = CalculateProgress(i, Repositories.Count);
                         sem.Release();
                         repo.StopProgress();
                     });
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
-                    if (token.IsCancellationRequested) break;
+                    if (CancellationTokenSource.Token.IsCancellationRequested) break;
                 }
             }
             finally
             {
+                CancellationTokenSource = null;
                 StopProgress();
             }
         }
