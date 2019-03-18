@@ -127,7 +127,10 @@
                     Command="{Binding Commands.RunCommand}"
                     CommandParameter="{Binding GitInfo.Root.DirectoryName}">
                 <Button.ToolTip>
-                    <Label Content="Open directory" FontWeight="Bold" />
+                    <StackPanel>
+                        <Label Content="Open directory" FontWeight="Bold" />
+                        <Label Content="{Binding GitInfo.Root.DirectoryName}" />
+                    </StackPanel>
                 </Button.ToolTip>
                 <iconPacks:PackIconFontAwesome Kind="FolderOpenSolid"  VerticalAlignment="Center" />
             </Button>
@@ -145,8 +148,23 @@
                     CommandParameter="{Binding GitInfo.Root.DirectoryName}">
                 <iconPacks:PackIconFontAwesome Kind="TerminalSolid"  VerticalAlignment="Center" />
                 <Button.ToolTip>
-                    <Label Content="Pull selected repository" FontWeight="Bold" />
+                    <StackPanel>
+                        <Label Content="Open in commandline" FontWeight="Bold" />
+                        <Label Content="{Binding GitInfo.Root.DirectoryName}" />
+                    </StackPanel>
                 </Button.ToolTip>
+            </Button>
+            <Button Height="35" Width="35" Margin="5 10 5 10"
+                    Style="{DynamicResource CircleButtonStyle}"
+                    Command="{Binding Commands.OpenLinkCommand}"
+                    CommandParameter="{Binding GitInfo.RemoteUrl}">
+                <Button.ToolTip>
+                    <StackPanel>
+                        <Label Content="Open remote url" FontWeight="Bold" />
+                        <Label Content="{Binding GitInfo.RemoteUrl}" />
+                    </StackPanel>
+                </Button.ToolTip>
+                <iconPacks:PackIconFontAwesome Kind="EdgeBrands" />
             </Button>
         </StackPanel>
     </Grid>
