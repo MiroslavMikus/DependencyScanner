@@ -33,11 +33,19 @@
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Horizontal">
-            <Button Command="{Binding PickWorkingDirectoryCommand}" Content="Add new working directory" Margin="5"
-                    IsEnabled="{Binding CancellationTokenSource, Converter={StaticResource NullToTrue}}" />
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+            <Label Content="Working directory:" VerticalAlignment="Center"/>
+            <Button Command="{Binding PickWorkingDirectoryCommand}" Content="Add" Margin="5"
+                    IsEnabled="{Binding CancellationTokenSource, Converter={StaticResource NullToTrue}}" >
+                <Button.ToolTip>
+                    <Label Content="Add a new working directory" FontWeight="Bold" />
+                </Button.ToolTip>
+            </Button>
             <Button Margin="5" Content="Rename" Command="{Binding RenameWorkingDirectoryCommand}"
                     CommandParameter="{Binding ElementName=WdList, Path=SelectedItem}">
+                <Button.ToolTip>
+                    <Label Content="Rename the selected working directory" FontWeight="Bold" />
+                </Button.ToolTip>
                 <Button.IsEnabled>
                     <MultiBinding Converter="{StaticResource BollAndConverter}">
                         <Binding ElementName="WdList" Path="SelectedItem" Converter="{StaticResource NullToFalse}" />
@@ -47,6 +55,9 @@
             </Button>
             <Button Margin="5" Content="Remove" Command="{Binding RemoveWorkingDirectoryCommand}"
                     CommandParameter="{Binding ElementName=WdList, Path=SelectedItem}">
+                <Button.ToolTip>
+                    <Label Content="Remove the selected working directory" FontWeight="Bold" />
+                </Button.ToolTip>
                 <Button.IsEnabled>
                     <MultiBinding Converter="{StaticResource BollAndConverter}">
                         <Binding ElementName="WdList" Path="SelectedItem" Converter="{StaticResource NullToFalse}" />
@@ -56,28 +67,6 @@
             </Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="3"  IsEnabled="{Binding ElementName=WdList, Path=SelectedItem, Converter={StaticResource NullToFalse}}">
-            <Button Height="35" Width="35" Margin="10 10 5 10"
-                    Style="{DynamicResource CircleButtonStyle}"
-                    Command="{Binding Commands.RunCommand}"
-                    CommandParameter="{Binding ElementName=WdList, Path=SelectedItem.Path}">
-                <Button.ToolTip>
-                    <Label Content="Open directory" FontWeight="Bold" />
-                </Button.ToolTip>
-                <iconPacks:PackIconFontAwesome Kind="FolderOpenSolid"  VerticalAlignment="Center" />
-            </Button>
-            <Button Height="35" Width="35" Margin="5 10 5 10"
-                    Style="{DynamicResource CircleButtonStyle}"
-                    Command="{Binding CloneCommand}"
-                    CommandParameter="{Binding ElementName=WdList, Path=SelectedItem}"
-                    IsEnabled="{Binding CancellationTokenSource, Converter={StaticResource NullToTrue}}">
-                <iconPacks:PackIconFontAwesome Kind="ArrowDownSolid"  VerticalAlignment="Center" />
-                <Button.ToolTip>
-                    <StackPanel Orientation="Vertical">
-                        <Label Content="Clone repository" FontWeight="Bold" />
-                        <Label Content="Clone new repository to the selected working directory." />
-                    </StackPanel>
-                </Button.ToolTip>
-            </Button>
             <Button Height="35" Width="35" Margin="5 10 5 10"
                     Style="{DynamicResource CircleButtonStyle}"
                     Command="{Binding PullAllCommand}"
@@ -125,7 +114,10 @@
                                 <Label Content="{Binding Name}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" />
                                 <TextBlock Margin="4 2 2 2" Text="{Binding Path}" FontWeight="Regular" FontSize="11" TextWrapping="Wrap" Width="180" />
                             </StackPanel>
-                            <Button Height="30" Style="{DynamicResource CircleButtonStyle}" Command="{Binding PullCommand}">
+                            <Button Height="30" 
+                                    Style="{DynamicResource CircleButtonStyle}" 
+                                    Command="{Binding PullCommand}"
+                                    IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl},Path=DataContext.CancellationTokenSource, Converter={StaticResource NullToTrue}}">
                                 <Button.ToolTip>
                                     <StackPanel Orientation="Vertical">
                                         <Label Content="Sync working directory" FontWeight="Bold" />
@@ -134,18 +126,32 @@
                                 </Button.ToolTip>
                                 <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
                             </Button>
-                            <Button Height="30" Margin="5 10 5 10"
+                            <Button Height="30" 
                                     Style="{DynamicResource CircleButtonStyle}"
-                                    Command="{Binding PullCommand}">
-                                <iconPacks:PackIconFontAwesome Kind="CodeBranchSolid" />
+                                    Command="{Binding Commands.RunCommand}"
+                                    CommandParameter="{Binding Path}">
+                                <Button.ToolTip>
+                                    <Label Content="Open directory" FontWeight="Bold" />
+                                </Button.ToolTip>
+                                <iconPacks:PackIconFontAwesome Kind="FolderOpenSolid"  VerticalAlignment="Center" />
+                            </Button>
+                            <Button Height="30" 
+                                    Style="{DynamicResource CircleButtonStyle}"
+                                    Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl},Path=DataContext.CloneCommand}"
+                                    CommandParameter="{Binding}"
+                                    IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl},Path=DataContext.CancellationTokenSource, Converter={StaticResource NullToTrue}}">
+                                <iconPacks:PackIconFontAwesome Kind="ArrowDownSolid"  VerticalAlignment="Center" />
                                 <Button.ToolTip>
                                     <StackPanel Orientation="Vertical">
-                                        <Label Content="Pull containig repositories" FontWeight="Bold" />
-                                        <Label Content="Executes git pull for each repository." />
+                                        <Label Content="Clone repository" FontWeight="Bold" />
+                                        <Label Content="Clone new repository to the current working directory." />
                                     </StackPanel>
                                 </Button.ToolTip>
                             </Button>
                         </StackPanel>
+                        <Grid.ToolTip>
+                            <Label Content="SomeTest"/>
+                        </Grid.ToolTip>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -194,6 +200,25 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+            <Button Height="35" Width="35" Margin="5 10 5 10"
+                    Style="{DynamicResource CircleButtonStyle}"
+                    Command="{Binding ElementName=WdList,Path=SelectedItem.PullCommand}">
+                <iconPacks:PackIconFontAwesome Kind="CodeBranchSolid" />
+                <Button.IsEnabled>
+                    <MultiBinding Converter="{StaticResource BollAndConverter}">
+                        <Binding ElementName="WdList" Path="SelectedItem" Converter="{StaticResource NullToFalse}" />
+                        <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}" Path="DataContext.CancellationTokenSource" Converter="{StaticResource NullToTrue}" />
+                    </MultiBinding>
+                </Button.IsEnabled>
+                <Button.ToolTip>
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Pull repositories" FontWeight="Bold" />
+                        <Label Content="Executes git pull for each repository in the current working directory." />
+                    </StackPanel>
+                </Button.ToolTip>
+            </Button>
+        </StackPanel>
         <repo:RepositoryView Grid.Column="2"
                               Grid.Row="2"
                               Grid.RowSpan="2"
