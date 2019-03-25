@@ -74,7 +74,15 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
             PullCommand = new RelayCommand(async () =>
             {
-                await PullAllRepos(CancellationToken.None);
+                try
+                {
+                    CancellationTokenSource = new CancellationTokenSource();
+                    await PullAllRepos(CancellationTokenSource.Token);
+                }
+                finally
+                {
+                    CancellationTokenSource = null;
+                }
             });
 
             CancelCommand = new RelayCommand(() =>
@@ -146,7 +154,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
         public async Task ExecuteForEachRepositoryParallel(Func<IRepository, Task> repositoryAction, SemaphoreSlim sem, CancellationToken token)
         {
             StartProgress();
-            
+
             CancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(token);
 
             try

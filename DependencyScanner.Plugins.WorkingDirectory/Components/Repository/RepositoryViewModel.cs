@@ -13,6 +13,8 @@ namespace DependencyScanner.Plugins.Wd.Components.Repository
     public class RepositoryViewModel : ObservableProgressBase, IRepository
     {
         private CancellationTokenSource _cancellationTokenSource;
+        public CancellationTokenSource CancellationTokenSource { get => _cancellationTokenSource; set => Set(ref _cancellationTokenSource, value); }
+
         public Core.Gui.Services.CommandManager Commands { get; set; }
 
         public IGitInfo GitInfo { get; set; }

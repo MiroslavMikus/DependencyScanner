@@ -34,9 +34,9 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-            <Label Content="Working directory:" VerticalAlignment="Center"/>
+            <Label Content="Working directory:" VerticalAlignment="Center" />
             <Button Command="{Binding PickWorkingDirectoryCommand}" Content="Add" Margin="5"
-                    IsEnabled="{Binding CancellationTokenSource, Converter={StaticResource NullToTrue}}" >
+                    IsEnabled="{Binding CancellationTokenSource, Converter={StaticResource NullToTrue}}">
                 <Button.ToolTip>
                     <Label Content="Add a new working directory" FontWeight="Bold" />
                 </Button.ToolTip>
@@ -114,8 +114,8 @@
                                 <Label Content="{Binding Name}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" />
                                 <TextBlock Margin="4 2 2 2" Text="{Binding Path}" FontWeight="Regular" FontSize="11" TextWrapping="Wrap" Width="180" />
                             </StackPanel>
-                            <Button Height="30" 
-                                    Style="{DynamicResource CircleButtonStyle}" 
+                            <Button Height="30"
+                                    Style="{DynamicResource CircleButtonStyle}"
                                     Command="{Binding PullCommand}"
                                     IsEnabled="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl},Path=DataContext.CancellationTokenSource, Converter={StaticResource NullToTrue}}">
                                 <Button.ToolTip>
@@ -126,7 +126,7 @@
                                 </Button.ToolTip>
                                 <iconPacks:PackIconFontAwesome Kind="SyncAltSolid"  VerticalAlignment="Center" />
                             </Button>
-                            <Button Height="30" 
+                            <Button Height="30"
                                     Style="{DynamicResource CircleButtonStyle}"
                                     Command="{Binding Commands.RunCommand}"
                                     CommandParameter="{Binding Path}">
@@ -135,7 +135,7 @@
                                 </Button.ToolTip>
                                 <iconPacks:PackIconFontAwesome Kind="FolderOpenSolid"  VerticalAlignment="Center" />
                             </Button>
-                            <Button Height="30" 
+                            <Button Height="30"
                                     Style="{DynamicResource CircleButtonStyle}"
                                     Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl},Path=DataContext.CloneCommand}"
                                     CommandParameter="{Binding}"
@@ -150,7 +150,7 @@
                             </Button>
                         </StackPanel>
                         <Grid.ToolTip>
-                            <Label Content="SomeTest"/>
+                            <Label Content="SomeTest" />
                         </Grid.ToolTip>
                     </Grid>
                 </DataTemplate>
@@ -208,6 +208,7 @@
                 <Button.IsEnabled>
                     <MultiBinding Converter="{StaticResource BollAndConverter}">
                         <Binding ElementName="WdList" Path="SelectedItem" Converter="{StaticResource NullToFalse}" />
+                        <Binding ElementName="WdList" Path="SelectedItem.CancellationTokenSource" Converter="{StaticResource NullToTrue}" />
                         <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=UserControl}" Path="DataContext.CancellationTokenSource" Converter="{StaticResource NullToTrue}" />
                     </MultiBinding>
                 </Button.IsEnabled>
@@ -216,6 +217,15 @@
                         <Label Content="Pull repositories" FontWeight="Bold" />
                         <Label Content="Executes git pull for each repository in the current working directory." />
                     </StackPanel>
+                </Button.ToolTip>
+            </Button>
+            <Button Height="35" Width="35" Margin="5 10 5 10"
+                    Style="{DynamicResource CircleButtonStyle}"
+                    Command="{Binding ElementName=WdList, Path=SelectedItem.CancelCommand}"
+                    IsEnabled="{Binding ElementName=WdList, Path=SelectedItem.CancellationTokenSource, Converter={StaticResource NullToFalse}}">
+                <iconPacks:PackIconFontAwesome Kind="BanSolid"  VerticalAlignment="Center" />
+                <Button.ToolTip>
+                    <Label Content="Stop syncing" FontWeight="Bold" />
                 </Button.ToolTip>
             </Button>
         </StackPanel>
