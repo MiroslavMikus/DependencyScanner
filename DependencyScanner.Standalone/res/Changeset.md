@@ -1,13 +1,15 @@
 # Changeset
 
 <!---
--->
 ## Coming in the new release
+-->
+## 27.5.2019 0.2.0.1
 
 **Features**:
 
 - Dependency scanner can now work with multiple repositories at once
-![WorkingDirectory](pic/2019-03-16.gif)
+![WorkingDirectory](pic/2019-03-16.gif) // todo update gif
+- Working directory plugin has some performance optimizaitons under the hood.
 
 ## 11.3.2019 0.2.0.0
 
