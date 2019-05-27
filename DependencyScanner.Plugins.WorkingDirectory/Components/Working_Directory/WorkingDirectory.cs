@@ -74,9 +74,34 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
 
             PullCommand = new RelayCommand(async () =>
             {
+                CancellationTokenSource = new CancellationTokenSource();
+
                 try
                 {
-                    CancellationTokenSource = new CancellationTokenSource();
+                    var repos = await _scanner.ScanForGitRepositories(_path, this, _settings.ExecuteGitFetchWhileScanning, CancellationTokenSource.Token);
+
+                    if (repos.Count() != Repositories.Count())
+                    {
+                        // add
+                        var missingRepos = repos.Except(Repositories.Select(a => a.GitInfo));
+
+                        foreach (var repo in missingRepos.Select(a => _repoCtor(a)))
+                        {
+                            Repositories.Add(repo);
+                        }
+
+                        // remove
+                        var gitInfosToRemove = Repositories.Select(a => a.GitInfo).Except(repos).ToList();
+
+                        if (gitInfosToRemove.Any())
+                        {
+                            foreach (var repo in Repositories.Where(a => gitInfosToRemove.Any(b => b.Equals(a.GitInfo))))
+                            {
+                                Repositories.Remove(repo);
+                            }
+                        }
+                    }
+
                     await PullAllRepos(CancellationTokenSource.Token);
                 }
                 finally

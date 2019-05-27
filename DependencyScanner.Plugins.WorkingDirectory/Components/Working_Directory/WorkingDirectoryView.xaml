@@ -149,9 +149,6 @@
                                 </Button.ToolTip>
                             </Button>
                         </StackPanel>
-                        <Grid.ToolTip>
-                            <Label Content="SomeTest" />
-                        </Grid.ToolTip>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

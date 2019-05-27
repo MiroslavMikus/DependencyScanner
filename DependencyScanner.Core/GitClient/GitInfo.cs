@@ -3,6 +3,7 @@ using DependencyScanner.Core.GitClient;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Serilog;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DependencyScanner.Core.Model
 {
-    public class GitInfo : ObservableObject, IGitInfo
+    public class GitInfo : ObservableObject, IGitInfo, IEquatable<GitInfo>
     {
         #region Services
 
@@ -155,6 +156,22 @@ namespace DependencyScanner.Core.Model
             _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Pull);
             Status = _gitEngine.GitProcess(Root.DirectoryName, GitCommand.Status);
             UpdateBranchList();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as GitInfo);
+        }
+
+        public bool Equals(GitInfo other)
+        {
+            return other != null &&
+                   EqualityComparer<string>.Default.Equals(Root.DirectoryName, other.Root.DirectoryName);
+        }
+
+        public override int GetHashCode()
+        {
+            return -1490287827 + EqualityComparer<string>.Default.GetHashCode(Root.DirectoryName);
         }
     }
 }
