@@ -33,6 +33,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
         private CancellationTokenSource _cancellationTokenSource;
         public CancellationTokenSource CancellationTokenSource { get => _cancellationTokenSource; set => Set(ref _cancellationTokenSource, value); }
 
+        public Core.Gui.Services.CommandManager Commands { get; }
         public string Path { get => _path; set => Set(ref _path, value); }
 
         public int AtWorkCount { get => Repositories.Where(a => !a.GitInfo.IsClean).Count(); }
@@ -64,12 +65,14 @@ namespace DependencyScanner.Plugins.Wd.Components.Working_Directory
                                 IRepositoryScanner scanner,
                                 IMessenger messenger,
                                 WorkingDirectorySettings settings,
+                                Core.Gui.Services.CommandManager commandManager,
                                 Func<IGitInfo, IRepository> repoCtor)
         {
             _logger = logger;
             _scanner = scanner;
             _messenger = messenger;
             _settings = settings;
+            Commands = commandManager;
             _repoCtor = repoCtor;
 
             PullCommand = new RelayCommand(async () =>

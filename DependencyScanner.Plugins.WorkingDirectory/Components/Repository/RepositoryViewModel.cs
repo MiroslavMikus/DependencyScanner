@@ -15,7 +15,7 @@ namespace DependencyScanner.Plugins.Wd.Components.Repository
         private CancellationTokenSource _cancellationTokenSource;
         public CancellationTokenSource CancellationTokenSource { get => _cancellationTokenSource; set => Set(ref _cancellationTokenSource, value); }
 
-        public Core.Gui.Services.CommandManager Commands { get; set; }
+        public Core.Gui.Services.CommandManager Commands { get; }
 
         public IGitInfo GitInfo { get; set; }
         public ICommand PullCommand { get; set; }
