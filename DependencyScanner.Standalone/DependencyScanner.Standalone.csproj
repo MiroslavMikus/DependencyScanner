@@ -79,7 +79,6 @@
     </ApplicationDefinition>
     <Compile Include="AppModule.cs" />
     <Compile Include="ChocoUpdater.cs" />
-    <Compile Include="Components\AppSettings.cs" />
     <Compile Include="Components\Browse\BrowsePlugin.cs" />
     <Compile Include="Components\Browse\BrowseSettings.cs" />
     <Compile Include="Components\Browse\BrowseSettingsView.xaml.cs">
