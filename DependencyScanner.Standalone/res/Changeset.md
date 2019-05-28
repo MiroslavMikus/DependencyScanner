@@ -1,13 +1,19 @@
 # Changeset
 
 <!---
--->
 ## Coming in the new release
+-->
+
+## 28.5.2019 0.2.0.1
 
 **Features**:
 
 - Dependency scanner can now work with multiple repositories at once
 ![WorkingDirectory](pic/2019-03-16.gif)
+- *Clean nugets* command was removed
+- There was done a huge under the hood improvement in the working directory plugin
+- Working directory has a new commands concept:
+![WorkingDirectory](pic/2019-05-28.png)
 
 ## 11.3.2019 0.2.0.0
 
