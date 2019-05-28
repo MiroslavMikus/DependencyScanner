@@ -31,6 +31,7 @@
     </Controls:MetroWindow.RightWindowCommands>
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
+            <!--Global progress-->
             <Controls:Flyout Position="Bottom" DataContext="{Binding Progress}"
                              IsOpen="{Binding IsOpen}"
                              Height="110">
@@ -51,6 +52,7 @@
                 </StackPanel>
             </Controls:Flyout>
 
+            <!--Serilog notification bar-->
             <Controls:Flyout Position="Bottom"
                              IsOpen="{Binding OpenNotificationBar}"
                              Height="auto"
@@ -68,6 +70,7 @@
                 </Grid>
             </Controls:Flyout>
 
+            <!--Settings-->
             <Controls:Flyout x:Name="settingsFlyout"
                              Width="600"
                              Header="Settings"
