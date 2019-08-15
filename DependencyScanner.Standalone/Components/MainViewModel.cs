@@ -1,4 +1,5 @@
 ﻿using DependencyScanner.Api.Interfaces;
+using DependencyScanner.Core.Gui.Services;
 using DependencyScanner.Core.Interfaces;
 using DependencyScanner.Standalone.Services;
 using DependencyScanner.Standalone.Setting;
@@ -20,10 +21,10 @@ namespace DependencyScanner.Standalone.Components
     {
         public string LogPath { get; }
         private readonly IDialogCoordinator _dialogCoordinator;
-        public AppSettings MainSettings { get; } = AppSettings.Instance;
-        public ObservableProgress Progress { get; }
-
         public MainSettings Settings { get; set; }
+        public CommandManagerSettings CommandSettings { get; private set; }
+
+        public ObservableProgress Progress { get; }
 
         private string _notification;
 
@@ -68,11 +69,14 @@ namespace DependencyScanner.Standalone.Components
             ObservableProgress progress,
             EventSink eventSink,
             MainSettings settings,
+            CommandManagerSettings commandSettings,
             string logPath,
             IDialogCoordinator dialogCoordinator,
             ChocoUpdater chocoUpdater)
         {
             _dialogCoordinator = dialogCoordinator;
+
+            CommandSettings = commandSettings;
 #if DEBUG
             CheckUpdates(chocoUpdater);
 #endif
@@ -80,6 +84,7 @@ namespace DependencyScanner.Standalone.Components
 
             Settings = settings;
 
+            // build settings list
             SettingsList = new List<SettingsViewModel>()
             {
                 new SettingsViewModel("View settings", new MainSettingsView
@@ -93,6 +98,7 @@ namespace DependencyScanner.Standalone.Components
 
             LogPath = logPath;
 
+            // subscribe to errors from serilog
             eventSink.NotifyEvent += (s, e) =>
             {
                 Notification = e;
@@ -102,6 +108,8 @@ namespace DependencyScanner.Standalone.Components
             {
                 plugin.OnStarted();
             }
+
+            Services.CommandManager.Settings = commandSettings;
         }
 
         private IEnumerable<SettingsViewModel> ReadSettings(IEnumerable<IPlugin> plugins)

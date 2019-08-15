@@ -1,4 +1,5 @@
-﻿using DependencyScanner.ViewModel;
+﻿using DependencyScanner.Core.Gui.Services;
+using DependencyScanner.ViewModel;
 using GalaSoft.MvvmLight.Command;
 using Serilog;
 using System;
@@ -9,6 +10,8 @@ namespace DependencyScanner.Standalone.Services
 {
     public static class CommandManager
     {
+        public static CommandManagerSettings Settings { get; internal set; }
+
         public static RelayCommand<string> RunCommand { get; } = new RelayCommand<string>(a =>
         {
             if (string.IsNullOrEmpty(a))
@@ -27,36 +30,6 @@ namespace DependencyScanner.Standalone.Services
             catch (Exception ex)
             {
                 Log.Error(ex, "Run ommand: Error while executing process {process}", a);
-            }
-        });
-
-        public static RelayCommand ClearNuspecCommand { get; } = new RelayCommand(() =>
-        {
-            string path = AppSettings.Instance.PathToNuspec;
-
-            if (string.IsNullOrEmpty(path))
-            {
-                Log.Error($"Can't execute clear nuspec action, the path parameter is null or empty.");
-
-                return;
-            }
-
-            var startInfo = new ProcessStartInfo
-            {
-                WindowStyle = ProcessWindowStyle.Normal,
-                FileName = path,
-                Arguments = "locals all -clear"
-            };
-
-            try
-            {
-                Log.Information("Starting process {@process}", new { startInfo.Arguments, startInfo.FileName });
-
-                Process.Start(startInfo);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Error while executing clear nuspec command.");
             }
         });
 
@@ -91,7 +64,7 @@ namespace DependencyScanner.Standalone.Services
 
         public static RelayCommand<string> OpenLinkCommand { get; } = new RelayCommand<string>(a =>
         {
-            string browser = AppSettings.Instance.PreferencedWebBrowser;
+            string browser = Settings.WebBrowser;
 
             try
             {
@@ -143,7 +116,7 @@ namespace DependencyScanner.Standalone.Services
 
         private static string GetTerminalTool()
         {
-            string terminalTool = AppSettings.Instance.PreferedConsoleTool;
+            string terminalTool = Settings.ConsoleTool;
 
             if (string.IsNullOrEmpty(terminalTool))
             {
@@ -155,14 +128,14 @@ namespace DependencyScanner.Standalone.Services
 
         private static string GetPreferedTextEditor()
         {
-            string terminalTool = AppSettings.Instance.PreferedTextEditor;
+            string textEditor = Settings.TextEditor;
 
-            if (string.IsNullOrEmpty(terminalTool))
+            if (string.IsNullOrEmpty(textEditor))
             {
-                terminalTool = "notepad";
+                textEditor = "notepad";
             }
 
-            return terminalTool;
+            return textEditor;
         }
     }
 }
